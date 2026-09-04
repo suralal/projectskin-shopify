@@ -1,0 +1,42 @@
+{% comment %}
+  Related education after a journal article — tags drive concern/ingredient links.
+{% endcomment %}
+{% liquid
+  assign tag_blob = article.tags | join: ' ' | downcase
+  assign concern_url = '/pages/acne'
+  assign concern_label = 'Acne literacy'
+  assign ingredient_url = '/pages/ingredients'
+  assign ingredient_label = 'Ingredient library'
+
+  if tag_blob contains 'barrier' or tag_blob contains 'winter' or tag_blob contains 'moistur'
+    assign concern_url = '/pages/barrier'
+    assign concern_label = 'Barrier literacy'
+    assign ingredient_url = '/pages/ingredients#ingredient-ceramide-complex'
+    assign ingredient_label = 'Read: Ceramides'
+  elsif tag_blob contains 'spf' or tag_blob contains 'sun' or tag_blob contains 'uv' or tag_blob contains 'festive'
+    assign concern_url = '/pages/daily-spf'
+    assign concern_label = 'Daily SPF literacy'
+    assign ingredient_url = '/pages/ingredients#ingredient-tinosorb-s'
+    assign ingredient_label = 'Read: Tinosorb S'
+  elsif tag_blob contains 'pigment' or tag_blob contains 'pih' or tag_blob contains 'melasma'
+    assign concern_url = '/pages/pigmentation'
+    assign concern_label = 'Pigmentation literacy'
+    assign ingredient_url = '/pages/ingredients#ingredient-niacinamide'
+    assign ingredient_label = 'Read: Niacinamide'
+  elsif tag_blob contains 'monsoon' or tag_blob contains 'acne' or tag_blob contains 'niacinamide'
+    assign concern_url = '/pages/acne'
+    assign concern_label = 'Acne literacy'
+    assign ingredient_url = '/pages/ingredients#ingredient-niacinamide'
+    assign ingredient_label = 'Read: Niacinamide at 5%'
+  endif
+%}
+
+<aside class="ps-article__edu" aria-label="Keep learning">
+  <p class="psr-kicker">Keep learning</p>
+  <h2>From this story to the science</h2>
+  <div class="ps-article__edu-grid">
+    <a href="{{ concern_url }}"><strong>{{ concern_label }}</strong><span>Diagnosis first. Mechanism second.</span></a>
+    <a href="{{ ingredient_url }}"><strong>{{ ingredient_label }}</strong><span>Percentage, mechanism, formulas.</span></a>
+    <a href="/pages/journal"><strong>Journal hub</strong><span>Seasons and literacy threads.</span></a>
+  </div>
+</aside>

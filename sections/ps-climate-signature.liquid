@@ -1,0 +1,224 @@
+{% comment %}
+  Climate section — teaser (homepage) or full (detail / science pages).
+{% endcomment %}
+{% assign clim_layout = section.settings.layout | default: 'teaser' %}
+<section
+  class="ps-clim{% if clim_layout == 'teaser' %} ps-clim--teaser{% endif %}"
+  id="ClimateSignature-{{ section.id }}"
+  style="--ps-clim-top: {{ section.settings.padding_top }}px; --ps-clim-bottom: {{ section.settings.padding_bottom }}px"
+>
+  <div class="ps-clim__mesh" aria-hidden="true"><i></i><i></i></div>
+
+  <div class="ps-clim__wrap">
+    <header class="ps-clim__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="ps-clim__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 class="ps-clim__heading">
+        {{ section.settings.heading }}
+        {% if section.settings.heading_italic != blank %}
+          <em>{{ section.settings.heading_italic }}</em>
+        {% endif %}
+      </h2>
+      {% if section.settings.description != blank %}
+        <div class="ps-clim__lede">{{ section.settings.description }}</div>
+      {% endif %}
+    </header>
+
+    <ps-climate-signature
+      class="ps-clim__explorer"
+      data-section-id="{{ section.id }}"
+      data-clim-layout="{{ clim_layout }}"
+      data-clim-detail-base="{{ section.settings.detail_link | default: '/pages/climate' }}"
+    >
+      <div class="ps-clim__toolbar">
+        <div class="ps-clim__cities" role="tablist" aria-label="{{ section.settings.heading | escape }}" data-clim-cities></div>
+        {% if clim_layout == 'full' %}
+          <div class="ps-clim__seasons" role="tablist" aria-label="Season" data-clim-seasons>
+            <button type="button" class="ps-clim__season is-on" data-season="annual" role="tab" aria-selected="true">Year-round</button>
+            <button type="button" class="ps-clim__season" data-season="monsoon" role="tab" aria-selected="false">Monsoon</button>
+            <button type="button" class="ps-clim__season" data-season="winter" role="tab" aria-selected="false">Winter</button>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ps-clim__board">
+        {% if clim_layout == 'teaser' %}
+          <div class="ps-clim__teaser">
+            <div class="ps-clim__teaser-score">
+              <div class="ps-clim__score-main">
+                <span class="ps-clim__idx-n" data-clim-idx-n>0</span>
+                <span class="ps-clim__idx-denom">/100</span>
+              </div>
+              <p class="ps-clim__idx-l"><span data-clim-idx-city></span> skin stress</p>
+              <p class="ps-clim__idx-rank" data-clim-idx-rank></p>
+            </div>
+            <div class="ps-clim__teaser-main">
+              <div class="ps-clim__driver-chips" data-clim-driver-chips aria-label="Top stressors"></div>
+              <p class="ps-clim__v-h" data-clim-v-h></p>
+              <div class="ps-clim__pills" data-clim-pills></div>
+              <div class="ps-clim__teaser-actions">
+                {% if section.settings.button_label != blank %}
+                  <a class="ps-clim__cta" href="{{ section.settings.routine_link | default: '/pages/routine' }}" data-clim-routine-cta>
+                    {{ section.settings.button_label }}
+                    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h11M8.5 1.5 12 5l-3.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                {% endif %}
+                {% if section.settings.detail_label != blank %}
+                  <a class="ps-clim__detail-link" href="{{ section.settings.detail_link | default: '/pages/climate' }}" data-clim-detail-link>
+                    {{ section.settings.detail_label }}
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M9.5 2.5H4M9.5 2.5v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="ps-clim__head">
+            <div class="ps-clim__score-block">
+              <div class="ps-clim__score-main">
+                <span class="ps-clim__idx-n" data-clim-idx-n>0</span>
+                <span class="ps-clim__idx-denom">/100</span>
+              </div>
+              <div class="ps-clim__score-copy">
+                <p class="ps-clim__idx-l"><span data-clim-idx-city></span> skin stress</p>
+                <p class="ps-clim__idx-rank" data-clim-idx-rank></p>
+              </div>
+            </div>
+            <div class="ps-clim__head-actions">
+              <label class="ps-clim__compare">
+                <span class="ps-clim__compare-l">Compare city</span>
+                <select data-clim-cmp-select aria-label="Compare to another city">
+                  <option value="">Compare city…</option>
+                </select>
+              </label>
+              <button type="button" class="ps-clim__save" data-clim-save>
+                <span data-clim-save-label>Save my city profile</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="ps-clim__compare-panel" data-clim-compare-panel hidden>
+            <p class="ps-clim__compare-title" data-clim-compare-title></p>
+            <ul class="ps-clim__compare-deltas" data-clim-compare-deltas></ul>
+          </div>
+
+          <div class="ps-clim__hero-cards" data-clim-hero-cards aria-label="Top stressors"></div>
+
+          <div class="ps-clim__verdict">
+            <p class="ps-clim__v-h" data-clim-v-h></p>
+            <p class="ps-clim__v-p" data-clim-v-p></p>
+          </div>
+
+          <details class="ps-clim__factors-wrap">
+            <summary>All five environmental factors</summary>
+            <div class="ps-clim__factor-cards" data-clim-factor-cards></div>
+          </details>
+
+          <div class="ps-clim__signature" data-clim-signature hidden>
+            <div class="ps-clim__sig" data-clim-sig-card>
+              <svg class="ps-clim__svg" viewBox="0 0 580 470" role="img" aria-labelledby="ClimSigTitle-{{ section.id }}">
+                <title id="ClimSigTitle-{{ section.id }}">City signature across five factors</title>
+                <text class="ps-clim__cty-name" data-clim-cty-name x="290" y="248"></text>
+                <g data-clim-grid></g>
+                <path class="ps-clim__avgpath" data-clim-avg-path></path>
+                <path class="ps-clim__cmppath" data-clim-cmp-path hidden></path>
+                <path class="ps-clim__mypath" data-clim-my-path></path>
+                <g data-clim-knots></g>
+                <g data-clim-labels></g>
+              </svg>
+              <div class="ps-clim__tip" data-clim-tip hidden></div>
+            </div>
+            <div class="ps-clim__legend">
+              <span><i class="ps-clim__kl"></i> <b data-clim-key-city></b></span>
+              <span><i class="ps-clim__kl ps-clim__kl--dash"></i> 8-city average</span>
+              <span data-clim-key-cmp-wrap hidden><i class="ps-clim__kl ps-clim__kl--clay"></i> <b data-clim-key-cmp></b></span>
+            </div>
+          </div>
+
+          <div class="ps-clim__scale">
+            <div class="ps-clim__scale-labels">
+              <span>Easier on skin</span>
+              <span>Harder on skin</span>
+            </div>
+            <div class="ps-clim__scale-track" data-clim-scale-track>
+              <div class="ps-clim__scale-line" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="ps-clim__foot">
+            <div class="ps-clim__foot-left">
+              <div class="ps-clim__pills" data-clim-pills></div>
+              <button type="button" class="ps-clim__sig-toggle" data-clim-sig-toggle aria-pressed="false">
+                Signature view
+              </button>
+            </div>
+            {% if section.settings.button_label != blank %}
+              <a class="ps-clim__cta" href="{{ section.settings.routine_link | default: '/pages/routine' }}" data-clim-routine-cta>
+                {{ section.settings.button_label }}
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h11M8.5 1.5 12 5l-3.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            {% endif %}
+          </div>
+
+          {% if section.settings.source_note != blank %}
+            <details class="ps-clim__meta">
+              <summary>How scores are calculated</summary>
+              <p>{{ section.settings.source_note }}</p>
+            </details>
+          {% endif %}
+        {% endif %}
+      </div>
+
+      <script type="application/json" data-clim-catalog>{{ section.settings.city_catalog | default: '[]' }}</script>
+    </ps-climate-signature>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Climate signature",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "teaser", "label": "Compact teaser (homepage)" },
+        { "value": "full", "label": "Full explorer (detail page)" }
+      ],
+      "default": "teaser"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why Indian skin needs different science" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "One country." },
+    { "type": "inline_richtext", "id": "heading_italic", "label": "Heading italic line", "default": "Many skin environments." },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Your city changes what your skin needs. Pick yours — see the one insight that matters, then build a routine that fits.</p>"
+    },
+    { "type": "text", "id": "button_label", "label": "Routine CTA label", "default": "Build my routine" },
+    { "type": "url", "id": "routine_link", "label": "Routine page link" },
+    { "type": "text", "id": "detail_label", "label": "Detail link label", "default": "Explore your city profile" },
+    { "type": "url", "id": "detail_link", "label": "Detail page link" },
+    {
+      "type": "textarea",
+      "id": "source_note",
+      "label": "Source note",
+      "default": "Scores compare eight major Indian cities on five stress axes using illustrative annual averages. Humidity and seasonal swing are plotted as stress — both very dry and very humid read high. Monsoon and winter toggles apply seasonal modifiers for education, not live forecasts."
+    },
+    {
+      "type": "textarea",
+      "id": "city_catalog",
+      "label": "City catalog JSON",
+      "info": "Advanced. Leave blank to use the built-in default catalog."
+    },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 40, "max": 160, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 40, "max": 160, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [{ "name": "Climate signature" }]
+}
+{% endschema %}

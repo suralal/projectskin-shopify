@@ -1,0 +1,12 @@
+<section class="pdp-section pdp-image-story" style="--pdp-pad-top: {{ section.settings.padding_top }}px; --pdp-pad-bottom: {{ section.settings.padding_bottom }}px">
+  <div class="page-width-pdp">
+    <header class="pdp-section-head"><p class="pdp-eyebrow">{{ section.settings.eyebrow }}</p><h2>{{ section.settings.heading }}</h2><div class="pdp-section-copy">{{ section.settings.copy }}</div></header>
+    <div class="pdp-image-story__grid">
+      <a class="pdp-image-story__card" href="{{ section.settings.link_1 | default: '#' }}">{% render 'purity-image', image: section.settings.image_1, fallback_asset: 'pdp-innovation-1.jpg', fallback_width: 1368, fallback_height: 1000, alt: section.settings.image_1_alt, sizes: '(min-width: 750px) 48vw, 94vw' %}<span>{{ section.settings.image_1_label }}</span></a>
+      <a class="pdp-image-story__card" href="{{ section.settings.link_2 | default: '#' }}">{% render 'purity-image', image: section.settings.image_2, fallback_asset: 'pdp-innovation-2.jpg', fallback_width: 1026, fallback_height: 750, alt: section.settings.image_2_alt, sizes: '(min-width: 750px) 48vw, 94vw' %}<span>{{ section.settings.image_2_label }}</span></a>
+    </div>
+  </div>
+</section>
+{% schema %}
+{"name":"PDP image story","settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"3-in-1 Lip Innovation"},{"type":"inline_richtext","id":"heading","label":"Heading","default":"Plump. Hydrate. Shine."},{"type":"richtext","id":"copy","label":"Copy","default":"<p>Fuller lips, deep hydration, and high-gloss finish - all in one smooth swipe, for a healthy, radiant, all-day glow.</p>"},{"type":"image_picker","id":"image_1","label":"Image 1"},{"type":"text","id":"image_1_alt","label":"Image 1 alt text","default":"Lip products"},{"type":"text","id":"image_1_label","label":"Image 1 hover label","default":"Shop Lip Care"},{"type":"url","id":"link_1","label":"Image 1 link"},{"type":"image_picker","id":"image_2","label":"Image 2"},{"type":"text","id":"image_2_alt","label":"Image 2 alt text","default":"Lip color textures"},{"type":"text","id":"image_2_label","label":"Image 2 hover label","default":"Explore Shades"},{"type":"url","id":"link_2","label":"Image 2 link"},{"type":"range","id":"padding_top","label":"Top padding","min":20,"max":140,"step":4,"unit":"px","default":76},{"type":"range","id":"padding_bottom","label":"Bottom padding","min":20,"max":140,"step":4,"unit":"px","default":76}],"presets":[{"name":"PDP image story"}]}
+{% endschema %}

@@ -1,0 +1,18 @@
+{% liquid
+  capture product_palette
+    render 'product-palette-name', product: product
+  endcapture
+  assign product_palette = product_palette | strip
+%}
+<section class="pdp-trust-strip" data-product-palette="{{ product_palette }}" style="--pdp-strip-speed: {{ section.settings.speed }}s">
+  <div class="pdp-trust-strip__track">
+    {% for repeat in (1..2) %}
+      <div class="pdp-trust-strip__group" {% if repeat == 2 %}aria-hidden="true"{% endif %}>
+        {% for block in section.blocks %}<span {{ block.shopify_attributes }}><b aria-hidden="true">✓</b>{{ block.settings.text }}</span>{% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{"name":"PDP trust strip","settings":[{"type":"range","id":"speed","label":"Marquee speed","min":12,"max":60,"step":2,"unit":"s","default":28}],"blocks":[{"type":"item","name":"Trust statement","settings":[{"type":"text","id":"text","label":"Text","default":"Safe for Sensitive Skin"}]}],"max_blocks":8,"presets":[{"name":"PDP trust strip","blocks":[{"type":"item"},{"type":"item"},{"type":"item"}]}]}
+{% endschema %}

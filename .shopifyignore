@@ -1,0 +1,9 @@
+# Incomplete yt-dlp downloads previously broke theme:dev sync
+**/*.part
+*.zip
+
+# Repo docs are not valid theme files and are rejected on upload
+*.md
+
+.local-backup/
+assets/.banner-backup/

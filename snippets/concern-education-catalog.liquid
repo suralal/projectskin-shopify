@@ -1,0 +1,101 @@
+{% comment %}
+  Sets concern education variables from concern_key.
+  Keys: acne | pigmentation | barrier | spf
+{% endcomment %}
+{% liquid
+  assign concern_key = concern_key | default: 'acne' | strip | downcase
+  if concern_key == 'daily-spf' or concern_key == 'sunscreen' or concern_key == 'sun' or concern_key == 'daily_spf'
+    assign concern_key = 'spf'
+  elsif concern_key == 'acne-care' or concern_key == 'breakouts'
+    assign concern_key = 'acne'
+  elsif concern_key == 'pigment' or concern_key == 'pih' or concern_key == 'melasma'
+    assign concern_key = 'pigmentation'
+  elsif concern_key == 'barrier-support' or concern_key == 'barrier-repair'
+    assign concern_key = 'barrier'
+  endif
+
+  assign concern_page_handle = concern_key
+  if concern_key == 'spf'
+    assign concern_page_handle = 'daily-spf'
+  endif
+
+  case concern_key
+    when 'pigmentation'
+      assign concern_eyebrow = 'Concern · Pigmentation'
+      assign concern_title = 'Pigmentation is a melanin memory problem.'
+      assign concern_lede = 'Dark marks after acne, melasma, or UV-driven uneven tone are not fixed by scrubbing harder. They need trigger control, melanin regulation, and daily photoprotection — especially under Indian UV.'
+      assign diagnosis_heading = 'What you are seeing'
+      assign diagnosis_text = 'Post-inflammatory hyperpigmentation (PIH) is leftover melanin after inflammation. Melasma and sun-driven patches are UV- and hormone-responsive. Treating only the mark while skipping SPF usually means the mark returns.'
+      assign causes_heading = 'Why it happens here'
+      assign causes_blob = 'Inflammation aftermath|Acne and irritation leave melanin behind — especially on melanin-rich Indian skin.###High UV load|Nearly year-round UV keeps melanocytes active; cloudy days still count.###Barrier stress|A compromised barrier makes tone more reactive and recovery slower.###Wrong-order actives|Harsh brightening without protection and moisture often worsens the cycle.'
+      assign mechanism_heading = 'How we approach the fix'
+      assign mechanism_text = 'Stop new triggers with daily broad-spectrum SPF. Support melanin balance with efficacious Niacinamide and botanicals that earn their place. Renew the surface carefully — then keep the barrier intact so tone can settle.'
+      assign actives_heading = 'Actives that earn a place'
+      assign actives_blob = 'niacinamide|Niacinamide|5% encapsulated|Oil balance and clearer-looking tone without abandoning comfort|/pages/ingredients#ingredient-niacinamide###botanical-six|Six-botanical complex|Evidence-led blend|Brightening and antioxidant support with a named role|/pages/ingredients#ingredient-botanical-six###tinosorb-s|Tinosorb S|Next-gen UVA filter|Photostable UVA defence in a four-filter SPF system|/pages/ingredients#ingredient-tinosorb-s###glycolic-acid|Glycolic Acid|1% in cleanser|Surface renewal that supports tone work without a strip|/pages/ingredients#ingredient-glycolic-acid'
+      assign products_heading = 'Formulas for this concern'
+      assign products_text = 'Literacy first. Then the products that match the mechanism — not a trend stack.'
+      assign product_handles = '5-niacinamide-serum-acne-prone-skin,protecting-sunscreen-acne-prone-skin,calming-moisturiser-acne-prone-skin,refreshing-cleanser-acne-prone-skin'
+      assign shop_cta_label = 'Shop the serum'
+      assign shop_cta_handle = '5-niacinamide-serum-acne-prone-skin'
+
+    when 'barrier'
+      assign concern_eyebrow = 'Concern · Barrier'
+      assign concern_title = 'Your moisturiser isn’t failing you. Your barrier is.'
+      assign concern_lede = 'Tightness, sting, and products that “don’t absorb” often mean the lipid layer is compromised. Until that matrix is repaired, actives and creams cannot do their job.'
+      assign diagnosis_heading = 'What you are seeing'
+      assign diagnosis_text = 'A compromised barrier shows up as dryness that cream alone does not fix, reactivity to products that used to be fine, and rising TEWL — moisture escaping through skin that should hold it.'
+      assign causes_heading = 'Why it happens here'
+      assign causes_blob = 'Over-treatment|Too many acids, retinoids, or “clarifying” steps without repair.###Harsh cleanse|Stripping surfactants and hard water raise pH and strip lipids.###Climate swings|Monsoon humidity to dry winters stress the same barrier in one year.###Acne routines gone wrong|Treating oil by abandoning the lipid layer creates a longer problem.'
+      assign mechanism_heading = 'How we approach the fix'
+      assign mechanism_text = 'Replenish skin-identical lipids. Reduce TEWL with humectants and cushioning emollients that still sit under SPF. Then reintroduce clarifying actives at a pace the barrier can tolerate.'
+      assign actives_heading = 'Actives that earn a place'
+      assign actives_blob = 'ceramide-complex|Ceramide Complex|Barrier lipid system|Replenishes the lipid matrix acne-prone skin often compromises|/pages/ingredients#ingredient-ceramide-complex###phospholipids|Phospholipids + Sphingolipids|Lipid matrix support|Repair support during cleanse and moisturise|/pages/ingredients#ingredient-phospholipids###saccharide-isomerate|Saccharide Isomerate|Next-gen humectant|Helps skin hold water so treatment stays comfortable|/pages/ingredients#ingredient-saccharide-isomerate###c15-19-alkane|C15-19 Alkane|Plant-derived emollient|Cushion without grease — sits under SPF without pilling|/pages/ingredients#ingredient-c15-19-alkane'
+      assign products_heading = 'Formulas for this concern'
+      assign products_text = 'Barrier first. Clarity second. Comfort is not optional for acne-prone skin.'
+      assign product_handles = 'calming-moisturiser-acne-prone-skin,refreshing-cleanser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,protecting-sunscreen-acne-prone-skin'
+      assign shop_cta_label = 'Shop the moisturiser'
+      assign shop_cta_handle = 'calming-moisturiser-acne-prone-skin'
+
+    when 'spf'
+      assign concern_eyebrow = 'Concern · Daily SPF'
+      assign concern_title = 'In India, SPF isn’t seasonal. It’s structural.'
+      assign concern_lede = 'High UV load, pollution, and pigmentation risk mean photoprotection is part of the routine architecture — not a summer add-on. Texture and wearability matter as much as the filter list.'
+      assign diagnosis_heading = 'What you are seeing'
+      assign diagnosis_text = 'Uneven tone that returns after brightening, barrier stress from daily outdoor exposure, and acne-prone skin that rejects greasy SPF — all point to photoprotection that was incomplete, unwearable, or skipped.'
+      assign causes_heading = 'Why it happens here'
+      assign causes_blob = 'Year-round UV|Nearly 300 high-UV days — cloudy weather still transmits UVA.###Pigmentation loops|UV keeps melanocytes active while you treat the mark.###Acne-prone rejection|Heavy filters get abandoned — zero SPF is worse than imperfect SPF.###Under-SPF gaps|Moisturiser and treat steps that pill or grease make daily use fail.'
+      assign mechanism_heading = 'How we approach the fix'
+      assign mechanism_text = 'Broad-spectrum, photostable filters with real UVA coverage. A texture acne-prone skin will actually wear. Oil-control support so heat and humidity do not kill compliance. Barrier-friendly layers underneath so SPF sits clean.'
+      assign actives_heading = 'Actives that earn a place'
+      assign actives_blob = 'tinosorb-s|Tinosorb S|Four-filter hybrid|Modern European UVA filter chosen for coverage and stability|/pages/ingredients#ingredient-tinosorb-s###zinc-pca|Zinc PCA|0.5% in sunscreen|Sebum regulation so SPF stays wearable in Indian heat|/pages/ingredients#ingredient-zinc-pca###niacinamide|Niacinamide|Support active|Tone and oil balance that pairs with daily protection|/pages/ingredients#ingredient-niacinamide###ceramide-complex|Ceramide Complex|Barrier lipids|Comfort under SPF so protection does not feel like a trade-off|/pages/ingredients#ingredient-ceramide-complex'
+      assign products_heading = 'Formulas for this concern'
+      assign products_text = 'Protection only works if you use it. These formulas are built for Indian sun and acne-prone wearability.'
+      assign product_handles = 'protecting-sunscreen-acne-prone-skin,calming-moisturiser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,project-skin-complete-4-step-skincare-routine-kit'
+      assign shop_cta_label = 'Shop the sunscreen'
+      assign shop_cta_handle = 'protecting-sunscreen-acne-prone-skin'
+
+    else
+      assign concern_key = 'acne'
+      assign concern_page_handle = 'acne'
+      assign concern_eyebrow = 'Concern · Acne'
+      assign concern_title = 'Your breakouts aren’t a cleanliness problem.'
+      assign concern_lede = 'Congestion, oil dysregulation, and inflammation sit inside a barrier that is often already stressed. Clearing pores while stripping lipids creates a longer cycle — especially in Indian heat and humidity.'
+      assign diagnosis_heading = 'What you are seeing'
+      assign diagnosis_text = 'Active breakouts, clogged pores, and oiliness are signals — not proof you need a harsher wash. Many acne-prone routines fail because they treat oil by abandoning the barrier that keeps skin resilient.'
+      assign causes_heading = 'Why it happens here'
+      assign causes_blob = 'Pore congestion|Sebum and dead cells block the follicle — oil-soluble pathways matter.###Oil dysregulation|Heat and humidity amplify sebum; stripping cleansers rebound oiliness.###Inflammation|Breakouts leave marks and barrier damage if calm is ignored.###Climate load|Pollution, hard water, and UV stack stress on acne-prone Indian skin.'
+      assign mechanism_heading = 'How we approach the fix'
+      assign mechanism_text = 'Clear inside the pore with functional BHA. Support surface renewal with a paired AHA. Regulate oil with Niacinamide and dual sebum pathways. Protect the lipid layer so clarity does not cost comfort.'
+      assign actives_heading = 'Actives that earn a place'
+      assign actives_blob = 'salicylic-acid|Salicylic Acid|2% in cleanser|Oil-soluble BHA that works inside the pore|/pages/ingredients#ingredient-salicylic-acid###niacinamide|Niacinamide|5% encapsulated|Oil balance, pores, and tone in a stabilised matrix|/pages/ingredients#ingredient-niacinamide###sepicontrol|SEPICONCONTROL™ A5|Dual sebum pathway|Second oil-regulation system most single-active serums skip|/pages/ingredients#ingredient-sepicontrol###ceramide-complex|Ceramide Complex|Barrier lipids|Repair so treatment does not abandon the barrier|/pages/ingredients#ingredient-ceramide-complex'
+      assign products_heading = 'Formulas for this concern'
+      assign products_text = 'Understand the mechanism. Then choose the step that matches it — cleanse, treat, moisturise, protect.'
+      assign product_handles = 'refreshing-cleanser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,calming-moisturiser-acne-prone-skin,protecting-sunscreen-acne-prone-skin,clear-seal,project-skin-complete-4-step-skincare-routine-kit'
+      assign shop_cta_label = 'Shop the cleanser'
+      assign shop_cta_handle = 'refreshing-cleanser-acne-prone-skin'
+  endcase
+
+  assign causes_rows = causes_blob | split: '###'
+  assign actives_rows = actives_blob | split: '###'
+  assign product_handle_list = product_handles | split: ','
+%}

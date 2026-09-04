@@ -1,0 +1,69 @@
+{% liquid
+  assign card_product = product
+  assign card_url = routes.all_products_collection_url
+  if card_product != blank
+    assign card_url = card_product.url
+  endif
+
+  assign card_eyebrow = eyebrow
+  if card_eyebrow == blank and card_product != blank and card_product.type != blank
+    assign card_eyebrow = card_product.type
+  endif
+  if card_eyebrow == blank
+    assign card_eyebrow = 'Featured'
+  endif
+
+  assign card_title = heading
+  if card_title == blank and card_product != blank
+    assign card_title = card_product.title
+  endif
+  if card_title == blank
+    assign card_title = 'Featured product'
+  endif
+
+  if card_product != blank
+    assign card_price_label = card_product.price | money
+  elsif button_label != blank
+    assign card_price_label = button_label
+  else
+    assign card_price_label = 'Shop now'
+  endif
+
+  assign fallback_file = fallback_asset | default: 'project-skin-banner-6.jpg'
+%}
+
+<a class="mega-menu__promo psr-mega-product" href="{{ card_url }}" data-mega-product-link>
+  <span class="psr-mega-product__media">
+    {% if image != blank %}
+      {{ image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '420,720,1000', sizes: '(min-width: 990px) 18vw, 70vw', alt: card_title }}
+    {% elsif card_product != blank and card_product.featured_image != blank %}
+      {{ card_product.featured_image | image_url: width: 1000 | image_tag: class: 'psr-mega-product__primary', loading: 'lazy', widths: '420,720,1000', sizes: '(min-width: 990px) 18vw, 70vw', alt: card_product.title }}
+      {% if card_product.handle == '5-niacinamide-serum-acne-prone-skin' %}
+        <img
+          class="psr-mega-product__secondary"
+          src="{{ 'product-serum-hover.png' | asset_url }}"
+          width="819"
+          height="1024"
+          loading="lazy"
+          alt="{{ card_product.title | escape }}"
+        >
+      {% elsif card_product.images[1] != blank %}
+        {{ card_product.images[1] | image_url: width: 1000 | image_tag: class: 'psr-mega-product__secondary', loading: 'lazy', widths: '420,720,1000', sizes: '(min-width: 990px) 18vw, 70vw', alt: card_product.title }}
+      {% endif %}
+    {% else %}
+      <img
+        src="{{ fallback_file | asset_url }}"
+        alt="{{ card_title | escape }}"
+        width="960"
+        height="640"
+        loading="lazy"
+      >
+    {% endif %}
+    <span class="psr-mega-product__view">View product <span aria-hidden="true">↗</span></span>
+  </span>
+  <span class="psr-mega-product__copy">
+    <small>{{ card_eyebrow }}</small>
+    <strong>{{ card_title }}</strong>
+    <span>{{ card_price_label }}</span>
+  </span>
+</a>

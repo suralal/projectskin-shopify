@@ -1,0 +1,94 @@
+{
+  "sections": {
+    "hub": {
+      "type": "project-skin-journal-hub",
+      "blocks": {
+        "monsoon": {
+          "type": "season",
+          "settings": {
+            "eyebrow": "Season",
+            "heading": "Monsoon",
+            "text": "Humidity does not cancel acne biology — or the need for daily SPF.",
+            "link": "/pages/monsoon",
+            "link_label": "Read the season"
+          }
+        },
+        "festive": {
+          "type": "season",
+          "settings": {
+            "eyebrow": "Season",
+            "heading": "Festive",
+            "text": "Celebration skin still needs photoprotection and barrier discipline.",
+            "link": "/pages/festive",
+            "link_label": "Read the season"
+          }
+        },
+        "winter": {
+          "type": "season",
+          "settings": {
+            "eyebrow": "Season",
+            "heading": "Winter",
+            "text": "Dryness is often a barrier story — cream alone is not the fix.",
+            "link": "/pages/winter",
+            "link_label": "Read the season"
+          }
+        },
+        "essay_pct": {
+          "type": "essay",
+          "settings": {
+            "topic": "Ingredient",
+            "heading": "Why percentage belongs on the label",
+            "text": "Name the dose. Cite the mechanism. Make the customer feel informed — not enriched-with fluff.",
+            "link": "/pages/ingredients"
+          }
+        },
+        "essay_barrier": {
+          "type": "essay",
+          "settings": {
+            "topic": "Concern",
+            "heading": "Your moisturiser isn’t failing you",
+            "text": "When cream fails, the lipid layer is usually the real issue.",
+            "link": "/pages/barrier"
+          }
+        },
+        "essay_spf": {
+          "type": "essay",
+          "settings": {
+            "topic": "Climate",
+            "heading": "In India, SPF isn’t seasonal",
+            "text": "Nearly year-round UV means photoprotection is routine architecture.",
+            "link": "/pages/daily-spf"
+          }
+        },
+        "essay_acne": {
+          "type": "essay",
+          "settings": {
+            "topic": "Concern",
+            "heading": "Breakouts aren’t a cleanliness problem",
+            "text": "Congestion, oil, and barrier stress — diagnosed before the product grid.",
+            "link": "/pages/acne"
+          }
+        }
+      },
+      "block_order": ["monsoon", "festive", "winter", "essay_pct", "essay_barrier", "essay_spf", "essay_acne"],
+      "settings": {
+        "eyebrow": "Project Skin Journal",
+        "heading": "Education on a calendar.",
+        "text": "Seasonal climate, ingredient deep dives, and concern literacy — written to inform before you buy. Not sale banners.",
+        "primary_label": "Open the blog",
+        "primary_link": "/blogs/news",
+        "secondary_label": "Explore the science",
+        "secondary_link": "/pages/the-science",
+        "calendar_eyebrow": "Campaign calendar",
+        "calendar_heading": "Seasons as education modules",
+        "calendar_text": "Monsoon, festive, and winter change the biology. Each module diagnoses first — then points to mechanisms and formulas.",
+        "essays_eyebrow": "Starter essays",
+        "essays_heading": "Literacy threads to keep open",
+        "essays_text": "Short paths into concerns and actives — the same voice as the playbook.",
+        "show_blog": true,
+        "blog_handle": "news"
+      }
+    }
+  },
+  "order": ["hub"]
+}

@@ -1,0 +1,4 @@
+<section class="pdp-text-marquee" style="--pdp-text-speed: {{ section.settings.speed }}s"><div class="pdp-text-marquee__track">{% for repeat in (1..2) %}<div class="pdp-text-marquee__group" {% if repeat == 2 %}aria-hidden="true"{% endif %}>{% for block in section.blocks %}<span {{ block.shopify_attributes }}>{{ block.settings.text }}<b aria-hidden="true">✦</b></span>{% endfor %}</div>{% endfor %}</div></section>
+{% schema %}
+{"name":"PDP text marquee","settings":[{"type":"range","id":"speed","label":"Speed","min":12,"max":60,"step":2,"unit":"s","default":26}],"blocks":[{"type":"item","name":"Text item","settings":[{"type":"text","id":"text","label":"Text","default":"Pure Botanical Goodness"}]}],"max_blocks":8,"presets":[{"name":"PDP text marquee","blocks":[{"type":"item"},{"type":"item"},{"type":"item"}]}]}
+{% endschema %}

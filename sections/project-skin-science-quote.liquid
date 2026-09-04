@@ -1,0 +1,27 @@
+<section class="psr-route-fallback psr-route-fallback--science psr-page psr-sci-quote">
+  <div class="container psr-sci-quote__inner">
+    <span class="psr-sci-quote__mark" aria-hidden="true">“</span>
+    <blockquote>
+      <p>{{ section.settings.quote }}</p>
+      {% if section.settings.attribution != blank %}
+        <cite>{{ section.settings.attribution }}</cite>
+      {% endif %}
+    </blockquote>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Science quote",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "Technology should not sell another trend — it should make the next skincare decision more honest, explainable, and useful."
+    },
+    { "type": "text", "id": "attribution", "label": "Attribution", "default": "Project Skin Science" }
+  ],
+  "presets": [{ "name": "Science quote" }]
+}
+{% endschema %}

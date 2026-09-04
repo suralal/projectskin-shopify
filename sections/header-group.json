@@ -1,0 +1,74 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "blocks": {
+        "science": { "type": "announcement", "settings": { "text": "Science-led skincare engineered for Indian skin.", "link_label": "Explore the science", "link": "/pages/the-science" } },
+        "consult": { "type": "announcement", "settings": { "text": "Not sure where to begin? Speak with a dermatologist.", "link_label": "Book a consultation", "link": "/pages/consultation" } }
+      },
+      "block_order": ["science", "consult"],
+      "settings": { "speed": 6 }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "shop": {
+          "type": "mega_menu",
+          "settings": {
+            "title": "Shop",
+            "link": "/collections/all",
+            "preset": "project_skin",
+            "column_1_heading": "Shop by concern",
+            "column_2_heading": "Build your routine",
+            "promo_1_product": "project-skin-complete-4-step-skincare-routine-kit",
+            "promo_1_eyebrow": "Complete system",
+            "promo_1_heading": "Four steps. One considered routine.",
+            "promo_1_button": "View routine",
+            "promo_2_product": "5-niacinamide-serum-acne-prone-skin",
+            "promo_2_eyebrow": "Targeted treatment",
+            "promo_2_heading": "5% encapsulated Niacinamide serum",
+            "promo_2_button": "View serum",
+            "promo_collection": "all",
+            "promo_limit": 6
+          }
+        },
+        "learn": {
+          "type": "mega_menu",
+          "settings": {
+            "title": "Learn",
+            "link": "/pages/the-science",
+            "preset": "learn",
+            "column_1_heading": "Skin literacy",
+            "column_2_heading": "Concerns & seasons",
+            "promo_1_eyebrow": "Education first",
+            "promo_1_heading": "Understand the mechanism before you buy.",
+            "promo_1_button": "Explore the science",
+            "promo_2_eyebrow": "Journal",
+            "promo_2_heading": "Seasons as education modules — not sale banners.",
+            "promo_2_button": "Open the journal",
+            "promo_limit": 2
+          }
+        },
+        "consultation": {
+          "type": "nav_link",
+          "settings": { "title": "Consultation", "link": "/pages/consultation" }
+        }
+      },
+      "block_order": ["shop", "learn", "consultation"],
+      "settings": {
+        "logo_text": "Project Skin",
+        "logo_width": 140,
+        "sticky_header": true,
+        "show_wishlist": false,
+        "mobile_promos": true,
+        "mega_eyebrow": "Featured",
+        "mega_heading": "Explore the collection",
+        "mega_eyebrow_2": "New",
+        "mega_heading_2": "Discover what's new"
+      }
+    }
+  },
+  "order": ["announcement", "header"]
+}

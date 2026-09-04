@@ -1,0 +1,38 @@
+{% liquid
+  assign product_palette = 'brand'
+  case product.handle
+    when '5-niacinamide-serum-acne-prone-skin'
+      assign product_palette = 'serum'
+    when 'calming-moisturiser-acne-prone-skin'
+      assign product_palette = 'moisturiser'
+    when 'refreshing-cleanser-acne-prone-skin'
+      assign product_palette = 'cleanser'
+    when 'protecting-sunscreen-acne-prone-skin'
+      assign product_palette = 'sunscreen'
+    when 'clear-seal'
+      assign product_palette = 'clean-seal'
+    when 'active-boba-encapsulated-cream-acne-prone-skin'
+      assign product_palette = 'active-boba'
+  endcase
+%}
+{% render 'product-usp-catalog',
+  product: product,
+  product_palette: product_palette,
+  eyebrow: section.settings.eyebrow,
+  heading: section.settings.heading,
+  padding_top: section.settings.padding_top,
+  padding_bottom: section.settings.padding_bottom
+%}
+
+{% schema %}
+{
+  "name": "PDP why different",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why this formula" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What sets it apart" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 40 }
+  ],
+  "presets": [{ "name": "PDP why different" }]
+}
+{% endschema %}

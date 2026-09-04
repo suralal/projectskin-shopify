@@ -1,0 +1,30 @@
+{% case product.handle %}
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    For oily, acne-prone skin — oil, pores, tone
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    When cream fails, start with the barrier
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    Congestion care that does not strip
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    Daily photoprotection for Indian UV
+  {% when 'clear-seal' %}
+    Spot treatment + invisible shield
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    Multi-action treatment with barrier support
+  {% when 'project-skin-complete-4-step-skincare-routine-kit' %}
+    Four steps. One considered routine.
+  {% else %}
+    {% liquid
+      assign concern_fallback = product.title
+      if concern_fallback contains ' – '
+        assign concern_fallback = concern_fallback | split: ' – ' | last
+      elsif concern_fallback contains ' - '
+        assign concern_fallback = concern_fallback | split: ' - ' | last
+      else
+        assign concern_fallback = blank
+      endif
+    %}
+    {% if concern_fallback != blank and concern_fallback != product.title %}
+      {{ concern_fallback | strip }}
+    {% endif %}
+{% endcase %}

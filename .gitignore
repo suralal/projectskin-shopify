@@ -1,0 +1,10 @@
+.DS_Store
+.local-backup/
+*.zip
+.env
+.env.*
+!.env.example
+node_modules/
+.shopify/
+*.log
+.cursor/

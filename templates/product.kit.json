@@ -1,0 +1,390 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "outcome_steps": {
+          "type": "outcome",
+          "settings": {
+            "stat": "4",
+            "label": "Essential steps",
+            "detail": "Cleanse, treat, moisturise, protect — one complete system"
+          }
+        },
+        "outcome_save": {
+          "type": "outcome",
+          "settings": {
+            "stat": "₹647",
+            "label": "You save",
+            "detail": "Vs buying each step separately at full price"
+          }
+        },
+        "outcome_derm": {
+          "type": "outcome",
+          "settings": {
+            "stat": "Derm",
+            "label": "Dermatologically tested",
+            "detail": "Formulated for oily and acne-prone Indian skin"
+          }
+        },
+        "benefit_complete": {
+          "type": "benefit",
+          "settings": {
+            "text": "Everything you need for a clear, calm daily routine — no guesswork"
+          }
+        },
+        "benefit_synergy": {
+          "type": "benefit",
+          "settings": {
+            "text": "Each step is designed to layer cleanly with the next"
+          }
+        },
+        "benefit_value": {
+          "type": "benefit",
+          "settings": {
+            "text": "Save ₹647 compared with buying the four products alone"
+          }
+        },
+        "benefit_climate": {
+          "type": "benefit",
+          "settings": {
+            "text": "Built for Indian climate, congestion, and everyday oil balance"
+          }
+        },
+        "accordion_included": {
+          "type": "accordion",
+          "settings": {
+            "heading": "What's included",
+            "content": "<ul><li><strong>Refreshing Cleanser</strong> — gentle cleanse that won’t strip skin</li><li><strong>5% Niacinamide Serum</strong> — treat step for pores, oiliness and uneven tone</li><li><strong>Calming Moisturiser</strong> — barrier comfort for acne-prone skin</li><li><strong>Protecting Sunscreen SPF 50</strong> — lightweight daily protect</li></ul>",
+            "open": true
+          }
+        },
+        "accordion_howto": {
+          "type": "accordion",
+          "settings": {
+            "heading": "How to use",
+            "content": "<p><strong>AM:</strong> Cleanse → Serum → Moisturise → Sunscreen<br><strong>PM:</strong> Cleanse → Serum → Moisturise</p><p>Introduce one new active at a time if your skin is reactive. Patch test before first use.</p>",
+            "open": false
+          }
+        },
+        "accordion_who": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Who it's for",
+            "content": "<p>Ideal if you want a complete acne-prone routine without piecing products together — especially oily, congestion-prone, or climate-stressed Indian skin.</p>",
+            "open": false
+          }
+        },
+        "accordion_value": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Why the kit",
+            "content": "<p>Buying the four essentials together locks in the full Cleanse → Treat → Moisturise → Protect system at a better value — and removes the friction of building a routine from scratch.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "outcome_steps",
+        "outcome_save",
+        "outcome_derm",
+        "benefit_complete",
+        "benefit_synergy",
+        "benefit_value",
+        "benefit_climate",
+        "accordion_included",
+        "accordion_howto",
+        "accordion_who",
+        "accordion_value"
+      ],
+      "settings": {
+        "use_product_media": false,
+        "use_custom_content": true,
+        "title_override": "Complete Routine Kit",
+        "price_override": "",
+        "enable_zoom": true,
+        "concern_line": "Four essentials. One clearer routine.",
+        "use_judgeme_rating": true,
+        "rating": "5.0",
+        "review_count": "2",
+        "show_demo_swatches": false,
+        "inventory_text": "In stock and ready to ship",
+        "add_label": "Add kit to cart",
+        "show_dynamic_checkout": true,
+        "shipping_text": "Free shipping on eligible orders",
+        "returns_text": "Easy returns on unused products",
+        "gift_text": "",
+        "benefits_heading": "Why people choose the kit",
+        "show_pickup": false,
+        "help_heading": "Not sure if the kit is right?",
+        "help_text": "Our consultation team can help you choose.",
+        "help_button": "Ask a product question",
+        "question_heading": "Ask about the Complete Kit",
+        "disclaimer": "",
+        "sticky_add_to_cart": true,
+        "gallery_layout": "thumbnails",
+        "show_rating": false,
+        "show_variant_picker": false,
+        "show_purchase_options": false,
+        "product_description": "<p>Your complete Project Skin system in one kit — cleanser, serum, moisturiser and SPF 50, sequenced to work better together.</p><p>Skip the guesswork. Start a clear, calm routine built for oily and acne-prone Indian skin.</p>",
+        "inventory_tone": "available"
+      }
+    },
+    "experience": {
+      "type": "pdp-experience",
+      "blocks": {
+        "for_skin": {
+          "type": "item",
+          "settings": {
+            "kicker": "FOR",
+            "title": "Oily & acne-prone skin",
+            "text": "A full routine for congestion, excess oil, and everyday Indian climate — without stacking random products."
+          }
+        },
+        "feel": {
+          "type": "item",
+          "settings": {
+            "kicker": "SYSTEM",
+            "title": "Four steps that layer cleanly",
+            "text": "Each formula is chosen to follow the next — cleanse, treat, moisturise, then protect."
+          }
+        },
+        "finish": {
+          "type": "item",
+          "settings": {
+            "kicker": "VALUE",
+            "title": "Complete kit savings",
+            "text": "Get the full essentials together and save versus buying each step alone."
+          }
+        }
+      },
+      "block_order": ["for_skin", "feel", "finish"],
+      "settings": {
+        "product_handles": "project-skin-complete-4-step-skincare-routine-kit",
+        "eyebrow": "The kit experience",
+        "heading": "Built as one routine",
+        "padding_top": 64,
+        "padding_bottom": 28
+      }
+    },
+    "steps": {
+      "type": "pdp-steps",
+      "blocks": {
+        "step_cleanse": {
+          "type": "step",
+          "settings": {
+            "heading": "01 · Cleanse",
+            "copy": "<p><strong>Refreshing Cleanser</strong><br>A gentle first step that clears the day without stripping your barrier.</p>"
+          }
+        },
+        "step_treat": {
+          "type": "step",
+          "settings": {
+            "heading": "02 · Treat",
+            "copy": "<p><strong>5% Niacinamide Serum</strong><br>Targets pores, oiliness and uneven tone with encapsulated actives.</p>"
+          }
+        },
+        "step_moisturise": {
+          "type": "step",
+          "settings": {
+            "heading": "03 · Moisturise",
+            "copy": "<p><strong>Calming Moisturiser</strong><br>Lightweight barrier comfort that seals in the treat step.</p>"
+          }
+        },
+        "step_protect": {
+          "type": "step",
+          "settings": {
+            "heading": "04 · Protect",
+            "copy": "<p><strong>Protecting Sunscreen SPF 50</strong><br>Daily broad-spectrum finish — light enough for acne-prone skin.</p>"
+          }
+        }
+      },
+      "block_order": ["step_cleanse", "step_treat", "step_moisturise", "step_protect"],
+      "settings": {
+        "product_handles": "project-skin-complete-4-step-skincare-routine-kit",
+        "use_formula_catalog": false,
+        "eyebrow": "Inside the kit",
+        "heading": "Four essentials, one system",
+        "padding_top": 48,
+        "padding_bottom": 64
+      }
+    },
+    "commitments": {
+      "type": "pdp-commitments",
+      "blocks": {
+        "science": {
+          "type": "commitment",
+          "settings": {
+            "heading": "Science-led formulas",
+            "copy": "<p>Every step is dermatologically tested and built around clear actives — not guesswork.</p>"
+          }
+        },
+        "system": {
+          "type": "commitment",
+          "settings": {
+            "heading": "A complete daily system",
+            "copy": "<p>Cleanse, treat, moisturise and protect — sequenced so consistency feels effortless.</p>"
+          }
+        },
+        "honest": {
+          "type": "commitment",
+          "settings": {
+            "heading": "Transparent by design",
+            "copy": "<p>Made for Indian skin and climate, with cruelty-free, paraben-free standards.</p>"
+          }
+        }
+      },
+      "block_order": ["science", "system", "honest"],
+      "settings": {
+        "eyebrow": "Why Project Skin",
+        "heading": "Beauty that earns trust",
+        "copy": "<p>Less noise. More clarity. A routine you can stay with.</p>",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "trust": {
+      "type": "pdp-trust-strip",
+      "blocks": {
+        "clinical": {
+          "type": "item",
+          "settings": {
+            "text": "Dermatologically tested"
+          }
+        },
+        "indian_skin": {
+          "type": "item",
+          "settings": {
+            "text": "Designed for Indian skin"
+          }
+        },
+        "cruelty": {
+          "type": "item",
+          "settings": {
+            "text": "Cruelty-free"
+          }
+        },
+        "complete": {
+          "type": "item",
+          "settings": {
+            "text": "Complete 4-step system"
+          }
+        }
+      },
+      "block_order": ["clinical", "indian_skin", "cruelty", "complete"],
+      "settings": {
+        "speed": 28
+      }
+    },
+    "reviews": {
+      "type": "judgeme-reviews",
+      "settings": {
+        "eyebrow": "Real routines",
+        "heading": "What customers say",
+        "padding_top": 56,
+        "padding_bottom": 48
+      }
+    },
+    "inside_products": {
+      "type": "compact-product-bundle",
+      "blocks": {
+        "cleanser": {
+          "type": "product",
+          "settings": {
+            "product": "refreshing-cleanser-acne-prone-skin"
+          }
+        },
+        "serum": {
+          "type": "product",
+          "settings": {
+            "product": "5-niacinamide-serum-acne-prone-skin"
+          }
+        },
+        "moisturiser": {
+          "type": "product",
+          "settings": {
+            "product": "calming-moisturiser-acne-prone-skin"
+          }
+        },
+        "sunscreen": {
+          "type": "product",
+          "settings": {
+            "product": "protecting-sunscreen-acne-prone-skin"
+          }
+        }
+      },
+      "block_order": ["cleanser", "serum", "moisturiser", "sunscreen"],
+      "settings": {
+        "section_width": "fixed",
+        "subheading": "Prefer to shop steps alone?",
+        "heading": "Explore each essential",
+        "description": "<p>The kit is the best value — or discover each product on its own.</p>",
+        "alignment": "center",
+        "padding_top": 48,
+        "padding_bottom": 64,
+        "show_divider": false,
+        "show_cta": false
+      }
+    },
+    "faq": {
+      "type": "pdp-faq",
+      "blocks": {
+        "whats_included": {
+          "type": "faq",
+          "settings": {
+            "question": "What products are in the Complete Kit?",
+            "answer": "<p>Refreshing Cleanser, 5% Niacinamide Serum, Calming Moisturiser, and Protecting Sunscreen SPF 50 — the full Cleanse → Treat → Moisturise → Protect system.</p>"
+          }
+        },
+        "how_to_use": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I use the kit morning and night?",
+            "answer": "<p>AM: Cleanse → Serum → Moisturise → Sunscreen. PM: Cleanse → Serum → Moisturise. Keep SPF for daytime only.</p>"
+          }
+        },
+        "sensitive": {
+          "type": "faq",
+          "settings": {
+            "question": "Is it suitable if my skin is sensitive?",
+            "answer": "<p>Patch test first. Introduce one new step at a time if your skin is reactive, and moisturise well.</p>"
+          }
+        },
+        "singles": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I buy the steps separately later?",
+            "answer": "<p>Yes. Every product in the kit is also available individually when you’re ready to refill.</p>"
+          }
+        },
+        "value": {
+          "type": "faq",
+          "settings": {
+            "question": "Why buy the kit instead of singles?",
+            "answer": "<p>You get a complete, sequenced routine with kit savings — and you don’t have to assemble the system yourself.</p>"
+          }
+        }
+      },
+      "block_order": ["whats_included", "how_to_use", "sensitive", "singles", "value"],
+      "settings": {
+        "eyebrow": "Before you buy",
+        "heading": "Kit questions, answered",
+        "copy": "<p>Clear answers about what’s inside, how to use it, and whether the kit is right for you.</p>",
+        "button_label": "Book a consultation",
+        "button_link": "/pages/consultation",
+        "padding_top": 56,
+        "padding_bottom": 88
+      }
+    }
+  },
+  "order": [
+    "main",
+    "experience",
+    "steps",
+    "commitments",
+    "trust",
+    "reviews",
+    "inside_products",
+    "faq"
+  ]
+}

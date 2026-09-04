@@ -1,0 +1,64 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+        "show_author": true,
+        "show_date": true,
+        "show_share": true
+      }
+    },
+    "related_edu": {
+      "type": "project-skin-journal-teaser",
+      "blocks": {
+        "monsoon": {
+          "type": "card",
+          "settings": {
+            "eyebrow": "Season",
+            "heading": "Monsoon",
+            "text": "Humidity does not cancel acne biology.",
+            "link": "/pages/monsoon"
+          }
+        },
+        "ingredients": {
+          "type": "card",
+          "settings": {
+            "eyebrow": "Library",
+            "heading": "Ingredients",
+            "text": "Named actives with percentage and mechanism.",
+            "link": "/pages/ingredients"
+          }
+        },
+        "journal": {
+          "type": "card",
+          "settings": {
+            "eyebrow": "Hub",
+            "heading": "Journal home",
+            "text": "Seasons and literacy threads in one place.",
+            "link": "/pages/journal"
+          }
+        }
+      },
+      "block_order": ["monsoon", "ingredients", "journal"],
+      "settings": {
+        "wide": true,
+        "eyebrow": "Keep learning",
+        "heading": "More from Project Skin Journal",
+        "text": "Seasonal modules and literacy threads — education before commerce.",
+        "cta_label": "Open the journal",
+        "cta_link": "/pages/journal",
+        "padding_top": 48,
+        "padding_bottom": 72
+      }
+    },
+    "blog": {
+      "type": "featured-blog",
+      "settings": {
+        "heading": "More published stories",
+        "subheading": "Journal",
+        "description": "<p>Continue with recent posts from the Project Skin Journal.</p>"
+      }
+    }
+  },
+  "order": ["main", "related_edu", "blog"]
+}

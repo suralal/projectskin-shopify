@@ -1,0 +1,82 @@
+<section class="ps-customer" data-customer-account>
+  <div class="ps-customer__shell">
+    <header class="ps-account-header">
+      <div>
+        {% assign account_name = customer.first_name | default: 'there' %}
+        <span class="ps-customer__eyebrow">Your Project Skin</span>
+        <h1>{{ section.settings.heading | replace: '[first_name]', account_name }}</h1>
+        <p>{{ customer.email }}</p>
+      </div>
+      <div class="ps-account-actions">
+        <a class="ps-button-account--secondary" href="{{ routes.account_addresses_url }}">Manage addresses</a>
+        <a class="ps-button-account--secondary" href="{{ routes.account_logout_url }}">Sign out</a>
+      </div>
+    </header>
+
+    <div class="ps-account-grid">
+      <div class="ps-account-panel">
+        <div class="ps-account-panel__head">
+          <h2>Order history</h2>
+          {% if customer.orders_count > 0 %}<span>{{ customer.orders_count }} total</span>{% endif %}
+        </div>
+
+        {% paginate customer.orders by 10 %}
+          {% if customer.orders.size > 0 %}
+            <div class="ps-order-list">
+              {% for order in customer.orders %}
+                <a class="ps-order-row" href="{{ order.customer_url }}">
+                  <strong>{{ order.name }}</strong>
+                  <time datetime="{{ order.created_at | date: '%Y-%m-%d' }}">{{ order.created_at | date: '%d %b %Y' }}</time>
+                  <span class="ps-status">{{ order.financial_status_label }}</span>
+                  <span>{{ order.total_price | money_with_currency }}</span>
+                  <span class="ps-order-row__arrow" aria-hidden="true">→</span>
+                </a>
+              {% endfor %}
+            </div>
+
+            {% if paginate.pages > 1 %}
+              <nav class="ps-pagination" aria-label="Order history pages">
+                {{ paginate | default_pagination }}
+              </nav>
+            {% endif %}
+          {% else %}
+            <div class="ps-account-empty">
+              <h3>{{ section.settings.empty_heading }}</h3>
+              <p>{{ section.settings.empty_text }}</p>
+              <a class="ps-button-account" href="{{ routes.all_products_collection_url }}">Explore products</a>
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      </div>
+
+      <aside class="ps-account-panel">
+        <div class="ps-account-panel__head">
+          <h2>Delivery details</h2>
+        </div>
+        {% if customer.default_address %}
+          <div class="ps-address-summary">
+            {{ customer.default_address | format_address }}
+          </div>
+          <a class="ps-account-link" href="{{ routes.account_addresses_url }}">Edit saved addresses</a>
+        {% else %}
+          <div class="ps-account-empty">
+            <h3>Add your first address</h3>
+            <p>Save a delivery address to make your next checkout quicker.</p>
+            <a class="ps-button-account" href="{{ routes.account_addresses_url }}">Add address</a>
+          </div>
+        {% endif %}
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer account",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Hello, [first_name]" },
+    { "type": "text", "id": "empty_heading", "label": "Empty orders heading", "default": "Your order history starts here" },
+    { "type": "textarea", "id": "empty_text", "label": "Empty orders text", "default": "When you place an order, its status and details will appear here." }
+  ]
+}
+{% endschema %}

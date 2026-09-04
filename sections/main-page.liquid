@@ -1,0 +1,22 @@
+<section class="ps-template ps-page">
+  <div class="container{% if section.settings.narrow %} ps-page__narrow{% endif %}">
+    {% if section.settings.show_title %}
+      <div class="ps-template__head">
+        {% if section.settings.eyebrow != blank %}<span class="ps-eyebrow">{{ section.settings.eyebrow }}</span>{% endif %}
+        <h1>{{ page.title }}</h1>
+      </div>
+    {% endif %}
+    {% if page.content != blank %}<div class="rte ps-page__content">{{ page.content }}</div>{% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    { "type": "checkbox", "id": "show_title", "label": "Show title", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "checkbox", "id": "narrow", "label": "Use narrow content width", "default": true }
+  ]
+}
+{% endschema %}

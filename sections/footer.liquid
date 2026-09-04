@@ -1,0 +1,242 @@
+<footer class="footer">
+  {% if section.settings.show_services %}
+    <div class="container footer-services">
+      <article class="footer-service">
+        {% render 'icon', name: 'shipping' %}
+        <div>
+          <h3>{{ section.settings.shipping_heading }}</h3>
+          <p>{{ section.settings.shipping_text }}</p>
+        </div>
+      </article>
+      <article class="footer-service">
+        {% render 'icon', name: 'guarantee' %}
+        <div>
+          <h3>{{ section.settings.guarantee_heading }}</h3>
+          <p>{{ section.settings.guarantee_text }}</p>
+        </div>
+      </article>
+      <article class="footer-service">
+        {% render 'icon', name: 'support' %}
+        <div>
+          <h3>{{ section.settings.support_heading }}</h3>
+          <p>{{ section.settings.support_text }}</p>
+        </div>
+      </article>
+    </div>
+  {% endif %}
+
+  {% liquid
+    assign facebook_url = settings.social_facebook | default: 'https://www.facebook.com/share/1BS6aAnFib/?mibextid=wwXIfr'
+    assign linkedin_url = settings.social_linkedin | default: 'https://www.linkedin.com/company/nureya-beauty-and-wellness-pvt-ltd-skin/'
+    assign instagram_url = settings.social_instagram | default: 'https://www.instagram.com/projectskin.co'
+    assign youtube_url = settings.social_youtube | default: 'https://youtube.com/@projectskin-co'
+    assign whatsapp_url = section.settings.whatsapp_url
+    if whatsapp_url == blank
+      assign whatsapp_url = 'https://wa.me/918446544458?text=Hi,%20I%20need%20to%20know%20more%20about%20your%20acne%20range%20products'
+    endif
+  %}
+
+  <div class="container footer-main">
+    <section class="footer-contact">
+      <a class="footer-brand-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+        {% render 'project-skin-logo', width: 160 %}
+      </a>
+      <h2>{{ section.settings.contact_heading }}</h2>
+      {% if section.settings.contact_intro != blank %}
+        <p class="footer-contact__intro">{{ section.settings.contact_intro }}</p>
+      {% endif %}
+      {% if section.settings.email != blank %}
+        <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+      {% endif %}
+      {% if section.settings.whatsapp_label != blank %}
+        <a href="{{ whatsapp_url }}" target="_blank" rel="noopener">{{ section.settings.whatsapp_label }}</a>
+      {% endif %}
+
+      <div class="footer-socials" aria-label="Social media">
+        <a href="{{ facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', name: 'facebook' %}</a>
+        <a href="{{ linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn">{% render 'icon', name: 'linkedin' %}</a>
+        <a href="{{ instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>
+        <a href="{{ youtube_url }}" target="_blank" rel="noopener" aria-label="YouTube">{% render 'icon', name: 'youtube' %}</a>
+      </div>
+    </section>
+
+    <nav class="footer-menu" aria-label="{{ section.settings.company_heading | escape }}">
+      <h2>{{ section.settings.company_heading }}</h2>
+      <div class="footer-menu__links">
+        {% if section.settings.link_about_label != blank %}
+          <a href="{{ section.settings.link_about_url | default: '/pages/about' }}">{{ section.settings.link_about_label }}</a>
+        {% endif %}
+        {% if section.settings.link_science_label != blank %}
+          <a href="{{ section.settings.link_science_url | default: '/pages/the-science' }}">{{ section.settings.link_science_label }}</a>
+        {% endif %}
+        {% if section.settings.link_ingredients_label != blank %}
+          <a href="{{ section.settings.link_ingredients_url | default: '/pages/ingredients' }}">{{ section.settings.link_ingredients_label }}</a>
+        {% endif %}
+        {% if section.settings.link_journal_label != blank %}
+          <a href="{{ section.settings.link_journal_url | default: '/pages/journal' }}">{{ section.settings.link_journal_label }}</a>
+        {% endif %}
+        {% if section.settings.link_philosophy_label != blank %}
+          <a href="{{ section.settings.link_philosophy_url | default: '/pages/philosophy' }}">{{ section.settings.link_philosophy_label }}</a>
+        {% endif %}
+        {% if section.settings.link_account_label != blank %}
+          {% liquid
+            assign footer_account_url = section.settings.link_account_url | default: routes.account_url
+            if footer_account_url == routes.account_url or footer_account_url == '/account'
+              assign footer_account_url = shop.url | append: routes.account_url
+            endif
+          %}
+          <a href="{{ footer_account_url }}">{{ section.settings.link_account_label }}</a>
+        {% endif %}
+        {% if section.settings.link_contact_label != blank %}
+          <a href="{{ section.settings.link_contact_url | default: '/pages/contact-us' }}">{{ section.settings.link_contact_label }}</a>
+        {% endif %}
+        {% if section.settings.link_faq_label != blank %}
+          <a href="{{ section.settings.link_faq_url | default: '/pages/faq' }}">{{ section.settings.link_faq_label }}</a>
+        {% endif %}
+        {% if section.settings.link_guarantee_label != blank %}
+          <a href="{{ section.settings.link_guarantee_url | default: '/pages/money-back-guarantee' }}">{{ section.settings.link_guarantee_label }}</a>
+        {% endif %}
+      </div>
+    </nav>
+
+    {% for block in section.blocks %}
+      <details class="footer-menu" open {{ block.shopify_attributes }}>
+        <summary>{{ block.settings.heading }}</summary>
+        <div class="footer-menu__links">
+          {% for link in block.settings.menu.links %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endfor %}
+        </div>
+      </details>
+    {% endfor %}
+
+    {% if section.settings.show_newsletter %}
+      <section class="footer-newsletter-wrap">
+        <h2>{{ section.settings.newsletter_heading }}</h2>
+        <p>{{ section.settings.newsletter_text }}</p>
+        {% form 'customer', class: 'footer-newsletter' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="visually-hidden" for="FooterEmail-{{ section.id }}">Email address</label>
+          <input
+            id="FooterEmail-{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            value="{{ form.email }}"
+            placeholder="{{ section.settings.newsletter_placeholder }}"
+            autocomplete="email"
+            required
+          >
+          <button type="submit">{{ section.settings.newsletter_button }}</button>
+          {% if form.posted_successfully? %}<p class="footer-newsletter__message">Thanks for subscribing.</p>{% endif %}
+          {% if form.errors %}<div class="footer-newsletter__message">{{ form.errors | default_errors }}</div>{% endif %}
+        {% endform %}
+        {% if section.settings.newsletter_terms != blank %}
+          <div class="footer-newsletter__terms rte">{{ section.settings.newsletter_terms }}</div>
+        {% endif %}
+      </section>
+    {% endif %}
+  </div>
+
+  <div class="container footer-bottom">
+    <div class="footer-localization">
+      {% if localization.available_countries.size > 1 or localization.available_languages.size > 1 %}
+        {% form 'localization', id: 'FooterLocalization', class: 'footer-localization__form' %}
+          {% if localization.available_countries.size > 1 %}
+            <label class="visually-hidden" for="FooterCountry">Country</label>
+            <select id="FooterCountry" name="country_code" onchange="this.form.submit()">
+              {% for country in localization.available_countries %}
+                <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+                  {{ country.name }} / {{ country.currency.iso_code }}
+                </option>
+              {% endfor %}
+            </select>
+          {% endif %}
+          {% if localization.available_languages.size > 1 %}
+            <label class="visually-hidden" for="FooterLanguage">Language</label>
+            <select id="FooterLanguage" name="language_code" onchange="this.form.submit()">
+              {% for language in localization.available_languages %}
+                <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>{{ language.endonym_name }}</option>
+              {% endfor %}
+            </select>
+          {% endif %}
+        {% endform %}
+      {% endif %}
+      <span>{{ section.settings.copyright_text | default: 'Copyright © 2026 Nureya Beauty and Wellness Pvt Limited' }}</span>
+    </div>
+
+    {% if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 %}
+      <div class="footer-payments" aria-label="Payment methods">
+        {% for type in shop.enabled_payment_types %}
+          {{ type | payment_type_svg_tag: class: 'footer-payment-icon' }}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</footer>
+
+<button class="footer-back-to-top" type="button" data-back-to-top aria-label="Back to top">
+  {% render 'icon', name: 'arrow-up' %}
+</button>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "checkbox", "id": "show_services", "label": "Show service benefits", "default": false },
+    { "type": "text", "id": "shipping_heading", "label": "Shipping heading", "default": "Free Shipping" },
+    { "type": "textarea", "id": "shipping_text", "label": "Shipping text", "default": "Enjoy free worldwide shipping and returns, with customs and duties taxes included." },
+    { "type": "text", "id": "guarantee_heading", "label": "Guarantee heading", "default": "100-Day money Back" },
+    { "type": "textarea", "id": "guarantee_text", "label": "Guarantee text", "default": "Enjoy free returns within 100 days, as long as the product remains unused and undamaged." },
+    { "type": "text", "id": "support_heading", "label": "Support heading", "default": "Support Online" },
+    { "type": "textarea", "id": "support_text", "label": "Support text", "default": "We support customers 24/7, send questions and we will solve for you immediately." },
+    { "type": "header", "content": "Contact" },
+    { "type": "text", "id": "contact_heading", "label": "Heading", "default": "Contact us" },
+    { "type": "text", "id": "contact_intro", "label": "Intro", "default": "Need help fast?" },
+    { "type": "text", "id": "email", "label": "Email", "default": "support@theprojectskin.com" },
+    { "type": "text", "id": "whatsapp_label", "label": "WhatsApp label", "default": "WhatsApp" },
+    { "type": "url", "id": "whatsapp_url", "label": "WhatsApp link" },
+    { "type": "header", "content": "Company overview" },
+    { "type": "text", "id": "company_heading", "label": "Heading", "default": "Company Overview" },
+    { "type": "text", "id": "link_about_label", "label": "About label", "default": "About Us" },
+    { "type": "url", "id": "link_about_url", "label": "About link" },
+    { "type": "text", "id": "link_science_label", "label": "Science label", "default": "The Science" },
+    { "type": "url", "id": "link_science_url", "label": "Science link" },
+    { "type": "text", "id": "link_ingredients_label", "label": "Ingredients label", "default": "Ingredients" },
+    { "type": "url", "id": "link_ingredients_url", "label": "Ingredients link" },
+    { "type": "text", "id": "link_journal_label", "label": "Journal label", "default": "Journal" },
+    { "type": "url", "id": "link_journal_url", "label": "Journal link" },
+    { "type": "text", "id": "link_philosophy_label", "label": "Philosophy label", "default": "Philosophy" },
+    { "type": "url", "id": "link_philosophy_url", "label": "Philosophy link" },
+    { "type": "text", "id": "link_account_label", "label": "Account label", "default": "My Account" },
+    { "type": "url", "id": "link_account_url", "label": "Account link" },
+    { "type": "text", "id": "link_contact_label", "label": "Contact label", "default": "Contact Us" },
+    { "type": "url", "id": "link_contact_url", "label": "Contact link" },
+    { "type": "text", "id": "link_faq_label", "label": "FAQ label", "default": "FAQ's" },
+    { "type": "url", "id": "link_faq_url", "label": "FAQ link" },
+    { "type": "text", "id": "link_guarantee_label", "label": "Guarantee label", "default": "Money Back Guarantee" },
+    { "type": "url", "id": "link_guarantee_url", "label": "Guarantee link" },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter", "default": true },
+    { "type": "text", "id": "newsletter_heading", "label": "Heading", "default": "Stay in the loop" },
+    { "type": "textarea", "id": "newsletter_text", "label": "Text", "default": "Get Project Skin tips, launches, and routine updates straight to your inbox." },
+    { "type": "text", "id": "newsletter_placeholder", "label": "Placeholder", "default": "Enter your email..." },
+    { "type": "text", "id": "newsletter_button", "label": "Button", "default": "Subscribe" },
+    { "type": "richtext", "id": "newsletter_terms", "label": "Terms" },
+    { "type": "header", "content": "Bottom bar" },
+    { "type": "text", "id": "copyright_text", "label": "Copyright text", "default": "Copyright © 2026 Nureya Beauty and Wellness Pvt Limited" },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Explore" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
+  "max_blocks": 2,
+  "presets": [{ "name": "Footer" }]
+}
+{% endschema %}

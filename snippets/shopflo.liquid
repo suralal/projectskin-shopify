@@ -1,0 +1,192 @@
+{%- comment -%}
+  Shopflo Flo Cart + Flo Checkout.
+
+  Shopflo's bridge keys off window.location.host for health checks.
+  Theme Dev (127.0.0.1) fails that check, so we rewrite shop-url /
+  shop_url / shopUrl to the real storefront domain before the bundle runs.
+{%- endcomment -%}
+{%- if settings.shopflo_enabled -%}
+  <script>
+    window.PurityTheme = window.PurityTheme || {};
+    window.PurityTheme.shopfloEnabled = true;
+    window.PurityTheme.shopfloUseFloCart = {{ settings.shopflo_use_flo_cart | json }};
+    window.PurityTheme.shopUrl = {{ shop.url | json }};
+    window.PurityTheme.shopDomain = {{ shop.permanent_domain | json }};
+    window.PurityTheme.shopfloHost = {{ shop.domain | json }};
+
+    (function installShopfloShopUrlShim() {
+      var realHost = {{ shop.domain | json }};
+      if (!realHost) return;
+
+      var current = window.location.host || '';
+      var hostname = window.location.hostname || '';
+      var isLocalPreview = /^(127\.0\.0\.1|localhost)$/i.test(hostname);
+      if (!isLocalPreview && current === realHost) return;
+
+      function shouldRewriteValue(value) {
+        if (!value) return false;
+        var decoded = value;
+        try { decoded = decodeURIComponent(value); } catch (e) {}
+        return (
+          decoded === current ||
+          decoded === hostname ||
+          /^(127\.0\.0\.1|localhost)(:\d+)?$/i.test(decoded)
+        );
+      }
+
+      function rewriteUrl(url) {
+        if (typeof url !== 'string') return url;
+        if (
+          url.indexOf('shop-url=') === -1 &&
+          url.indexOf('shop_url=') === -1 &&
+          url.indexOf('shopUrl=') === -1
+        ) {
+          return url;
+        }
+        return url.replace(/(shop-url=|shop_url=|shopUrl=)([^&#]*)/g, function (_, key, raw) {
+          return shouldRewriteValue(raw) ? key + encodeURIComponent(realHost) : key + raw;
+        });
+      }
+
+      var originalFetch = window.fetch;
+      if (typeof originalFetch === 'function') {
+        window.fetch = function (input, init) {
+          try {
+            if (typeof input === 'string') {
+              input = rewriteUrl(input);
+            } else if (input && typeof input.url === 'string') {
+              var rewritten = rewriteUrl(input.url);
+              if (rewritten !== input.url) input = new Request(rewritten, input);
+            }
+          } catch (e) {}
+          return originalFetch.call(this, input, init);
+        };
+      }
+
+      if (window.XMLHttpRequest) {
+        var originalOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function (method, url) {
+          if (typeof url === 'string') arguments[1] = rewriteUrl(url);
+          return originalOpen.apply(this, arguments);
+        };
+      }
+
+      try {
+        var srcDescriptor = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'src');
+        if (srcDescriptor && srcDescriptor.set) {
+          Object.defineProperty(HTMLIFrameElement.prototype, 'src', {
+            configurable: true,
+            enumerable: srcDescriptor.enumerable,
+            get: srcDescriptor.get,
+            set: function (value) {
+              srcDescriptor.set.call(this, rewriteUrl(String(value || '')));
+            }
+          });
+        }
+      } catch (e) {}
+
+      var originalSetAttribute = Element.prototype.setAttribute;
+      Element.prototype.setAttribute = function (name, value) {
+        if (String(name).toLowerCase() === 'src' && this.tagName === 'IFRAME') {
+          value = rewriteUrl(String(value || ''));
+        }
+        return originalSetAttribute.call(this, name, value);
+      };
+    })();
+
+    window.PurityShopflo = (function () {
+      function floActive() {
+        if (window.Shopflo && window.Shopflo.isFloCheckoutEnabled) return true;
+        var cfg = window.shopfloConfig || {};
+        if (cfg.enableShopfloCheckout) return true;
+        // Bundle may swap in real handlers before shopfloConfig flips.
+        if (typeof window.handleFloCartBtn === 'function' && !isFallbackCartHandler()) return true;
+        return false;
+      }
+
+      function isFallbackCartHandler() {
+        try {
+          return String(window.handleFloCartBtn || '').indexOf('flo_skip_cart_redirect') !== -1;
+        } catch (e) {
+          return true;
+        }
+      }
+
+      function storeCheckoutUrl() {
+        var base = (window.PurityTheme && window.PurityTheme.shopUrl) || '';
+        if (!base && window.Shopify && window.Shopify.shop) {
+          base = 'https://' + window.Shopify.shop;
+        }
+        return (base || '') + '/checkout';
+      }
+
+      return {
+        floActive: floActive,
+
+        checkout: function () {
+          if (floActive() && typeof window.handleFloCheckoutBtn === 'function' && !isFallbackCartHandler()) {
+            window.handleFloCheckoutBtn();
+            return true;
+          }
+          if (floActive() && window.Shopflo && typeof window.Shopflo.openCheckout === 'function') {
+            window.Shopflo.openCheckout();
+            return true;
+          }
+          window.location.assign(storeCheckoutUrl());
+          return true;
+        },
+
+        buyNow: function (event) {
+          if (!floActive()) return false;
+          if (typeof window.handleFloBuyNowBtn === 'function') {
+            window.handleFloBuyNowBtn(event);
+            return true;
+          }
+          return false;
+        },
+
+        cart: function () {
+          if (!window.PurityTheme || !window.PurityTheme.shopfloUseFloCart) return false;
+
+          if (floActive() && !isFallbackCartHandler() && typeof window.handleFloCartBtn === 'function') {
+            window.handleFloCartBtn();
+            return true;
+          }
+
+          if (window.Shopflo && typeof window.Shopflo.openFloCart === 'function' && floActive()) {
+            window.Shopflo.openFloCart();
+            return true;
+          }
+
+          return false;
+        },
+
+        /**
+         * Wait briefly for Shopflo health to flip floActive, then open Flo Cart.
+         * Matches live theme: ATC / bag icon should open the "Powered by shopflo" drawer.
+         */
+        openCartWhenReady: function (timeoutMs) {
+          var self = this;
+          var budget = typeof timeoutMs === 'number' ? timeoutMs : 4000;
+          var started = Date.now();
+
+          return new Promise(function (resolve) {
+            function attempt() {
+              if (self.cart()) {
+                resolve(true);
+                return;
+              }
+              if (Date.now() - started >= budget) {
+                resolve(false);
+                return;
+              }
+              setTimeout(attempt, 120);
+            }
+            attempt();
+          });
+        }
+      };
+    })();
+  </script>
+  <script src="https://bridge.shopflo.com/js/shopflo.bundle.js" async></script>
+{%- endif -%}

@@ -1,0 +1,58 @@
+<section class="pdp-section pdp-faq" style="--pdp-pad-top: {{ section.settings.padding_top }}px; --pdp-pad-bottom: {{ section.settings.padding_bottom }}px">
+  <div class="page-width-pdp pdp-faq__grid">
+    <div class="pdp-faq__intro">
+      <p class="pdp-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <div>{{ section.settings.copy }}</div>
+      {% if section.settings.button_label != blank %}
+        <a class="pdp-pill-button" href="{{ section.settings.button_link | default: '/pages/consultation' }}">{{ section.settings.button_label }}</a>
+      {% endif %}
+    </div>
+    <div class="pdp-faq__items">
+      {% liquid
+        assign use_catalog = section.settings.use_formula_catalog
+        capture catalog_faqs
+          render 'product-faq-catalog', product: product
+        endcapture
+        assign catalog_faqs = catalog_faqs | strip
+      %}
+      {% if use_catalog and catalog_faqs != blank %}
+        {{ catalog_faqs }}
+      {% else %}
+        {% for block in section.blocks %}
+          <details {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question }}<span>+</span></summary>
+            <div>{{ block.settings.answer }}</div>
+          </details>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "PDP FAQ",
+  "settings": [
+    { "type": "checkbox", "id": "use_formula_catalog", "label": "Use product FAQ catalog", "default": true, "info": "Diagnosis-first answers per product handle. Turn off to use theme editor blocks." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Before You Buy" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Frequently Asked Questions" },
+    { "type": "richtext", "id": "copy", "label": "Copy", "default": "<p>Clear answers about mechanism, layering, and whether this formula fits your concern.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Book a consultation" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 84 }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Is it suitable for sensitive skin?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Patch test first. Introduce one new product at a time and moisturise well.</p>" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [{ "name": "PDP FAQ", "blocks": [{ "type": "faq" }, { "type": "faq" }, { "type": "faq" }] }]
+}
+{% endschema %}

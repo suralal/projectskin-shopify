@@ -1,0 +1,128 @@
+{% liquid
+  assign heading_text = section.settings.heading | strip_html
+  assign heading_highlight = section.settings.heading_highlight | strip_html
+  assign heading_prefix = heading_text | remove: heading_highlight | strip
+%}
+
+<purity-result-spotlight
+  class="ps-section ps-result"
+  style="--ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px"
+>
+  <div class="ps-result__wrap">
+    <header class="ps-result__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="ps-result__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+
+      <h2 class="ps-result__heading">
+        {{ heading_prefix }}
+        <span class="ps-result__highlight">
+          {{ heading_highlight }}
+          <svg viewBox="0 0 186 24" aria-hidden="true">
+            <path d="M3 10.176C34.845 4.685 117.175-1.003 203 6.881C162.353 5.94 127.5 5.5 68 14C91.689 11.647 142.5 8.5 186.5 23.5" />
+          </svg>
+        </span>
+      </h2>
+
+      {% if section.settings.description != blank %}
+        <div class="ps-result__description rte">{{ section.settings.description }}</div>
+      {% endif %}
+    </header>
+
+    <div class="ps-result__stage">
+      <div class="ps-result__product">
+        {% render 'purity-image',
+          image: section.settings.image,
+          fallback_asset: 'project-skin-active-boba.jpg',
+          fallback_width: 1200,
+          fallback_height: 1200,
+          alt: heading_text,
+          sizes: '(min-width: 1025px) 400px, calc(100vw - 40px)'
+        %}
+      </div>
+
+      <div class="ps-result__callouts" role="list" aria-label="Product benefits">
+        {% for block in section.blocks %}
+          <div
+            class="ps-result__callout ps-result__callout--{{ forloop.index }}"
+            role="listitem"
+            data-result-callout
+            style="--ps-result-delay: {{ forloop.index0 | divided_by: 2 | times: 100 }}ms"
+            {{ block.shopify_attributes }}
+          >
+            <div class="ps-result__callout-inner">
+              {% render 'purity-benefit-icon', icon: block.settings.icon %}
+              <span>{{ block.settings.text }}</span>
+              <svg class="ps-result__bubble" width="25" height="25" viewBox="0 0 25 25" aria-hidden="true">
+                <ellipse cx="21" cy="21" rx="4" ry="4" />
+                <ellipse cx="9" cy="9" rx="9" ry="9" />
+              </svg>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.button_label != blank %}
+        <a class="ps-button ps-result__button" href="{{ section.settings.link | default: routes.all_products_collection_url }}">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</purity-result-spotlight>
+
+{% schema %}
+{
+  "name": "Result spotlight",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Targeted care for blemish-prone skin" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Meet Active Boba" },
+    { "type": "text", "id": "heading_highlight", "label": "Underlined words", "default": "Active Boba", "info": "Enter words that also appear in the heading." },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>An encapsulated daily cream with niacinamide, salicylic acid, and zinc PCA for clearer-looking, balanced skin.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Product image" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore Active Boba" },
+    { "type": "url", "id": "link", "label": "Button link" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 100 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 100 }
+  ],
+  "blocks": [
+    {
+      "type": "callout",
+      "name": "Benefit callout",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "smooth",
+          "options": [
+            { "value": "smooth", "label": "Smooth lines" },
+            { "value": "bright", "label": "Brighten" },
+            { "value": "collagen", "label": "Collagen" },
+            { "value": "hydration", "label": "Hydration" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "absorption", "label": "Absorption" }
+          ]
+        },
+        { "type": "text", "id": "text", "label": "Text", "default": "Smooths Lines" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Result spotlight",
+      "blocks": [
+        { "type": "callout", "settings": { "icon": "smooth", "text": "Salicylic Acid Care" } },
+        { "type": "callout", "settings": { "icon": "bright", "text": "Clearer-Looking Skin" } },
+        { "type": "callout", "settings": { "icon": "collagen", "text": "Niacinamide Powered" } },
+        { "type": "callout", "settings": { "icon": "hydration", "text": "Comforting Moisture" } },
+        { "type": "callout", "settings": { "icon": "shield", "text": "Zinc PCA Support" } },
+        { "type": "callout", "settings": { "icon": "absorption", "text": "Fast-Absorbing Cream" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

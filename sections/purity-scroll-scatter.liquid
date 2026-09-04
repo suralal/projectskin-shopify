@@ -1,0 +1,94 @@
+<purity-scroll-scatter class="ps-section ps-scatter{% if section.settings.compact %} ps-scatter--compact{% endif %}" style="--ps-scroll-height: {% if section.settings.compact %}auto{% else %}max({{ section.settings.scroll_height }}px, 320svh){% endif %}">
+  <div class="ps-scatter__stage">
+    <div class="ps-scatter__glow" data-ps-scatter-glow aria-hidden="true"></div>
+    <div class="ps-scatter__cards" aria-hidden="true">
+      {% for block in section.blocks %}
+        {% liquid
+          assign fallback_asset = 'project-skin-philosophy-people.jpg'
+          assign finish_x = '-0.40'
+          assign finish_y = '-0.28'
+          assign finish_rotate = '-3'
+          assign finish_scale = '0.95'
+          assign start_x = '-0.22'
+          assign start_rotate = '-4'
+          case forloop.index
+            when 2
+              assign fallback_asset = 'project-skin-banner-6.jpg'
+              assign finish_y = '0.30'
+              assign finish_rotate = '3'
+              assign start_x = '-0.11'
+              assign start_rotate = '4'
+            when 3
+              assign fallback_asset = 'project-skin-philosophy-lab.jpg'
+              assign finish_x = '0.00'
+              assign finish_y = '-0.41'
+              assign finish_rotate = '0'
+              assign finish_scale = '0.97'
+              assign start_x = '0.00'
+              assign start_rotate = '0'
+            when 4
+              assign fallback_asset = 'project-skin-banner-3.jpg'
+              assign finish_x = '0.40'
+              assign finish_rotate = '3'
+              assign start_x = '0.11'
+              assign start_rotate = '4'
+            when 5
+              assign fallback_asset = 'project-skin-banner-1.jpg'
+              assign finish_x = '0.40'
+              assign finish_y = '0.30'
+              assign start_x = '0.22'
+          endcase
+        %}
+        <figure
+          class="ps-scatter__card"
+          data-ps-scatter-card
+          data-fx="{{ finish_x }}"
+          data-fy="{{ finish_y }}"
+          data-fr="{{ finish_rotate }}"
+          data-fs="{{ finish_scale }}"
+          data-sx="{{ start_x }}"
+          data-sy="0.06"
+          data-sr="{{ start_rotate }}"
+          data-ss="0.58"
+          {{ block.shopify_attributes }}
+        >
+          {% render 'purity-image', image: block.settings.image, fallback_asset: fallback_asset, fallback_width: 675, fallback_height: 906, alt: '', sizes: '(min-width: 768px) 260px, 200px' %}
+        </figure>
+      {% endfor %}
+    </div>
+    <div class="ps-scatter__copy" data-ps-scatter-head>
+      <span class="ps-scatter__veil" data-ps-scatter-veil aria-hidden="true"></span>
+      <div class="ps-scatter__heading-group">
+        <span class="ps-eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 class="ps-title ps-title--underline ps-title--curve">{{ section.settings.heading | newline_to_br }}</h2>
+      </div>
+      <div class="ps-scatter__description rte" data-ps-scatter-lead>{{ section.settings.description }}</div>
+      {% if section.settings.button_label != blank %}<a class="ps-button ps-scatter__button" data-ps-scatter-cta href="{{ section.settings.button_link | default: routes.root_url }}">{{ section.settings.button_label }}</a>{% endif %}
+    </div>
+    {% if section.settings.show_hint %}<div class="ps-scatter__hint"><span>{{ section.settings.hint }}</span><i aria-hidden="true">⌄</i></div>{% endif %}
+  </div>
+</purity-scroll-scatter>
+
+{% schema %}
+{
+  "name": "Scroll scatter",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Project Skin philosophy" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Skin is biology.\nTreat it with evidence." },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Built for Indian skin, climate and life. Every formula, recommendation and routine starts with context, explains its mechanism, and earns trust over time.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Read our philosophy" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "checkbox", "id": "compact", "label": "Compact homepage layout", "default": false, "info": "Single viewport — no long scroll animation. Use on homepage; keep full scroll on Philosophy page." },
+    { "type": "range", "id": "scroll_height", "label": "Scroll distance", "min": 800, "max": 3200, "step": 100, "unit": "px", "default": 2300, "info": "Ignored when compact layout is enabled." },
+    { "type": "checkbox", "id": "show_hint", "label": "Show scroll hint", "default": true },
+    { "type": "text", "id": "hint", "label": "Scroll hint", "default": "Scroll to Explore" }
+  ],
+  "blocks": [
+    { "type": "image", "name": "Scatter image", "settings": [{ "type": "image_picker", "id": "image", "label": "Image" }] }
+  ],
+  "max_blocks": 5,
+  "presets": [{ "name": "Scroll scatter", "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" }] }]
+}
+{% endschema %}

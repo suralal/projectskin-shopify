@@ -1,0 +1,166 @@
+{% liquid
+  assign kit_product = section.settings.kit_product
+  assign routine_total = 0
+  assign available_count = 0
+  assign routine_image = section.settings.image
+  assign routine_fallback = 'project-skin-routine-kit.jpg'
+
+  for block in section.blocks
+    assign routine_product = block.settings.product
+    if routine_product != blank
+      assign routine_total = routine_total | plus: routine_product.selected_or_first_available_variant.price
+      if routine_product.selected_or_first_available_variant.available
+        assign available_count = available_count | plus: 1
+      endif
+    endif
+  endfor
+
+  assign kit_savings = 0
+  if kit_product != blank
+    assign kit_savings = routine_total | minus: kit_product.selected_or_first_available_variant.price
+  endif
+%}
+
+<section
+  class="ps-routine-bundle"
+  data-psr-routine-bundle
+  style="--routine-bg: {{ section.settings.background }}; --routine-pad-top: {{ section.settings.padding_top }}px; --routine-pad-bottom: {{ section.settings.padding_bottom }}px"
+>
+  <div class="ps-routine-bundle__inner">
+    <div class="ps-routine-bundle__media">
+      {% if kit_product != blank %}<a href="{{ kit_product.url }}" aria-label="View {{ kit_product.title | escape }}">{% endif %}
+        {% render 'purity-image', image: routine_image, fallback_asset: routine_fallback, fallback_width: 756, fallback_height: 1024, alt: section.settings.image_alt, sizes: '(min-width: 900px) 42vw, 100vw', loading: 'lazy' %}
+      {% if kit_product != blank %}</a>{% endif %}
+
+      {% if section.settings.show_hotspots %}
+        <div class="ps-routine-bundle__hotspots" aria-label="Explore the routine">
+          {% for block in section.blocks %}
+            {% if block.settings.product != blank %}
+              <button
+                class="ps-routine-bundle__hotspot{% if forloop.first %} is-active{% endif %}"
+                type="button"
+                style="--hotspot-x: {{ block.settings.hotspot_x }}%; --hotspot-y: {{ block.settings.hotspot_y }}%"
+                data-routine-hotspot="{{ forloop.index0 }}"
+                aria-label="View step {{ forloop.index }}: {{ block.settings.product.title | escape }}"
+              ><span>{{ forloop.index }}</span></button>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if kit_savings > 0 %}
+        <span class="ps-routine-bundle__saving">Save {{ kit_savings | money }} with the complete kit</span>
+      {% endif %}
+    </div>
+
+    <div class="ps-routine-bundle__content">
+      {% if section.settings.eyebrow != blank %}<p class="ps-routine-bundle__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+      <h2 class="ps-routine-bundle__heading">{{ section.settings.heading }}</h2>
+      {% if section.settings.description != blank %}<div class="ps-routine-bundle__description">{{ section.settings.description }}</div>{% endif %}
+
+      <div class="ps-routine-bundle__products">
+        {% for block in section.blocks %}
+          {% liquid
+            assign routine_product = block.settings.product
+            assign routine_variant = routine_product.selected_or_first_available_variant
+            assign routine_title = routine_product.title | remove: ' - Acne Prone Skin'
+            if block.settings.title != blank
+              assign routine_title = block.settings.title
+            endif
+          %}
+          {% if routine_product != blank %}
+            <article class="ps-routine-bundle__product{% if forloop.first %} is-active{% endif %}" data-routine-product="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+              <a class="ps-routine-bundle__thumb" href="{{ routine_product.url }}" aria-label="View {{ routine_product.title | escape }}">
+                {% if routine_product.featured_image != blank %}
+                  {{ routine_product.featured_image | image_url: width: 220 | image_tag: loading: 'lazy', widths: '88,132,176,220', sizes: '76px', alt: routine_product.title }}
+                {% endif %}
+              </a>
+              <div class="ps-routine-bundle__product-copy">
+                <span class="ps-routine-bundle__step">{{ block.settings.step_label | default: 'Routine step' }}</span>
+                <a href="{{ routine_product.url }}"><strong>{{ routine_title }}</strong></a>
+                {% if routine_product.has_only_default_variant == false and routine_product.variants.size > 1 %}
+                  <label class="ps-routine-bundle__variant">
+                    <span class="visually-hidden">Choose {{ routine_product.title | escape }} option</span>
+                    <select data-routine-variant>
+                      {% for variant in routine_product.variants %}
+                        <option value="{{ variant.id }}" data-price="{{ variant.price }}" {% if variant.id == routine_variant.id %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}</option>
+                      {% endfor %}
+                    </select>
+                  </label>
+                {% elsif routine_variant.title != 'Default Title' %}
+                  <span class="ps-routine-bundle__size">{{ routine_variant.title }}</span>
+                {% endif %}
+              </div>
+              <strong class="ps-routine-bundle__price" data-routine-price>{{ routine_variant.price | money }}</strong>
+              {% if routine_variant.available %}
+                <input type="checkbox" value="{{ routine_variant.id }}" data-price="{{ routine_variant.price }}" checked hidden data-routine-item>
+              {% else %}
+                <span class="ps-routine-bundle__sold-out">Sold out</span>
+              {% endif %}
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="ps-routine-bundle__actions">
+        <button class="ps-routine-bundle__add" type="button" data-routine-add {% if available_count == 0 %}disabled{% endif %}>
+          {{ section.settings.button_label }} <span aria-hidden="true">·</span> <span data-routine-total>{{ routine_total | money }}</span>
+        </button>
+        <p data-routine-status aria-live="polite"></p>
+        {% if kit_product != blank %}
+          <a class="ps-routine-bundle__kit-link" href="{{ kit_product.url }}">
+            {{ section.settings.kit_link_label }} for <strong>{{ kit_product.selected_or_first_available_variant.price | money }}</strong>{% if kit_savings > 0 %} and save {{ kit_savings | money }}{% endif %}
+            <span aria-hidden="true">→</span>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Project Skin routine",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "color", "id": "background", "label": "Background", "default": "#ffffff" },
+    { "type": "image_picker", "id": "image", "label": "Routine image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Project Skin complete four-step routine" },
+    { "type": "product", "id": "kit_product", "label": "Complete kit product" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Cleanse · Treat · Moisturise · Protect" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "The 4-Step Routine" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>A complete daily system, designed to work better together.</p>" },
+    { "type": "text", "id": "button_label", "label": "Add all button", "default": "Add full routine to cart" },
+    { "type": "text", "id": "kit_link_label", "label": "Kit link label", "default": "Or get the Complete Kit" },
+    { "type": "checkbox", "id": "show_hotspots", "label": "Show image hotspots", "default": true },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Routine product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "title", "label": "Custom title" },
+        { "type": "text", "id": "step_label", "label": "Step label", "default": "Routine step" },
+        { "type": "range", "id": "hotspot_x", "label": "Hotspot horizontal position", "min": 5, "max": 95, "step": 1, "unit": "%", "default": 50 },
+        { "type": "range", "id": "hotspot_y", "label": "Hotspot vertical position", "min": 5, "max": 95, "step": 1, "unit": "%", "default": 50 }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Project Skin routine",
+      "blocks": [
+        { "type": "product", "settings": { "step_label": "Step 1 · Cleanse", "hotspot_x": 31, "hotspot_y": 60 } },
+        { "type": "product", "settings": { "step_label": "Step 2 · Treat", "hotspot_x": 46, "hotspot_y": 62 } },
+        { "type": "product", "settings": { "step_label": "Step 3 · Moisturise", "hotspot_x": 62, "hotspot_y": 63 } },
+        { "type": "product", "settings": { "step_label": "Step 4 · Protect", "hotspot_x": 78, "hotspot_y": 63 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

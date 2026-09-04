@@ -1,0 +1,391 @@
+{% liquid
+  assign header_palette = ''
+  if request.page_type == 'product' and product != blank
+    capture header_palette
+      render 'product-palette-name', product: product
+    endcapture
+    assign header_palette = header_palette | strip
+  endif
+%}
+<div
+  class="site-header-wrap{% if section.settings.sticky_header %} site-header-wrap--sticky{% endif %}"
+  data-site-header
+  {% if header_palette != blank %}data-active-palette="{{ header_palette }}"{% endif %}
+>
+  <header class="site-header container">
+    <div class="site-header__brand">
+      <button class="icon-button mobile-menu-toggle" type="button" data-mobile-menu-open aria-label="Open menu">
+        {% render 'icon', name: 'menu' %}
+      </button>
+      <a class="site-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+        {% render 'project-skin-logo', width: section.settings.logo_width, loading: 'eager' %}
+      </a>
+    </div>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'mega_menu' %}
+            <div class="site-nav__item site-nav__item--mega" data-mega-menu-item {{ block.shopify_attributes }}>
+              <a
+                class="site-nav__link{% if block.settings.highlight %} site-nav__link--quiz{% endif %}"
+                href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+                data-mega-trigger
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span>{{ block.settings.title }}</span>
+                <span class="site-nav__chevron" aria-hidden="true">{% render 'icon', name: 'chevron' %}</span>
+              </a>
+              {% render 'header-mega-menu', block: block %}
+            </div>
+          {% elsif block.type == 'nav_link' %}
+            <div class="site-nav__item" {{ block.shopify_attributes }}>
+              <a
+                class="site-nav__link{% if block.settings.highlight %} site-nav__link--quiz{% endif %}"
+                href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+              >
+                <span>{{ block.settings.title }}</span>
+                {% if block.settings.highlight %}<span class="site-nav__sparkle" aria-hidden="true">{% render 'icon', name: 'sparkle' %}</span>{% endif %}
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% for link in section.settings.menu.links %}
+        <div class="site-nav__item">
+          <a
+            class="site-nav__link{% if link.active %} is-active{% endif %}{% if link.title contains 'Quiz' %} site-nav__link--quiz{% endif %}"
+            href="{{ link.url }}"
+            {% if link.links.size > 0 %}aria-haspopup="true"{% endif %}
+          >
+            <span>{{ link.title }}</span>
+            {% if link.links.size > 0 %}
+              <span class="site-nav__chevron" aria-hidden="true">{% render 'icon', name: 'chevron' %}</span>
+            {% elsif link.title contains 'Quiz' %}
+              <span class="site-nav__sparkle" aria-hidden="true">{% render 'icon', name: 'sparkle' %}</span>
+            {% endif %}
+          </a>
+
+          {% if link.links.size > 0 %}
+            <div class="mega-menu">
+              <div class="container mega-menu__grid">
+                <div class="mega-menu__links">
+                  {% for child in link.links %}
+                    <div class="mega-menu__column">
+                      <a class="mega-menu__heading" href="{{ child.url }}">{{ child.title }}</a>
+                      {% if child.links.size > 0 %}
+                        <ul>
+                          {% for grandchild in child.links %}
+                            <li><a href="{{ grandchild.url }}">{{ grandchild.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+
+                {% if section.settings.mega_image or section.settings.mega_image_2 %}
+                  <div class="mega-menu__promos">
+                    {% if section.settings.mega_image %}
+                      <a class="mega-menu__promo" href="{{ section.settings.mega_link | default: routes.all_products_collection_url }}">
+                        {{
+                          section.settings.mega_image
+                          | image_url: width: 760
+                          | image_tag: loading: 'lazy', widths: '360,540,760', sizes: '280px'
+                        }}
+                        <span class="mega-menu__promo-copy">
+                          <small>{{ section.settings.mega_eyebrow }}</small>
+                          <strong>{{ section.settings.mega_heading }}</strong>
+                        </span>
+                      </a>
+                    {% endif %}
+                    {% if section.settings.mega_image_2 %}
+                      <a class="mega-menu__promo" href="{{ section.settings.mega_link_2 | default: routes.all_products_collection_url }}">
+                        {{
+                          section.settings.mega_image_2
+                          | image_url: width: 760
+                          | image_tag: loading: 'lazy', widths: '360,540,760', sizes: '280px'
+                        }}
+                        <span class="mega-menu__promo-copy">
+                          <small>{{ section.settings.mega_eyebrow_2 }}</small>
+                          <strong>{{ section.settings.mega_heading_2 }}</strong>
+                        </span>
+                      </a>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      {% endif %}
+    </nav>
+
+    <div class="site-actions">
+      <button class="icon-button" type="button" data-search-open aria-label="Search">
+        {% render 'icon', name: 'search' %}
+      </button>
+      {% if shop.customer_accounts_enabled %}
+        <a
+          class="icon-button{% if customer %} icon-button--customer{% endif %}"
+          href="{{ shop.url }}{{ routes.account_url }}"
+          data-account-entry-open
+          aria-controls="CustomerAccountEntry"
+          aria-expanded="false"
+          aria-label="{% if customer %}View account for {{ customer.first_name | default: customer.email | escape }}{% else %}Sign in or create account{% endif %}"
+        >
+          {% render 'icon', name: 'account' %}
+        </a>
+      {% endif %}
+      {% if section.settings.show_wishlist %}
+        <button class="icon-button site-wishlist" type="button" data-wishlist-summary aria-label="Saved products" aria-expanded="false">
+          {% render 'icon', name: 'heart' %}
+          <span class="site-wishlist__count" data-wishlist-count hidden>0</span>
+        </button>
+      {% endif %}
+      <a class="icon-button" href="{{ routes.cart_url }}" data-cart-open aria-label="Cart">
+        {% render 'icon', name: 'bag' %}
+        <span
+          class="cart-count flo-cart-icon-bubble{% if cart.item_count == 0 %} is-hidden{% endif %}"
+          data-cart-count
+          aria-hidden="true"
+        >{{ cart.item_count }}</span>
+      </a>
+    </div>
+
+    {% if shop.customer_accounts_enabled %}
+      <div class="customer-entry" id="CustomerAccountEntry" data-account-entry hidden aria-hidden="true">
+        <button class="customer-entry__backdrop" type="button" data-account-entry-close tabindex="-1" aria-label="Close account panel"></button>
+        <aside class="customer-entry__panel" role="dialog" aria-modal="true" aria-labelledby="CustomerEntryTitle">
+          <div class="customer-entry__head">
+            <span class="customer-entry__eyebrow">Project Skin account</span>
+            <button class="icon-button customer-entry__close" type="button" data-account-entry-close aria-label="Close account panel">
+              {% render 'icon', name: 'close' %}
+            </button>
+          </div>
+
+          {% if customer %}
+            <div class="customer-entry__intro">
+              <span class="customer-entry__avatar" aria-hidden="true">{{ customer.first_name | default: customer.email | slice: 0 | upcase }}</span>
+              <div>
+                <p class="customer-entry__welcome">Welcome back</p>
+                <h2 id="CustomerEntryTitle">{{ customer.first_name | default: customer.email | escape }}</h2>
+              </div>
+            </div>
+            <nav class="customer-entry__nav" aria-label="Customer account">
+              <a href="{{ routes.account_url }}">
+                <span>{% render 'icon', name: 'bag' %}</span>
+                <span><strong>Orders</strong><small>Track purchases and review order history</small></span>
+                <span aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
+              </a>
+              <a href="{{ routes.account_addresses_url }}">
+                <span>{% render 'icon', name: 'account' %}</span>
+                <span><strong>Addresses</strong><small>Manage delivery and billing details</small></span>
+                <span aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
+              </a>
+            </nav>
+            <a class="customer-entry__secondary" href="{{ routes.account_logout_url }}">Sign out</a>
+          {% else %}
+            <div class="customer-entry__intro customer-entry__intro--guest">
+              <span class="customer-entry__avatar" aria-hidden="true">PS</span>
+              <div>
+                <p class="customer-entry__welcome">Your routine, remembered</p>
+                <h2 id="CustomerEntryTitle">Sign in or create an account</h2>
+              </div>
+            </div>
+            <p class="customer-entry__copy">Use your email to access orders, saved delivery details, and a smoother Project Skin checkout.</p>
+            <ul class="customer-entry__benefits" role="list">
+              <li><span>{% render 'icon', name: 'bag' %}</span><span><strong>Track every order</strong><small>See fulfilment and delivery updates in one place.</small></span></li>
+              <li><span>{% render 'icon', name: 'account' %}</span><span><strong>Faster checkout</strong><small>Keep addresses ready for your next routine refill.</small></span></li>
+              <li><span>{% render 'icon', name: 'verified' %}</span><span><strong>Secure, passwordless access</strong><small>Shopify sends a one-time code to your email.</small></span></li>
+            </ul>
+            <a class="customer-entry__primary" href="{{ shop.url }}{{ routes.account_url }}">Continue with email</a>
+            <p class="customer-entry__note">New here? Entering your email creates your account automatically.</p>
+          {% endif %}
+        </aside>
+      </div>
+    {% endif %}
+
+    {% if section.settings.show_wishlist %}
+      <div class="site-wishlist-popover" data-wishlist-popover aria-hidden="true">
+        <div>
+          <strong>Saved for later</strong>
+          <button class="icon-button" type="button" data-wishlist-close aria-label="Close saved products">
+            {% render 'icon', name: 'close' %}
+          </button>
+        </div>
+        <div class="site-wishlist-popover__items" data-wishlist-items></div>
+      </div>
+    {% endif %}
+  </header>
+</div>
+
+<aside class="mobile-nav" data-mobile-nav aria-label="Mobile navigation">
+  <div class="mobile-nav__head">
+    <a class="site-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+      {% render 'project-skin-logo', width: section.settings.logo_width, loading: 'eager' %}
+    </a>
+    <button class="icon-button" type="button" data-drawer-close aria-label="Close menu">
+      {% render 'icon', name: 'close' %}
+    </button>
+  </div>
+
+  {% if section.blocks.size > 0 %}
+    {% for block in section.blocks %}
+      {% if block.type == 'mega_menu' %}
+        <details {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.title }}</summary>
+          <div class="mobile-nav__mega">
+            <a class="mobile-nav__group-title" href="{{ block.settings.link | default: routes.all_products_collection_url }}">
+              {{ block.settings.column_1_heading | default: 'All Products' }}
+            </a>
+            <ul>
+              {% if block.settings.column_1_menu != blank and block.settings.column_1_menu.links.size > 0 %}
+                {% for menu_link in block.settings.column_1_menu.links %}
+                  <li><a href="{{ menu_link.url }}">{{ menu_link.title }}</a></li>
+                {% endfor %}
+              {% else %}
+                {% assign mobile_fallback_products = collections['all'].products %}
+                {% if block.settings.preset == 'project_skin' %}
+                  {% assign mobile_labels = 'Shop all|Acne care|Pigmentation|Daily SPF|Barrier support|Complete routines' | split: '|' %}
+                  {% assign mobile_urls = '/collections/all|/pages/acne|/pages/pigmentation|/pages/daily-spf|/pages/barrier|/products/project-skin-complete-4-step-skincare-routine-kit' | split: '|' %}
+                {% elsif block.settings.preset == 'learn' %}
+                  {% assign mobile_labels = 'The Science|Ingredients|Journal|Acne|Monsoon|Winter|Philosophy|Consultation' | split: '|' %}
+                  {% assign mobile_urls = '/pages/the-science|/pages/ingredients|/pages/journal|/pages/acne|/pages/monsoon|/pages/winter|/pages/philosophy|/pages/consultation' | split: '|' %}
+                {% elsif block.settings.preset == 'skincare' %}
+                  {% assign mobile_labels = 'Cleansers|Toners|Serums|Moisturizers|Sunscreen|Skin treatments' | split: '|' %}
+                {% else %}
+                  {% assign mobile_labels = 'Foundation|Setting powders|Blush|Eye makeup|Lipsticks|Clean beauty' | split: '|' %}
+                {% endif %}
+                {% for label in mobile_labels %}
+                  {% assign mobile_product = mobile_fallback_products[forloop.index0] %}
+                  {% assign mobile_url = mobile_product.url | default: routes.all_products_collection_url %}
+                  {% if block.settings.preset == 'project_skin' or block.settings.preset == 'learn' %}{% assign mobile_url = mobile_urls[forloop.index0] %}{% endif %}
+                  <li><a href="{{ mobile_url }}">{{ label }}</a></li>
+                {% endfor %}
+              {% endif %}
+            </ul>
+          </div>
+        </details>
+      {% elsif block.type == 'nav_link' %}
+        <a class="mobile-nav__link{% if block.settings.highlight %} mobile-nav__link--highlight{% endif %}" href="{{ block.settings.link | default: routes.all_products_collection_url }}">
+          {{ block.settings.title }}{% if block.settings.highlight %}<span aria-hidden="true">✦</span>{% endif %}
+        </a>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    {% for link in section.settings.menu.links %}
+      {% if link.links.size > 0 %}
+        <details>
+          <summary>{{ link.title }}</summary>
+          <ul>
+            {% for child in link.links %}
+              <li>
+                <a href="{{ child.url }}">{{ child.title }}</a>
+                {% if child.links.size > 0 %}
+                  <ul>
+                    {% for grandchild in child.links %}
+                      <li><a href="{{ grandchild.url }}">{{ grandchild.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </details>
+      {% else %}
+        <a class="mobile-nav__link" href="{{ link.url }}">{{ link.title }}</a>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if section.settings.mobile_promos and section.settings.mega_image %}
+    <div class="mobile-nav__promos">
+      <a href="{{ section.settings.mega_link | default: routes.all_products_collection_url }}" class="mobile-nav__promo">
+        {{ section.settings.mega_image | image_url: width: 700 | image_tag: loading: 'lazy' }}
+        <span><small>{{ section.settings.mega_eyebrow }}</small><strong>{{ section.settings.mega_heading }}</strong></span>
+      </a>
+      {% if section.settings.mega_image_2 %}
+        <a href="{{ section.settings.mega_link_2 | default: routes.all_products_collection_url }}" class="mobile-nav__promo">
+          {{ section.settings.mega_image_2 | image_url: width: 700 | image_tag: loading: 'lazy' }}
+          <span><small>{{ section.settings.mega_eyebrow_2 }}</small><strong>{{ section.settings.mega_heading_2 }}</strong></span>
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+</aside>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "paragraph", "content": "The Project Skin SVG logo is used sitewide. Uploaded logo images are ignored." },
+    { "type": "image_picker", "id": "logo", "label": "Logo (unused — SVG is preferred)" },
+    { "type": "text", "id": "logo_text", "label": "Fallback logo text", "default": "Project Skin" },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 240, "step": 10, "default": 140 },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "sticky_header", "label": "Sticky header", "default": true },
+    { "type": "checkbox", "id": "show_wishlist", "label": "Show browser wishlist", "default": true },
+    { "type": "checkbox", "id": "mobile_promos", "label": "Show promotion cards in mobile menu", "default": true },
+    { "type": "header", "content": "Mega menu promotion" },
+    { "type": "image_picker", "id": "mega_image", "label": "Promotion image" },
+    { "type": "text", "id": "mega_eyebrow", "label": "Eyebrow", "default": "Featured" },
+    { "type": "text", "id": "mega_heading", "label": "Heading", "default": "Explore the collection" },
+    { "type": "url", "id": "mega_link", "label": "Link" },
+    { "type": "image_picker", "id": "mega_image_2", "label": "Second promotion image" },
+    { "type": "text", "id": "mega_eyebrow_2", "label": "Second eyebrow", "default": "New" },
+    { "type": "text", "id": "mega_heading_2", "label": "Second heading", "default": "Discover what's new" },
+    { "type": "url", "id": "mega_link_2", "label": "Second link" }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega menu",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Navigation label", "default": "Makeup" },
+        { "type": "url", "id": "link", "label": "Navigation link" },
+        { "type": "select", "id": "preset", "label": "Fallback link labels", "default": "makeup", "options": [
+          { "value": "makeup", "label": "Makeup" },
+          { "value": "skincare", "label": "Skin care" },
+          { "value": "project_skin", "label": "Project Skin Shop" },
+          { "value": "learn", "label": "Project Skin Learn" }
+        ] },
+        { "type": "checkbox", "id": "highlight", "label": "Use accent color", "default": false },
+        { "type": "header", "content": "Link columns" },
+        { "type": "text", "id": "column_1_heading", "label": "First column heading", "default": "All Products" },
+        { "type": "link_list", "id": "column_1_menu", "label": "First column menu" },
+        { "type": "text", "id": "column_2_heading", "label": "Second column heading", "default": "Skin Tones" },
+        { "type": "link_list", "id": "column_2_menu", "label": "Second column menu" },
+        { "type": "header", "content": "First product promotion" },
+        { "type": "product", "id": "promo_1_product", "label": "Product" },
+        { "type": "image_picker", "id": "promo_1_image", "label": "Image" },
+        { "type": "text", "id": "promo_1_eyebrow", "label": "Eyebrow", "default": "Big Saving" },
+        { "type": "text", "id": "promo_1_heading", "label": "Heading", "default": "Holiday Set Deal" },
+        { "type": "text", "id": "promo_1_button", "label": "Button label", "default": "Shop the Set" },
+        { "type": "header", "content": "Second product promotion" },
+        { "type": "product", "id": "promo_2_product", "label": "Product" },
+        { "type": "image_picker", "id": "promo_2_image", "label": "Image" },
+        { "type": "text", "id": "promo_2_eyebrow", "label": "Eyebrow", "default": "Sensitive Skin" },
+        { "type": "text", "id": "promo_2_heading", "label": "Heading", "default": "Brightening Eye" },
+        { "type": "text", "id": "promo_2_button", "label": "Button label", "default": "Shop Serum" },
+        { "type": "header", "content": "Product carousel" },
+        { "type": "collection", "id": "promo_collection", "label": "More products collection", "info": "Extra products after the two featured cards. Defaults to All products." },
+        { "type": "range", "id": "promo_limit", "min": 2, "max": 10, "step": 1, "unit": "pcs", "label": "Max products in carousel", "default": 6 }
+      ]
+    },
+    {
+      "type": "nav_link",
+      "name": "Navigation link",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Label", "default": "Explore" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "checkbox", "id": "highlight", "label": "Use accent color", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Header" }]
+}
+{% endschema %}

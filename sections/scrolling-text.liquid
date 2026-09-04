@@ -1,0 +1,10 @@
+<section class="section scrolling-text-section {% if section.settings.section_width == 'full' %}full{% endif %}" style="padding-top:{{ section.settings.padding_top }}px;padding-bottom:{{ section.settings.padding_bottom }}px;{% if section.settings.show_divider %}border-top:1px solid var(--line);{% endif %}">
+  <div class="marquee marquee--{{ section.settings.direction }}" style="--marquee-speed:{{ section.settings.speed }}s">
+    <div class="marquee-track">
+      {% for i in (1..4) %}{% for block in section.blocks %}<span class="marquee-item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>{% endfor %}{% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{"name":"Scrolling text","tag":"section","class":"section-wrapper","settings":[{"type":"select","id":"section_width","label":"Section width","default":"full","options":[{"value":"fixed","label":"Fixed width"},{"value":"stretch","label":"Stretch width"},{"value":"full","label":"Full width"}]},{"type":"range","id":"speed","label":"Animation speed","min":10,"max":60,"step":2,"default":26,"unit":"s"},{"type":"select","id":"direction","label":"Direction","default":"left","options":[{"value":"left","label":"Left"},{"value":"right","label":"Right"}]},{"type":"range","id":"padding_top","label":"Top padding","min":0,"max":80,"step":4,"default":20,"unit":"px"},{"type":"range","id":"padding_bottom","label":"Bottom padding","min":0,"max":80,"step":4,"default":20,"unit":"px"},{"type":"checkbox","id":"show_divider","label":"Show divider","default":true}],"blocks":[{"type":"text","name":"Text","settings":[{"type":"text","id":"text","label":"Text","default":"Skin first • Science led •"}]}],"max_blocks":12,"presets":[{"name":"Scrolling text"}]}
+{% endschema %}

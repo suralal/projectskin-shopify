@@ -1,0 +1,44 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }}
+}
+</script>
+{% capture search_target %}{{ shop.url }}{{ routes.search_url }}?q={search_term_string}{% endcapture %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {{ search_target | strip | json }},
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{% if request.page_type == 'product' and product %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ canonical_url | json }},
+  "description": {{ product.description | strip_html | strip_newlines | truncate: 5000 | json }},
+  {% if product.featured_image %}"image": [{{ product.featured_image | image_url: width: 1600 | prepend: 'https:' | json }}],{% endif %}
+  {% if product.vendor != blank %}"brand": {"@type":"Brand","name":{{ product.vendor | json }}},{% endif %}
+  {% if product.selected_or_first_available_variant.sku != blank %}"sku": {{ product.selected_or_first_available_variant.sku | json }},{% endif %}
+  "offers": {
+    "@type": "Offer",
+    "url": {{ canonical_url | json }},
+    "priceCurrency": {{ cart.currency.iso_code | default: shop.currency | json }},
+    "price": {{ product.selected_or_first_available_variant.price | divided_by: 100.0 | json }},
+    "availability": "https://schema.org/{% if product.selected_or_first_available_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+    "itemCondition": "https://schema.org/NewCondition"
+  }
+}
+</script>
+{% endif %}

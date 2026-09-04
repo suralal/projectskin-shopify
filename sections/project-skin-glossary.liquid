@@ -1,0 +1,53 @@
+<section
+  id="IngredientGlossary"
+  class="psr-route-fallback psr-route-fallback--science psr-page psr-section psr-section--mist psr-glossary"
+>
+  <div class="container">
+    <div class="psr-section__head">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="psr-kicker">{{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      {% if section.settings.text != blank %}
+        <p>{{ section.settings.text }}</p>
+      {% endif %}
+    </div>
+
+    <div class="psr-glossary__grid">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <article class="psr-glossary__term" {{ block.shopify_attributes }} id="term-{{ block.settings.term | handle }}">
+            <h3>{{ block.settings.term }}</h3>
+            <p>{{ block.settings.definition }}</p>
+          </article>
+        {% endfor %}
+      {% else %}
+        {% render 'ingredient-glossary-defaults' %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ingredient glossary",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Glossary" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Words we use on purpose" },
+    { "type": "textarea", "id": "text", "label": "Intro", "default": "Short definitions for the biology behind the formulas — so mechanism language never feels like jargon for jargon’s sake." }
+  ],
+  "blocks": [
+    {
+      "type": "term",
+      "name": "Term",
+      "settings": [
+        { "type": "text", "id": "term", "label": "Term", "default": "Barrier" },
+        { "type": "textarea", "id": "definition", "label": "Definition", "default": "The skin’s protective lipid layer. When compromised, products absorb poorly and irritation rises." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Ingredient glossary" }]
+}
+{% endschema %}

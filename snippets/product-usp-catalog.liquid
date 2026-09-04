@@ -1,0 +1,107 @@
+{% comment %}
+  Product-aware positioning + differentiation (USP) cards.
+  Renders from formula drafts — customer-first titles, science as support.
+{% endcomment %}
+{% liquid
+  assign usp_intro = blank
+  assign usp_1_title = blank
+  assign usp_1_text = blank
+  assign usp_2_title = blank
+  assign usp_2_text = blank
+  assign usp_3_title = blank
+  assign usp_3_text = blank
+%}
+
+{% case product.handle %}
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    {% assign usp_intro = 'A hybrid broad-spectrum sunscreen built for Indian skin — next-generation European UV filters with an active skin-correction layer, so protection also supports clearer, more even-looking skin.' %}
+    {% assign usp_1_title = 'Four-filter hybrid coverage' %}
+    {% assign usp_1_text = 'Tinosorb S, Uvinul A Plus, Ethylhexyl Triazone, and Titanium Dioxide work together for true UVA1, UVA2, and UVB coverage — broader than the two-filter systems common in many daily SPFs.' %}
+    {% assign usp_2_title = 'Wearable in heat and humidity' %}
+    {% assign usp_2_text = 'Zinc PCA at 0.5% helps control sebum at the source, so the aqua-gel finish stays comfortable on oily, acne-prone skin through Indian weather.' %}
+    {% assign usp_3_title = 'Protects from sun damage — not just sun' %}
+    {% assign usp_3_text = 'Niacinamide and Licorice Extract support the look of post-inflammatory pigmentation and melasma-prone skin, because Indian skin needs correction alongside coverage.' %}
+
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    {% assign usp_intro = 'A lightweight hydrating moisturiser built on a plant-derived emollient system and a six-botanical bioactive complex — barrier repair and brightening support that sits under SPF without pilling or grease.' %}
+    {% assign usp_1_title = 'Prestige plant-derived emollient' %}
+    {% assign usp_1_text = 'C15-19 Alkane is a next-generation sustainable hydrocarbon emollient used in European prestige moisturisers — cushion without heaviness on acne-prone skin.' %}
+    {% assign usp_2_title = 'Six-botanical bioactive complex' %}
+    {% assign usp_2_text = 'Amla, Licorice Root, Tulsi, Black Seed, Neem, and Phytic Acid in one evidence-led complex for brightening, antioxidant defence, and anti-acne support.' %}
+    {% assign usp_3_title = 'Barrier-first architecture' %}
+    {% assign usp_3_text = 'Phospholipids and Sphingolipids replenish the lipid matrix while Saccharide Isomerate, Glycerin, Propanediol, and Betaine hydrate across multiple layers.' %}
+
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    {% assign usp_intro = 'A BHA + AHA cleanser on a barrier-safe surfactant system — Salicylic Acid and Glycolic Acid do the active work, while phospholipids and sphingolipids help make sure skin doesn’t pay for it.' %}
+    {% assign usp_1_title = 'Zero-compromise surfactant system' %}
+    {% assign usp_1_text = 'Sodium Lauroyl Sarcosinate, Decyl Glucoside, and Cocamidopropyl Betaine — a mild amino-acid and plant-derived trio that cleans without stripping barrier lipids.' %}
+    {% assign usp_2_title = 'Functional BHA + AHA levels' %}
+    {% assign usp_2_text = 'Salicylic Acid at 2% and Glycolic Acid at 1% work together in a rinse-off format — meaningful active concentrations, not a token acid mention on the label.' %}
+    {% assign usp_3_title = 'Repairs while it cleanses' %}
+    {% assign usp_3_text = 'Phospholipids and Sphingolipids actively replenish the skin’s lipid barrier during cleansing, so clarity doesn’t come at the cost of comfort.' %}
+
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    {% assign usp_intro = 'A stabilised 5% encapsulated Niacinamide serum built for oily, acne-prone Indian skin — layered with SEPICONCONTROL™ A5 for sebum control, dual Berberine extracts for brightening, and Saccharide Isomerate for next-generation hydration.' %}
+    {% assign usp_1_title = 'PDRN for recovery signalling' %}
+    {% assign usp_1_text = 'PDRN (Polydeoxyribonucleotide) is included as a DNA-repair–oriented recovery active — supporting a smoother, more resilient-looking finish with consistent use.' %}
+    {% assign usp_2_title = 'Niacinamide done right' %}
+    {% assign usp_2_text = 'Not just “5% on the label” — encapsulated Niacinamide in a pH-stabilised, buffered delivery matrix designed for oily, congestion-prone skin.' %}
+    {% assign usp_3_title = 'Double sebum-control system' %}
+    {% assign usp_3_text = 'SEPICONCONTROL™ A5 and Zinc PCA work on two different sebum-regulation pathways at once — a dual approach most single-active Niacinamide serums skip.' %}
+
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    {% assign usp_intro = 'A multi-action anti-acne capsule cream that combines acne correction, pigmentation control, barrier repair, and deep hydration in a single treatment system.' %}
+    {% assign usp_1_title = 'Barrier-first acne treatment' %}
+    {% assign usp_1_text = 'Ceramide NP, AP, and EOP with Panthenol, Squalane, Jojoba Oil, and Allantoin help maintain barrier integrity while treatment actives address breakouts.' %}
+    {% assign usp_2_title = 'Dual-chamber capsule technology' %}
+    {% assign usp_2_text = 'Treatment actives stay separated from the hydrating gel until you apply — improving stability and delivering fresher efficacy with every use.' %}
+    {% assign usp_3_title = 'Modern actives + botanicals' %}
+    {% assign usp_3_text = 'Niacinamide, Salicylic Acid, and Zinc PCA pair with Neem, Turmeric, and Willow Bark to address oiliness, inflammation, and the look of pigmentation together.' %}
+
+  {% when 'clear-seal' %}
+    {% assign usp_intro = 'A liquid acne patch that dries into an invisible protective film while actively treating breakouts — clearing, shielding, and supporting the look of post-acne marks without the bulk of traditional patches.' %}
+    {% assign usp_1_title = 'Targets acne at the source' %}
+    {% assign usp_1_text = 'Salicylic Acid, Glycolic Acid, and Niacinamide help unclog pores, exfoliate, and calm the look of inflammation where a breakout starts.' %}
+    {% assign usp_2_title = 'Invisible liquid patch' %}
+    {% assign usp_2_text = 'Forms a protective film that shields breakouts from dirt, friction, and picking — virtually undetectable once dry.' %}
+    {% assign usp_3_title = 'Hydrates as it heals' %}
+    {% assign usp_3_text = 'A moisture-locking complex helps prevent the dryness often caused by traditional acne treatments and patches.' %}
+{% endcase %}
+
+{% if usp_intro != blank %}
+  <section
+    class="pdp-section pdp-diff"
+    style="--pdp-pad-top: {{ padding_top | default: 56 }}px; --pdp-pad-bottom: {{ padding_bottom | default: 40 }}px"
+    data-product-palette="{{ product_palette }}"
+  >
+    <div class="page-width-pdp">
+      <header class="pdp-section-head pdp-diff__head">
+        {% if eyebrow != blank %}
+          <p class="pdp-eyebrow">{{ eyebrow }}</p>
+        {% endif %}
+        {% if heading != blank %}
+          <h2>{{ heading }}</h2>
+        {% endif %}
+        <p class="pdp-diff__intro">{{ usp_intro }}</p>
+      </header>
+
+      <div class="pdp-diff__grid" role="list">
+        <article class="pdp-diff__card" role="listitem">
+          <span class="pdp-diff__index" aria-hidden="true">01</span>
+          <h3>{{ usp_1_title }}</h3>
+          <p>{{ usp_1_text }}</p>
+        </article>
+        <article class="pdp-diff__card" role="listitem">
+          <span class="pdp-diff__index" aria-hidden="true">02</span>
+          <h3>{{ usp_2_title }}</h3>
+          <p>{{ usp_2_text }}</p>
+        </article>
+        <article class="pdp-diff__card" role="listitem">
+          <span class="pdp-diff__index" aria-hidden="true">03</span>
+          <h3>{{ usp_3_title }}</h3>
+          <p>{{ usp_3_text }}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+{% endif %}

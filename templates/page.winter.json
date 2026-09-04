@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "landing": {
+      "type": "project-skin-seasonal-landing",
+      "settings": { "season_key": "winter" }
+    }
+  },
+  "order": ["landing"]
+}

@@ -1,0 +1,37 @@
+{
+  "sections": {
+    "hero": {
+      "type": "ps-consultation-hero",
+      "settings": {
+        "eyebrow": "Dermatologist consultation",
+        "heading": "Clinical guidance.\nPersonal context.",
+        "text": "Talk through recurring concerns, existing products and routine history with a qualified dermatologist, then leave with a clear plan.",
+        "duration": "30 minute consultation",
+        "format": "Secure video call",
+        "follow_up": "Written routine summary",
+        "button_label": "Request an appointment",
+        "button_link": "#book-consultation"
+      }
+    },
+    "booking": {
+      "type": "ps-consultation-form",
+      "blocks": {
+        "context": { "type": "step", "settings": { "heading": "Share your context", "text": "Tell us the concern, your current routine and relevant history." } },
+        "consult": { "type": "step", "settings": { "heading": "Meet your dermatologist", "text": "Discuss likely triggers, product use and practical next steps." } },
+        "plan": { "type": "step", "settings": { "heading": "Receive a clear plan", "text": "Leave with a written routine summary and guidance on follow-up." } }
+      },
+      "block_order": ["context", "consult", "plan"],
+      "settings": {
+        "eyebrow": "How it works",
+        "heading": "A clearer next step",
+        "text": "A consultation is useful when concerns recur, your current routine is unclear, or product choices require qualified clinical context.",
+        "form_heading": "Tell us what your skin is experiencing",
+        "form_text": "Share enough context for our team to match the right dermatologist and confirm availability.",
+        "button_label": "Request consultation",
+        "success_message": "Thank you. Our consultation team will contact you to confirm the next available appointment.",
+        "privacy_note": "Your information is used only to coordinate the consultation and provide the service you request."
+      }
+    }
+  },
+  "order": ["hero", "booking"]
+}

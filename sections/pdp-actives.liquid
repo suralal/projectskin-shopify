@@ -1,0 +1,203 @@
+{% liquid
+  assign show_section = true
+  assign handle_list = section.settings.product_handles | strip | downcase
+  if handle_list != blank
+    assign show_section = false
+    if handle_list contains product.handle
+      assign show_section = true
+    endif
+  endif
+
+  capture catalog_actives
+    render 'product-actives-catalog', product: product
+  endcapture
+  assign catalog_actives = catalog_actives | strip
+  assign use_catalog = false
+  if section.settings.use_formula_catalog and catalog_actives != blank
+    assign use_catalog = true
+  endif
+  if catalog_actives == blank and section.blocks.size == 0
+    assign show_section = false
+  endif
+%}
+{% if show_section %}
+<section
+  class="pdp-section pdp-actives"
+  id="ProductActives"
+  style="--pdp-pad-top: {{ section.settings.padding_top }}px; --pdp-pad-bottom: {{ section.settings.padding_bottom }}px"
+  data-pdp-actives
+>
+  <div class="page-width-pdp">
+    <purity-ingredient-explorer class="ps-ingredients__explorer pdp-actives__explorer">
+      <div class="ps-ingredients__header pdp-actives__header">
+        <div class="ps-ingredients__intro">
+          {% if section.settings.eyebrow != blank %}
+            <p class="ps-ingredients__eyebrow">{{ section.settings.eyebrow }}</p>
+          {% endif %}
+          <h2 class="ps-ingredients__heading pdp-actives__heading">{{ section.settings.heading }}</h2>
+          {% if section.settings.copy != blank %}
+            <div class="ps-ingredients__description rte">{{ section.settings.copy }}</div>
+          {% endif %}
+        </div>
+
+        {% if use_catalog or section.blocks.size > 2 %}
+          <div class="ps-ingredients__controls" aria-label="Ingredient carousel controls">
+            <p class="ps-ingredients__counter" aria-hidden="true">
+              <span data-ingredient-counter-current>1</span><span>/</span><span data-ingredient-counter-total></span>
+            </p>
+            <button class="ps-ingredients__arrow" type="button" data-ingredient-prev aria-label="Previous ingredients">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+            </button>
+            <button class="ps-ingredients__arrow" type="button" data-ingredient-next aria-label="Next ingredients">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            </button>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ps-ingredients__viewport pdp-actives__viewport" data-ingredient-viewport>
+        <div class="ps-ingredients__track pdp-actives__track" data-ingredient-track role="list" aria-label="{{ section.settings.heading | escape }}">
+          {% if use_catalog %}
+            {{ catalog_actives }}
+          {% else %}
+            {% for block in section.blocks %}
+              {% render 'ingredient-card',
+                index: forloop.index,
+                is_active: forloop.first,
+                role: block.settings.benefit,
+                title: block.settings.heading,
+                type_label: block.settings.type_label,
+                summary: block.settings.text,
+                details: block.settings.details,
+                strength: block.settings.strength,
+                marker: block.settings.marker,
+                icon: block.settings.icon,
+                image: blank,
+                tone: block.settings.tone,
+                block_attributes: block.shopify_attributes
+              %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="ps-ingredients__footer pdp-actives__footer-panel">
+        <div class="ps-ingredients__progress" aria-hidden="true"><span data-ingredient-progress></span></div>
+
+        <div class="ps-ingredients__detail" data-ingredient-detail aria-live="polite">
+          <div class="ps-ingredients__detail-heading">
+            <span data-ingredient-detail-role></span>
+            <h3 data-ingredient-detail-title></h3>
+            <p data-ingredient-detail-type></p>
+            <strong data-ingredient-detail-marker></strong>
+          </div>
+          <div class="ps-ingredients__detail-copy">
+            <div><span>At a glance</span><p data-ingredient-detail-summary></p></div>
+            <div><span>Why we use it</span><p data-ingredient-detail-body></p></div>
+          </div>
+        </div>
+
+        {% if section.settings.ingredients_label != blank %}
+          <p class="pdp-actives__footer">
+            <a href="{{ section.settings.ingredients_link | default: '/pages/ingredients' }}">{{ section.settings.ingredients_label }}</a>
+          </p>
+        {% endif %}
+        {% render 'product-ingredient-links', product: product %}
+      </div>
+    </purity-ingredient-explorer>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "PDP active ingredients",
+  "settings": [
+    { "type": "text", "id": "product_handles", "label": "Only show for product handles", "info": "Comma-separated handles. Leave blank to show on all products." },
+    { "type": "checkbox", "id": "use_formula_catalog", "label": "Use built-in formula catalog", "default": true, "info": "Pulls product-specific actives from the Project Skin formula drafts. Turn off to use theme editor blocks instead." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Formula" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Active ingredients" },
+    { "type": "richtext", "id": "copy", "label": "Intro" },
+    { "type": "text", "id": "ingredients_label", "label": "Full list link label", "default": "View full ingredients list" },
+    { "type": "url", "id": "ingredients_link", "label": "Full list link" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Active",
+      "settings": [
+        { "type": "text", "id": "benefit", "label": "Role", "default": "Oil balance" },
+        { "type": "text", "id": "heading", "label": "Ingredient name", "default": "Niacinamide" },
+        { "type": "text", "id": "type_label", "label": "Ingredient family", "default": "Vitamin B3 derivative" },
+        { "type": "text", "id": "strength", "label": "Strength or form", "default": "5% concentration" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "molecule",
+          "options": [
+            { "value": "molecule", "label": "Molecule (general active)" },
+            { "value": "droplet", "label": "Droplet (hydration)" },
+            { "value": "oil", "label": "Oil balance" },
+            { "value": "pores", "label": "Pore care" },
+            { "value": "shield", "label": "Barrier support" },
+            { "value": "leaf", "label": "Botanical / soothing" },
+            { "value": "sun", "label": "Sun protection" },
+            { "value": "sparkle", "label": "Brightening" }
+          ]
+        },
+        { "type": "text", "id": "marker", "label": "Legacy marker", "info": "Only used if Strength is empty, and only when it contains a number." },
+        { "type": "textarea", "id": "text", "label": "Short description", "default": "A multi-benefit vitamin B3 active that supports oil balance and clearer-looking texture." },
+        { "type": "textarea", "id": "details", "label": "Detailed explanation", "default": "Helps support the skin barrier while improving the appearance of uneven tone, visible pores, and excess oil." },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Card tone",
+          "default": "sage",
+          "options": [
+            { "value": "sage", "label": "Sage" },
+            { "value": "clay", "label": "Clay" },
+            { "value": "blue", "label": "Mineral blue" },
+            { "value": "green", "label": "Botanical green" },
+            { "value": "cream", "label": "Ceramide cream" },
+            { "value": "rose", "label": "Soft rose" }
+          ]
+        },
+        { "type": "image_picker", "id": "image", "label": "Legacy background image", "info": "Unused — cards use the branded identity panel instead of photo overlays." }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "PDP active ingredients",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "benefit": "Oil balance",
+            "heading": "Niacinamide",
+            "type_label": "Vitamin B3 derivative",
+            "strength": "5% concentration",
+            "icon": "oil",
+            "tone": "sage"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "benefit": "Pore care",
+            "heading": "Salicylic Acid",
+            "type_label": "Oil-soluble BHA",
+            "strength": "2% concentration",
+            "icon": "pores",
+            "tone": "clay"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

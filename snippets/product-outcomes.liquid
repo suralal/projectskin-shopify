@@ -1,0 +1,61 @@
+{% comment %}
+  Product-specific buy-box concern + outcome tiles when section blocks are empty.
+{% endcomment %}
+{% case product.handle %}
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    {% unless concern_only %}
+      <div class="pdp-outcomes" aria-label="Key product outcomes">
+        <article class="pdp-outcome"><strong>5%</strong><span>Encapsulated niacinamide</span><small>pH-stabilised delivery for oil balance and clearer texture</small></article>
+        <article class="pdp-outcome"><strong>Dual</strong><span>Sebum-control system</span><small>SEPICONCONTROL™ A5 + Zinc PCA on two pathways</small></article>
+        <article class="pdp-outcome"><strong>PDRN</strong><span>Recovery support</span><small>Plus Saccharide Isomerate for lasting hydration</small></article>
+      </div>
+    {% endunless %}
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    {% unless concern_only %}
+      <div class="pdp-outcomes" aria-label="Key product outcomes">
+        <article class="pdp-outcome"><strong>6</strong><span>Botanical complex</span><small>Amla, Licorice, Tulsi, Black Seed, Neem, Phytic Acid</small></article>
+        <article class="pdp-outcome"><strong>Barrier</strong><span>Ceramide + lipids</span><small>Phospholipids and sphingolipids replenish the matrix</small></article>
+        <article class="pdp-outcome"><strong>SPF</strong><span>Sits under sunscreen</span><small>Lightweight gel — no pilling, no grease</small></article>
+      </div>
+    {% endunless %}
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    {% unless concern_only %}
+      <div class="pdp-outcomes" aria-label="Key product outcomes">
+        <article class="pdp-outcome"><strong>2%</strong><span>Salicylic Acid</span><small>Functional BHA in a rinse-off cleanse</small></article>
+        <article class="pdp-outcome"><strong>1%</strong><span>Glycolic Acid</span><small>Paired AHA for clearer-looking skin</small></article>
+        <article class="pdp-outcome"><strong>Barrier</strong><span>Soap-free system</span><small>Cleans without stripping lipid support</small></article>
+      </div>
+    {% endunless %}
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    {% unless concern_only %}
+      <div class="pdp-outcomes" aria-label="Key product outcomes">
+        <article class="pdp-outcome"><strong>SPF 50</strong><span>PA++++ aqua gel</span><small>Four-filter hybrid for UVA1, UVA2, and UVB</small></article>
+        <article class="pdp-outcome"><strong>0.5%</strong><span>Zinc PCA</span><small>Sebum control for heat and humidity wear</small></article>
+        <article class="pdp-outcome"><strong>Tone</strong><span>Correction layer</span><small>Niacinamide + Licorice for PIH-prone skin</small></article>
+      </div>
+    {% endunless %}
+  {% when 'clear-seal' %}
+    {% unless concern_only %}
+      <div class="pdp-outcomes" aria-label="Key product outcomes">
+        <article class="pdp-outcome"><strong>Film</strong><span>Invisible liquid patch</span><small>Shields breakouts without bulky patches</small></article>
+        <article class="pdp-outcome"><strong>Actives</strong><span>SA + GA + Niacinamide</span><small>Treats the spot while the film sets</small></article>
+        <article class="pdp-outcome"><strong>Hydrate</strong><span>Moisture-locking</span><small>Helps limit dryness as it seals</small></article>
+      </div>
+    {% endunless %}
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    {% unless concern_only %}
+      <div class="pdp-outcomes" aria-label="Key product outcomes">
+        <article class="pdp-outcome"><strong>Capsule</strong><span>Dual-chamber tech</span><small>Fresh actives released at application</small></article>
+        <article class="pdp-outcome"><strong>Trio</strong><span>Niacinamide · SA · Zinc PCA</span><small>Clarity, pores, and oil balance in one cream</small></article>
+        <article class="pdp-outcome"><strong>Barrier</strong><span>Ceramide-first</span><small>Treats acne without abandoning the barrier</small></article>
+      </div>
+    {% endunless %}
+  {% when 'project-skin-complete-4-step-skincare-routine-kit' %}
+    {% unless concern_only %}
+      <div class="pdp-outcomes" aria-label="Key product outcomes">
+        <article class="pdp-outcome"><strong>4</strong><span>Essential steps</span><small>Cleanse, treat, moisturise, protect — one complete system</small></article>
+        <article class="pdp-outcome"><strong>₹647</strong><span>You save</span><small>Vs buying each step separately at full price</small></article>
+        <article class="pdp-outcome"><strong>Derm</strong><span>Dermatologically tested</span><small>Formulated for oily and acne-prone Indian skin</small></article>
+      </div>
+    {% endunless %}
+{% endcase %}

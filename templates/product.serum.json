@@ -1,0 +1,468 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "outcome_niacinamide": {
+          "type": "outcome",
+          "settings": {
+            "stat": "5%",
+            "label": "Encapsulated niacinamide",
+            "detail": "Supports oil balance and clearer-looking texture"
+          }
+        },
+        "outcome_hydration": {
+          "type": "outcome",
+          "settings": {
+            "stat": "Daily",
+            "label": "Treat step",
+            "detail": "Pentavitin™ + PDRN for lasting hydration support"
+          }
+        },
+        "outcome_tested": {
+          "type": "outcome",
+          "settings": {
+            "stat": "Derm",
+            "label": "Dermatologically tested",
+            "detail": "Formulated for oily and acne-prone skin"
+          }
+        },
+        "highlight_cruelty": {
+          "type": "highlight",
+          "settings": {
+            "heading": "Cruelty-free"
+          }
+        },
+        "highlight_paraben": {
+          "type": "highlight",
+          "settings": {
+            "heading": "Paraben-free"
+          }
+        },
+        "highlight_indian_skin": {
+          "type": "highlight",
+          "settings": {
+            "heading": "Made for Indian skin"
+          }
+        },
+        "accordion_why": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Why these actives",
+            "content": "<ul><li><strong>Encapsulated Niacinamide 5%</strong> — oil balance, pores, and tone in a stabilised delivery matrix.</li><li><strong>SEPICONCONTROL™ A5 + Zinc PCA</strong> — dual sebum pathways most single-active serums skip.</li><li><strong>PDRN + Saccharide Isomerate</strong> — recovery signalling and lasting hydration so treatment stays comfortable.</li></ul><p><a href=\"/pages/ingredients#ingredient-niacinamide\">Read: Niacinamide at 5%</a> · <a href=\"/pages/acne\">Acne literacy</a></p>",
+            "open": true
+          }
+        },
+        "accordion_dos": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Do's",
+            "content": "<ul><li>Apply 2–3 drops on clean, dry skin after cleansing.</li><li>Use once daily; twice daily only if your skin tolerates it well.</li><li>Follow with moisturiser; add SPF in the morning.</li><li>Stay consistent for several weeks before judging results.</li><li>Patch test before first use if your skin is reactive.</li></ul>",
+            "open": false
+          }
+        },
+        "accordion_donts": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Don'ts",
+            "content": "<ul><li>Don't layer immediately with strong AHAs, BHAs, or vitamin C if your skin is easily irritated.</li><li>Don't over-apply — more product won't speed results.</li><li>Don't skip moisturiser after the serum.</li><li>Don't use on broken or highly inflamed skin.</li><li>Don't expect overnight clearing; give the routine time.</li></ul>",
+            "open": false
+          }
+        },
+        "accordion_howto": {
+          "type": "accordion",
+          "settings": {
+            "heading": "How to use",
+            "content": "<p>Cleanse → apply 2–3 drops of serum and pat in → moisturise → protect with SPF in the morning. Introduce one new active at a time.</p>",
+            "open": false
+          }
+        },
+        "accordion_ingredients": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Full ingredients",
+            "content": "<p>Key actives: Encapsulated Niacinamide 5%, SEPICONCONTROL™ A5, PDRN, Saccharide Isomerate (Pentavitin™), Panthenol, Zinc PCA, calming botanicals. The complete INCI list is on the product packaging.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "outcome_niacinamide",
+        "outcome_hydration",
+        "outcome_tested",
+        "highlight_cruelty",
+        "highlight_paraben",
+        "highlight_indian_skin",
+        "accordion_why",
+        "accordion_dos",
+        "accordion_donts",
+        "accordion_howto",
+        "accordion_ingredients"
+      ],
+      "settings": {
+        "use_product_media": true,
+        "use_custom_content": false,
+        "title_override": "",
+        "price_override": "",
+        "enable_zoom": true,
+        "concern_line": "",
+        "mechanism_line": "",
+        "use_judgeme_rating": true,
+        "rating": "5.0",
+        "review_count": "2",
+        "show_demo_swatches": false,
+        "swatch_1_label": "Orange",
+        "swatch_1_color": "#e66b23",
+        "swatch_2_label": "Green",
+        "swatch_2_color": "#667853",
+        "inventory_text": "In stock and ready to ship",
+        "one_time_label": "One Time Purchase",
+        "subscribe_label": "Subscribe and save",
+        "subscribe_price": "$36.00",
+        "frequency_label": "Deliver every month - 10% Off",
+        "add_label": "Add to Cart",
+        "show_dynamic_checkout": true,
+        "shipping_text": "Free shipping on eligible orders. View shipping policy",
+        "returns_text": "Easy returns. View return policy",
+        "gift_text": "",
+        "benefits_heading": "Top Benefits",
+        "action_heading": "See in Action",
+        "pickup_heading": "Pickup availability",
+        "pickup_text": "Check availability at your nearest store.",
+        "show_pickup": false,
+        "pairs_heading": "Pairs Well With",
+        "help_heading": "Need product guidance?",
+        "help_text": "Speak with our consultation team.",
+        "help_button": "Ask a product question",
+        "question_heading": "Ask a question",
+        "disclaimer": "",
+        "sticky_add_to_cart": true,
+        "gallery_layout": "thumbnails",
+        "show_rating": false,
+        "show_variant_picker": true,
+        "show_purchase_options": false,
+        "product_description": "",
+        "inventory_tone": "available"
+      }
+    },
+    "experience": {
+      "type": "pdp-experience",
+      "blocks": {
+        "for_skin": {
+          "type": "item",
+          "settings": {
+            "kicker": "FOR",
+            "title": "Oily and acne-prone skin",
+            "text": "Built for congestion, excess oil, and everyday Indian climate."
+          }
+        },
+        "feel": {
+          "type": "item",
+          "settings": {
+            "kicker": "FEEL",
+            "title": "Lightweight water-serum",
+            "text": "Fast-absorbing texture that layers cleanly under moisturiser and SPF."
+          }
+        },
+        "finish": {
+          "type": "item",
+          "settings": {
+            "kicker": "FINISH",
+            "title": "Fragrance-free focus",
+            "text": "No added fragrance — centred on actives, comfort, and clarity."
+          }
+        }
+      },
+      "block_order": ["for_skin", "feel", "finish"],
+      "settings": {
+        "product_handles": "",
+        "use_formula_catalog": true,
+        "eyebrow": "The experience",
+        "heading": "How it feels on skin",
+        "padding_top": 56,
+        "padding_bottom": 40
+      }
+    },
+    "differentiation": {
+      "type": "pdp-differentiation",
+      "settings": {
+        "eyebrow": "Why this formula",
+        "heading": "What sets it apart",
+        "padding_top": 56,
+        "padding_bottom": 40
+      }
+    },
+    "ingredients": {
+      "type": "pdp-actives",
+      "blocks": {
+        "niacinamide": {
+          "type": "ingredient",
+          "settings": {
+            "benefit": "Oil balance",
+            "heading": "Encapsulated Niacinamide",
+            "type_label": "Vitamin B3 derivative",
+            "strength": "5% concentration",
+            "icon": "oil",
+            "text": "Supports oil balance, pore appearance, and a more even-looking tone.",
+            "details": "A 5% encapsulated vitamin B3 active selected to support oil balance, pore appearance, and a more even-looking tone — with a measured, skin-friendly feel.",
+            "tone": "sage"
+          }
+        },
+        "sepicontrol": {
+          "type": "ingredient",
+          "settings": {
+            "benefit": "Clarity",
+            "heading": "Sepicontrol™ A5",
+            "type_label": "Acne-focused complex",
+            "strength": "Targeted complex",
+            "icon": "pores",
+            "text": "Supports clearer-looking, congestion-prone skin in the treat step.",
+            "details": "A targeted complex used to support clearer-looking, congestion-prone skin as part of a consistent treat step.",
+            "tone": "clay"
+          }
+        },
+        "pentavitin": {
+          "type": "ingredient",
+          "settings": {
+            "benefit": "Hydration",
+            "heading": "Pentavitin™",
+            "type_label": "Sugar-based humectant",
+            "strength": "Lasting hydration support",
+            "icon": "droplet",
+            "text": "Helps skin hold onto moisture while addressing oily, acne-prone concerns.",
+            "details": "Helps skin hold onto moisture so the serum supports comfort while addressing oily and acne-prone concerns.",
+            "tone": "blue"
+          }
+        },
+        "pdrn": {
+          "type": "ingredient",
+          "settings": {
+            "benefit": "Recovery",
+            "heading": "PDRN",
+            "type_label": "Recovery support active",
+            "strength": "Smoother finish",
+            "icon": "sparkle",
+            "text": "Supports skin recovery and a smoother-looking finish with regular use.",
+            "details": "Included to support skin recovery and a smoother-looking finish with regular use.",
+            "tone": "rose"
+          }
+        }
+      },
+      "block_order": ["niacinamide", "sepicontrol", "pentavitin", "pdrn"],
+      "settings": {
+        "eyebrow": "Formula",
+        "heading": "Active ingredients",
+        "copy": "<p>Named actives, functional concentrations, and a clear reason each one is in the formula.</p>",
+        "ingredients_label": "Explore the ingredient library",
+        "ingredients_link": "/pages/ingredients",
+        "padding_top": 64,
+        "padding_bottom": 40,
+        "product_handles": "",
+        "use_formula_catalog": true
+      }
+    },
+    "steps": {
+      "type": "pdp-steps",
+      "blocks": {
+        "step_cleanse": {
+          "type": "step",
+          "settings": {
+            "heading": "01. Cleanse",
+            "copy": "<p>Start with a gentle cleanser so the serum can absorb evenly.</p>"
+          }
+        },
+        "step_treat": {
+          "type": "step",
+          "settings": {
+            "heading": "02. Treat",
+            "copy": "<p>Apply 2–3 drops of Project Skin serum and pat until absorbed.</p>"
+          }
+        },
+        "step_seal": {
+          "type": "step",
+          "settings": {
+            "heading": "03. Moisturise & protect",
+            "copy": "<p>Lock in with moisturiser. In the morning, finish with broad-spectrum SPF.</p>"
+          }
+        }
+      },
+      "block_order": ["step_cleanse", "step_treat", "step_seal"],
+      "settings": {
+        "product_handles": "",
+        "use_formula_catalog": true,
+        "eyebrow": "How to use",
+        "heading": "Three steps to a clearer routine",
+        "intro": "Amount, order, and timing — so the formula can do what it is built for.",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "trust": {
+      "type": "pdp-trust-strip",
+      "blocks": {
+        "clinical": {
+          "type": "item",
+          "settings": {
+            "text": "Dermatologically tested"
+          }
+        },
+        "transparent": {
+          "type": "item",
+          "settings": {
+            "text": "Transparent ingredient information"
+          }
+        },
+        "indian_skin": {
+          "type": "item",
+          "settings": {
+            "text": "Designed for Indian skin"
+          }
+        },
+        "cruelty": {
+          "type": "item",
+          "settings": {
+            "text": "Cruelty-free"
+          }
+        }
+      },
+      "block_order": ["clinical", "transparent", "indian_skin", "cruelty"],
+      "settings": {
+        "speed": 28
+      }
+    },
+    "reviews": {
+      "type": "judgeme-reviews",
+      "settings": {
+        "eyebrow": "Customer reviews",
+        "heading": "What customers say",
+        "intro": "Texture, climate, and consistency — from people building the same routine.",
+        "show_fallback_when_empty": true,
+        "padding_top": 68,
+        "padding_bottom": 64
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "section_width": "fixed",
+        "subheading": "Build your routine",
+        "heading": "Complete the routine",
+        "alignment": "center",
+        "products_to_show": 4,
+        "columns": 4,
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "show_divider": false,
+        "description": "<p>Cleanse, treat, moisturise, protect — pair this serum with the rest of your Project Skin steps.</p>"
+      }
+    },
+    "faq": {
+      "type": "pdp-faq",
+      "blocks": {
+        "who": {
+          "type": "faq",
+          "settings": {
+            "question": "Who is this serum for?",
+            "answer": "<p>It's formulated for oily and acne-prone skin that needs oil balance, pore-focused care, and a lightweight treat step. If your barrier is very compromised, start slowly and moisturise well.</p>"
+          }
+        },
+        "sensitive": {
+          "type": "faq",
+          "settings": {
+            "question": "Is it suitable for sensitive skin?",
+            "answer": "<p>Many people with reactive skin tolerate niacinamide well, but always patch test first. Start every other day if your skin is easily irritated, and avoid stacking strong actives at the same time.</p>"
+          }
+        },
+        "timeline": {
+          "type": "faq",
+          "settings": {
+            "question": "How long until I notice a difference?",
+            "answer": "<p>Oil balance and feel can improve within the first 1–2 weeks of consistent use. Texture and clarity usually need several weeks. Stay consistent and keep the rest of your routine simple.</p>"
+          }
+        },
+        "layering": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use it with salicylic acid or vitamin C?",
+            "answer": "<p>Yes, with planning. Use this serum on alternate nights from strong exfoliating acids if your skin is new to actives. Vitamin C is often better in the morning with SPF; keep niacinamide in your treat step once or twice daily as tolerated.</p>"
+          }
+        },
+        "am_pm": {
+          "type": "faq",
+          "settings": {
+            "question": "Morning or night?",
+            "answer": "<p>Both are fine. If you use it in the morning, always finish with broad-spectrum sunscreen. At night, follow with moisturiser.</p>"
+          }
+        },
+        "active_acne": {
+          "type": "faq",
+          "settings": {
+            "question": "Will it treat active pimples?",
+            "answer": "<p>This serum is focused on oil balance, texture, and overall clarity. For active breakouts, pair it with a targeted acne treatment or speak with our consultation team for a routine fit.</p>"
+          }
+        },
+        "ingredients": {
+          "type": "faq",
+          "settings": {
+            "question": "What are the key actives?",
+            "answer": "<p>Encapsulated niacinamide 5%, Sepicontrol™ A5, PDRN, Pentavitin™, and panthenol — supported by calming botanicals. Full ingredient information is listed on the product packaging and Shopify product details.</p>"
+          }
+        },
+        "fragrance": {
+          "type": "faq",
+          "settings": {
+            "question": "Does it contain fragrance?",
+            "answer": "<p>No added fragrance. The formula prioritises actives and comfort for acne-prone routines.</p>"
+          }
+        },
+        "moisturiser": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I still need a moisturiser?",
+            "answer": "<p>Yes. Seal the serum with a moisturiser suited to oily or combination skin so hydration stays balanced and the barrier stays supported.</p>"
+          }
+        },
+        "cruelty": {
+          "type": "faq",
+          "settings": {
+            "question": "Is Project Skin cruelty-free?",
+            "answer": "<p>Yes. Project Skin is committed to cruelty-free product development.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "who",
+        "sensitive",
+        "timeline",
+        "layering",
+        "am_pm",
+        "active_acne",
+        "ingredients",
+        "fragrance",
+        "moisturiser",
+        "cruelty"
+      ],
+      "settings": {
+        "use_formula_catalog": true,
+        "eyebrow": "Before you buy",
+        "heading": "Ask the mechanism questions",
+        "copy": "<p>Diagnosis-first answers — what this serum is for, what it will not claim, and how it fits an Indian acne-prone routine.</p>",
+        "button_label": "Book a consultation",
+        "padding_top": 72,
+        "padding_bottom": 84,
+        "button_link": "/pages/consultation"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "differentiation",
+    "experience",
+    "ingredients",
+    "steps",
+    "trust",
+    "reviews",
+    "related",
+    "faq"
+  ]
+}

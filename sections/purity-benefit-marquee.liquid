@@ -1,0 +1,78 @@
+<section
+  class="ps-section ps-benefits"
+  data-follow-hero-palette="{{ section.settings.follow_hero_palette }}"
+  data-active-palette="neutral"
+  style="--ps-speed: {{ section.settings.speed }}s; --ps-gap: {{ section.settings.gap }}px; --ps-benefit-bg: {{ section.settings.background }}; --ps-benefit-icon-bg: {{ section.settings.icon_background }}; --ps-benefit-text: {{ section.settings.text_color }}; --ps-benefit-border: {{ section.settings.border_color }}"
+>
+  <div class="ps-marquee" role="region" aria-label="{{ section.settings.accessibility_label }}">
+    {% for duplicate in (1..2) %}
+      <div class="ps-marquee__group" {% if duplicate == 2 %}aria-hidden="true"{% endif %}>
+        {% for block in section.blocks %}
+          {% liquid
+            assign benefit_icon = block.settings.icon | default: 'auto'
+            assign benefit_tone = block.settings.tone | default: 'mint'
+            if benefit_icon == 'auto'
+              assign benefit_text = block.settings.text | downcase
+              if benefit_text contains 'cruelty'
+                assign benefit_icon = 'cruelty-free'
+              elsif benefit_text contains 'tester'
+                assign benefit_icon = 'testers'
+              elsif benefit_text contains 'dermatologist'
+                assign benefit_icon = 'dermatologist'
+              elsif benefit_text contains 'indian'
+                assign benefit_icon = 'indian-skin'
+              elsif benefit_text contains 'comedogenic'
+                assign benefit_icon = 'non-comedogenic'
+              else
+                assign benefit_icon = 'verified'
+              endif
+            endif
+          %}
+          {% if block.settings.link != blank %}<a class="ps-benefit ps-benefit--{{ benefit_tone }}" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{% else %}<div class="ps-benefit ps-benefit--{{ benefit_tone }}" {{ block.shopify_attributes }}>{% endif %}
+            <span class="ps-benefit__icon" aria-hidden="true">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 96 | image_tag: loading: 'lazy', widths: '48,72,96', sizes: '42px', alt: '' }}
+              {% else %}
+                {% render 'icon', name: benefit_icon %}
+              {% endif %}
+            </span>
+            <span>{{ block.settings.text }}</span>
+          {% if block.settings.link != blank %}</a>{% else %}</div>{% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefit marquee",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "accessibility_label", "label": "Accessibility label", "default": "Project Skin standards" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#e1f5ee" },
+    { "type": "color", "id": "icon_background", "label": "Icon background", "default": "#ddf4ee" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#252525" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#edf0ed" },
+    { "type": "checkbox", "id": "follow_hero_palette", "label": "Follow active banner palette", "default": true },
+    { "type": "range", "id": "speed", "label": "Speed", "min": 12, "max": 60, "step": 2, "unit": "s", "default": 38 },
+    { "type": "range", "id": "gap", "label": "Gap", "min": 20, "max": 100, "step": 4, "unit": "px", "default": 60 }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Trust point",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "auto", "options": [{ "value": "auto", "label": "Automatic" }, { "value": "cruelty-free", "label": "Cruelty-free" }, { "value": "testers", "label": "Testers" }, { "value": "dermatologist", "label": "Dermatologist" }, { "value": "verified", "label": "Verified" }, { "value": "indian-skin", "label": "Indian skin" }, { "value": "non-comedogenic", "label": "Non-comedogenic" }] },
+        { "type": "select", "id": "tone", "label": "Color tone", "default": "mint", "options": [{ "value": "mint", "label": "Mint" }, { "value": "sky", "label": "Sky" }, { "value": "blush", "label": "Blush" }, { "value": "lilac", "label": "Lilac" }, { "value": "gold", "label": "Gold" }, { "value": "taupe", "label": "Taupe" }, { "value": "neutral", "label": "Neutral" }] },
+        { "type": "image_picker", "id": "image", "label": "Custom icon (optional)" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Lab-Verified Actives" },
+        { "type": "url", "id": "link", "label": "Optional link" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [{ "name": "Benefit marquee", "blocks": [{ "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }] }]
+}
+{% endschema %}

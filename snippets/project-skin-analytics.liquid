@@ -1,0 +1,59 @@
+{% liquid
+  assign analytics_mode = settings.analytics_mode | default: 'shopify'
+  assign ga4_id = settings.ga4_measurement_id | strip
+  assign gtm_id = settings.gtm_container_id | strip
+  assign active_variant = product.selected_or_first_available_variant
+%}
+<script id="ProjectSkinAnalyticsConfig" type="application/json">
+  {
+    "mode": {{ analytics_mode | json }},
+    "ga4MeasurementId": {{ ga4_id | json }},
+    "gtmContainerId": {{ gtm_id | json }},
+    "debug": {{ settings.analytics_debug_mode | json }},
+    "page": {
+      "type": {{ request.page_type | json }},
+      "title": {{ page_title | json }},
+      "currency": {{ cart.currency.iso_code | default: shop.currency | json }},
+      "customerLoggedIn": {% if customer %}true{% else %}false{% endif %},
+      "searchTerm": {% if search.performed %}{{ search.terms | json }}{% else %}null{% endif %},
+      "collectionTitle": {% if collection %}{{ collection.title | json }}{% else %}null{% endif %},
+      "product": {% if product and active_variant %}{
+        "item_id": {{ active_variant.id | append: '' | json }},
+        "item_name": {{ product.title | json }},
+        "item_brand": {{ product.vendor | json }},
+        "item_category": {{ product.type | json }},
+        "item_variant": {{ active_variant.title | json }},
+        "price": {{ active_variant.price | divided_by: 100.0 | json }},
+        "quantity": 1
+      }{% else %}null{% endif %},
+      "cart": {
+        "value": {{ cart.total_price | divided_by: 100.0 | json }},
+        "items": [
+          {% for item in cart.items %}
+            {
+              "item_id": {{ item.variant_id | append: '' | json }},
+              "item_name": {{ item.product.title | json }},
+              "item_brand": {{ item.product.vendor | json }},
+              "item_category": {{ item.product.type | json }},
+              "item_variant": {{ item.variant.title | json }},
+              "price": {{ item.final_price | divided_by: 100.0 | json }},
+              "quantity": {{ item.quantity | json }},
+              "item_key": {{ item.key | json }}
+            }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
+      }
+    }
+  }
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+  window.gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    wait_for_update: 500
+  });
+</script>

@@ -1,0 +1,43 @@
+<section class="psr-route-fallback psr-route-fallback--science psr-page psr-section psr-section--mist">
+  <div class="container">
+    <div class="psr-section__head">
+      <div>
+        <span class="psr-kicker">{{ section.settings.eyebrow }}</span>
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      <p>{{ section.settings.text }}</p>
+    </div>
+    <div class="psr-method-grid">
+      {% for block in section.blocks %}
+        <article class="psr-method-card" {{ block.shopify_attributes }}>
+          <span class="psr-method-card__number">0{{ forloop.index }}</span>
+          <h3>{{ block.settings.heading }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Science method",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The operating principle" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Understand first. Formulate second." },
+    { "type": "textarea", "id": "text", "label": "Description", "default": "Education is part of the product. Every recommendation should make the mechanism, concentration and expected role understandable." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Method step",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Read the signal" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Establish a baseline using visible skin signals, concern history and environmental context." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Science method", "blocks": [{ "type": "step" }, { "type": "step" }, { "type": "step" }] }]
+}
+{% endschema %}

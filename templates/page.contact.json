@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": { "type": "main-page", "settings": {} },
+    "contact": {
+      "type": "contact-form",
+      "settings": {
+        "eyebrow": "We're here to help",
+        "heading": "Talk to Purity",
+        "text": "<p>Ask about products, routines, orders, or anything else on your mind. Our support team will reply as soon as possible.</p>",
+        "email": "email@puritycosmetics.com",
+        "phone": "+1 (973) 3333-5555",
+        "button_label": "Send message"
+      }
+    }
+  },
+  "order": ["main", "contact"]
+}

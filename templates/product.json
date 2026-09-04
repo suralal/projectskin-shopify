@@ -1,0 +1,373 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "highlight_cruelty": {
+          "type": "highlight",
+          "settings": {
+            "heading": "Cruelty-free"
+          }
+        },
+        "highlight_paraben": {
+          "type": "highlight",
+          "settings": {
+            "heading": "Paraben-free"
+          }
+        },
+        "highlight_indian_skin": {
+          "type": "highlight",
+          "settings": {
+            "heading": "Made for Indian skin"
+          }
+        }
+      },
+      "block_order": [
+        "highlight_cruelty",
+        "highlight_paraben",
+        "highlight_indian_skin"
+      ],
+      "settings": {
+        "use_product_media": true,
+        "use_custom_content": false,
+        "title_override": "",
+        "price_override": "",
+        "enable_zoom": true,
+        "concern_line": "",
+        "use_judgeme_rating": true,
+        "rating": "5.0",
+        "review_count": "2",
+        "show_demo_swatches": false,
+        "swatch_1_label": "Orange",
+        "swatch_1_color": "#e66b23",
+        "swatch_2_label": "Green",
+        "swatch_2_color": "#667853",
+        "inventory_text": "In stock and ready to ship",
+        "one_time_label": "One Time Purchase",
+        "subscribe_label": "Subscribe and save",
+        "subscribe_price": "$36.00",
+        "frequency_label": "Deliver every month - 10% Off",
+        "add_label": "Add to Cart",
+        "show_dynamic_checkout": true,
+        "shipping_text": "Free shipping on eligible orders. View shipping policy",
+        "returns_text": "Easy returns. View return policy",
+        "gift_text": "",
+        "benefits_heading": "Top Benefits",
+        "action_heading": "See in Action",
+        "pickup_heading": "Pickup availability",
+        "pickup_text": "Check availability at your nearest store.",
+        "show_pickup": false,
+        "pairs_heading": "Pairs Well With",
+        "help_heading": "Need product guidance?",
+        "help_text": "Speak with our consultation team.",
+        "help_button": "Ask a product question",
+        "question_heading": "Ask a question",
+        "disclaimer": "",
+        "sticky_add_to_cart": true,
+        "gallery_layout": "thumbnails",
+        "show_rating": false,
+        "show_variant_picker": true,
+        "show_purchase_options": false,
+        "product_description": "",
+        "inventory_tone": "available"
+      }
+    },
+    "trust": {
+      "type": "pdp-trust-strip",
+      "blocks": {
+        "clinical": {
+          "type": "item",
+          "settings": {
+            "text": "Dermatologically tested"
+          }
+        },
+        "transparent": {
+          "type": "item",
+          "settings": {
+            "text": "Transparent ingredient information"
+          }
+        },
+        "indian_skin": {
+          "type": "item",
+          "settings": {
+            "text": "Designed for Indian skin"
+          }
+        },
+        "cruelty": {
+          "type": "item",
+          "settings": {
+            "text": "Cruelty-free"
+          }
+        }
+      },
+      "block_order": [
+        "clinical",
+        "transparent",
+        "indian_skin",
+        "cruelty"
+      ],
+      "settings": {
+        "speed": 28
+      }
+    },
+    "reviews": {
+      "type": "judgeme-reviews",
+      "settings": {
+        "eyebrow": "Customer reviews",
+        "heading": "What customers say",
+        "intro": "Texture, climate, and consistency — from people building the same routine.",
+        "show_fallback_when_empty": true,
+        "padding_top": 68,
+        "padding_bottom": 64
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "section_width": "fixed",
+        "subheading": "Build your routine",
+        "heading": "Complete the routine",
+        "alignment": "center",
+        "products_to_show": 4,
+        "columns": 4,
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "show_divider": false,
+        "description": "<p>Cleanse, treat, moisturise, protect \u2014 pair this product with the rest of your Project Skin steps.</p>"
+      }
+    },
+    "faq": {
+      "type": "pdp-faq",
+      "blocks": {
+        "sensitive": {
+          "type": "faq",
+          "settings": {
+            "question": "Is it suitable for sensitive skin?",
+            "answer": "<p>Patch test before first use if your skin is reactive. Introduce one new product at a time and moisturise well.</p>"
+          }
+        },
+        "routine": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I build a routine?",
+            "answer": "<p>Follow Cleanse \u2192 Treat \u2192 Moisturise \u2192 Protect. For personal guidance, book a consultation.</p>"
+          }
+        },
+        "ingredients": {
+          "type": "faq",
+          "settings": {
+            "question": "Where can I find the ingredients?",
+            "answer": "<p>Key actives are listed on this page and the full INCI list is on the product packaging.</p>"
+          }
+        },
+        "mix": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I mix products together?",
+            "answer": "<p>Layering depends on the actives. Avoid stacking multiple strong acids at once if your skin is new to them.</p>"
+          }
+        },
+        "cruelty": {
+          "type": "faq",
+          "settings": {
+            "question": "Are your products cruelty-free?",
+            "answer": "<p>Yes. Project Skin is committed to cruelty-free product development.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "sensitive",
+        "routine",
+        "ingredients",
+        "mix",
+        "cruelty"
+      ],
+      "settings": {
+        "use_formula_catalog": true,
+        "eyebrow": "Before you buy",
+        "heading": "Ask the mechanism questions",
+        "copy": "<p>Diagnosis-first answers about use, layering, and whether this formula fits your concern.</p>",
+        "button_label": "Book a consultation",
+        "padding_top": 72,
+        "padding_bottom": 84,
+        "button_link": "/pages/consultation"
+      }
+    },
+    "experience": {
+      "type": "pdp-experience",
+      "blocks": {
+        "for_skin": {
+          "type": "item",
+          "settings": {
+            "kicker": "FOR",
+            "title": "Oily and acne-prone skin",
+            "text": "Built for congestion, excess oil, and everyday Indian climate."
+          }
+        },
+        "feel": {
+          "type": "item",
+          "settings": {
+            "kicker": "FEEL",
+            "title": "Lightweight water-serum",
+            "text": "Fast-absorbing texture that layers cleanly under moisturiser and SPF."
+          }
+        },
+        "finish": {
+          "type": "item",
+          "settings": {
+            "kicker": "FINISH",
+            "title": "Fragrance-free focus",
+            "text": "No added fragrance \u2014 centred on actives, comfort, and clarity."
+          }
+        }
+      },
+      "block_order": [
+        "for_skin",
+        "feel",
+        "finish"
+      ],
+      "settings": {
+        "product_handles": "",
+        "use_formula_catalog": true,
+        "eyebrow": "The experience",
+        "heading": "How it feels on skin",
+        "padding_top": 56,
+        "padding_bottom": 40
+      }
+    },
+    "differentiation": {
+      "type": "pdp-differentiation",
+      "settings": {
+        "eyebrow": "Why this formula",
+        "heading": "What sets it apart",
+        "padding_top": 56,
+        "padding_bottom": 40
+      }
+    },
+    "ingredients": {
+      "type": "pdp-actives",
+      "blocks": {
+        "niacinamide": {
+          "type": "ingredient",
+          "settings": {
+            "benefit": "Oil balance",
+            "heading": "Encapsulated Niacinamide",
+            "type_label": "Vitamin B3 derivative",
+            "strength": "5% concentration",
+            "icon": "oil",
+            "text": "Supports oil balance, pore appearance, and a more even-looking tone.",
+            "details": "A 5% encapsulated vitamin B3 active selected to support oil balance, pore appearance, and a more even-looking tone \u2014 with a measured, skin-friendly feel.",
+            "tone": "sage"
+          }
+        },
+        "sepicontrol": {
+          "type": "ingredient",
+          "settings": {
+            "benefit": "Clarity",
+            "heading": "Sepicontrol\u2122 A5",
+            "type_label": "Acne-focused complex",
+            "strength": "Targeted complex",
+            "icon": "pores",
+            "text": "Supports clearer-looking, congestion-prone skin in the treat step.",
+            "details": "A targeted complex used to support clearer-looking, congestion-prone skin as part of a consistent treat step.",
+            "tone": "clay"
+          }
+        },
+        "pentavitin": {
+          "type": "ingredient",
+          "settings": {
+            "benefit": "Hydration",
+            "heading": "Pentavitin\u2122",
+            "type_label": "Sugar-based humectant",
+            "strength": "Lasting hydration support",
+            "icon": "droplet",
+            "text": "Helps skin hold onto moisture while addressing oily, acne-prone concerns.",
+            "details": "Helps skin hold onto moisture so the serum supports comfort while addressing oily and acne-prone concerns.",
+            "tone": "blue"
+          }
+        },
+        "pdrn": {
+          "type": "ingredient",
+          "settings": {
+            "benefit": "Recovery",
+            "heading": "PDRN",
+            "type_label": "Recovery support active",
+            "strength": "Smoother finish",
+            "icon": "sparkle",
+            "text": "Supports skin recovery and a smoother-looking finish with regular use.",
+            "details": "Included to support skin recovery and a smoother-looking finish with regular use.",
+            "tone": "rose"
+          }
+        }
+      },
+      "block_order": [
+        "niacinamide",
+        "sepicontrol",
+        "pentavitin",
+        "pdrn"
+      ],
+      "settings": {
+        "product_handles": "",
+        "use_formula_catalog": true,
+        "eyebrow": "Formula",
+        "heading": "Active ingredients",
+        "copy": "<p>Named actives, functional concentrations, and a clear reason each one is in the formula.</p>",
+        "ingredients_label": "Explore the ingredient library",
+        "ingredients_link": "/pages/ingredients",
+        "padding_top": 64,
+        "padding_bottom": 40
+      }
+    },
+    "steps": {
+      "type": "pdp-steps",
+      "blocks": {
+        "step_cleanse": {
+          "type": "step",
+          "settings": {
+            "heading": "01. Cleanse",
+            "copy": "<p>Start with a gentle cleanser so the serum can absorb evenly.</p>"
+          }
+        },
+        "step_treat": {
+          "type": "step",
+          "settings": {
+            "heading": "02. Treat",
+            "copy": "<p>Apply 2\u20133 drops of Project Skin serum and pat until absorbed.</p>"
+          }
+        },
+        "step_seal": {
+          "type": "step",
+          "settings": {
+            "heading": "03. Moisturise & protect",
+            "copy": "<p>Lock in with moisturiser. In the morning, finish with broad-spectrum SPF.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_cleanse",
+        "step_treat",
+        "step_seal"
+      ],
+      "settings": {
+        "product_handles": "",
+        "use_formula_catalog": true,
+        "eyebrow": "How to use",
+        "heading": "Three steps to a clearer routine",
+        "intro": "Amount, order, and timing — so the formula can do what it is built for.",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "main",
+    "differentiation",
+    "experience",
+    "ingredients",
+    "steps",
+    "trust",
+    "reviews",
+    "related",
+    "faq"
+  ]
+}

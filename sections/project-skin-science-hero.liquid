@@ -1,0 +1,54 @@
+<section class="psr-route-fallback psr-route-fallback--science psr-page psr-sci-hero">
+  <div class="container psr-sci-hero__frame">
+    <div class="psr-sci-hero__media">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 2600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '900,1400,2000,2600', sizes: '100vw', alt: section.settings.image_alt }}
+      {% else %}
+        <img
+          src="{{ 'psr-science-hero-overlay.jpg' | asset_url }}"
+          width="1920"
+          height="1080"
+          loading="eager"
+          fetchpriority="high"
+          alt="{{ section.settings.image_alt | escape }}"
+        >
+      {% endif %}
+      <div class="psr-sci-hero__veil" aria-hidden="true"></div>
+      <div class="psr-sci-hero__copy">
+        <p class="psr-phil-kicker psr-phil-kicker--light">{{ section.settings.eyebrow }}</p>
+        <h1>{{ section.settings.heading | newline_to_br }}</h1>
+        {% if section.settings.text != blank %}
+          <div class="psr-sci-hero__text">{{ section.settings.text }}</div>
+        {% endif %}
+        {% if section.settings.primary_label != blank or section.settings.secondary_label != blank %}
+          <div class="psr-phil-actions">
+            {% if section.settings.primary_label != blank %}
+              <a class="psr-phil-btn" href="{{ section.settings.primary_link | default: '#science-platform' }}">{{ section.settings.primary_label }}</a>
+            {% endif %}
+            {% if section.settings.secondary_label != blank %}
+              <a class="psr-phil-btn psr-phil-btn--ghost" href="{{ section.settings.secondary_link | default: '/pages/consultation' }}">{{ section.settings.secondary_label }}</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Science hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The science layer" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "See the signal.\nBuild the right routine." },
+    { "type": "textarea", "id": "text", "label": "Description", "default": "Technology that organizes skin context, explains product choices, and helps you follow through — so care gets clearer over time." },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "image_alt", "label": "Image alternative text", "default": "Guided skin analysis with Project Skin technology" },
+    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Explore the system" },
+    { "type": "url", "id": "primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Speak to a dermatologist" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary button link" }
+  ],
+  "presets": [{ "name": "Science hero" }]
+}
+{% endschema %}

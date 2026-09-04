@@ -1,0 +1,37 @@
+<section class="ps-section ps-offer-faq" style="--ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px">
+  <div class="ps-wrap ps-offer-faq__layout">
+    <a class="ps-offer" href="{{ section.settings.offer_link | default: routes.all_products_collection_url }}">
+      {% render 'purity-image', image: section.settings.offer_image, fallback_asset: 'offers.jpg', fallback_width: 1200, fallback_height: 850, alt: section.settings.offer_heading, sizes: '(min-width: 800px) 50vw, 100vw' %}
+      <div class="ps-offer__copy"><span class="ps-eyebrow" style="color:#fff">{{ section.settings.offer_eyebrow }}</span><h3>{{ section.settings.offer_heading }}</h3><span class="ps-button ps-button--light">{{ section.settings.offer_button }}</span></div>
+    </a>
+    <div class="ps-faq">
+      <span class="ps-eyebrow">{{ section.settings.faq_eyebrow }}</span>
+      <h2 class="ps-title">{{ section.settings.faq_heading }}</h2>
+      {% for block in section.blocks %}<details {{ block.shopify_attributes }}><summary>{{ block.settings.question }}</summary><div class="rte">{{ block.settings.answer }}</div></details>{% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Offer and FAQ",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "image_picker", "id": "offer_image", "label": "Offer image" },
+    { "type": "text", "id": "offer_eyebrow", "label": "Offer eyebrow", "default": "Member-only" },
+    { "type": "inline_richtext", "id": "offer_heading", "label": "Offer heading", "default": "Get Exclusive Deals!" },
+    { "type": "text", "id": "offer_button", "label": "Offer button", "default": "Sign In" },
+    { "type": "url", "id": "offer_link", "label": "Offer link" },
+    { "type": "text", "id": "faq_eyebrow", "label": "FAQ eyebrow", "default": "Help centre" },
+    { "type": "inline_richtext", "id": "faq_heading", "label": "FAQ heading", "default": "Frequently Asked Questions" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 }
+  ],
+  "blocks": [
+    { "type": "faq", "name": "FAQ", "settings": [{ "type": "text", "id": "question", "label": "Question", "default": "Is Purity suitable for all skin types?" }, { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Our routines are designed to be easy to personalize for your skin.</p>" }] }
+  ],
+  "max_blocks": 10,
+  "presets": [{ "name": "Offer and FAQ", "blocks": [{ "type": "faq" }, { "type": "faq" }, { "type": "faq" }, { "type": "faq" }] }]
+}
+{% endschema %}

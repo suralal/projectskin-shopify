@@ -1,0 +1,361 @@
+{% comment %}
+  Product-aware how-to steps. Prefer live product images; fall back to assets.
+  Sets: ps_steps_eyebrow, ps_steps_heading, ps_steps_intro, ps_steps_count
+  Must be {% include %}d so assigns stay in parent scope.
+{% endcomment %}
+{% liquid
+  assign cleanser = all_products['refreshing-cleanser-acne-prone-skin']
+  assign serum = all_products['5-niacinamide-serum-acne-prone-skin']
+  assign moisturiser = all_products['calming-moisturiser-acne-prone-skin']
+  assign sunscreen = all_products['protecting-sunscreen-acne-prone-skin']
+  assign clear_seal = all_products['clear-seal']
+  assign active_boba = all_products['active-boba-encapsulated-cream-acne-prone-skin']
+
+  assign ps_steps_eyebrow = 'How to use'
+  assign ps_steps_heading = 'Three steps that actually stick'
+  assign ps_steps_intro = 'Amount, order, and timing — so the formula can do what it is built for.'
+  assign ps_steps_count = 3
+%}
+
+{% case product.handle %}
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    {% assign ps_steps_heading = 'Cleanse with intent, not force' %}
+    {% assign ps_steps_intro = 'Named acids work in a rinse-off step — give them contact time, then seal what follows.' %}
+    <article class="pdp-step" style="--step-tint: #e8eef2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">01</span>
+        {% if cleanser.featured_image != blank %}
+          {% render 'purity-image', image: cleanser.featured_image, alt: '01. Wet', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-cleanser-1.png', fallback_width: 819, fallback_height: 1024, alt: '01. Wet', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">AM · PM · 30 seconds</p>
+      <h3>Wet &amp; dispense</h3>
+      <div><p>Dampen face with lukewarm water. Dispense 1–2 pumps into damp hands — enough to cover, not flood.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Lukewarm water — hot water strips more than it cleans</li>
+        <li>Skip eye contour</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #efeae2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">02</span>
+        {% if cleanser.images.size > 1 %}
+          {% render 'purity-image', image: cleanser.images[1], alt: '02. Massage', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% elsif cleanser.featured_image != blank %}
+          {% render 'purity-image', image: cleanser.featured_image, alt: '02. Massage', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-cleanser-2.png', fallback_width: 819, fallback_height: 1024, alt: '02. Massage', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Contact time · 30–60 sec</p>
+      <h3>Massage, don’t scrub</h3>
+      <div><p>Work into T-zone and congested areas for 30–60 seconds so BHA and AHA get real contact time.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Focus nose, chin, forehead</li>
+        <li>No washcloth grit needed</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #e9f0ec">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">03</span>
+        {% if serum.featured_image != blank %}
+          {% render 'purity-image', image: serum.featured_image, alt: '03. Rinse and treat', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-serum-1.png', fallback_width: 819, fallback_height: 1024, alt: '03. Rinse and treat', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Then seal the routine</p>
+      <h3>Rinse, treat, protect</h3>
+      <div><p>Rinse thoroughly, pat dry, then serum and moisturiser. Morning: finish with broad-spectrum SPF.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Pat — don’t rub dry</li>
+        <li>Moisturiser is not optional after acids</li>
+      </ul>
+    </article>
+
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    {% assign ps_steps_heading = 'Treat after cleanse — then seal' %}
+    {% assign ps_steps_intro = 'Two to three drops on dry skin. Consistency beats stacking more actives.' %}
+    <article class="pdp-step" style="--step-tint: #e8eef2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">01</span>
+        {% if cleanser.featured_image != blank %}
+          {% render 'purity-image', image: cleanser.featured_image, alt: '01. Cleanse', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-cleanser-1.png', fallback_width: 819, fallback_height: 1024, alt: '01. Cleanse', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">AM · PM · on dry skin</p>
+      <h3>Cleanse first</h3>
+      <div><p>Start with a gentle cleanser so encapsulated Niacinamide contacts clean, dry skin — not leftover oil or SPF.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Wait until skin feels dry to the touch</li>
+        <li>Skip if barrier is badly compromised — repair first</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #efeae2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">02</span>
+        {% if serum.featured_image != blank %}
+          {% render 'purity-image', image: serum.featured_image, alt: '02. Treat', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-serum-1.png', fallback_width: 819, fallback_height: 1024, alt: '02. Treat', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Amount · 2–3 drops</p>
+      <h3>Treat — pat, don’t rub</h3>
+      <div><p>Apply 2–3 drops across face. Pat until absorbed. Once daily to start; twice if tolerated after two weeks.</p></div>
+      <ul class="pdp-step__tips">
+        <li>More drops ≠ faster results</li>
+        <li>Alternate nights with strong acids at first</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #e9f0ec">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">03</span>
+        {% if moisturiser.featured_image != blank %}
+          {% render 'purity-image', image: moisturiser.featured_image, alt: '03. Moisturise and protect', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-moisturiser-1.png', fallback_width: 819, fallback_height: 1024, alt: '03. Moisturise and protect', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Seal · then SPF by day</p>
+      <h3>Moisturise &amp; protect</h3>
+      <div><p>Lock in with moisturiser. In the morning, finish with broad-spectrum SPF — treat without protect stalls pigmentation care.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Moisturiser after serum, always</li>
+        <li>SPF is the last morning step</li>
+      </ul>
+    </article>
+
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    {% assign ps_steps_heading = 'Seal the barrier — then protect' %}
+    {% assign ps_steps_intro = 'Thin layer after treat. Built to sit under SPF without pilling.' %}
+    <article class="pdp-step" style="--step-tint: #efeae2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">01</span>
+        {% if serum.featured_image != blank %}
+          {% render 'purity-image', image: serum.featured_image, alt: '01. After treat', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-serum-1.png', fallback_width: 819, fallback_height: 1024, alt: '01. After treat', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">After cleanse · after serum</p>
+      <h3>After treat</h3>
+      <div><p>Apply on clean skin after serum — or after cleansing if you are skipping treat that day.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Let serum settle 30–60 seconds</li>
+        <li>Still use on “rest” nights</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #e8eef2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">02</span>
+        {% if moisturiser.featured_image != blank %}
+          {% render 'purity-image', image: moisturiser.featured_image, alt: '02. Moisturise', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-moisturiser-1.png', fallback_width: 819, fallback_height: 1024, alt: '02. Moisturise', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Amount · thin layer</p>
+      <h3>Moisturise</h3>
+      <div><p>Smooth a thin layer over face and neck. The lightweight gel is built for oily, acne-prone skin — not a heavy occlusive blanket.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Pea-to-almond size for face</li>
+        <li>Neck if dry or treated</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #e9f0ec">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">03</span>
+        {% if sunscreen.featured_image != blank %}
+          {% render 'purity-image', image: sunscreen.featured_image, alt: '03. Protect', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-sunscreen-1.png', fallback_width: 819, fallback_height: 1024, alt: '03. Protect', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Morning last step</p>
+      <h3>Protect by day</h3>
+      <div><p>Morning: finish with Protecting Sunscreen. Evening: this can be your last step.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Wait a minute before SPF</li>
+        <li>Unused SPF is zero SPF</li>
+      </ul>
+    </article>
+
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    {% assign ps_steps_heading = 'Apply enough. Reapply often.' %}
+    {% assign ps_steps_intro = 'Photoprotection only works at a real dose — and only if the texture is wearable enough to stay on.' %}
+    <article class="pdp-step" style="--step-tint: #e8eef2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">01</span>
+        {% if moisturiser.featured_image != blank %}
+          {% render 'purity-image', image: moisturiser.featured_image, alt: '01. Prep the base', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-moisturiser-1.png', fallback_width: 819, fallback_height: 1024, alt: '01. Prep the base', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Morning · last step slot</p>
+      <h3>Prep the base</h3>
+      <div><p>Finish cleanse, treat, and moisturise first. SPF sits on top — not mixed into earlier steps.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Label: after moisturiser</li>
+        <li>Don’t dilute into serum</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #efeae2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">02</span>
+        {% if sunscreen.featured_image != blank %}
+          {% render 'purity-image', image: sunscreen.featured_image, alt: '02. Apply generously', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-sunscreen-1.png', fallback_width: 819, fallback_height: 1024, alt: '02. Apply generously', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Amount · 2 finger lengths</p>
+      <h3>Apply generously</h3>
+      <div><p>Use a generous amount of the aqua gel — about two finger lengths for face and neck. Ears and hairline count.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Under-applying = under-protecting</li>
+        <li>Spread, then press — don’t wipe off</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #e9f0ec">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">03</span>
+        {% if sunscreen.images.size > 1 %}
+          {% render 'purity-image', image: sunscreen.images[1], alt: '03. Reapply', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% elsif sunscreen.featured_image != blank %}
+          {% render 'purity-image', image: sunscreen.featured_image, alt: '03. Reapply', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-sunscreen-2.png', fallback_width: 819, fallback_height: 1024, alt: '03. Reapply', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Every 2–3 hrs · outdoors</p>
+      <h3>Reapply on purpose</h3>
+      <div><p>Reapply every 2–3 hours with sun exposure, and after heavy sweat. Zinc PCA keeps the finish wearable so reapply is realistic.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Cloudy days still need UVA cover</li>
+        <li>Keep a tube in the bag, not the drawer</li>
+      </ul>
+    </article>
+
+  {% when 'clear-seal' %}
+    {% assign ps_steps_heading = 'Seal the spot. Leave it alone.' %}
+    {% assign ps_steps_intro = 'A thin film that interrupts picking and shields the lesion while actives work.' %}
+    <article class="pdp-step" style="--step-tint: #efeae2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">01</span>
+        {% if clear_seal.featured_image != blank %}
+          {% render 'purity-image', image: clear_seal.featured_image, alt: '01. Spot prep', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-clear-seal-1.png', fallback_width: 819, fallback_height: 1024, alt: '01. Spot prep', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">On clean · dry skin</p>
+      <h3>Spot prep</h3>
+      <div><p>On clean, dry skin, identify the active breakout. Keep the area free of heavy cream first.</p></div>
+      <ul class="pdp-step__tips">
+        <li>After cleanse or after serum</li>
+        <li>Dry to the touch before sealing</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #e8eef2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">02</span>
+        {% if clear_seal.images.size > 1 %}
+          {% render 'purity-image', image: clear_seal.images[1], alt: '02. Seal', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% elsif clear_seal.featured_image != blank %}
+          {% render 'purity-image', image: clear_seal.featured_image, alt: '02. Seal', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-clear-seal-2.png', fallback_width: 819, fallback_height: 1024, alt: '02. Seal', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Thin layer · let dry</p>
+      <h3>Seal</h3>
+      <div><p>Apply a thin layer of Clear Seal directly on the spot. Let it dry into an invisible protective film.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Spot only — not full-face</li>
+        <li>Moisturise around, not under, the film</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #e9f0ec">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">03</span>
+        {% if clear_seal.images.size > 2 %}
+          {% render 'purity-image', image: clear_seal.images[2], alt: '03. Leave on', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% elsif clear_seal.featured_image != blank %}
+          {% render 'purity-image', image: clear_seal.featured_image, alt: '03. Leave on', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-clear-seal-3.png', fallback_width: 819, fallback_height: 1024, alt: '03. Leave on', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Do not peel</p>
+      <h3>Leave on</h3>
+      <div><p>Do not peel. Leave the film in place to shield from dirt, friction, and picking while actives work.</p></div>
+      <ul class="pdp-step__tips">
+        <li>The film is the picking interrupt</li>
+        <li>Remove gently at next cleanse</li>
+      </ul>
+    </article>
+
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    {% assign ps_steps_heading = 'Activate, then finish the day' %}
+    {% assign ps_steps_intro = 'Press to release capsules into the base — treatment and comfort in one evening step.' %}
+    <article class="pdp-step" style="--step-tint: #e8eef2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">01</span>
+        {% if cleanser.featured_image != blank %}
+          {% render 'purity-image', image: cleanser.featured_image, alt: '01. Cleanse', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-cleanser-1.png', fallback_width: 819, fallback_height: 1024, alt: '01. Cleanse', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Clean skin first</p>
+      <h3>Cleanse</h3>
+      <div><p>Start with clean skin so encapsulated actives contact the surface evenly.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Pat dry before scooping</li>
+        <li>Evening is the primary slot</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #efeae2">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">02</span>
+        {% if active_boba.featured_image != blank %}
+          {% render 'purity-image', image: active_boba.featured_image, alt: '02. Activate', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-active-boba-1.png', fallback_width: 819, fallback_height: 1024, alt: '02. Activate', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">Press · then smooth</p>
+      <h3>Activate</h3>
+      <div><p>Scoop a small amount. Gently press to release the capsules into the hydrating base, then smooth over face.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Press — don’t grind</li>
+        <li>Even film beats thick blobs</li>
+      </ul>
+    </article>
+    <article class="pdp-step" style="--step-tint: #e9f0ec">
+      <div class="pdp-step__media">
+        <span class="pdp-step__index" aria-hidden="true">03</span>
+        {% if sunscreen.featured_image != blank %}
+          {% render 'purity-image', image: sunscreen.featured_image, alt: '03. Finish', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% else %}
+          {% render 'purity-image', image: blank, fallback_asset: 'product-sunscreen-1.png', fallback_width: 819, fallback_height: 1024, alt: '03. Finish', sizes: '(min-width: 990px) 22vw, (min-width: 750px) 31vw, 92vw' %}
+        {% endif %}
+      </div>
+      <p class="pdp-step__when">AM protect · PM done</p>
+      <h3>Finish</h3>
+      <div><p>Morning: follow with SPF. Evening: Active Boba can be your treatment and cream step in one.</p></div>
+      <ul class="pdp-step__tips">
+        <li>Daytime still needs SPF</li>
+        <li>Patch test if barrier is reactive</li>
+      </ul>
+    </article>
+
+  {% else %}
+    {% assign ps_steps_count = 0 %}
+{% endcase %}

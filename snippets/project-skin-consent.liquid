@@ -1,0 +1,13 @@
+<script>
+  document.documentElement.classList.add('ps-consent-enhanced');
+</script>
+<script id="ProjectSkinConsentConfig" type="application/json">
+  {
+    "delay": {{ settings.consent_delay | default: 2500 | json }},
+    "heading": {{ settings.consent_heading | default: 'Your privacy, your choice' | json }},
+    "body": {{ settings.consent_body | default: "We use essential cookies to run Project Skin. With your permission, we'll also use cookies to measure performance and personalise your experience." | json }},
+    "acceptLabel": {{ settings.consent_accept_label | default: 'Allow all' | json }},
+    "declineLabel": {{ settings.consent_decline_label | default: 'Essential only' | json }},
+    "manageLabel": {{ settings.consent_manage_label | default: 'Choose preferences' | json }}
+  }
+</script>

@@ -1,0 +1,197 @@
+{% liquid
+  assign p = product
+  assign ratio = settings.card_image_ratio | default: 'portrait'
+  assign gallery_assets = blank
+
+  case p.handle
+    when '5-niacinamide-serum-acne-prone-skin'
+      assign gallery_assets = 'product-serum-1.png|product-serum-2.png|product-serum-3.png|product-serum-4.png|product-serum-5.png'
+    when 'calming-moisturiser-acne-prone-skin'
+      assign gallery_assets = 'product-moisturiser-1.png|product-moisturiser-2.png|product-moisturiser-3.png|product-moisturiser-4.png|product-moisturiser-5.png|product-moisturiser-6.png|product-moisturiser-7.png'
+    when 'refreshing-cleanser-acne-prone-skin'
+      assign gallery_assets = 'product-cleanser-1.png|product-cleanser-2.png|product-cleanser-3.png|product-cleanser-4.png|product-cleanser-5.png'
+    when 'protecting-sunscreen-acne-prone-skin'
+      assign gallery_assets = 'product-sunscreen-1.png|product-sunscreen-2.png|product-sunscreen-3.png|product-sunscreen-4.png|product-sunscreen-5.png|product-sunscreen-6.png|product-sunscreen-7.png|product-sunscreen-8.png'
+    when 'clear-seal'
+      assign gallery_assets = 'product-clear-seal-1.png|product-clear-seal-2.png|product-clear-seal-3.png|product-clear-seal-4.png|product-clear-seal-5.png|product-clear-seal-6.png|product-clear-seal-7.png'
+    when 'active-boba-encapsulated-cream-acne-prone-skin'
+      assign gallery_assets = 'product-active-boba-1.png|product-active-boba-2.png|product-active-boba-3.png|product-active-boba-4.png|product-active-boba-5.png'
+  endcase
+
+  assign gallery_list = gallery_assets | split: '|'
+  assign gallery_count = 0
+  if gallery_assets != blank
+    assign gallery_count = gallery_list.size
+  elsif p.images.size > 0
+    assign gallery_count = p.images.size
+  endif
+
+  assign has_gallery = false
+  if gallery_count > 1
+    assign has_gallery = true
+  endif
+
+  assign card_tags = p.tags
+  assign simple_media = simple_media | default: false
+  if simple_media
+    assign has_gallery = false
+  endif
+%}
+{% capture card_palette %}{% render 'product-palette-name', product: p %}{% endcapture %}
+{% assign card_palette = card_palette | strip %}
+<article
+  class="product-card ps-product{% if simple_media %} ps-product--edu{% endif %}{% if has_gallery %} has-card-gallery{% endif %}"
+  style="--card-ratio:{% case ratio %}{% when 'square' %}1/1{% when 'landscape' %}4/3{% else %}3/4{% endcase %}"
+  data-product-palette="{{ card_palette }}"
+  data-analytics-product-card
+  data-item-id="{{ p.selected_or_first_available_variant.id }}"
+  data-item-name="{{ p.title | escape }}"
+  data-item-brand="{{ p.vendor | escape }}"
+  data-item-category="{{ p.type | escape }}"
+  data-item-variant="{{ p.selected_or_first_available_variant.title | escape }}"
+  data-item-price="{{ p.selected_or_first_available_variant.price | divided_by: 100.0 }}"
+>
+  <div class="product-card__media ps-product__media">
+    {% if simple_media %}
+      <a class="ps-product__media-link ps-product__media-link--simple" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+        {% if gallery_assets != blank %}
+          {% assign first_asset = gallery_list | first %}
+          <img
+            class="product-card__primary ps-product__image ps-product__gallery-image is-active"
+            src="{{ first_asset | asset_url }}"
+            width="756"
+            height="1024"
+            loading="lazy"
+            alt="{{ p.title | escape }}"
+          >
+        {% elsif p.featured_image %}
+          <img
+            class="product-card__primary ps-product__image ps-product__gallery-image is-active"
+            src="{{ p.featured_image | image_url: width: 700 }}"
+            srcset="{{ p.featured_image | image_url: width: 320 }} 320w, {{ p.featured_image | image_url: width: 480 }} 480w, {{ p.featured_image | image_url: width: 700 }} 700w"
+            sizes="220px"
+            width="{{ p.featured_image.width | default: 700 }}"
+            height="{{ p.featured_image.height | default: 900 }}"
+            loading="lazy"
+            alt="{{ p.title | escape }}"
+          >
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'ps-product__image' }}
+        {% endif %}
+      </a>
+    {% else %}
+    <purity-card-gallery class="ps-product__gallery" data-card-gallery{% if has_gallery %} data-gallery-count="{{ gallery_count }}"{% endif %}>
+      <a class="ps-product__media-link" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+        <span class="ps-product__gallery-stage" data-card-gallery-stage>
+          {% if gallery_assets != blank %}
+            {% for asset_name in gallery_list %}
+              <img
+                class="product-card__primary ps-product__image ps-product__gallery-image{% if forloop.first %} is-active{% endif %}"
+                src="{{ asset_name | asset_url }}"
+                width="756"
+                height="1024"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                alt="{{ p.title | escape }}"
+                data-card-gallery-slide
+                {% unless forloop.first %}aria-hidden="true"{% endunless %}
+              >
+            {% endfor %}
+          {% elsif p.featured_image %}
+            {% for image in p.images %}
+              <img
+                class="product-card__primary ps-product__image ps-product__gallery-image{% if forloop.first %} is-active{% endif %}"
+                src="{{ image | image_url: width: 900 }}"
+                srcset="{{ image | image_url: width: 320 }} 320w, {{ image | image_url: width: 480 }} 480w, {{ image | image_url: width: 700 }} 700w, {{ image | image_url: width: 900 }} 900w"
+                sizes="(min-width: 1200px) 22vw, (min-width: 750px) 31vw, 46vw"
+                width="{{ image.width | default: 900 }}"
+                height="{{ image.height | default: 1200 }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                alt="{{ p.title | escape }}"
+                data-card-gallery-slide
+                {% unless forloop.first %}aria-hidden="true"{% endunless %}
+              >
+            {% endfor %}
+          {% else %}
+            {{ 'product-1' | placeholder_svg_tag: 'ps-product__image' }}
+          {% endif %}
+        </span>
+      </a>
+
+      {% if has_gallery %}
+        <button
+          class="ps-product__gallery-arrow ps-product__gallery-arrow--prev"
+          type="button"
+          data-card-gallery-prev
+          aria-label="Previous image of {{ p.title | escape }}"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button
+          class="ps-product__gallery-arrow ps-product__gallery-arrow--next"
+          type="button"
+          data-card-gallery-next
+          aria-label="Next image of {{ p.title | escape }}"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      {% endif %}
+    </purity-card-gallery>
+    {% endif %}
+  </div>
+
+  <div class="product-card__content ps-product__content">
+    {% if settings.card_tags %}
+      <div class="ps-product__tags">
+        {% if p.type != blank %}
+          <span>{{ p.type }}</span>
+        {% endif %}
+        {% assign shown_tags = 0 %}
+        {% for tag in card_tags %}
+          {% assign tag_down = tag | downcase %}
+          {% if tag_down contains 'badge:' or tag_down contains 'label:' %}
+            {% continue %}
+          {% endif %}
+          {% if p.type != blank and tag == p.type %}
+            {% continue %}
+          {% endif %}
+          {% if shown_tags >= 2 %}
+            {% break %}
+          {% endif %}
+          <span>{{ tag }}</span>
+          {% assign shown_tags = shown_tags | plus: 1 %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if settings.card_vendor and p.vendor != blank and p.vendor != shop.name %}
+      <small class="product-card__vendor">{{ p.vendor }}</small>
+    {% endif %}
+
+    {% capture card_display_title %}{% render 'product-display-title', product: p %}{% endcapture %}
+    {% capture card_concern_line %}{% render 'product-concern-line', product: p %}{% endcapture %}
+    {% assign card_display_title = card_display_title | strip %}
+    {% assign card_concern_line = card_concern_line | strip %}
+
+    <h3 class="product-card__title ps-product__title">
+      <a href="{{ p.url }}">{{ card_display_title }}</a>
+    </h3>
+    <p class="ps-product__concern">{% if card_concern_line != blank %}{{ card_concern_line }}{% else %}&nbsp;{% endif %}</p>
+
+    <div class="ps-product__meta">
+      <div class="product-card__price ps-product__price">
+        <strong>{{ p.price | money }}</strong>
+      </div>
+
+      {% if settings.card_quick_add and p.available %}
+        {% form 'product', p, class: 'ps-product__atc-form' %}
+          <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+          <button class="ps-product__atc" type="submit">Add to cart</button>
+        {% endform %}
+      {% elsif p.available == false %}
+        <a class="ps-product__atc ps-product__atc--link" href="{{ p.url }}">Sold out</a>
+      {% else %}
+        <a class="ps-product__atc ps-product__atc--link" href="{{ p.url }}">View product</a>
+      {% endif %}
+    </div>
+  </div>
+</article>

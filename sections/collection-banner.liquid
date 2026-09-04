@@ -1,0 +1,11 @@
+<section class="psr-shop-hero">
+  <div class="container psr-shop-hero__inner">
+    <div>
+      <span class="psr-kicker">{{ section.settings.subheading | default: 'Evidence-led care' }}</span>
+      <h1>{{ section.settings.heading | default: collection.title }}</h1>
+      <div class="psr-copy">{% if section.settings.description != blank %}{{ section.settings.description }}{% else %}{{ collection.description }}{% endif %}</div>
+    </div>
+    <a class="psr-text-link" href="/pages/the-science">How recommendations work <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+{% schema %}{"name":"Collection banner","tag":"section","class":"section-wrapper","settings":[{"type":"select","id":"section_width","label":"Section width","default":"fixed","options":[{"value":"fixed","label":"Fixed width"},{"value":"stretch","label":"Stretch width"},{"value":"full","label":"Full width"}]},{"type":"text","id":"subheading","label":"Subheading"},{"type":"text","id":"heading","label":"Heading"},{"type":"richtext","id":"description","label":"Description"},{"type":"select","id":"alignment","label":"Alignment","default":"left","options":[{"value":"left","label":"Left"},{"value":"center","label":"Center"},{"value":"right","label":"Right"}]},{"type":"range","id":"padding_top","label":"Top padding","min":0,"max":120,"step":4,"default":64,"unit":"px"},{"type":"range","id":"padding_bottom","label":"Bottom padding","min":0,"max":120,"step":4,"default":64,"unit":"px"},{"type":"checkbox","id":"show_divider","label":"Show divider","default":false}],"presets":[{"name":"Collection banner"}]}{% endschema %}

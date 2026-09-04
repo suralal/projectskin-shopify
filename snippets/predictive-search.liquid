@@ -1,0 +1,69 @@
+<div class="search-overlay" data-search-overlay aria-hidden="true">
+  <button class="search-overlay__backdrop" type="button" data-search-close aria-label="Close search"></button>
+  <section class="search-panel" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="search-panel__head">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="predictive-search-form">
+        <span class="predictive-search-form__icon">{% render 'icon', name: 'search' %}</span>
+        <label class="visually-hidden" for="PredictiveSearch">Search the store</label>
+        <input
+          id="PredictiveSearch"
+          type="search"
+          name="q"
+          placeholder="{{ settings.search_placeholder | escape }}"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          data-predictive-input
+        >
+        <button type="submit" class="predictive-search-form__submit">Search</button>
+        <button type="button" class="icon-button" data-search-close aria-label="Close search">
+          {% render 'icon', name: 'close' %}
+        </button>
+      </form>
+    </div>
+
+    <div class="predictive-search-results" data-predictive-results>
+      <div class="predictive-search-start">
+        <div class="predictive-search-start__copy">
+          <span class="eyebrow">Search Purity</span>
+          <h2>What are you looking for?</h2>
+          {% assign suggested_terms = settings.suggested_searches | split: ',' %}
+          {% if suggested_terms.size > 0 %}
+            <div class="predictive-search-tags" aria-label="Suggested searches">
+              {% for term in suggested_terms %}
+                {% assign clean_term = term | strip %}
+                {% if clean_term != blank %}
+                  <a href="{{ routes.search_url }}?q={{ clean_term | url_encode }}">{{ clean_term }}</a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        {% if settings.search_suggestions != blank and settings.search_suggestions.products_count > 0 %}
+          <div class="predictive-search-featured">
+            <div class="predictive-search-featured__head">
+              <h3>Popular right now</h3>
+              <a href="{{ settings.search_suggestions.url }}">View all</a>
+            </div>
+            <div class="predictive-grid predictive-grid--compact">
+              {% for product in settings.search_suggestions.products limit: 4 %}
+                <a class="predictive-item" href="{{ product.url }}">
+                  {% if product.featured_image %}
+                    {{
+                      product.featured_image
+                      | image_url: width: 480
+                      | image_tag: loading: 'lazy', widths: '180,280,480', sizes: '(max-width: 749px) 46vw, 220px'
+                    }}
+                  {% endif %}
+                  <strong>{{ product.title }}</strong>
+                  <span>{{ product.price | money }}</span>
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</div>

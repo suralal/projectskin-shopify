@@ -1,0 +1,27 @@
+<section class="psr-route-fallback psr-route-fallback--philosophy psr-page psr-phil-quote">
+  <div class="container psr-phil-quote__inner">
+    <span class="psr-phil-quote__mark" aria-hidden="true">“</span>
+    <blockquote>
+      <p>{{ section.settings.quote }}</p>
+      {% if section.settings.attribution != blank %}
+        <cite>{{ section.settings.attribution }}</cite>
+      {% endif %}
+    </blockquote>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Philosophy quote",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "Each of our formulas is a harmony of biology, climate and craft — redefining what modern skincare should mean for Indian skin."
+    },
+    { "type": "text", "id": "attribution", "label": "Attribution", "default": "Project Skin" }
+  ],
+  "presets": [{ "name": "Philosophy quote" }]
+}
+{% endschema %}

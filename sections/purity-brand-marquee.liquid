@@ -1,0 +1,33 @@
+<section class="ps-section ps-brands{% if section.settings.dark %} ps-brands--dark{% endif %}" style="--ps-speed: {{ section.settings.speed }}s">
+  {% if section.settings.heading != blank %}{% render 'purity-section-heading', eyebrow: section.settings.eyebrow, title: section.settings.heading, alignment: 'center' %}{% endif %}
+  <div class="ps-marquee" aria-label="Featured brands">
+    {% for duplicate in (1..2) %}
+      <div class="ps-marquee__group" {% if duplicate == 2 %}aria-hidden="true"{% endif %}>
+        {% for block in section.blocks %}
+          <a class="ps-brand" href="{{ block.settings.link | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+            {% if block.settings.logo != blank %}{{ block.settings.logo | image_url: width: 360 | image_tag: loading: 'lazy', widths: '120,180,240,360', sizes: '120px', alt: block.settings.name }}{% else %}<strong>{{ block.settings.name }}</strong>{% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purity brand marquee",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "checkbox", "id": "dark", "label": "Use dark style", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Featured Brands" },
+    { "type": "range", "id": "speed", "label": "Speed", "min": 12, "max": 60, "step": 2, "unit": "s", "default": 32 }
+  ],
+  "blocks": [
+    { "type": "brand", "name": "Brand", "settings": [{ "type": "image_picker", "id": "logo", "label": "Logo" }, { "type": "text", "id": "name", "label": "Brand name", "default": "Gently" }, { "type": "url", "id": "link", "label": "Link" }] }
+  ],
+  "max_blocks": 16,
+  "presets": [{ "name": "Purity brand marquee", "blocks": [{ "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }] }]
+}
+{% endschema %}

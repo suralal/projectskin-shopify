@@ -1,0 +1,15 @@
+{
+  "current": {
+    "card_image_ratio": "portrait",
+    "card_quick_add": true,
+    "card_quick_shop": false,
+    "card_swatches": false,
+    "card_tags": false,
+    "card_vendor": false,
+    "card_secondary_image": true,
+    "card_video_hover": true,
+    "use_project_skin_fonts": true,
+    "shopflo_enabled": false,
+    "shopflo_use_flo_cart": false
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "sections": {
+    "hero": {
+      "type": "project-skin-science-hero",
+      "settings": {
+        "eyebrow": "Education first",
+        "heading": "Named ingredients.\nEfficacious concentrations.",
+        "text": "We don't decorate labels. Every active below is here because of its mechanism, dose, and fit for Indian, acne-prone skin.",
+        "primary_label": "Skip to glossary",
+        "primary_link": "#IngredientGlossary",
+        "secondary_label": "Speak to a dermatologist",
+        "secondary_link": "/pages/consultation"
+      }
+    },
+    "method": {
+      "type": "project-skin-method",
+      "blocks": {
+        "pct": {
+          "type": "step",
+          "settings": {
+            "heading": "Name the percentage",
+            "text": "When a concentration matters, we show it — like 5% niacinamide or 2% salicylic acid — not vague enrichment language."
+          }
+        },
+        "mech": {
+          "type": "step",
+          "settings": {
+            "heading": "Cite the mechanism",
+            "text": "What pathway it supports, and what concern it is meant to address, in plain language."
+          }
+        },
+        "place": {
+          "type": "step",
+          "settings": {
+            "heading": "Earn its place",
+            "text": "If an ingredient cannot explain its role in the formula, it does not belong on the label — or in the jar."
+          }
+        }
+      },
+      "block_order": ["pct", "mech", "place"],
+      "settings": {
+        "eyebrow": "How we talk about actives",
+        "heading": "Inform the customer. Then sell.",
+        "text": "Playbook rule: name the percentage, cite the mechanism, make the consumer feel informed — never enriched-with fluff."
+      }
+    },
+    "library": {
+      "type": "project-skin-ingredient-library",
+      "settings": {
+        "eyebrow": "Ingredient library",
+        "heading": "Actives with a reason",
+        "text": "Percentage. Mechanism. Which formulas use it. Literacy first — so you understand before you buy."
+      }
+    },
+    "glossary": {
+      "type": "project-skin-glossary",
+      "settings": {
+        "eyebrow": "Glossary",
+        "heading": "Words we use on purpose",
+        "text": "Short definitions for the biology behind the formulas — so mechanism language never feels like jargon for jargon’s sake."
+      }
+    },
+    "commitment": {
+      "type": "project-skin-science-commitment",
+      "blocks": {
+        "a": {
+          "type": "commitment",
+          "settings": {
+            "heading": "Transparency",
+            "text": "We tell you exactly what's in it, why it's there, and what it is meant to do."
+          }
+        },
+        "b": {
+          "type": "commitment",
+          "settings": {
+            "heading": "Efficacy",
+            "text": "Every ingredient earns its place at a concentration that actually works."
+          }
+        },
+        "c": {
+          "type": "commitment",
+          "settings": {
+            "heading": "Indian-skin fit",
+            "text": "Climate, UV, oiliness and barrier stress shape which actives we choose — and how we deliver them."
+          }
+        }
+      },
+      "block_order": ["a", "b", "c"],
+      "settings": {
+        "eyebrow": "What we stand for",
+        "heading": "Science you can verify.",
+        "text": "<p>Ready to match actives to a routine? Start with the concern, then the product.</p>",
+        "cta_label": "Start with acne literacy",
+        "cta_link": "/pages/acne",
+        "secondary_label": "Explore the science",
+        "secondary_link": "/pages/the-science"
+      }
+    }
+  },
+  "order": ["hero", "method", "library", "glossary", "commitment"]
+}

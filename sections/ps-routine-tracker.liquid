@@ -1,0 +1,79 @@
+{% comment %}
+  Routine builder + daily tracker — pairs with climate signature section.
+{% endcomment %}
+<section class="ps-rout-page">
+  <div class="ps-rout-page__hero">
+    <div class="ps-wrap">
+      <p class="ps-rout-page__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="ps-rout-page__heading">{{ section.settings.heading }}</h1>
+      <p class="ps-rout-page__lede">{{ section.settings.lede }}</p>
+    </div>
+  </div>
+
+  <div class="ps-wrap">
+    <ps-routine-tracker class="ps-rout">
+      <div class="ps-rout__progress" data-routine-progress aria-hidden="true"></div>
+      <ol class="ps-rout__steps-label" aria-hidden="true">
+        <li>City</li><li>Concern</li><li>Plan</li><li>Track</li>
+      </ol>
+
+      <div class="ps-rout__panel" data-routine-city-panel>
+        <h2>Where does your skin live?</h2>
+        <p class="ps-rout__hint">Pick your city — we'll shape the four-step plan around its UV, humidity, pollution, and water profile.</p>
+        <div class="ps-rout__chips" data-routine-cities></div>
+        <p class="ps-rout__note">Came from the climate map? Your saved city profile loads automatically.</p>
+        <button type="button" class="ps-rout__next" data-routine-nav="0" data-routine-next-city>Continue</button>
+      </div>
+
+      <div class="ps-rout__panel" data-routine-concern-panel hidden>
+        <h2>What are you actually fighting?</h2>
+        <p class="ps-rout__hint">No 12-step grid. One primary concern so the routine stays doable — especially on busy weeks.</p>
+        <div class="ps-rout__chips ps-rout__chips--stack" data-routine-concerns></div>
+        <button type="button" class="ps-rout__next" data-routine-nav="1" data-routine-next-concern>See my routine</button>
+      </div>
+
+      <div class="ps-rout__panel" data-routine-plan-panel hidden>
+        <h2>Your <span data-routine-city-name></span> routine</h2>
+        <p class="ps-rout__profile" data-routine-profile></p>
+        <p class="ps-rout__verdict" data-routine-verdict></p>
+        <div class="ps-rout__products" data-routine-products></div>
+        <button type="button" class="ps-rout__next" data-routine-nav="2" data-routine-start-track>Start tracking</button>
+      </div>
+
+      <div class="ps-rout__panel" data-routine-track-panel hidden>
+        <div class="ps-rout__track-head">
+          <div>
+            <h2>Today's check-in</h2>
+            <p class="ps-rout__hint">Tick what you did. Stored on this device — no account needed to start.</p>
+          </div>
+          <div class="ps-rout__streak">
+            <span data-routine-streak>0</span>
+            <small>day streak</small>
+          </div>
+        </div>
+        <div class="ps-rout__track-grid" data-routine-track-grid></div>
+        <div class="ps-rout__week" data-routine-week></div>
+        <p class="ps-rout__fine">Want a dermatologist to sanity-check the plan? <a href="/pages/consultation">Book a consultation</a>.</p>
+      </div>
+    </ps-routine-tracker>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Routine tracker",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your routine" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Built for your city. Tracked by you." },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Intro",
+      "default": "Four steps, one sequence. Pick your city, name your main concern, get a climate-aware plan — then check in daily. No perfection required; consistency is the point."
+    }
+  ],
+  "presets": [{ "name": "Routine tracker" }]
+}
+{% endschema %}

@@ -1,0 +1,118 @@
+{% comment %}
+  Homepage philosophy teaser — editorial split + three focus pillars.
+  Replaces scroll-scatter for a cleaner, conversion-friendly brand moment.
+{% endcomment %}
+<section
+  class="ps-phil"
+  id="PhilosophyFocus-{{ section.id }}"
+  style="--ps-phil-top: {{ section.settings.padding_top }}px; --ps-phil-bottom: {{ section.settings.padding_bottom }}px"
+>
+  <div class="ps-phil__mesh" aria-hidden="true"><i></i><i></i></div>
+
+  <div class="ps-phil__wrap">
+    <div class="ps-phil__hero">
+      <div class="ps-phil__copy">
+        {% if section.settings.eyebrow != blank %}
+          <p class="ps-phil__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        <h2 class="ps-phil__heading">
+          {{ section.settings.heading }}
+          {% if section.settings.heading_italic != blank %}
+            <em>{{ section.settings.heading_italic }}</em>
+          {% endif %}
+        </h2>
+        {% if section.settings.description != blank %}
+          <div class="ps-phil__lede">{{ section.settings.description }}</div>
+        {% endif %}
+        {% if section.settings.button_label != blank %}
+          <a class="ps-phil__cta" href="{{ section.settings.button_link | default: '/pages/philosophy' }}">
+            {{ section.settings.button_label }}
+            <span aria-hidden="true">→</span>
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="ps-phil__visual" aria-hidden="true">
+        <figure class="ps-phil__photo ps-phil__photo--primary">
+          {% render 'purity-image',
+            image: section.settings.image_primary,
+            fallback_asset: 'project-skin-philosophy-lab.jpg',
+            fallback_width: 900,
+            fallback_height: 1120,
+            alt: '',
+            sizes: '(min-width: 990px) 28vw, 42vw',
+            loading: 'lazy'
+          %}
+        </figure>
+        <figure class="ps-phil__photo ps-phil__photo--secondary">
+          {% render 'purity-image',
+            image: section.settings.image_secondary,
+            fallback_asset: 'project-skin-philosophy-people.jpg',
+            fallback_width: 720,
+            fallback_height: 900,
+            alt: '',
+            sizes: '(min-width: 990px) 22vw, 34vw',
+            loading: 'lazy'
+          %}
+        </figure>
+        {% if section.settings.badge != blank %}
+          <span class="ps-phil__badge">{{ section.settings.badge }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if section.blocks.size > 0 %}
+      <div class="ps-phil__pillars">
+        {% for block in section.blocks %}
+          <article class="ps-phil__pillar" {{ block.shopify_attributes }}>
+            <span class="ps-phil__pillar-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <h3>{{ block.settings.heading }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Philosophy focus",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Project Skin philosophy" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Skin is biology." },
+    { "type": "text", "id": "heading_italic", "label": "Heading emphasis", "default": "Treat it with evidence." },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>We sell literacy first, formulations second — built for Indian skin, climate, and daily life.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Read our philosophy" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "image_picker", "id": "image_primary", "label": "Primary image" },
+    { "type": "image_picker", "id": "image_secondary", "label": "Secondary image" },
+    { "type": "text", "id": "badge", "label": "Image badge", "default": "Evidence-led" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 40, "max": 140, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 40, "max": 140, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "focus",
+      "name": "Focus pillar",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Context first" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Climate, routine, and lifestyle shape what skin needs — not trends alone." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Philosophy focus",
+      "blocks": [
+        { "type": "focus", "settings": { "heading": "Context first", "text": "Climate, routine, and lifestyle shape what skin needs — not trends alone." } },
+        { "type": "focus", "settings": { "heading": "Mechanism over trend", "text": "Every ingredient earns its place with a clear role and an honest concentration." } },
+        { "type": "focus", "settings": { "heading": "Consistency over novelty", "text": "A routine must be usable long enough to learn from — fewer steps, followed daily." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

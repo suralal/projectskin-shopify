@@ -1,0 +1,71 @@
+<div class="ps-account-form__row">
+  <div class="ps-field">
+    <label for="AddressFirstName{{ form_key }}">First name</label>
+    <input id="AddressFirstName{{ form_key }}" type="text" name="address[first_name]" value="{{ address_form.first_name }}" autocomplete="given-name">
+  </div>
+  <div class="ps-field">
+    <label for="AddressLastName{{ form_key }}">Last name</label>
+    <input id="AddressLastName{{ form_key }}" type="text" name="address[last_name]" value="{{ address_form.last_name }}" autocomplete="family-name">
+  </div>
+</div>
+
+<div class="ps-field">
+  <label for="AddressCompany{{ form_key }}">Company <span class="ps-field__hint">Optional</span></label>
+  <input id="AddressCompany{{ form_key }}" type="text" name="address[company]" value="{{ address_form.company }}" autocomplete="organization">
+</div>
+
+<div class="ps-field">
+  <label for="AddressAddress1{{ form_key }}">Address</label>
+  <input id="AddressAddress1{{ form_key }}" type="text" name="address[address1]" value="{{ address_form.address1 }}" autocomplete="address-line1" required>
+</div>
+
+<div class="ps-field">
+  <label for="AddressAddress2{{ form_key }}">Apartment, suite, etc. <span class="ps-field__hint">Optional</span></label>
+  <input id="AddressAddress2{{ form_key }}" type="text" name="address[address2]" value="{{ address_form.address2 }}" autocomplete="address-line2">
+</div>
+
+<div class="ps-account-form__row">
+  <div class="ps-field">
+    <label for="AddressCity{{ form_key }}">City</label>
+    <input id="AddressCity{{ form_key }}" type="text" name="address[city]" value="{{ address_form.city }}" autocomplete="address-level2" required>
+  </div>
+  <div class="ps-field">
+    <label for="AddressZip{{ form_key }}">Postal code</label>
+    <input id="AddressZip{{ form_key }}" type="text" name="address[zip]" value="{{ address_form.zip }}" autocapitalize="characters" autocomplete="postal-code" required>
+  </div>
+</div>
+
+<div class="ps-account-form__row">
+  <div class="ps-field">
+    <label for="AddressCountry{{ form_key }}">Country/region</label>
+    <select
+      id="AddressCountry{{ form_key }}"
+      name="address[country]"
+      data-address-country
+      data-default="{{ address_form.country }}"
+      autocomplete="country"
+    >
+      {{ all_country_option_tags }}
+    </select>
+  </div>
+  <div class="ps-field" data-province-wrap>
+    <label for="AddressProvince{{ form_key }}">State/province</label>
+    <select
+      id="AddressProvince{{ form_key }}"
+      name="address[province]"
+      data-address-province
+      data-default="{{ address_form.province }}"
+      autocomplete="address-level1"
+    ></select>
+  </div>
+</div>
+
+<div class="ps-field">
+  <label for="AddressPhone{{ form_key }}">Phone <span class="ps-field__hint">Optional</span></label>
+  <input id="AddressPhone{{ form_key }}" type="tel" name="address[phone]" value="{{ address_form.phone }}" autocomplete="tel">
+</div>
+
+<label class="ps-checkbox" for="AddressDefault{{ form_key }}">
+  <input id="AddressDefault{{ form_key }}" type="checkbox" name="address[default]" value="1"{% if is_default %} checked{% endif %}>
+  <span>Use as default address</span>
+</label>

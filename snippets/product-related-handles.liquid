@@ -1,0 +1,21 @@
+{% comment %}
+  Related / complete-the-routine product handles per PDP.
+{% endcomment %}
+{% case product.handle %}
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    refreshing-cleanser-acne-prone-skin,calming-moisturiser-acne-prone-skin,protecting-sunscreen-acne-prone-skin,clear-seal
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    refreshing-cleanser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,protecting-sunscreen-acne-prone-skin,project-skin-complete-4-step-skincare-routine-kit
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    5-niacinamide-serum-acne-prone-skin,calming-moisturiser-acne-prone-skin,protecting-sunscreen-acne-prone-skin,clear-seal
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    calming-moisturiser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,refreshing-cleanser-acne-prone-skin,project-skin-complete-4-step-skincare-routine-kit
+  {% when 'clear-seal' %}
+    refreshing-cleanser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,calming-moisturiser-acne-prone-skin,protecting-sunscreen-acne-prone-skin
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    refreshing-cleanser-acne-prone-skin,calming-moisturiser-acne-prone-skin,protecting-sunscreen-acne-prone-skin,5-niacinamide-serum-acne-prone-skin
+  {% when 'project-skin-complete-4-step-skincare-routine-kit' %}
+    refreshing-cleanser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,calming-moisturiser-acne-prone-skin,protecting-sunscreen-acne-prone-skin
+  {% else %}
+    refreshing-cleanser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,calming-moisturiser-acne-prone-skin,protecting-sunscreen-acne-prone-skin
+{% endcase %}

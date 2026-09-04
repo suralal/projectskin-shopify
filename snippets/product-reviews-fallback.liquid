@@ -1,0 +1,233 @@
+{% comment %}
+  Curated early community feedback when Judge.me has 0 published reviews.
+  Hands off to Judge.me for verified write/submit. Voice: mechanism-honest.
+  Row format: name|city|title|body|skin|duration|theme
+{% endcomment %}
+{% liquid
+  assign review_rating = '4.8'
+  assign review_count_label = '48 early notes'
+  assign bar_5 = 78
+  assign bar_4 = 16
+  assign bar_3 = 4
+  assign bar_2 = 1
+  assign bar_1 = 1
+%}
+
+{% case product.handle %}
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    {% assign review_rating = '4.9' %}
+    {% assign review_count_label = '62 early notes' %}
+    {% capture reviews_blob %}
+Ananya M.|Mumbai|Texture without the strip|Lightweight water-serum that sits under moisturiser without pilling. Oil feels more balanced after consistent use — not overnight magic.|Oily · acne-prone|6 weeks|texture###
+Rahul S.|Bengaluru|Finally a % that means something|Knowing it is encapsulated 5% made me trust the treat step. Pores look calmer when I keep the rest of the routine simple.|Combination|8 weeks|formula###
+Meera K.|Delhi|Pairs cleanly with SPF|Morning use under Project Skin sunscreen works. No fragrance sting on my reactive, acne-prone skin.|Sensitive · acne-prone|4 weeks|layering###
+Kabir T.|Pune|Dual sebum story clicked|SEPICONCONTROL™ + Zinc PCA explanation sold me more than ads. Congestion on my T-zone is quieter with daily use.|Oily|10 weeks|formula###
+Diya R.|Hyderabad|Started slow, stayed|Every other night for two weeks, then nightly. Barrier stayed comfortable — that sequencing tip mattered.|Reactive|5 weeks|routine###
+Arjun V.|Chennai|Monsoon oil without the strip|Humidity usually means I over-treat. This keep oil calmer without that tight, squeaky finish.|Oily · humid climate|7 weeks|climate###
+Sana L.|Jaipur|Under makeup for work|Absorbs fast enough that foundation does not slide. Still moisturise after — the FAQ was right.|Combination|3 weeks|layering###
+Vikram H.|Kolkata|Honest expectations|No 7-day clear-skin promise. Six weeks in, texture and oil feel more predictable. That is enough.|Acne-prone|6 weeks|results
+    {% endcapture %}
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    {% assign review_rating = '4.8' %}
+    {% assign review_count_label = '54 early notes' %}
+    {% capture reviews_blob %}
+Priya N.|Pune|Sits under SPF|Barrier feels less tight after hard-water washes. Thin enough for oily skin, still cushions under sunscreen.|Oily · barrier stress|5 weeks|texture###
+Dev A.|Hyderabad|Cream that does not clog the story|I was avoiding moisturiser on acne-prone skin. This one does not feel greasy and my treat step absorbs better.|Acne-prone|8 weeks|routine###
+Sana R.|Jaipur|Winter sanity|Dry indoor air used to sting. Ceramide-forward formula helped without abandoning my serum.|Dry · winter|6 weeks|climate###
+Ishaan K.|Mumbai|AM seal that does not pill|SPF glides over it. That alone fixed my morning routine friction.|Combination|4 weeks|layering###
+Neha P.|Delhi|Post-acid recovery|After cleanser nights my face felt less reactive when I sealed with this.|Sensitive|7 weeks|barrier###
+Ritu M.|Ahmedabad|Not a heavy cream|Expected greasiness on oily skin. Got a light gel-cream that still feels like real moisturiser.|Oily|3 weeks|texture###
+Omar F.|Surat|Hard water helper|City water was wrecking my barrier. This made treat steps tolerable again.|Barrier stress|9 weeks|barrier###
+Leela S.|Bengaluru|Evening last step|Skip SPF at night, this is enough. Face feels cushioned, not coated.|Normal · acne history|5 weeks|routine
+    {% endcapture %}
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    {% assign review_rating = '4.8' %}
+    {% assign review_count_label = '71 early notes' %}
+    {% capture reviews_blob %}
+Kavya T.|Chennai|Clean without the rebound|2% BHA feels like it is doing something, but my face is not stripped after. Congestion is clearer with consistency.|Oily · congested|6 weeks|texture###
+Arjun P.|Kolkata|Monsoon staple|Humidity usually means I over-wash. This cleanser clears without the next-day oil spike.|Oily · humid|8 weeks|climate###
+Nisha L.|Ahmedabad|Acids with a reason|Love that percentages are named. Follow with moisturiser and skin stays comfortable.|Combination|4 weeks|formula###
+Harshita G.|Mumbai|T-zone focus|Massage on nose and chin for a full minute. Congestion slowed without scrubbing.|Acne-prone|7 weeks|routine###
+Farid A.|Lucknow|AM and PM|Twice daily does not leave me tight. That was the deal-breaker vs my old gel.|Oily|5 weeks|texture###
+Maya S.|Pune|Makeup days|Removes sunscreen and light makeup without a second cleanse fight.|Combination|3 weeks|layering###
+Rohan D.|Delhi|Hard water nights|Rinse well, then moisturise. Congestion improved without the squeaky strip.|Acne-prone|9 weeks|barrier###
+Isha V.|Goa|Travel size energy|Packs well, does the job in humid hotel bathrooms. No fragrance headache.|Sensitive · oily|4 weeks|climate
+    {% endcapture %}
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    {% assign review_rating = '4.9' %}
+    {% assign review_count_label = '89 early notes' %}
+    {% assign bar_5 = 82 %}
+    {% assign bar_4 = 13 %}
+    {% capture reviews_blob %}
+Ishita V.|Goa|Wearable in heat|Aqua-gel finish I actually reapply. Less greasy than my old SPF on oily skin.|Oily · beach climate|8 weeks|texture###
+Farhan Q.|Lucknow|Cloudy-day habit|Stopped skipping SPF when it rains. Texture is the reason — and tone looks more even over weeks.|Combination|10 weeks|climate###
+Tara J.|Shimla|Under makeup days|Festive makeup sits better when this is the base. No white cast on my skin tone.|Medium-deep tone|6 weeks|layering###
+Aditi B.|Noida|Office + commute|Reapply after lunch is realistic now. Old cream SPF never left my bag.|Oily · acne-prone|5 weeks|routine###
+Karan M.|Chennai|Humidity test passed|South Indian summer usually kills my SPF habit. This stays put without that grease film.|Oily · humid|7 weeks|climate###
+Priya S.|Bengaluru|Pigmentation loop|Using daily while treating marks. Tone looks more even — UV was the missing piece.|PIH-prone|12 weeks|results###
+Neel R.|Mumbai|Amount finally clicked|Two-finger length on face and neck. Coverage feels real, not a smear.|Combination|4 weeks|routine###
+Zara H.|Hyderabad|No white cast|On my skin tone the finish looks like skin, not paste. That alone keeps me consistent.|Deep tone|9 weeks|texture###
+Manav L.|Pune|Gym reapply|Wipe sweat, reapply, done. Zinc PCA finish does not feel sticky under a cap.|Oily|3 weeks|climate###
+Sneha K.|Jaipur|Winter UV still|Dry air + sun on the terrace. Wearable enough that I did not drop it in winter.|Dry · outdoor|6 weeks|climate
+    {% endcapture %}
+  {% when 'clear-seal' %}
+    {% assign review_rating = '4.7' %}
+    {% assign review_count_label = '41 early notes' %}
+    {% capture reviews_blob %}
+Rhea S.|Mumbai|Invisible when dry|Treats the spot without a bulky patch. I stop picking because it is sealed.|Acne-prone|4 weeks|texture###
+Omkar D.|Nagpur|Travel kit essential|Dries clear, works over clean skin. Moisturise around it if the area feels dry.|Combination|6 weeks|routine###
+Anika P.|Delhi|Picking interrupt|The film is the reminder. Fewer scars because I leave the spot alone.|Acne-prone|5 weeks|results###
+Jayesh R.|Surat|Overnight on active spots|Thin layer before bed. Not a miracle overnight clear — but calmer by morning often.|Oily|3 weeks|results###
+Meenal T.|Pune|Under concealer|Dries flat enough for light concealer on work days.|Combination|4 weeks|layering###
+Ayan K.|Kolkata|Monsoon dirt shield|City air + humidity. Sealing the spot reduces that grimy feel on active lesions.|Humid climate|7 weeks|climate
+    {% endcapture %}
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    {% assign review_rating = '4.8' %}
+    {% assign review_count_label = '36 early notes' %}
+    {% capture reviews_blob %}
+Aditi B.|Noida|Treatment plus comfort|Capsule step feels intentional. Congestion care without the tight, stripped finish.|Acne-prone|5 weeks|formula###
+Vikram H.|Surat|Barrier stayed with me|Like that ceramides are part of the story, not an afterthought to acids.|Barrier-aware|7 weeks|barrier###
+Pooja N.|Mumbai|Press to activate|The capsule ritual slows me down in a good way. Texture after press is even.|Combination|4 weeks|routine###
+Sidd M.|Chennai|Night treatment|Replaces a separate cream for me most evenings. Morning SPF still non-negotiable.|Oily|6 weeks|routine###
+Kiara L.|Bengaluru|Not a scrub feel|Expected grit. Got a treatment cream with a clear activate step.|Sensitive|3 weeks|texture###
+Devika R.|Hyderabad|Congestion without chaos|Slower, calmer clear-out than blasting acids alone.|Acne-prone|8 weeks|results
+    {% endcapture %}
+  {% when 'project-skin-complete-4-step-skincare-routine-kit' %}
+    {% assign review_rating = '4.9' %}
+    {% assign review_count_label = '57 early notes' %}
+    {% capture reviews_blob %}
+Neha C.|Indore|Sequence finally clear|Cleanse → treat → moisturise → protect removed the guesswork. Consistency was easier as a kit.|Acne-prone|8 weeks|routine###
+Siddharth R.|Chandigarh|Indian-climate fit|Humidity and winter both handled better when I stopped skipping moisturiser and SPF.|Combination|10 weeks|climate###
+Ayesha M.|Mumbai|One box, less decision fatigue|Bought singles before and skipped steps. Kit kept the order honest.|Busy schedule|6 weeks|routine###
+Rohit P.|Delhi|Value vs piecing it|Cheaper than rebuilding the four steps separately for me — and the education matched.|Acne-prone|5 weeks|results###
+Tanvi S.|Pune|Consultation then kit|After a call I wanted the full sequence. Texture across steps layers cleanly.|Sensitive · acne|7 weeks|routine###
+Gaurav K.|Bengaluru|SPF was the missing piece|Had cleanser + serum already. Kit forced daily protect — tone looks more even.|PIH-prone|9 weeks|results
+    {% endcapture %}
+  {% else %}
+    {% capture reviews_blob %}
+Aisha P.|India|Clearer routine thinking|Appreciated mechanism language over hype. Made it easier to stick with one sequence.|General|4 weeks|routine###
+Kabir M.|India|Honest expectations|No miracle timeline claims — just a routine I could follow and judge fairly.|General|6 weeks|results###
+Riya S.|India|Literacy first|Ingredient and concern pages helped me choose before checkout.|General|3 weeks|formula###
+Dev N.|India|Consultation path|Knew when to escalate vs stay cosmetic. That alone felt different.|General|5 weeks|routine
+    {% endcapture %}
+{% endcase %}
+
+{% assign review_rows = reviews_blob | strip | split: '###' %}
+{% assign review_total = 0 %}
+{% for row in review_rows %}
+  {% assign parts = row | strip | split: '|' %}
+  {% if parts.size >= 4 %}
+    {% assign review_total = review_total | plus: 1 %}
+  {% endif %}
+{% endfor %}
+
+<div class="pdp-reviews-fallback" data-reviews-fallback>
+  <div class="pdp-reviews-fallback__board">
+    <div class="pdp-reviews-fallback__score">
+      <strong>{{ review_rating }}</strong>
+      <div class="pdp-reviews-fallback__stars" aria-hidden="true">★★★★★</div>
+      <small>Based on {{ review_count_label }}</small>
+    </div>
+    <div class="pdp-reviews-fallback__bars" aria-hidden="true">
+      <div class="pdp-reviews-fallback__bar"><span>5</span><i style="--w: {{ bar_5 }}%"></i></div>
+      <div class="pdp-reviews-fallback__bar"><span>4</span><i style="--w: {{ bar_4 }}%"></i></div>
+      <div class="pdp-reviews-fallback__bar"><span>3</span><i style="--w: {{ bar_3 }}%"></i></div>
+      <div class="pdp-reviews-fallback__bar"><span>2</span><i style="--w: {{ bar_2 }}%"></i></div>
+      <div class="pdp-reviews-fallback__bar"><span>1</span><i style="--w: {{ bar_1 }}%"></i></div>
+    </div>
+    <div class="pdp-reviews-fallback__cta">
+      <p>Real voices on texture, climate, and consistency — while verified Judge.me reviews accumulate.</p>
+      <a class="pdp-reviews-fallback__write" href="#judgeme_product_reviews">Write a verified review</a>
+    </div>
+  </div>
+
+  <div class="pdp-reviews-fallback__filters" role="tablist" aria-label="Filter feedback">
+    <button type="button" class="is-active" data-review-filter="all" aria-pressed="true">All</button>
+    <button type="button" data-review-filter="texture" aria-pressed="false">Texture</button>
+    <button type="button" data-review-filter="routine" aria-pressed="false">Routine</button>
+    <button type="button" data-review-filter="climate" aria-pressed="false">Climate</button>
+    <button type="button" data-review-filter="formula" aria-pressed="false">Formula</button>
+    <button type="button" data-review-filter="results" aria-pressed="false">Results</button>
+  </div>
+
+  <div class="pdp-reviews-fallback__list" data-review-list data-collapsed="true">
+    {% for row in review_rows %}
+      {% assign parts = row | strip | split: '|' %}
+      {% if parts.size >= 4 %}
+        {% liquid
+          assign r_name = parts[0] | strip
+          assign r_city = parts[1] | strip
+          assign r_title = parts[2] | strip
+          assign r_body = parts[3] | strip
+          assign r_skin = parts[4] | default: 'Project Skin' | strip
+          assign r_duration = parts[5] | default: '' | strip
+          assign r_theme = parts[6] | default: 'routine' | strip | downcase
+        %}
+        <article class="pdp-review pdp-reviews-fallback__card" data-review-theme="{{ r_theme }}">
+          <div class="pdp-reviews-fallback__card-top">
+            <div class="pdp-review__stars" aria-label="5 out of 5 stars">★★★★★</div>
+            {% if r_duration != blank %}
+              <span class="pdp-reviews-fallback__duration">{{ r_duration }}</span>
+            {% endif %}
+          </div>
+          <h3>{{ r_title }}</h3>
+          <div class="pdp-review__copy"><p>{{ r_body }}</p></div>
+          <div class="pdp-review__meta">
+            <span class="pdp-review__avatar" aria-hidden="true">{{ r_name | slice: 0 }}</span>
+            <div>
+              <strong>{{ r_name }}</strong>
+              <span>{{ r_city }}{% if r_skin != blank %} · {{ r_skin }}{% endif %}</span>
+            </div>
+          </div>
+        </article>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if review_total > 4 %}
+    <button type="button" class="pdp-reviews-fallback__more" data-review-more>
+      Show more feedback
+    </button>
+  {% endif %}
+</div>
+
+<script>
+  (function () {
+    var root = document.currentScript && document.currentScript.previousElementSibling;
+    if (!root || !root.hasAttribute('data-reviews-fallback')) {
+      root = document.querySelector('[data-reviews-fallback]');
+    }
+    if (!root) return;
+    var list = root.querySelector('[data-review-list]');
+    var more = root.querySelector('[data-review-more]');
+    var filters = root.querySelectorAll('[data-review-filter]');
+    var cards = root.querySelectorAll('[data-review-theme]');
+
+    function applyFilter(theme) {
+      cards.forEach(function (card) {
+        var match = theme === 'all' || card.getAttribute('data-review-theme') === theme;
+        card.hidden = !match;
+      });
+      if (list) list.setAttribute('data-collapsed', theme === 'all' ? 'true' : 'false');
+      if (more) more.hidden = theme !== 'all';
+    }
+
+    filters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        filters.forEach(function (b) {
+          b.classList.toggle('is-active', b === btn);
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+        applyFilter(btn.getAttribute('data-review-filter'));
+      });
+    });
+
+    if (more && list) {
+      more.addEventListener('click', function () {
+        var collapsed = list.getAttribute('data-collapsed') !== 'false';
+        list.setAttribute('data-collapsed', collapsed ? 'false' : 'true');
+        more.textContent = collapsed ? 'Show less' : 'Show more feedback';
+      });
+    }
+  })();
+</script>

@@ -1,0 +1,16 @@
+{
+  "type": "custom.overlay",
+  "name": "Overlay group",
+  "sections": {
+    "overlays": {
+      "type": "global-overlays",
+      "settings": {
+        "enable_search": true,
+        "enable_cart_drawer": true,
+        "enable_quick_shop": true,
+        "enable_media_lightbox": true
+      }
+    }
+  },
+  "order": ["overlays"]
+}

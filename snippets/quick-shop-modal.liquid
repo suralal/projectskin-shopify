@@ -1,0 +1,20 @@
+<div class="quick-shop-modal" data-quick-shop-modal aria-hidden="true">
+  <div class="quick-shop-modal__backdrop" data-quick-shop-close></div>
+  <div class="quick-shop-modal__dialog" role="dialog" aria-modal="true" aria-label="Quick shop">
+    <button class="icon-button quick-shop-modal__close" type="button" data-quick-shop-close aria-label="Close">{% render 'icon', name: 'close' %}</button>
+    <div class="quick-shop-modal__grid">
+      <div class="quick-shop-modal__media"><img data-quick-shop-image src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" width="900" height="1200" alt=""></div>
+      <div class="quick-shop-modal__content">
+        <div class="eyebrow">Quick shop</div><h2 data-quick-shop-title></h2><div class="product-price" data-quick-shop-price></div>
+        <form action="{{ routes.cart_add_url }}" method="post" data-quick-shop-form>
+          <div data-quick-shop-options></div><input type="hidden" name="id" data-quick-shop-id>
+          <div class="quantity-row">
+            <div class="quantity"><button type="button" data-qty="minus" aria-label="Decrease quantity">−</button><input name="quantity" value="1" min="1" inputmode="numeric" aria-label="Quantity"><button type="button" data-qty="plus" aria-label="Increase quantity">+</button></div>
+            <button class="button button--full" type="submit">Add to cart</button>
+          </div>
+        </form>
+        <a class="quick-shop-modal__view" data-quick-shop-link>View full details →</a>
+      </div>
+    </div>
+  </div>
+</div>

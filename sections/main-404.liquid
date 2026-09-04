@@ -1,0 +1,54 @@
+{% liquid
+  # Education pages participate in the 404 route-fallback preview system
+  # until Admin publishes matching Shopify pages.
+%}
+<script>
+  (function () {
+    var path = window.location.pathname.replace(/\/$/, '');
+    var map = {
+      '/pages/philosophy': ['philosophy', 'Our Philosophy – Project Skin'],
+      '/pages/the-science': ['science', 'The Science – Project Skin'],
+      '/pages/ingredients': ['ingredients', 'Ingredients – Project Skin'],
+      '/pages/acne': ['acne', 'Acne – Project Skin'],
+      '/pages/pigmentation': ['pigmentation', 'Pigmentation – Project Skin'],
+      '/pages/barrier': ['barrier', 'Barrier – Project Skin'],
+      '/pages/daily-spf': ['spf', 'Daily SPF – Project Skin'],
+      '/pages/journal': ['journal', 'Journal – Project Skin'],
+      '/pages/monsoon': ['monsoon', 'Monsoon – Project Skin'],
+      '/pages/festive': ['festive', 'Festive – Project Skin'],
+      '/pages/winter': ['winter', 'Winter – Project Skin']
+    };
+    var hit = map[path];
+    var route = hit ? hit[0] : 'not-found';
+    document.documentElement.setAttribute('data-psr-fallback-route', route);
+    if (hit) document.title = hit[1];
+  })();
+</script>
+<style>
+  html[data-psr-fallback-route] .psr-route-fallback { display: none; }
+  html[data-psr-fallback-route='philosophy'] .psr-route-fallback--philosophy,
+  html[data-psr-fallback-route='science'] .psr-route-fallback--science,
+  html[data-psr-fallback-route='ingredients'] .psr-route-fallback--ingredients,
+  html[data-psr-fallback-route='ingredients'] .psr-route-fallback--science,
+  html[data-psr-fallback-route='acne'] .psr-route-fallback--concern-acne,
+  html[data-psr-fallback-route='pigmentation'] .psr-route-fallback--concern-pigmentation,
+  html[data-psr-fallback-route='barrier'] .psr-route-fallback--concern-barrier,
+  html[data-psr-fallback-route='spf'] .psr-route-fallback--concern-spf,
+  html[data-psr-fallback-route='journal'] .psr-route-fallback--journal,
+  html[data-psr-fallback-route='monsoon'] .psr-route-fallback--season-monsoon,
+  html[data-psr-fallback-route='festive'] .psr-route-fallback--season-festive,
+  html[data-psr-fallback-route='winter'] .psr-route-fallback--season-winter { display: block; }
+  html[data-psr-fallback-route='philosophy'] .psr-404-default,
+  html[data-psr-fallback-route='science'] .psr-404-default,
+  html[data-psr-fallback-route='ingredients'] .psr-404-default,
+  html[data-psr-fallback-route='acne'] .psr-404-default,
+  html[data-psr-fallback-route='pigmentation'] .psr-404-default,
+  html[data-psr-fallback-route='barrier'] .psr-404-default,
+  html[data-psr-fallback-route='spf'] .psr-404-default,
+  html[data-psr-fallback-route='journal'] .psr-404-default,
+  html[data-psr-fallback-route='monsoon'] .psr-404-default,
+  html[data-psr-fallback-route='festive'] .psr-404-default,
+  html[data-psr-fallback-route='winter'] .psr-404-default { display: none; }
+</style>
+<section class="section psr-404-default"><div class="container"><h1>404</h1><p>Page not found.</p><a class="btn" href="{{ routes.root_url }}">Back home</a></div></section>
+{% schema %}{"name":"404 page","settings":[]}{% endschema %}

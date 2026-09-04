@@ -1,0 +1,44 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "show_services": false,
+        "contact_heading": "Contact us",
+        "contact_intro": "Need help fast?",
+        "email": "support@theprojectskin.com",
+        "whatsapp_label": "WhatsApp",
+        "whatsapp_url": "https://wa.me/918446544458?text=Hi,%20I%20need%20to%20know%20more%20about%20your%20acne%20range%20products",
+        "company_heading": "Company Overview",
+        "link_about_label": "About Us",
+        "link_about_url": "/pages/about",
+        "link_science_label": "The Science",
+        "link_science_url": "/pages/the-science",
+        "link_ingredients_label": "Ingredients",
+        "link_ingredients_url": "/pages/ingredients",
+        "link_journal_label": "Journal",
+        "link_journal_url": "/pages/journal",
+        "link_philosophy_label": "Philosophy",
+        "link_philosophy_url": "/pages/philosophy",
+        "link_account_label": "My Account",
+        "link_account_url": "/account",
+        "link_contact_label": "Contact Us",
+        "link_contact_url": "/pages/contact-us",
+        "link_faq_label": "FAQ's",
+        "link_faq_url": "/pages/faq",
+        "link_guarantee_label": "Money Back Guarantee",
+        "link_guarantee_url": "/pages/money-back-guarantee",
+        "show_newsletter": true,
+        "newsletter_heading": "Stay in the loop",
+        "newsletter_text": "Science, routines, and evidence-led updates — not hype.",
+        "newsletter_placeholder": "Enter your email...",
+        "newsletter_button": "Subscribe",
+        "copyright_text": "Copyright © 2026 Nureya Beauty and Wellness Pvt Limited",
+        "show_payment_icons": true
+      }
+    }
+  },
+  "order": ["footer"]
+}

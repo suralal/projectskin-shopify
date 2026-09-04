@@ -1,0 +1,70 @@
+{% comment %}
+  Default buy-box accordions when theme editor blocks are empty:
+  Why these actives · How to use · Full ingredients note
+{% endcomment %}
+{% liquid
+  assign why_heading = 'Why these actives'
+  assign why_content = blank
+  assign use_heading = 'How to use'
+  assign use_content = blank
+  assign inci_heading = 'Full ingredients'
+  assign inci_content = blank
+%}
+
+{% case product.handle %}
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    {% capture why_content %}<ul><li><strong>Encapsulated Niacinamide 5%</strong> — oil balance, pores, and tone in a stabilised delivery matrix, not a loose label claim.</li><li><strong>SEPICONCONTROL™ A5 + Zinc PCA</strong> — dual sebum pathways most single-active serums skip.</li><li><strong>PDRN + Saccharide Isomerate</strong> — recovery signalling and lasting hydration so treatment stays comfortable.</li></ul><p><a href="/pages/ingredients#ingredient-niacinamide">Read: Niacinamide at 5%</a> · <a href="/pages/acne">Acne literacy</a></p>{% endcapture %}
+    {% capture use_content %}<p>Cleanse → 2–3 drops on dry skin → moisturise → SPF in the morning. Start once daily if your barrier is reactive. Patch test first.</p>{% endcapture %}
+    {% capture inci_content %}<p>Key actives: Encapsulated Niacinamide, SEPICONCONTROL™ A5, PDRN, Saccharide Isomerate (Pentavitin™), Panthenol, Zinc PCA, calming botanicals. The complete INCI list is on the product packaging.</p>{% endcapture %}
+
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    {% capture why_content %}<ul><li><strong>Ceramide complex + phospholipids</strong> — replenish the lipid matrix acne-prone routines often compromise.</li><li><strong>C15-19 Alkane</strong> — plant-derived emollient cushion that sits under SPF without pilling.</li><li><strong>Six-botanical complex</strong> — Amla, Licorice, Tulsi, Black Seed, Neem, Phytic Acid with named roles for tone and calm.</li></ul><p><a href="/pages/ingredients#ingredient-ceramide-complex">Read: Ceramides</a> · <a href="/pages/barrier">Barrier literacy</a></p>{% endcapture %}
+    {% capture use_content %}<p>After treat step (or after cleanse if you skip serum), apply a thin layer morning and night. In the morning, follow with sunscreen.</p>{% endcapture %}
+    {% capture inci_content %}<p>Key ingredients: C15-19 Alkane, Ceramide complex, Phospholipids / Sphingolipids, Saccharide Isomerate, six-botanical bioactive complex, Glycerin, Propanediol, Betaine. Full INCI on packaging.</p>{% endcapture %}
+
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    {% capture why_content %}<ul><li><strong>Salicylic Acid 2%</strong> — oil-soluble BHA that works inside the pore at a functional rinse-off level.</li><li><strong>Glycolic Acid 1%</strong> — water-soluble AHA for surface renewal alongside BHA.</li><li><strong>Phospholipids + mild surfactants</strong> — cleanse without abandoning the barrier.</li></ul><p><a href="/pages/ingredients#ingredient-salicylic-acid">Read: Salicylic Acid at 2%</a> · <a href="/pages/acne">Acne literacy</a></p>{% endcapture %}
+    {% capture use_content %}<p>Massage onto damp skin morning and/or night, rinse thoroughly. Follow with treat, moisturise, and SPF. If skin feels tight, reduce to once daily and prioritise moisturiser.</p>{% endcapture %}
+    {% capture inci_content %}<p>Key actives: Salicylic Acid 2%, Glycolic Acid 1%, Sodium Lauroyl Sarcosinate, Decyl Glucoside, Cocamidopropyl Betaine, Phospholipids, Sphingolipids. Full INCI on packaging.</p>{% endcapture %}
+
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    {% capture why_content %}<ul><li><strong>Four-filter hybrid system</strong> — including Tinosorb S for photostable UVA coverage beyond two-filter SPFs.</li><li><strong>Zinc PCA 0.5%</strong> — sebum regulation so the formula stays wearable in heat and humidity.</li><li><strong>Niacinamide support</strong> — tone care that belongs beside daily protection on Indian skin.</li></ul><p><a href="/pages/ingredients#ingredient-tinosorb-s">Read: Tinosorb S</a> · <a href="/pages/daily-spf">Daily SPF literacy</a></p>{% endcapture %}
+    {% capture use_content %}<p>Apply generously as the last morning step after moisturiser. Reapply after sweating or prolonged outdoor time. Photoprotection only works if the texture is worn daily.</p>{% endcapture %}
+    {% capture inci_content %}<p>Key filters and supports: Tinosorb S, Uvinul A Plus, Ethylhexyl Triazone, Titanium Dioxide, Zinc PCA, Niacinamide. Full INCI and SPF labelling on packaging.</p>{% endcapture %}
+
+  {% when 'clear-seal' %}
+    {% capture why_content %}<ul><li><strong>Salicylic Acid + Glycolic Acid</strong> — clear congestion at the lesion.</li><li><strong>Niacinamide</strong> — calm the look of inflammation and support tone.</li><li><strong>Film-forming patch</strong> — shields from dirt, friction, and picking while actives work.</li></ul><p><a href="/pages/ingredients#ingredient-salicylic-acid">Read: Salicylic Acid</a> · <a href="/pages/acne">Acne literacy</a></p>{% endcapture %}
+    {% capture use_content %}<p>Apply a thin layer on a clean, dry breakout. Allow to dry to a clear film. Use spot-wise; moisturise around the area if needed.</p>{% endcapture %}
+    {% capture inci_content %}<p>Key actives: Salicylic Acid, Glycolic Acid, Niacinamide, moisture-locking complex. Full INCI on packaging.</p>{% endcapture %}
+
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    {% capture why_content %}<ul><li><strong>Encapsulated multi-actives</strong> — Niacinamide, Salicylic Acid, Zinc PCA released on application for fresher efficacy.</li><li><strong>Ceramide NP / AP / EOP</strong> — barrier lipids so acne treatment does not equal strip.</li><li><strong>Botanical support</strong> — Neem, Turmeric, Willow Bark with a clear role beside modern actives.</li></ul><p><a href="/pages/ingredients#ingredient-niacinamide">Read: Niacinamide</a> · <a href="/pages/acne">Acne literacy</a></p>{% endcapture %}
+    {% capture use_content %}<p>After cleansing, activate a capsule and apply as directed. Follow with moisturiser if needed and SPF in the morning. Introduce slowly if your barrier is compromised.</p>{% endcapture %}
+    {% capture inci_content %}<p>Key actives: Niacinamide, Salicylic Acid, Zinc PCA, Ceramide NP/AP/EOP, Panthenol, Squalane, botanical extracts. Full INCI on packaging.</p>{% endcapture %}
+
+  {% when 'project-skin-complete-4-step-skincare-routine-kit' %}
+    {% capture why_content %}<ul><li><strong>Cleanser</strong> — functional BHA + AHA without stripping.</li><li><strong>Serum</strong> — 5% encapsulated Niacinamide with dual sebum control.</li><li><strong>Moisturiser</strong> — barrier lipids under SPF.</li><li><strong>Sunscreen</strong> — four-filter SPF 50 for Indian UV.</li></ul><p><a href="/pages/ingredients">Ingredient library</a> · <a href="/pages/acne">Acne literacy</a></p>{% endcapture %}
+    {% capture use_content %}<p>Morning: Cleanse → Serum → Moisturiser → SPF. Evening: Cleanse → Serum → Moisturiser. Stay consistent before judging the routine.</p>{% endcapture %}
+    {% capture inci_content %}<p>Each product carries its own INCI on packaging. Start with the ingredient library for percentage and mechanism detail across the kit.</p>{% endcapture %}
+{% endcase %}
+
+{% if why_content != blank %}
+  <div class="pdp-accordions" id="ProductIngredients">
+    <details open>
+      <summary>{{ why_heading }} <span aria-hidden="true">+</span></summary>
+      <div class="pdp-accordion__content rte">{{ why_content }}</div>
+    </details>
+    {% if use_content != blank %}
+      <details>
+        <summary>{{ use_heading }} <span aria-hidden="true">+</span></summary>
+        <div class="pdp-accordion__content rte">{{ use_content }}</div>
+      </details>
+    {% endif %}
+    {% if inci_content != blank %}
+      <details>
+        <summary>{{ inci_heading }} <span aria-hidden="true">+</span></summary>
+        <div class="pdp-accordion__content rte">{{ inci_content }}</div>
+      </details>
+    {% endif %}
+  </div>
+{% endif %}

@@ -1,0 +1,20 @@
+{% comment %}
+  Short mechanism line for the PDP buy-box — under the concern line.
+  Format: active + %/form + what pathway it supports.
+{% endcomment %}
+{% case product.handle %}
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    Encapsulated 5% Niacinamide + dual sebum pathways — oil, pores, and tone without abandoning comfort.
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    Ceramides + C15-19 Alkane replenish the lipid layer so hydration holds under SPF.
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    2% Salicylic Acid + 1% Glycolic Acid clear inside and on the surface — phospholipids keep the barrier intact.
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    Four-filter SPF 50 with Tinosorb S — broad UVA defence you can wear in Indian heat.
+  {% when 'clear-seal' %}
+    BHA + AHA + Niacinamide under an invisible film — treat the breakout and shield it from picking.
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    Capsule-delivered actives for congestion and tone, with ceramides so treatment does not strip the barrier.
+  {% when 'project-skin-complete-4-step-skincare-routine-kit' %}
+    Cleanse → treat → moisturise → protect — four mechanisms, one considered sequence.
+{% endcase %}

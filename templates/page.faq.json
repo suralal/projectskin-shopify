@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "main": { "type": "main-page", "settings": {} },
+    "questions": {
+      "type": "faqs",
+      "blocks": {
+        "products": { "type": "faq", "settings": { "question": "How do I choose the right products?", "answer": "<p>Start with your primary skin goal, then build a simple cleanse, treat, moisturize, and protect routine.</p>" } },
+        "types": { "type": "faq", "settings": { "question": "Are Purity routines suitable for every skin type?", "answer": "<p>Each routine can be adjusted around your skin type, comfort, and personal goals.</p>" } },
+        "delivery": { "type": "faq", "settings": { "question": "When will my order arrive?", "answer": "<p>Available shipping methods and delivery estimates are shown during checkout.</p>" } },
+        "returns": { "type": "faq", "settings": { "question": "What is your return policy?", "answer": "<p>Return eligibility and instructions are available in the store's return policy.</p>" } },
+        "support": { "type": "faq", "settings": { "question": "How can I contact support?", "answer": "<p>Use the contact page or the details in the footer and our team will be happy to help.</p>" } }
+      },
+      "block_order": ["products", "types", "delivery", "returns", "support"],
+      "settings": {
+        "section_width": "fixed",
+        "subheading": "Help centre",
+        "heading": "Frequently Asked Questions",
+        "description": "<p>Clear answers for shopping, products, delivery, and returns.</p>",
+        "alignment": "center",
+        "padding_top": 32,
+        "padding_bottom": 96,
+        "show_divider": false
+      }
+    }
+  },
+  "order": ["main", "questions"]
+}

@@ -1,0 +1,55 @@
+{% liquid
+  if canonical_url != blank
+    assign share_url = canonical_url
+  else
+    assign share_url = shop.url | append: product.url
+  endif
+  assign share_title = product.title | default: shop.name | escape
+  assign share_text = share_title | append: ' — ' | append: shop.name
+%}
+<div class="pdp-share" data-pdp-share>
+  <span class="pdp-share__label">Share</span>
+  <div class="pdp-share__actions">
+    <a
+      class="pdp-share__btn"
+      href="https://wa.me/?text={{ share_text | append: ' ' | append: share_url | url_encode }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Share on WhatsApp"
+    >
+      {% render 'icon', name: 'whatsapp' %}
+      <span class="pdp-share__name">WhatsApp</span>
+    </a>
+    <a
+      class="pdp-share__btn"
+      href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Share on Facebook"
+    >
+      {% render 'icon', name: 'facebook' %}
+      <span class="pdp-share__name">Facebook</span>
+    </a>
+    <a
+      class="pdp-share__btn"
+      href="https://twitter.com/intent/tweet?url={{ share_url | url_encode }}&text={{ share_title | url_encode }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Share on X"
+    >
+      {% render 'icon', name: 'x' %}
+      <span class="pdp-share__name">X</span>
+    </a>
+    <button
+      class="pdp-share__btn"
+      type="button"
+      data-copy-link
+      data-copy-url="{{ share_url }}"
+      aria-label="Copy product link"
+    >
+      {% render 'icon', name: 'link' %}
+      <span class="pdp-share__name">Copy link</span>
+      <span class="pdp-share__copied" data-copy-feedback hidden>Copied</span>
+    </button>
+  </div>
+</div>

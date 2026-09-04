@@ -1,0 +1,149 @@
+<section class="psr-route-fallback psr-route-fallback--journal psr-page psr-journal-hub">
+  <div class="psr-journal-hub__hero">
+    <div class="container">
+      <p class="psr-kicker">{{ section.settings.eyebrow }}</p>
+      <h1>{{ section.settings.heading }}</h1>
+      {% if section.settings.text != blank %}
+        <p class="psr-journal-hub__lede">{{ section.settings.text }}</p>
+      {% endif %}
+      <div class="psr-journal-hub__actions">
+        {% if section.settings.primary_label != blank %}
+          <a class="psr-button" href="{{ section.settings.primary_link | default: '/blogs/news' }}">{{ section.settings.primary_label }}</a>
+        {% endif %}
+        {% if section.settings.secondary_label != blank %}
+          <a class="psr-button psr-button--secondary" href="{{ section.settings.secondary_link | default: '/pages/the-science' }}">{{ section.settings.secondary_label }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="psr-section psr-section--linen">
+    <div class="container">
+      <div class="psr-section__head">
+        <div>
+          <span class="psr-kicker">{{ section.settings.calendar_eyebrow }}</span>
+          <h2>{{ section.settings.calendar_heading }}</h2>
+        </div>
+        <p>{{ section.settings.calendar_text }}</p>
+      </div>
+      <div class="psr-journal-hub__seasons">
+        {% for block in section.blocks %}
+          {% if block.type == 'season' %}
+            <a class="psr-journal-hub__season" href="{{ block.settings.link | default: '/pages/monsoon' }}" {{ block.shopify_attributes }}>
+              <span class="psr-kicker">{{ block.settings.eyebrow }}</span>
+              <h3>{{ block.settings.heading }}</h3>
+              <p>{{ block.settings.text }}</p>
+              <span class="psr-journal-hub__go">{{ block.settings.link_label | default: 'Read the season' }} <span aria-hidden="true">↗</span></span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="psr-section">
+    <div class="container">
+      <div class="psr-section__head">
+        <div>
+          <span class="psr-kicker">{{ section.settings.essays_eyebrow }}</span>
+          <h2>{{ section.settings.essays_heading }}</h2>
+        </div>
+        <p>{{ section.settings.essays_text }}</p>
+      </div>
+      <div class="psr-journal-hub__essays">
+        {% for block in section.blocks %}
+          {% if block.type == 'essay' %}
+            <a class="psr-journal-hub__essay" href="{{ block.settings.link | default: '/pages/ingredients' }}" {{ block.shopify_attributes }}>
+              <span class="psr-kicker">{{ block.settings.topic }}</span>
+              <h3>{{ block.settings.heading }}</h3>
+              <p>{{ block.settings.text }}</p>
+              <span class="psr-journal-hub__go">Continue reading <span aria-hidden="true">↗</span></span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% if section.settings.show_blog %}
+    {% assign journal_blog = blogs[section.settings.blog_handle] | default: blogs.news %}
+    {% if journal_blog != blank and journal_blog.articles_count > 0 %}
+      <div class="psr-section psr-section--mist">
+        <div class="container">
+          <div class="psr-section__head">
+            <div>
+              <span class="psr-kicker">From the blog</span>
+              <h2>Published in the journal</h2>
+            </div>
+            <a class="psr-text-link" href="{{ journal_blog.url }}">View all <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="psr-journal-hub__posts">
+            {% for article in journal_blog.articles limit: 3 %}
+              <article class="psr-journal-hub__post">
+                {% if article.image %}
+                  <a class="psr-journal-hub__post-media" href="{{ article.url }}">
+                    {{ article.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400,700,900', sizes: '(min-width: 900px) 30vw, 100vw', alt: article.title }}
+                  </a>
+                {% endif %}
+                <div>
+                  <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'date' }}</time>
+                  <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                  <p>{{ article.excerpt_or_content | strip_html | truncatewords: 22 }}</p>
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Journal hub",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Project Skin Journal" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Education on a calendar." },
+    { "type": "textarea", "id": "text", "label": "Intro", "default": "Seasonal climate, ingredient deep dives, and concern literacy — written to inform before you buy. Not sale banners." },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "Open the blog" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button", "default": "Explore the science" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" },
+    { "type": "text", "id": "calendar_eyebrow", "label": "Calendar eyebrow", "default": "Campaign calendar" },
+    { "type": "text", "id": "calendar_heading", "label": "Calendar heading", "default": "Seasons as education modules" },
+    { "type": "textarea", "id": "calendar_text", "label": "Calendar text", "default": "Monsoon, festive, and winter change the biology. Each module diagnoses first — then points to mechanisms and formulas." },
+    { "type": "text", "id": "essays_eyebrow", "label": "Essays eyebrow", "default": "Starter essays" },
+    { "type": "text", "id": "essays_heading", "label": "Essays heading", "default": "Literacy threads to keep open" },
+    { "type": "textarea", "id": "essays_text", "label": "Essays text", "default": "Short paths into concerns and actives — the same voice as the playbook." },
+    { "type": "checkbox", "id": "show_blog", "label": "Show published blog posts", "default": true },
+    { "type": "text", "id": "blog_handle", "label": "Blog handle", "default": "news" }
+  ],
+  "blocks": [
+    {
+      "type": "season",
+      "name": "Season card",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Season" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Monsoon" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Humidity does not cancel acne biology." },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Read the season" }
+      ]
+    },
+    {
+      "type": "essay",
+      "name": "Essay card",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "topic", "label": "Topic", "default": "Ingredient" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Why percentage matters" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Name the dose. Cite the mechanism." },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Journal hub" }]
+}
+{% endschema %}

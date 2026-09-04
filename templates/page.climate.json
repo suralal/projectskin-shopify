@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "climate_explorer": {
+      "type": "ps-climate-signature",
+      "settings": {
+        "layout": "full",
+        "eyebrow": "Your city's skin environment",
+        "heading": "Five factors.",
+        "heading_italic": "One profile.",
+        "description": "<p>UV, humidity, pollution, water hardness and seasonal swing — ranked for your city. Compare cities, switch seasons, and save a profile for your routine.</p>",
+        "button_label": "Build my routine",
+        "routine_link": "/pages/routine",
+        "detail_label": "",
+        "padding_top": 56,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": ["climate_explorer"]
+}

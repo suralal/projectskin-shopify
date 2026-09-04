@@ -1,0 +1,136 @@
+<section class="ps-template ps-cart-page">
+  <div class="container">
+    <div class="ps-template__head">
+      <span class="ps-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h1>{{ section.settings.heading }}</h1>
+      {% if cart.item_count > 0 %}<p>{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}</p>{% endif %}
+    </div>
+
+    {% if cart.item_count == 0 %}
+      <div class="ps-cart-empty">
+        <h2>{{ section.settings.empty_heading }}</h2>
+        <p>{{ section.settings.empty_text }}</p>
+        <a class="ps-button" href="{{ routes.all_products_collection_url }}">{{ section.settings.empty_button }}</a>
+      </div>
+
+      {% assign empty_collection = settings.empty_cart_collection %}
+      {% if empty_collection != blank %}
+        <div class="ps-cart-empty__products">
+          <h2>{{ section.settings.empty_products_heading }}</h2>
+          <div class="grid grid-4">
+            {% for product in empty_collection.products limit: 4 %}
+              {% render 'product-card', product: product %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="ps-cart-layout">
+        {% form 'cart', cart, id: 'MainCartForm', class: 'ps-cart-form' %}
+          <div class="ps-cart-lines">
+            {% for item in cart.items %}
+              <article class="ps-cart-line">
+                <a class="ps-cart-line__media" href="{{ item.url }}">
+                  {% if item.image %}
+                    {{ item.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '160,240,400', sizes: '140px', alt: item.product.title }}
+                  {% endif %}
+                </a>
+                <div class="ps-cart-line__copy">
+                  {% if item.product.vendor != blank %}<span class="ps-eyebrow">{{ item.product.vendor }}</span>{% endif %}
+                  <h2><a href="{{ item.url }}">{{ item.product.title }}</a></h2>
+                  {% unless item.variant.title == 'Default Title' %}<p>{{ item.variant.title }}</p>{% endunless %}
+                  {% if item.selling_plan_allocation %}<p>{{ item.selling_plan_allocation.selling_plan.name }}</p>{% endif %}
+                  {% unless item.properties == empty %}
+                    <dl>
+                      {% for property in item.properties %}
+                        {% assign first_character = property.first | slice: 0 %}
+                        {% if property.last != blank and first_character != '_' %}
+                          <div><dt>{{ property.first }}:</dt><dd>{{ property.last }}</dd></div>
+                        {% endif %}
+                      {% endfor %}
+                    </dl>
+                  {% endunless %}
+                  <div class="ps-cart-line__quantity">
+                    <label for="CartQuantity-{{ forloop.index }}">Quantity</label>
+                    <input id="CartQuantity-{{ forloop.index }}" name="updates[]" value="{{ item.quantity }}" min="0" type="number" inputmode="numeric">
+                    <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0">Remove</a>
+                  </div>
+                </div>
+                <div class="ps-cart-line__price">
+                  {% if item.original_line_price != item.final_line_price %}<s>{{ item.original_line_price | money }}</s>{% endif %}
+                  <strong>{{ item.final_line_price | money }}</strong>
+                  {% for discount in item.line_level_discount_allocations %}<small>{{ discount.discount_application.title }}</small>{% endfor %}
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+
+          {% if settings.show_cart_note %}
+            <div class="ps-cart-note">
+              <label for="CartNote">Order note</label>
+              <textarea id="CartNote" name="note" rows="4" placeholder="Add a note for your order">{{ cart.note }}</textarea>
+            </div>
+          {% endif %}
+
+          <button class="ps-text-button" type="submit" name="update">Update cart</button>
+        {% endform %}
+
+        <aside class="ps-cart-summary">
+          {% if settings.free_shipping_message %}
+            <div class="shipping-progress" data-shipping-progress data-threshold="{{ settings.free_shipping_threshold | times: 100 }}">
+              <div class="shipping-progress__message" data-shipping-message></div>
+              <div class="shipping-progress__bar"><span data-shipping-bar></span></div>
+            </div>
+          {% endif %}
+
+          <h2>Order summary</h2>
+          {% for discount in cart.cart_level_discount_applications %}
+            <div class="ps-cart-summary__row"><span>{{ discount.title }}</span><strong>-{{ discount.total_allocated_amount | money }}</strong></div>
+          {% endfor %}
+          <div class="ps-cart-summary__row ps-cart-summary__total"><span>Subtotal</span><strong>{{ cart.total_price | money }}</strong></div>
+          <p>Taxes and shipping calculated at checkout.</p>
+          {% if settings.shopflo_enabled %}
+            <button
+              class="ps-button ps-button--full"
+              type="button"
+              id="checkout2"
+              name="checkout2"
+              data-shopflo-checkout
+            >
+              {{ section.settings.checkout_label }}
+            </button>
+          {% else %}
+            <button class="ps-button ps-button--full" type="submit" name="checkout" form="MainCartForm">{{ section.settings.checkout_label }}</button>
+          {% endif %}
+          <a class="ps-text-button" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+
+          {% if settings.show_discount_field %}
+            <form class="cart-discount ps-cart-discount" data-discount-form>
+              <label for="CartPageDiscount">Discount code</label>
+              <div>
+                <input id="CartPageDiscount" type="text" placeholder="Enter code" data-discount-code>
+                <button type="submit">Apply</button>
+              </div>
+            </form>
+          {% endif %}
+        </aside>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your selection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shopping Bag" },
+    { "type": "text", "id": "checkout_label", "label": "Checkout button", "default": "Checkout securely" },
+    { "type": "header", "content": "Empty cart" },
+    { "type": "text", "id": "empty_heading", "label": "Heading", "default": "Your bag is waiting" },
+    { "type": "textarea", "id": "empty_text", "label": "Text", "default": "Discover thoughtful care made for your everyday ritual." },
+    { "type": "text", "id": "empty_button", "label": "Button", "default": "Explore all products" },
+    { "type": "text", "id": "empty_products_heading", "label": "Products heading", "default": "Start with these" }
+  ]
+}
+{% endschema %}

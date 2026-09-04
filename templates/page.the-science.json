@@ -1,0 +1,425 @@
+{
+  "sections": {
+    "hero": {
+      "type": "project-skin-science-hero",
+      "settings": {
+        "eyebrow": "Education is the product",
+        "heading": "Skin absorbs everything.\nTreat it like biology.",
+        "text": "We sell literacy first, formulations second. Understand the mechanism, the concentration, and the Indian-skin context — then choose the right product.",
+        "primary_label": "Explore ingredients",
+        "primary_link": "/pages/ingredients",
+        "secondary_label": "Speak to a dermatologist",
+        "secondary_link": "/pages/consultation"
+      }
+    },
+    "purpose": {
+      "type": "project-skin-science-purpose",
+      "blocks": {
+        "signal": {
+          "type": "pillar",
+          "settings": {
+            "icon": "◎",
+            "heading": "Root cause over ritual",
+            "text": "Diagnose the biology first. Formulate second. A customer who understands their skin never buys the wrong product again."
+          }
+        },
+        "explain": {
+          "type": "pillar",
+          "settings": {
+            "icon": "✧",
+            "heading": "Ingredient integrity",
+            "text": "Every active earns its place — backed by evidence, at efficacious concentrations, delivered with the right technology."
+          }
+        },
+        "learn": {
+          "type": "pillar",
+          "settings": {
+            "icon": "⬡",
+            "heading": "Climate-coded science",
+            "text": "Indian skin faces heat, humidity, UV, pollution and hard water. Formulas should match that volatility — not temperate-market defaults."
+          }
+        }
+      },
+      "block_order": ["signal", "explain", "learn"],
+      "settings": {
+        "eyebrow": "Why Project Skin",
+        "heading": "Clarity before another product.",
+        "text": "We built this layer so you can understand the concern, the mechanism, and the next step — without miracle timelines or ingredient theatre."
+      }
+    },
+    "indian_context": {
+      "type": "ps-climate-signature",
+      "settings": {
+        "layout": "full",
+        "eyebrow": "Built for Indian skin",
+        "heading": "One country.",
+        "heading_italic": "Many skin environments.",
+        "description": "<p>Global formulas are built for Europe, the US, or Korea. Indian skin needs climate-responsive science — pick a city and see why context changes what your routine should prioritize.</p>",
+        "button_label": "Build my routine",
+        "routine_link": "/pages/routine",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "method": {
+      "type": "project-skin-method",
+      "blocks": {
+        "read": {
+          "type": "step",
+          "settings": {
+            "heading": "Read the signal",
+            "text": "Establish a baseline from visible skin cues, concern history, and environmental context — before adding another active."
+          }
+        },
+        "name": {
+          "type": "step",
+          "settings": {
+            "heading": "Name the mechanism",
+            "text": "Every recommendation should show what an ingredient does, at what concentration, and why it belongs in the routine."
+          }
+        },
+        "follow": {
+          "type": "step",
+          "settings": {
+            "heading": "Follow through",
+            "text": "Consistency creates usable signal. Track the routine so the next decision is better informed than the last."
+          }
+        }
+      },
+      "block_order": ["read", "name", "follow"],
+      "settings": {
+        "eyebrow": "The operating principle",
+        "heading": "Understand first. Formulate second.",
+        "text": "Education is part of the product. We make you understand before we make you buy — because the informed customer is the most loyal customer."
+      }
+    },
+    "standards": {
+      "type": "project-skin-standards",
+      "blocks": {
+        "mechanism": {
+          "type": "standard",
+          "settings": {
+            "heading": "Mechanism, not marketing",
+            "text": "We explain what an ingredient is there to do — percentage plus pathway — not vague enrichment claims."
+          }
+        },
+        "dose": {
+          "type": "standard",
+          "settings": {
+            "heading": "Efficacious concentrations",
+            "text": "Right ingredient + right technology. We don't decorate labels; we deliver doses that earn their place."
+          }
+        },
+        "barrier": {
+          "type": "standard",
+          "settings": {
+            "heading": "Barrier-first care",
+            "text": "Treat acne and oil without abandoning the lipid layer. Comfort and correction belong together."
+          }
+        },
+        "honest": {
+          "type": "standard",
+          "settings": {
+            "heading": "Defensible claims only",
+            "text": "No miracle timelines. No glow hype. Evidence-backed language you can verify."
+          }
+        }
+      },
+      "block_order": ["mechanism", "dose", "barrier", "honest"],
+      "settings": {
+        "eyebrow": "The standard we hold",
+        "heading": "Evidence should be visible in the experience.",
+        "text": "<p>Credibility is not a badge. It is how a formula is explained, a recommendation is reasoned, and progress is reviewed without unrealistic promises.</p>",
+        "cta_text": "Understand your skin before adding another product.",
+        "primary_label": "Browse ingredients",
+        "primary_link": "/pages/ingredients",
+        "secondary_label": "Speak to a dermatologist",
+        "secondary_link": "/pages/consultation"
+      }
+    },
+    "ingredient_teaser": {
+      "type": "project-skin-ingredient-library",
+      "settings": {
+        "eyebrow": "Start with the actives",
+        "heading": "Ingredient literacy lives here.",
+        "text": "Twelve core actives with percentage, mechanism, and the formulas that use them. Jump to the full library anytime."
+      }
+    },
+    "concern_index": {
+      "type": "project-skin-concern-index",
+      "blocks": {
+        "acne": {
+          "type": "concern",
+          "settings": {
+            "eyebrow": "Concern",
+            "heading": "Acne",
+            "text": "Congestion, oil, and barrier stress — not a cleanliness problem.",
+            "link": "/pages/acne",
+            "link_label": "Read the concern"
+          }
+        },
+        "pigmentation": {
+          "type": "concern",
+          "settings": {
+            "eyebrow": "Concern",
+            "heading": "Pigmentation",
+            "text": "Melanin memory after inflammation and UV — not a scrub problem.",
+            "link": "/pages/pigmentation",
+            "link_label": "Read the concern"
+          }
+        },
+        "barrier": {
+          "type": "concern",
+          "settings": {
+            "eyebrow": "Concern",
+            "heading": "Barrier",
+            "text": "When cream fails, the lipid layer is usually the real issue.",
+            "link": "/pages/barrier",
+            "link_label": "Read the concern"
+          }
+        },
+        "spf": {
+          "type": "concern",
+          "settings": {
+            "eyebrow": "Concern",
+            "heading": "Daily SPF",
+            "text": "In India, photoprotection is structural — not seasonal.",
+            "link": "/pages/daily-spf",
+            "link_label": "Read the concern"
+          }
+        }
+      },
+      "block_order": ["acne", "pigmentation", "barrier", "spf"],
+      "settings": {
+        "eyebrow": "Shop by concern — literacy first",
+        "heading": "Understand the biology. Then choose the formula.",
+        "text": "Each concern page diagnoses first, explains the mechanism, names the actives, then shows the products."
+      }
+    },
+    "mission": {
+      "type": "project-skin-science-mission",
+      "settings": {
+        "image_1_alt": "Guided skin scan reviewed with a specialist",
+        "card_1_eyebrow": "Purpose",
+        "card_1_heading": "Technology that makes decisions clearer",
+        "card_1_text": "<p>Explore the system to turn scattered concerns into an explainable path: what you see, why a product fits, and how to stay consistent.</p>",
+        "card_1_label": "How it works",
+        "card_1_link": "#science-system",
+        "card_2_eyebrow": "Follow-through",
+        "card_2_heading": "Built to learn with your routine",
+        "card_2_text": "<p>Recommendations matter more when adherence and check-ins create a usable signal — so the next decision is better informed.</p>",
+        "card_2_label": "See the platform",
+        "card_2_link": "#science-platform",
+        "image_2_alt": "Daily routine guided by Project Skin",
+        "badge_text": "Evidence-led"
+      }
+    },
+    "flow": {
+      "type": "project-skin-science-flow",
+      "blocks": {
+        "observe": {
+          "type": "step",
+          "settings": {
+            "heading": "Observe",
+            "text": "A guided image and concern check-in organize visible skin signals into a useful starting point."
+          }
+        },
+        "context": {
+          "type": "step",
+          "settings": {
+            "heading": "Add context",
+            "text": "Climate, sensitivities, current products and routine history help explain what the image alone cannot."
+          }
+        },
+        "match": {
+          "type": "step",
+          "settings": {
+            "heading": "Match",
+            "text": "Products are compared by concern, mechanism, formula role and potential routine conflicts."
+          }
+        },
+        "review": {
+          "type": "step",
+          "settings": {
+            "heading": "Review",
+            "text": "Routine tracking and repeat check-ins create a clearer basis for continuing, changing or escalating care."
+          }
+        }
+      },
+      "block_order": ["observe", "context", "match", "review"],
+      "settings": {
+        "eyebrow": "How the system thinks",
+        "heading": "Four connected decisions",
+        "text": "Each layer adds context. Together they turn a one-time recommendation into a more useful skincare system."
+      }
+    },
+    "platform": {
+      "type": "project-skin-platform",
+      "blocks": {
+        "twin": {
+          "type": "capability",
+          "settings": {
+            "mode": "digital_twin",
+            "tab_label": "Digital Twin",
+            "tab_hint": "Organize visible signals",
+            "eyebrow": "Understand before you add",
+            "heading": "A living profile of your skin context",
+            "text": "A guided scan organizes visible concerns alongside the context you provide. It creates a reusable cosmetic skincare baseline; it does not replace medical diagnosis.",
+            "feature_1": "Organizes visible acne, pigmentation, texture and barrier cues",
+            "feature_2": "Adds climate, routine and lifestyle context",
+            "feature_3": "Creates a consistent baseline for future check-ins",
+            "button_label": "Start with a consultation",
+            "button_link": "/pages/consultation"
+          }
+        },
+        "recommend": {
+          "type": "capability",
+          "settings": {
+            "mode": "recommendations",
+            "tab_label": "Recommendations",
+            "tab_hint": "Match the right mechanism",
+            "eyebrow": "Problem first. Product second.",
+            "heading": "Recommendations with a reason",
+            "text": "Products are matched to the concern, active mechanism and routine role. Every recommendation should explain what it does and why it belongs.",
+            "feature_1": "Concern-led product matching",
+            "feature_2": "Ingredient concentration and mechanism explained",
+            "feature_3": "Routine conflicts and unnecessary duplication reduced",
+            "button_label": "Shop targeted care",
+            "button_link": "/collections/all"
+          }
+        },
+        "routine": {
+          "type": "capability",
+          "settings": {
+            "mode": "routine",
+            "tab_label": "Routine Tracker",
+            "tab_hint": "Build daily consistency",
+            "eyebrow": "Consistency creates signal",
+            "heading": "A routine you can actually follow",
+            "text": "Track completed steps, keep product order clear, and build enough consistency to interpret a later skin check-in with better context.",
+            "feature_1": "Morning and evening plans",
+            "feature_2": "Simple adherence tracking",
+            "feature_3": "Product order and usage guidance",
+            "button_label": "Explore complete routines",
+            "button_link": "/products/project-skin-complete-4-step-skincare-routine-kit"
+          }
+        },
+        "progress": {
+          "type": "capability",
+          "settings": {
+            "mode": "progress",
+            "tab_label": "Progress",
+            "tab_hint": "Review and adapt",
+            "eyebrow": "Evidence over assumption",
+            "heading": "Review what changed",
+            "text": "Regular check-ins compare the current state with the original baseline so the routine can be reviewed with better context.",
+            "feature_1": "Repeatable progress check-ins",
+            "feature_2": "Routine consistency viewed alongside skin signals",
+            "feature_3": "Escalation to dermatologist consultation when needed",
+            "button_label": "Book a clinical review",
+            "button_link": "/pages/consultation"
+          }
+        }
+      },
+      "block_order": ["twin", "recommend", "routine", "progress"],
+      "settings": {
+        "eyebrow": "One connected skin ecosystem",
+        "heading": "From signal to smarter routine",
+        "text": "Project Skin connects analysis, product matching and daily adherence so recommendations can become more relevant over time."
+      }
+    },
+    "quote": {
+      "type": "project-skin-science-quote",
+      "settings": {
+        "quote": "Your moisturiser isn't failing you. Your barrier is compromised — and until the lipid layer is repaired, nothing you apply will absorb, retain, or function the way it should.",
+        "attribution": "Project Skin — Sage + Rebel"
+      }
+    },
+    "guardrails": {
+      "type": "project-skin-science-guardrails",
+      "blocks": {
+        "scope": {
+          "type": "guardrail",
+          "settings": {
+            "heading": "Guidance, not diagnosis",
+            "text": "Visible signals help organize cosmetic concerns; clinical symptoms need a dermatologist."
+          }
+        },
+        "privacy": {
+          "type": "guardrail",
+          "settings": {
+            "heading": "Consent and restraint",
+            "text": "Collect only what is needed for the experience and make the purpose of that information clear."
+          }
+        },
+        "human": {
+          "type": "guardrail",
+          "settings": {
+            "heading": "A route to human review",
+            "text": "When concerns fall outside cosmetic guidance, the next step is qualified clinical care."
+          }
+        }
+      },
+      "block_order": ["scope", "privacy", "human"],
+      "settings": {
+        "eyebrow": "Technology with boundaries",
+        "heading": "Useful guidance. Clear limits.",
+        "text": "<p>Project Skin technology is designed to improve cosmetic skincare decisions. It does not diagnose disease or replace qualified medical care.</p>",
+        "button_label": "Book a dermatologist consultation",
+        "button_link": "/pages/consultation",
+        "image_alt": "Human review within the Project Skin system"
+      }
+    },
+    "commitment": {
+      "type": "project-skin-science-commitment",
+      "blocks": {
+        "scope": {
+          "type": "commitment",
+          "settings": {
+            "heading": "Literacy before purchase",
+            "text": "We explain mechanism and concentration so you can choose with confidence — not hype."
+          }
+        },
+        "privacy": {
+          "type": "commitment",
+          "settings": {
+            "heading": "Indian-skin context",
+            "text": "Climate, UV, pollution and barrier reality shape every formula decision."
+          }
+        },
+        "human": {
+          "type": "commitment",
+          "settings": {
+            "heading": "A route to human review",
+            "text": "When concerns fall outside cosmetic guidance, the next step is qualified clinical care."
+          }
+        }
+      },
+      "block_order": ["scope", "privacy", "human"],
+      "settings": {
+        "eyebrow": "What we stand for",
+        "heading": "Science you can feel. Claims you can defend.",
+        "text": "<p>Project Skin exists to help India take skincare seriously — honest, fact-based, clinically informed solutions for Indian skin, climate, and lifestyles.</p>",
+        "cta_label": "Browse the ingredient library",
+        "cta_link": "/pages/ingredients",
+        "secondary_label": "Read our philosophy",
+        "secondary_link": "/pages/philosophy"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "purpose",
+    "indian_context",
+    "method",
+    "standards",
+    "ingredient_teaser",
+    "concern_index",
+    "mission",
+    "flow",
+    "platform",
+    "quote",
+    "guardrails",
+    "commitment"
+  ]
+}

@@ -1,0 +1,134 @@
+{% comment %}
+  Curated theme-asset media for products that need hover/gallery shots
+  beyond Shopify admin media.
+
+  Params:
+    product  - product object (required)
+    mode     - 'hover' | 'gallery' (required)
+    display_title - alt text for gallery
+    enable_zoom - optional, for gallery slides
+    start_index - optional, 0-based index offset for thumbnails/counter
+{% endcomment %}
+{% liquid
+  assign extras = blank
+  case product.handle
+    when '5-niacinamide-serum-acne-prone-skin'
+      if mode == 'hover'
+        assign extras = 'product-serum-hover.png'
+      else
+        assign extras = 'product-serum-1.png|product-serum-2.png|product-serum-3.png|product-serum-4.png|product-serum-5.png'
+      endif
+    when 'calming-moisturiser-acne-prone-skin'
+      if mode == 'hover'
+        assign extras = 'product-moisturiser-hover.png'
+      else
+        assign extras = 'product-moisturiser-1.png|product-moisturiser-2.png|product-moisturiser-3.png|product-moisturiser-4.png|product-moisturiser-5.png|product-moisturiser-6.png|product-moisturiser-7.png'
+      endif
+    when 'refreshing-cleanser-acne-prone-skin'
+      if mode == 'hover'
+        assign extras = 'product-cleanser-hover.png'
+      else
+        assign extras = 'product-cleanser-1.png|product-cleanser-2.png|product-cleanser-3.png|product-cleanser-4.png|product-cleanser-5.png'
+      endif
+    when 'protecting-sunscreen-acne-prone-skin'
+      if mode == 'hover'
+        assign extras = 'product-sunscreen-hover.png'
+      else
+        assign extras = 'product-sunscreen-1.png|product-sunscreen-2.png|product-sunscreen-3.png|product-sunscreen-4.png|product-sunscreen-5.png|product-sunscreen-6.png|product-sunscreen-7.png|product-sunscreen-8.png'
+      endif
+    when 'clear-seal'
+      if mode == 'hover'
+        assign extras = 'product-clear-seal-hover.png'
+      else
+        assign extras = 'product-clear-seal-1.png|product-clear-seal-2.png|product-clear-seal-3.png|product-clear-seal-4.png|product-clear-seal-5.png|product-clear-seal-6.png|product-clear-seal-7.png'
+      endif
+    when 'active-boba-encapsulated-cream-acne-prone-skin'
+      if mode == 'hover'
+        assign extras = 'product-active-boba-hover.png'
+      else
+        assign extras = 'product-active-boba-1.png|product-active-boba-2.png|product-active-boba-3.png|product-active-boba-4.png|product-active-boba-5.png'
+      endif
+    when 'project-skin-complete-4-step-skincare-routine-kit'
+      if mode == 'hover'
+        assign extras = 'project-skin-routine-kit.jpg'
+      else
+        assign extras = 'project-skin-routine-kit.jpg|product-cleanser-1.png|product-serum-1.png|product-moisturiser-1.png|product-sunscreen-1.png'
+      endif
+  endcase
+
+  assign extra_list = extras | split: '|'
+  assign start_at = start_index | default: 0
+%}
+
+{% if extras != blank %}
+  {% if mode == 'hover' %}
+    <img
+      class="product-card__secondary ps-product__hover-image product-card__secondary--fill"
+      src="{{ extras | asset_url }}"
+      width="819"
+      height="1024"
+      loading="lazy"
+      alt="{{ product.title | escape }}"
+    >
+  {% elsif mode == 'gallery-thumbs' %}
+    {% for asset_name in extra_list %}
+      {% assign thumb_index = start_at | plus: forloop.index0 %}
+      <button
+        class="pdp-thumbnail-gallery__thumb{% if start_at == 0 and forloop.first %} is-active{% endif %}"
+        type="button"
+        data-thumbnail-index="{{ thumb_index }}"
+        data-media-id="extra-{{ product.handle }}-{{ forloop.index }}"
+        aria-label="View {{ display_title | escape }} image {{ thumb_index | plus: 1 }}"
+        aria-current="{% if start_at == 0 and forloop.first %}true{% else %}false{% endif %}"
+        role="listitem"
+      >
+        <img
+          src="{{ asset_name | asset_url }}"
+          width="220"
+          height="275"
+          loading="lazy"
+          alt="{{ display_title | escape }}"
+        >
+      </button>
+    {% endfor %}
+  {% elsif mode == 'gallery-slides' %}
+    {% for asset_name in extra_list %}
+      {% assign slide_index = start_at | plus: forloop.index0 %}
+      <div
+        class="pdp-thumbnail-gallery__slide{% if start_at == 0 and forloop.first %} is-active{% endif %}"
+        data-product-media
+        data-thumbnail-slide
+        data-media-id="extra-{{ product.handle }}-{{ forloop.index }}"
+        aria-hidden="{% if start_at == 0 and forloop.first %}false{% else %}true{% endif %}"
+      >
+        <img
+          src="{{ asset_name | asset_url }}"
+          width="819"
+          height="1024"
+          loading="lazy"
+          alt="{{ display_title | escape }}"
+          sizes="(min-width: 990px) 608px, calc(100vw - 40px)"
+        >
+        {% if enable_zoom %}
+          <button class="pdp-gallery__zoom pdp-thumbnail-gallery__zoom" type="button" data-media-zoom aria-label="Zoom image {{ slide_index | plus: 1 }}">{% render 'icon', name: 'zoom' %}</button>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% elsif mode == 'gallery-grid' %}
+    {% for asset_name in extra_list %}
+      <div class="pdp-gallery__item{% if forloop.index < 3 %} pdp-gallery__item--half{% endif %}" data-product-media>
+        <img
+          src="{{ asset_name | asset_url }}"
+          width="819"
+          height="1024"
+          loading="lazy"
+          alt="{{ display_title | escape }}"
+          sizes="(min-width: 990px) 50vw, 92vw"
+        >
+        {% if enable_zoom %}
+          <button class="pdp-gallery__zoom" type="button" data-media-zoom aria-label="Zoom image">{% render 'icon', name: 'zoom' %}</button>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endif %}

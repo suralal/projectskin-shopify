@@ -1,0 +1,144 @@
+<section class="ps-section ps-gram" style="--ps-speed: {{ section.settings.speed }}s; --ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px">
+  {% render 'purity-section-heading', eyebrow: section.settings.eyebrow, title: section.settings.heading, copy: section.settings.description, alignment: 'center' %}
+  <div class="ps-gram__viewport">
+    <div class="ps-gram__track">
+      {% for duplicate in (1..2) %}
+        <div class="ps-gram__group" {% if duplicate == 2 %}aria-hidden="true"{% endif %}>
+          {% for block in section.blocks %}
+            {% liquid
+              assign card_link = block.settings.link | default: section.settings.instagram_link | default: 'https://www.instagram.com/projectskin.co/'
+              assign poster = block.settings.poster
+              assign video = block.settings.video
+              assign asset_video = blank
+              assign asset_poster = blank
+              case block.settings.asset_key
+                when '1'
+                  assign asset_video = 'psr-gram-1.mp4'
+                  assign asset_poster = 'psr-gram-1.jpg'
+                when '2'
+                  assign asset_video = 'psr-gram-2.mp4'
+                  assign asset_poster = 'psr-gram-2.jpg'
+                when '3'
+                  assign asset_video = 'psr-gram-3.mp4'
+                  assign asset_poster = 'psr-gram-3.jpg'
+                when '4'
+                  assign asset_video = 'psr-gram-4.mp4'
+                  assign asset_poster = 'psr-gram-4.jpg'
+                when '5'
+                  assign asset_video = 'psr-gram-5.mp4'
+                  assign asset_poster = 'psr-gram-5.jpg'
+              endcase
+            %}
+
+            {% if block.type == 'text' %}
+              <div class="ps-gram__card ps-gram__text" {{ block.shopify_attributes }}>
+                <span aria-hidden="true">✧</span>
+                <span>{{ block.settings.text }}</span>
+              </div>
+            {% elsif block.type == 'video' or asset_video != blank or video != blank %}
+              <a
+                class="ps-gram__card ps-gram__card--video"
+                href="{{ card_link }}"
+                target="_blank"
+                rel="noopener"
+                {{ block.shopify_attributes }}
+              >
+                {% if video != blank %}
+                  {{
+                    video
+                    | video_tag:
+                      autoplay: true,
+                      loop: true,
+                      muted: true,
+                      controls: false,
+                      playsinline: true,
+                      image_size: '900x',
+                      class: 'ps-gram__video'
+                  }}
+                {% elsif asset_video != blank %}
+                  <video
+                    class="ps-gram__video"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    poster="{% if poster != blank %}{{ poster | image_url: width: 900 }}{% else %}{{ asset_poster | asset_url }}{% endif %}"
+                  >
+                    <source src="{{ asset_video | asset_url }}" type="video/mp4">
+                  </video>
+                {% elsif poster != blank %}
+                  {{ poster | image_url: width: 900 | image_tag: loading: 'lazy', class: 'ps-gram__image', sizes: '410px', alt: block.settings.alt | default: 'Project Skin on Instagram' }}
+                {% endif %}
+                <span class="ps-gram__icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></svg>
+                </span>
+              </a>
+            {% else %}
+              <a class="ps-gram__card" href="{{ card_link }}" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
+                {% if block.settings.image != blank %}
+                  {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'ps-gram__image', sizes: '410px', alt: block.settings.alt | default: 'Project Skin on Instagram' }}
+                {% elsif asset_poster != blank %}
+                  <img class="ps-gram__image" src="{{ asset_poster | asset_url }}" alt="{{ block.settings.alt | default: 'Project Skin on Instagram' | escape }}" loading="lazy" width="900" height="900">
+                {% else %}
+                  {% render 'purity-image', image: block.settings.image, fallback_asset: 'gallery-1.jpg', fallback_width: 900, fallback_height: 900, alt: block.settings.alt, sizes: '410px' %}
+                {% endif %}
+                <span class="ps-gram__icon" aria-hidden="true">◎</span>
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purity on Gram",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "@projectskin.co" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Project Skin On Gram" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Explore our gentle beauty highlights – trusted by over 10k fans.</p>" },
+    { "type": "url", "id": "instagram_link", "label": "Instagram link" },
+    { "type": "range", "id": "speed", "label": "Marquee speed", "min": 12, "max": 60, "step": 2, "unit": "s", "default": 28 },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 104 }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Instagram video",
+      "settings": [
+        { "type": "select", "id": "asset_key", "label": "Bundled Instagram reel", "options": [
+          { "value": "", "label": "None / upload below" },
+          { "value": "1", "label": "Reel 1" },
+          { "value": "2", "label": "Reel 2" },
+          { "value": "3", "label": "Reel 3" },
+          { "value": "4", "label": "Reel 4" },
+          { "value": "5", "label": "Reel 5" }
+        ], "default": "1" },
+        { "type": "video", "id": "video", "label": "Shopify-hosted video (optional)" },
+        { "type": "image_picker", "id": "poster", "label": "Poster image (optional)" },
+        { "type": "text", "id": "alt", "label": "Alt text" },
+        { "type": "url", "id": "link", "label": "Instagram post link" }
+      ]
+    },
+    { "type": "image", "name": "Image", "settings": [{ "type": "image_picker", "id": "image", "label": "Image" }, { "type": "text", "id": "alt", "label": "Alt text" }, { "type": "url", "id": "link", "label": "Link" }] },
+    { "type": "text", "name": "Editorial text", "settings": [{ "type": "textarea", "id": "text", "label": "Text", "default": "Science-backed skincare, made for Indian skin." }] }
+  ],
+  "max_blocks": 12,
+  "presets": [{
+    "name": "Purity on Gram",
+    "blocks": [
+      { "type": "video", "settings": { "asset_key": "1" } },
+      { "type": "video", "settings": { "asset_key": "2" } },
+      { "type": "video", "settings": { "asset_key": "3" } },
+      { "type": "video", "settings": { "asset_key": "4" } },
+      { "type": "video", "settings": { "asset_key": "5" } }
+    ]
+  }]
+}
+{% endschema %}

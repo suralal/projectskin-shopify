@@ -1,0 +1,126 @@
+{% liquid
+  assign card_strength = strength
+
+  # Legacy "marker" values are only shown when they read as a real strength (5%, 2%),
+  # never as abbreviations like Zn or HA.
+  if card_strength == blank and marker != blank
+    assign digits = '0123456789' | split: ''
+    for digit in digits
+      if marker contains digit
+        assign card_strength = marker
+        break
+      endif
+    endfor
+  endif
+
+  assign card_icon = icon | default: 'molecule'
+  assign card_role = role | default: 'Formula active'
+  assign card_type = type_label
+  assign title_key = title | downcase
+  assign chemical_asset = fallback_asset | default: blank
+
+  if chemical_asset == blank
+    if title_key contains 'niacinamide'
+      assign chemical_asset = 'ingredient-niacinamide.png'
+    elsif title_key contains 'salicylic'
+      assign chemical_asset = 'ingredient-salicylic.png'
+    elsif title_key contains 'zinc'
+      assign chemical_asset = 'ingredient-zinc-pca.png'
+    elsif title_key contains 'centella'
+      assign chemical_asset = 'ingredient-centella.png'
+    elsif title_key contains 'ceramide'
+      assign chemical_asset = 'ingredient-ceramide.png'
+    elsif title_key contains 'hyaluronic'
+      assign chemical_asset = 'ingredient-hyaluronic.png'
+    elsif title_key contains 'pentavitin'
+      assign chemical_asset = 'ingredient-pentavitin.png'
+    elsif title_key contains 'pdrn'
+      assign chemical_asset = 'ingredient-pdrn.png'
+    elsif title_key contains 'sepicontrol'
+      assign chemical_asset = 'ingredient-sepicontrol.png'
+    endif
+  endif
+
+  if card_type == blank
+    case title
+      when 'Niacinamide'
+        assign card_type = 'Vitamin B3 derivative'
+      when 'Salicylic Acid'
+        assign card_type = 'Oil-soluble BHA'
+      when 'Zinc PCA'
+        assign card_type = 'Mineral + amino acid complex'
+      when 'Centella Asiatica'
+        assign card_type = 'Soothing botanical'
+      when 'Ceramide Complex'
+        assign card_type = 'Skin-identical lipid blend'
+      when 'Hyaluronic Acid'
+        assign card_type = 'Water-binding humectant'
+      else
+        assign card_type = 'Targeted formula active'
+    endcase
+  endif
+
+  assign has_chemical = false
+  if image != blank or chemical_asset != blank
+    assign has_chemical = true
+  endif
+%}
+
+<article
+  class="ps-ingredient ps-ingredient--{{ tone | default: 'sage' }}{% if is_active %} is-active{% endif %}{% if has_chemical %} has-chemical{% endif %}"
+  role="listitem"
+  {{ block_attributes }}
+>
+  <button
+    class="ps-ingredient__button"
+    type="button"
+    data-ingredient-trigger
+    data-ingredient-role="{{ card_role | escape }}"
+    data-ingredient-title="{{ title | escape }}"
+    data-ingredient-type="{{ card_type | escape }}"
+    data-ingredient-marker="{{ card_strength | escape }}"
+    data-ingredient-summary="{{ summary | escape }}"
+    data-ingredient-details="{{ details | default: summary | escape }}"
+    aria-pressed="{% if is_active %}true{% else %}false{% endif %}"
+  >
+    <span class="ps-ingredient__topline">
+      <span>{{ index | prepend: '0' | slice: -2, 2 }}</span>
+      <span>{{ card_role }}</span>
+    </span>
+
+    <span class="ps-ingredient__visual" aria-hidden="true">
+      {% if image != blank %}
+        {{ image | image_url: width: 760 | image_tag: loading: 'lazy', widths: '320, 480, 640, 760', sizes: '(max-width: 800px) 80vw, 328px', class: 'ps-ingredient__image', alt: title }}
+      {% elsif chemical_asset != blank %}
+        <img
+          class="ps-ingredient__image"
+          src="{{ chemical_asset | asset_url }}"
+          width="760"
+          height="570"
+          loading="lazy"
+          alt="{{ title | escape }} chemical structure"
+        >
+      {% else %}
+        <span class="ps-ingredient__icon">{% render 'ingredient-icon', name: card_icon %}</span>
+        <span class="ps-ingredient__identity">
+          <small>Ingredient family</small>
+          <strong>{{ card_type }}</strong>
+        </span>
+      {% endif %}
+    </span>
+
+    <span class="ps-ingredient__content">
+      <span class="ps-ingredient__name">{{ title }}</span>
+      {% if card_strength != blank %}
+        <span class="ps-ingredient__strength">{{ card_strength }}</span>
+      {% endif %}
+      <span class="ps-ingredient__summary">{{ summary }}</span>
+      <span class="ps-ingredient__prompt">
+        <span data-ingredient-prompt-label>Explore ingredient</span>
+        <span class="ps-ingredient__prompt-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </span>
+    </span>
+  </button>
+</article>

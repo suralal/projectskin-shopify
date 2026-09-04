@@ -1,0 +1,141 @@
+{% liquid
+  assign season_key = section.settings.season_key | strip | downcase
+  if season_key == blank or season_key == 'auto'
+    assign season_key = page.handle | default: 'monsoon' | strip | downcase
+  endif
+%}
+{% include 'seasonal-education-catalog', season_key: season_key %}
+
+{% liquid
+  assign hero_eyebrow = season_eyebrow
+  assign hero_heading = season_title
+  assign hero_text = season_lede
+  if section.settings.eyebrow != blank
+    assign hero_eyebrow = section.settings.eyebrow
+  endif
+  if section.settings.heading != blank
+    assign hero_heading = section.settings.heading
+  endif
+  if section.settings.text != blank
+    assign hero_text = section.settings.text
+  endif
+%}
+
+<section class="psr-route-fallback psr-route-fallback--season-{{ season_key }} psr-page psr-season" data-season="{{ season_key }}">
+  <div class="psr-season__hero">
+    <div class="container psr-season__hero-inner">
+      <p class="psr-kicker">{{ hero_eyebrow }}</p>
+      <h1>{{ hero_heading }}</h1>
+      <p class="psr-season__lede">{{ hero_text }}</p>
+      <div class="psr-season__hero-actions">
+        <a class="psr-button" href="#SeasonMechanism-{{ season_key }}">See the seasonal mechanism</a>
+        <a class="psr-button psr-button--secondary" href="/blogs/news">Browse the journal</a>
+      </div>
+      <nav class="psr-season__switch" aria-label="Seasonal education">
+        <a href="/pages/monsoon"{% if season_key == 'monsoon' %} aria-current="page"{% endif %}>Monsoon</a>
+        <a href="/pages/festive"{% if season_key == 'festive' %} aria-current="page"{% endif %}>Festive</a>
+        <a href="/pages/winter"{% if season_key == 'winter' %} aria-current="page"{% endif %}>Winter</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="psr-section psr-section--linen">
+    <div class="container psr-season__split">
+      <article class="psr-season__panel">
+        <span class="psr-kicker">Diagnosis first</span>
+        <h2>{{ diagnosis_heading }}</h2>
+        <p>{{ diagnosis_text }}</p>
+      </article>
+      <article class="psr-season__panel psr-season__panel--dark">
+        <span class="psr-kicker psr-kicker--light">Climate signal</span>
+        <h2>{{ causes_heading }}</h2>
+        <div class="psr-season__causes">
+          {% for row in causes_rows %}
+            {% assign parts = row | split: '|' %}
+            <div>
+              <strong>{{ parts[0] | strip }}</strong>
+              <span>{{ parts[1] | strip }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div id="SeasonMechanism-{{ season_key }}" class="psr-section">
+    <div class="container">
+      <div class="psr-section__head">
+        <div>
+          <span class="psr-kicker">Mechanism this season</span>
+          <h2>{{ mechanism_heading }}</h2>
+        </div>
+        <p>{{ mechanism_text }}</p>
+      </div>
+
+      <div class="psr-season__links-head">
+        <h3>{{ links_heading }}</h3>
+        <a class="psr-text-link" href="/pages/ingredients">Ingredient library <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="psr-season__links">
+        {% for row in links_rows %}
+          {% assign parts = row | split: '|' %}
+          <a class="psr-season__link" href="{{ parts[1] | strip }}">
+            <strong>{{ parts[0] | strip }}</strong>
+            <span>{{ parts[2] | strip }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="psr-section psr-section--mist">
+    <div class="container">
+      <div class="psr-section__head">
+        <div>
+          <span class="psr-kicker">Then the formulas</span>
+          <h2>{{ products_heading }}</h2>
+        </div>
+        <p>{{ products_text }}</p>
+      </div>
+      <div class="psr-season__products psr-edu-products" style="--psr-columns: 4;">
+        {% for handle in product_handle_list %}
+          {% assign handle_clean = handle | strip %}
+          {% if handle_clean != blank %}
+            {% assign season_product = all_products[handle_clean] %}
+            {% if season_product != blank %}
+              {% render 'product-card', product: season_product, simple_media: true %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="psr-season__cta">
+        <a class="psr-button psr-button--secondary" href="/pages/consultation">Speak to a dermatologist</a>
+        <a class="psr-text-link" href="/pages/journal">Back to the journal <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Seasonal education",
+  "settings": [
+    {
+      "type": "select",
+      "id": "season_key",
+      "label": "Season",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Auto (from page handle)" },
+        { "value": "monsoon", "label": "Monsoon" },
+        { "value": "festive", "label": "Festive" },
+        { "value": "winter", "label": "Winter" }
+      ]
+    },
+    { "type": "text", "id": "eyebrow", "label": "Hero eyebrow override" },
+    { "type": "textarea", "id": "heading", "label": "Hero heading override" },
+    { "type": "textarea", "id": "text", "label": "Hero text override" }
+  ],
+  "presets": [{ "name": "Seasonal education" }]
+}
+{% endschema %}

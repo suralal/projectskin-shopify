@@ -1,0 +1,84 @@
+{% comment %}
+  Related education CTAs on the PDP — concern pages + key ingredient reads.
+{% endcomment %}
+{% liquid
+  assign edu_eyebrow = 'Keep learning'
+  assign edu_heading = 'Literacy before the next product'
+  assign concern_url = '/pages/acne'
+  assign concern_label = 'Acne literacy'
+  assign read_url = '/pages/ingredients'
+  assign read_label = 'Ingredient library'
+  assign read_detail = 'Percentages, mechanisms, and which formulas use each active.'
+%}
+
+{% case product.handle %}
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    {% assign concern_url = '/pages/acne' %}
+    {% assign concern_label = 'Understand acne biology' %}
+    {% assign read_url = '/pages/ingredients#ingredient-niacinamide' %}
+    {% assign read_label = 'Read: Niacinamide at 5%' %}
+    {% assign read_detail = 'Why encapsulation and dual sebum pathways matter — not just a label percentage.' %}
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    {% assign concern_url = '/pages/barrier' %}
+    {% assign concern_label = 'Understand the barrier' %}
+    {% assign read_url = '/pages/ingredients#ingredient-ceramide-complex' %}
+    {% assign read_label = 'Read: Ceramide complex' %}
+    {% assign read_detail = 'Why cream fails when the lipid layer is compromised.' %}
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    {% assign concern_url = '/pages/acne' %}
+    {% assign concern_label = 'Understand acne biology' %}
+    {% assign read_url = '/pages/ingredients#ingredient-salicylic-acid' %}
+    {% assign read_label = 'Read: Salicylic Acid at 2%' %}
+    {% assign read_detail = 'Oil-soluble BHA inside the pore — at a functional rinse-off level.' %}
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    {% assign concern_url = '/pages/daily-spf' %}
+    {% assign concern_label = 'Understand daily SPF' %}
+    {% assign read_url = '/pages/ingredients#ingredient-tinosorb-s' %}
+    {% assign read_label = 'Read: Tinosorb S' %}
+    {% assign read_detail = 'Photostable UVA defence in a four-filter system for Indian sun.' %}
+  {% when 'clear-seal' %}
+    {% assign concern_url = '/pages/acne' %}
+    {% assign concern_label = 'Understand acne biology' %}
+    {% assign read_url = '/pages/ingredients#ingredient-salicylic-acid' %}
+    {% assign read_label = 'Read: Salicylic Acid' %}
+    {% assign read_detail = 'How BHA + film protection differ from a hydrocolloid patch alone.' %}
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    {% assign concern_url = '/pages/acne' %}
+    {% assign concern_label = 'Understand acne biology' %}
+    {% assign read_url = '/pages/ingredients#ingredient-niacinamide' %}
+    {% assign read_label = 'Read: Niacinamide + barrier lipids' %}
+    {% assign read_detail = 'Treatment and ceramides in one system — clarity without abandoning the barrier.' %}
+  {% when 'project-skin-complete-4-step-skincare-routine-kit' %}
+    {% assign concern_url = '/pages/acne' %}
+    {% assign concern_label = 'Understand the full concern map' %}
+    {% assign read_url = '/pages/ingredients' %}
+    {% assign read_label = 'Browse the ingredient library' %}
+    {% assign read_detail = 'See every kit active with percentage and mechanism before you refill a single step.' %}
+{% endcase %}
+
+<aside class="pdp-edu" aria-label="Related education">
+  <p class="pdp-eyebrow">{{ edu_eyebrow }}</p>
+  <h2>{{ edu_heading }}</h2>
+  <div class="pdp-edu__grid">
+    <a class="pdp-edu__card" href="{{ concern_url }}">
+      <span class="pdp-edu__kicker">Concern</span>
+      <strong>{{ concern_label }}</strong>
+      <span>Diagnosis first. Mechanism second. Products third.</span>
+    </a>
+    <a class="pdp-edu__card" href="{{ read_url }}">
+      <span class="pdp-edu__kicker">Ingredient</span>
+      <strong>{{ read_label }}</strong>
+      <span>{{ read_detail }}</span>
+    </a>
+    <a class="pdp-edu__card" href="/pages/consultation">
+      <span class="pdp-edu__kicker">Human review</span>
+      <strong>Speak to a dermatologist</strong>
+      <span>When cosmetic guidance is not enough, escalate to clinical care.</span>
+    </a>
+    <a class="pdp-edu__card" href="/pages/journal">
+      <span class="pdp-edu__kicker">Journal</span>
+      <strong>Education on a calendar</strong>
+      <span>Monsoon, festive, and winter modules — literacy before campaigns.</span>
+    </a>
+  </div>
+</aside>

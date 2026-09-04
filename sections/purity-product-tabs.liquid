@@ -1,0 +1,111 @@
+<section class="ps-section ps-products" style="--ps-bg: {{ section.settings.background }}; --ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px">
+  <div class="ps-wrap">
+    {% render 'purity-section-heading', eyebrow: section.settings.eyebrow, title: section.settings.heading, copy: section.settings.description, alignment: 'center' %}
+
+    {% liquid
+      assign curated_products = section.blocks | where: 'type', 'product'
+      assign tab_blocks = section.blocks | where: 'type', 'tab'
+      assign use_curated = false
+      if curated_products.size > 0
+        assign use_curated = true
+      endif
+    %}
+
+    {% if use_curated %}
+      <purity-product-carousel class="ps-product-carousel">
+        <div class="ps-product-carousel__viewport" data-product-carousel-viewport>
+          <div class="ps-products__grid" data-product-carousel-track>
+            {% for block in curated_products %}
+              {% if block.settings.product != blank %}
+                <div {{ block.shopify_attributes }}>
+                  {% render 'product-card', product: block.settings.product %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <button class="ps-product-carousel__arrow ps-product-carousel__arrow--prev" type="button" aria-label="Previous products" data-product-carousel-prev>{% render 'icon', name: 'arrow-left' %}</button>
+        <button class="ps-product-carousel__arrow ps-product-carousel__arrow--next" type="button" aria-label="Next products" data-product-carousel-next>{% render 'icon', name: 'arrow-right' %}</button>
+      </purity-product-carousel>
+    {% else %}
+      <purity-tabs>
+        {% if tab_blocks.size > 1 %}
+          <div class="ps-tablist" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+            {% for block in tab_blocks %}
+              <button class="ps-tab{% if forloop.first %} is-active{% endif %}" id="Tab-{{ section.id }}-{{ forloop.index }}" type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="Panel-{{ section.id }}-{{ forloop.index }}" {{ block.shopify_attributes }}>{{ block.settings.title }}</button>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% for block in tab_blocks %}
+          {% liquid
+            assign tab_collection = block.settings.collection
+            if tab_collection == blank or tab_collection.products_count == 0
+              assign tab_collection = collections['all']
+            endif
+          %}
+          <div id="Panel-{{ section.id }}-{{ forloop.index }}"{% if tab_blocks.size > 1 %} role="tabpanel" aria-labelledby="Tab-{{ section.id }}-{{ forloop.index }}"{% else %} {{ block.shopify_attributes }}{% endif %} {% unless forloop.first %}hidden{% endunless %}>
+            <purity-product-carousel class="ps-product-carousel">
+              <div class="ps-product-carousel__viewport" data-product-carousel-viewport>
+                <div class="ps-products__grid" data-product-carousel-track>
+                  {% if tab_collection != blank and tab_collection.products_count > 0 %}
+                    {% for product in tab_collection.products limit: section.settings.products_to_show %}{% render 'product-card', product: product %}{% endfor %}
+                  {% else %}
+                    <p class="ps-products__empty">Add products in Shopify Admin to populate this tab.</p>
+                  {% endif %}
+                </div>
+              </div>
+              <button class="ps-product-carousel__arrow ps-product-carousel__arrow--prev" type="button" aria-label="Previous products" data-product-carousel-prev>{% render 'icon', name: 'arrow-left' %}</button>
+              <button class="ps-product-carousel__arrow ps-product-carousel__arrow--next" type="button" aria-label="Next products" data-product-carousel-next>{% render 'icon', name: 'arrow-right' %}</button>
+            </purity-product-carousel>
+          </div>
+        {% endfor %}
+      </purity-tabs>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purity product tabs",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "color", "id": "background", "label": "Background", "default": "#ffffff" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Best seller" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Popular Picks" },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "range", "id": "products_to_show", "label": "Products per tab", "min": 2, "max": 8, "step": 1, "default": 5, "info": "Used when tabs pull from a collection. Ignored for curated product blocks." },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 92 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 104 }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" }
+      ]
+    },
+    {
+      "type": "tab",
+      "name": "Collection tab",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Best Seller" },
+        { "type": "collection", "id": "collection", "label": "Collection" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Purity product tabs",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

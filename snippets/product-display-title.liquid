@@ -1,0 +1,32 @@
+{% comment %}
+  Short card display title. Prefer curated short names; else strip " - Acne Prone Skin" suffixes.
+{% endcomment %}
+{% liquid
+  assign display_title = blank
+  case product.handle
+    when '5-niacinamide-serum-acne-prone-skin'
+      assign display_title = '5% Niacinamide Serum'
+    when 'calming-moisturiser-acne-prone-skin'
+      assign display_title = 'Calming Moisturiser'
+    when 'refreshing-cleanser-acne-prone-skin'
+      assign display_title = 'Refreshing Cleanser'
+    when 'protecting-sunscreen-acne-prone-skin'
+      assign display_title = 'Protecting Sunscreen'
+    when 'clear-seal'
+      assign display_title = 'Clear Seal'
+    when 'active-boba-encapsulated-cream-acne-prone-skin'
+      assign display_title = 'Active Boba'
+    when 'project-skin-complete-4-step-skincare-routine-kit'
+      assign display_title = 'Complete Routine Kit'
+  endcase
+
+  if display_title == blank
+    assign display_title = product.title
+    if display_title contains ' – '
+      assign display_title = display_title | split: ' – ' | first
+    elsif display_title contains ' - '
+      assign display_title = display_title | split: ' - ' | first
+    endif
+  endif
+%}
+{{- display_title | strip -}}

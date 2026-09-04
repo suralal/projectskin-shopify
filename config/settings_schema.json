@@ -1,0 +1,258 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Project Skin",
+    "theme_version": "1.0.0",
+    "theme_author": "Custom",
+    "theme_documentation_url": "https://theprojectskin.com/",
+    "theme_support_url": "https://theprojectskin.com/"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Optional override. Defaults to the Project Skin PS mark. Square PNG, at least 180×180."
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "page_width", "label": "Page width", "min": 1100, "max": 1800, "step": 20, "unit": "px", "default": 1440 },
+      { "type": "range", "id": "page_gutter", "label": "Page gutter", "min": 16, "max": 60, "step": 2, "unit": "px", "default": 30 },
+      { "type": "range", "id": "radius", "label": "Corner radius", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 8 }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "checkbox", "id": "use_project_skin_fonts", "label": "Use included Project Skin typography", "default": true },
+      { "type": "font_picker", "id": "font_body", "label": "Body font fallback", "default": "assistant_n4" },
+      { "type": "font_picker", "id": "font_heading", "label": "Heading font fallback", "default": "assistant_n4" },
+      { "type": "range", "id": "body_size", "label": "Body text size", "min": 13, "max": 20, "step": 1, "unit": "px", "default": 15 }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_canvas", "label": "Paper (commerce)", "default": "#ffffff" },
+      { "type": "color", "id": "color_text", "label": "Primary text (Carbon)", "default": "#2c2c2a" },
+      { "type": "color", "id": "color_muted", "label": "Muted text", "default": "#6b6862" },
+      { "type": "color", "id": "color_surface", "label": "Skin Linen (education)", "default": "#f5f3ee" },
+      { "type": "color", "id": "color_mist", "label": "Bio Mist (proof sections)", "default": "#e1f5ee" },
+      { "type": "color", "id": "color_forest", "label": "Deep Forest (footer)", "default": "#0f6e56" },
+      { "type": "color", "id": "color_surface_alt", "label": "Alternate surface", "default": "#eeeae5" },
+      { "type": "color", "id": "color_border", "label": "Hairline borders", "default": "#ddd8ce" },
+      { "type": "color", "id": "color_primary", "label": "Primary action", "default": "#252724" },
+      { "type": "color", "id": "color_action_hover", "label": "Primary action hover", "default": "#111210" },
+      { "type": "color", "id": "color_on_action", "label": "Text on primary action", "default": "#ffffff" },
+      { "type": "color", "id": "color_accent", "label": "Campaign accent", "default": "#b98783" },
+      { "type": "color", "id": "color_secondary", "label": "Secondary campaign accent", "default": "#c58f65" },
+      { "type": "color", "id": "color_accent_soft", "label": "Soft accent wash", "default": "#f3e9e7" },
+      { "type": "color", "id": "color_sky", "label": "Sunscreen sky", "default": "#0096d6" },
+      { "type": "color", "id": "color_blush", "label": "Moisturiser pink", "default": "#fb8cb3" },
+      { "type": "color", "id": "color_mint", "label": "Cleanser teal", "default": "#0f9b8e" },
+      { "type": "color", "id": "color_lilac", "label": "Serum purple", "default": "#6a479e" },
+      { "type": "color", "id": "color_gold", "label": "Sunscreen yellow", "default": "#ffe300" },
+      { "type": "color", "id": "color_taupe", "label": "Active Boba taupe", "default": "#b7a58f" },
+      { "type": "color", "id": "color_cyan", "label": "Clear Seal cyan", "default": "#00a3b1" },
+      { "type": "color", "id": "color_highlight", "label": "Editorial highlight", "default": "#e6b84a" }
+    ]
+  },
+  {
+    "name": "Animation",
+    "settings": [
+      { "type": "select", "id": "scroll_animation", "label": "Scroll animation", "default": "all", "options": [{ "value": "disable", "label": "Disable" }, { "value": "all", "label": "All screens" }, { "value": "desktop", "label": "Desktop only" }] },
+      { "type": "checkbox", "id": "lazy_images", "label": "Enable image lazy loading", "default": true },
+      { "type": "select", "id": "hover_effect", "label": "Card hover effect", "default": "zoom", "options": [{ "value": "none", "label": "None" }, { "value": "zoom", "label": "Zoom" }, { "value": "lift", "label": "Lift" }] },
+      { "type": "checkbox", "id": "page_loader", "label": "Enable page loading effect", "default": true },
+      { "type": "color", "id": "page_loader_color", "label": "Page loader background", "default": "#f5f3ee" }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      { "type": "select", "id": "card_image_ratio", "label": "Image ratio", "options": [{ "value": "adapt", "label": "Adapt" }, { "value": "square", "label": "Square" }, { "value": "portrait", "label": "Portrait" }, { "value": "landscape", "label": "Landscape" }], "default": "portrait" },
+      { "type": "checkbox", "id": "card_quick_add", "label": "Enable quick add", "default": true },
+      { "type": "checkbox", "id": "card_quick_shop", "label": "Enable quick shop", "default": false },
+      { "type": "checkbox", "id": "card_swatches", "label": "Enable color swatches", "default": false },
+      { "type": "range", "id": "card_max_swatches", "label": "Maximum swatches", "min": 1, "max": 10, "default": 5 },
+      { "type": "text", "id": "swatch_trigger", "label": "Color option names", "default": "Color,Colour" },
+      { "type": "checkbox", "id": "card_tags", "label": "Show tags", "default": true },
+      { "type": "checkbox", "id": "card_vendor", "label": "Show vendor", "default": false },
+      { "type": "checkbox", "id": "card_secondary_image", "label": "Show secondary image", "default": true },
+      { "type": "checkbox", "id": "card_video_hover", "label": "Play product video on hover", "default": true }
+    ]
+  },
+  {
+    "name": "Badges",
+    "settings": [
+      { "type": "checkbox", "id": "show_sale_badge", "label": "Show sale badge", "default": true },
+      { "type": "select", "id": "sale_badge_format", "label": "Sale badge format", "default": "percentage", "options": [{ "value": "text", "label": "Text" }, { "value": "percentage", "label": "Percentage" }, { "value": "amount", "label": "Fixed amount" }] },
+      { "type": "checkbox", "id": "show_new_badge", "label": "Show new badge", "default": true },
+      { "type": "range", "id": "new_badge_days", "label": "New badge duration", "min": 1, "max": 90, "step": 1, "unit": "d", "default": 30 },
+      { "type": "checkbox", "id": "show_sold_out_badge", "label": "Show sold out badge", "default": true },
+      { "type": "text", "id": "custom_badge_metafield", "label": "Custom badge metafield", "default": "custom.badge" }
+    ]
+  },
+  {
+    "name": "Color swatches",
+    "settings": [
+      { "type": "checkbox", "id": "hide_sold_out_swatches", "label": "Hide sold out variants", "default": false },
+      { "type": "select", "id": "swatch_type", "label": "Swatch type", "default": "color", "options": [{ "value": "color", "label": "Color" }, { "value": "image", "label": "Variant image" }] },
+      { "type": "select", "id": "swatch_shape", "label": "Swatch shape", "default": "round", "options": [{ "value": "round", "label": "Round" }, { "value": "square", "label": "Square" }] },
+      { "type": "textarea", "id": "custom_swatches", "label": "Custom swatches", "info": "Color:#hex or Color:image-file.png, separated by commas" }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      { "type": "select", "id": "cart_action", "label": "Desktop action after add", "options": [{ "value": "drawer", "label": "Open drawer" }, { "value": "page", "label": "Cart page" }], "default": "drawer" },
+      { "type": "select", "id": "mobile_cart_action", "label": "Mobile action after add", "options": [{ "value": "drawer", "label": "Open drawer" }, { "value": "notify", "label": "Show notification" }, { "value": "once", "label": "Open once, then notify" }], "default": "drawer" },
+      { "type": "checkbox", "id": "free_shipping_message", "label": "Show free shipping message", "default": true },
+      { "type": "number", "id": "free_shipping_threshold", "label": "Free shipping threshold", "default": 75 },
+      { "type": "text", "id": "free_shipping_copy", "label": "Free shipping message", "default": "You're [amount] away from free shipping" },
+      { "type": "checkbox", "id": "show_cart_note", "label": "Show cart note", "default": true },
+      { "type": "checkbox", "id": "show_discount_field", "label": "Show discount field", "default": true },
+      { "type": "collection", "id": "cart_recommendations", "label": "Recommendation collection" },
+      { "type": "collection", "id": "empty_cart_collection", "label": "Empty cart collection" }
+    ]
+  },
+  {
+    "name": "Shopflo",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "shopflo_enabled",
+        "label": "Enable Shopflo checkout",
+        "default": false,
+        "info": "Loads the Shopflo bridge and routes Checkout / Buy it now through Shopflo. Requires the Shopflo app to be connected on this store."
+      },
+      {
+        "type": "checkbox",
+        "id": "shopflo_use_flo_cart",
+        "label": "Use Flo Cart for bag icon",
+        "default": true,
+        "info": "When enabled, the header bag opens Flo Cart instead of the theme cart drawer (matches the live Project Skin theme)."
+      }
+    ]
+  },
+  {
+    "name": "Search",
+    "settings": [
+      { "type": "checkbox", "id": "predictive_search", "label": "Enable predictive search", "default": true },
+      { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "Search lipstick, serum, perfume ..." },
+      { "type": "textarea", "id": "suggested_searches", "label": "Suggested searches", "default": "Serum,Hydration,Lipstick,SPF,Hair care" },
+      { "type": "collection", "id": "search_suggestions", "label": "Suggested product collection" }
+    ]
+  },
+  {
+    "name": "Analytics & tracking",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "analytics_enabled",
+        "label": "Enable analytics integration",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "analytics_mode",
+        "label": "Tracking provider",
+        "default": "shopify",
+        "options": [
+          { "value": "shopify", "label": "Shopify Google & YouTube app (recommended)" },
+          { "value": "ga4", "label": "Direct Google Analytics 4" },
+          { "value": "gtm", "label": "Google Tag Manager" }
+        ],
+        "info": "Use only one provider. Shopify's Google & YouTube app is recommended because it can measure checkout and purchase events outside the theme."
+      },
+      {
+        "type": "text",
+        "id": "ga4_measurement_id",
+        "label": "GA4 measurement ID",
+        "info": "Required only for Direct Google Analytics 4 mode. Example: G-XXXXXXXXXX"
+      },
+      {
+        "type": "text",
+        "id": "gtm_container_id",
+        "label": "GTM container ID",
+        "info": "Required only for Google Tag Manager mode. Example: GTM-XXXXXXX"
+      },
+      {
+        "type": "checkbox",
+        "id": "analytics_debug_mode",
+        "label": "Enable analytics debug mode",
+        "default": false,
+        "info": "Adds debug_mode to GA4 events and logs event payloads in the browser console. Disable after testing."
+      }
+    ]
+  },
+  {
+    "name": "Privacy & consent",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "consent_enhanced",
+        "label": "Use Project Skin consent design",
+        "default": true,
+        "info": "Keeps Shopify's native consent controls and applies Project Skin copy, layout, and timing."
+      },
+      {
+        "type": "range",
+        "id": "consent_delay",
+        "label": "Delay after page load",
+        "min": 0,
+        "max": 8000,
+        "step": 500,
+        "unit": "ms",
+        "default": 2500
+      },
+      {
+        "type": "text",
+        "id": "consent_heading",
+        "label": "Heading",
+        "default": "Your privacy, your choice"
+      },
+      {
+        "type": "textarea",
+        "id": "consent_body",
+        "label": "Message",
+        "default": "We use essential cookies to run Project Skin. With your permission, we'll also use cookies to measure performance and personalise your experience."
+      },
+      {
+        "type": "text",
+        "id": "consent_accept_label",
+        "label": "Accept button",
+        "default": "Allow all"
+      },
+      {
+        "type": "text",
+        "id": "consent_decline_label",
+        "label": "Decline button",
+        "default": "Essential only"
+      },
+      {
+        "type": "text",
+        "id": "consent_manage_label",
+        "label": "Preferences button",
+        "default": "Choose preferences"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
+      { "type": "url", "id": "social_youtube", "label": "YouTube" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_linkedin", "label": "LinkedIn" },
+      { "type": "url", "id": "social_x", "label": "X" },
+      { "type": "url", "id": "social_snapchat", "label": "Snapchat" }
+    ]
+  }
+]

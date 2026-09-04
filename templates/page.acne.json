@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "landing": {
+      "type": "project-skin-concern-landing",
+      "settings": {
+        "concern_key": "acne",
+        "columns": 3
+      }
+    }
+  },
+  "order": ["landing"]
+}

@@ -1,0 +1,214 @@
+{% liquid
+  assign all_collection = collections['all']
+  assign fallback_products = all_collection.products
+  assign fallback_url = routes.all_products_collection_url
+
+  if block.settings.preset == 'project_skin'
+    assign fallback_column_1 = 'Shop all|Acne care|Pigmentation|Daily SPF|Barrier support|Complete routines' | split: '|'
+    assign fallback_column_2 = 'Cleanse|Treat|Moisturise|Protect' | split: '|'
+    assign fallback_urls_1 = '/collections/all|/pages/acne|/pages/pigmentation|/pages/daily-spf|/pages/barrier|/products/project-skin-complete-4-step-skincare-routine-kit' | split: '|'
+    assign fallback_urls_2 = '/search?q=cleanser&type=product|/search?q=serum&type=product|/search?q=moisturiser&type=product|/search?q=sunscreen&type=product' | split: '|'
+  elsif block.settings.preset == 'learn'
+    assign fallback_column_1 = 'The Science|Ingredients|Journal|Philosophy|Consultation' | split: '|'
+    assign fallback_column_2 = 'Acne|Pigmentation|Monsoon|Winter' | split: '|'
+    assign fallback_urls_1 = '/pages/the-science|/pages/ingredients|/pages/journal|/pages/philosophy|/pages/consultation' | split: '|'
+    assign fallback_urls_2 = '/pages/acne|/pages/pigmentation|/pages/monsoon|/pages/winter' | split: '|'
+  elsif block.settings.preset == 'skincare'
+    assign fallback_column_1 = 'Cleansers|Toners|Serums|Moisturizers|Sunscreen|Skin treatments' | split: '|'
+    assign fallback_column_2 = 'Dry skin|Sensitive skin|Oily skin|Combination skin' | split: '|'
+  else
+    assign fallback_column_1 = 'Foundation|Setting powders|Blush|Eye makeup|Lipsticks|Clean beauty' | split: '|'
+    assign fallback_column_2 = 'Fair skin|Light skin|Medium skin|Dark skin' | split: '|'
+  endif
+
+  assign is_learn_menu = false
+  if block.settings.preset == 'learn'
+    assign is_learn_menu = true
+  endif
+
+  assign promo_1_product = block.settings.promo_1_product
+  assign promo_2_product = block.settings.promo_2_product
+  assign promo_collection = block.settings.promo_collection | default: all_collection
+  assign promo_limit = block.settings.promo_limit | default: 6
+  if promo_limit < 2
+    assign promo_limit = 2
+  endif
+
+  assign promo_count = 0
+  assign seen_handles = ','
+  assign promo_1_eyebrow = block.settings.promo_1_eyebrow | default: 'Complete system'
+  assign promo_2_eyebrow = block.settings.promo_2_eyebrow | default: 'Targeted treatment'
+%}
+
+<div class="mega-menu" data-mega-panel aria-hidden="true">
+  <div class="container mega-menu__grid">
+    <div class="mega-menu__links">
+      <div class="mega-menu__column">
+        <a class="mega-menu__heading" href="{{ block.settings.link | default: fallback_url }}">
+          {{ block.settings.column_1_heading | default: 'All Products' }}
+        </a>
+        <ul>
+          {% if block.settings.column_1_menu != blank and block.settings.column_1_menu.links.size > 0 %}
+            {% for menu_link in block.settings.column_1_menu.links %}
+              <li><a href="{{ menu_link.url }}">{{ menu_link.title }}</a></li>
+            {% endfor %}
+          {% else %}
+            {% for label in fallback_column_1 %}
+              {% assign fallback_product = fallback_products[forloop.index0] %}
+              {% assign fallback_link = fallback_product.url | default: fallback_url %}
+              {% if block.settings.preset == 'project_skin' or block.settings.preset == 'learn' %}{% assign fallback_link = fallback_urls_1[forloop.index0] %}{% endif %}
+              <li>
+                <a href="{{ fallback_link }}">
+                  {{ label }}
+                </a>
+              </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="mega-menu__column">
+        <a class="mega-menu__heading" href="{{ block.settings.link | default: fallback_url }}">
+          {{ block.settings.column_2_heading | default: 'Skin Tones' }}
+        </a>
+        <ul>
+          {% if block.settings.column_2_menu != blank and block.settings.column_2_menu.links.size > 0 %}
+            {% for menu_link in block.settings.column_2_menu.links %}
+              <li><a href="{{ menu_link.url }}">{{ menu_link.title }}</a></li>
+            {% endfor %}
+          {% else %}
+            {% for label in fallback_column_2 %}
+              {% assign product_index = forloop.index0 | plus: 6 %}
+              {% assign fallback_product = fallback_products[product_index] %}
+              {% assign fallback_link = fallback_product.url | default: fallback_products.first.url | default: fallback_url %}
+              {% if block.settings.preset == 'project_skin' or block.settings.preset == 'learn' %}{% assign fallback_link = fallback_urls_2[forloop.index0] %}{% endif %}
+              <li>
+                <a href="{{ fallback_link }}">
+                  {{ label }}
+                </a>
+              </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+
+    {% if is_learn_menu %}
+      <div class="mega-menu__promos mega-menu__promos--learn">
+        <a class="mega-menu__learn-card" href="/pages/the-science">
+          <p class="mega-menu__learn-card-eyebrow">{{ block.settings.promo_1_eyebrow | default: 'Education first' }}</p>
+          <h3>{{ block.settings.promo_1_heading | default: 'Understand the mechanism before you buy.' }}</h3>
+          <span>{{ block.settings.promo_1_button | default: 'Explore the science' }}</span>
+        </a>
+        <a class="mega-menu__learn-card mega-menu__learn-card--alt" href="/pages/journal">
+          <p class="mega-menu__learn-card-eyebrow">{{ block.settings.promo_2_eyebrow | default: 'Journal' }}</p>
+          <h3>{{ block.settings.promo_2_heading | default: 'Seasons as education modules — not sale banners.' }}</h3>
+          <span>{{ block.settings.promo_2_button | default: 'Open the journal' }}</span>
+        </a>
+      </div>
+    {% else %}
+    <purity-product-carousel class="mega-menu__promos mega-menu__promo-carousel">
+      <button
+        class="mega-menu__promo-nav mega-menu__promo-nav--prev"
+        type="button"
+        data-product-carousel-prev
+        aria-label="Previous products"
+      >
+        <span aria-hidden="true">{% render 'icon', name: 'arrow-left' %}</span>
+      </button>
+
+      <div class="mega-menu__promo-viewport" data-product-carousel-viewport tabindex="0">
+        <div class="mega-menu__promo-track" data-product-carousel-track>
+          {% if promo_1_product != blank %}
+            <div class="mega-menu__promo-slide">
+              {% render 'mega-menu-product-card',
+                product: promo_1_product,
+                image: block.settings.promo_1_image,
+                eyebrow: promo_1_eyebrow,
+                button_label: block.settings.promo_1_button,
+                fallback_asset: 'project-skin-banner-6.jpg'
+              %}
+            </div>
+            {% assign seen_handles = seen_handles | append: promo_1_product.handle | append: ',' %}
+            {% assign promo_count = promo_count | plus: 1 %}
+          {% endif %}
+
+          {% if promo_2_product != blank %}
+            <div class="mega-menu__promo-slide">
+              {% render 'mega-menu-product-card',
+                product: promo_2_product,
+                image: block.settings.promo_2_image,
+                eyebrow: promo_2_eyebrow,
+                button_label: block.settings.promo_2_button,
+                fallback_asset: 'project-skin-banner-2.jpg'
+              %}
+            </div>
+            {% assign seen_handles = seen_handles | append: promo_2_product.handle | append: ',' %}
+            {% assign promo_count = promo_count | plus: 1 %}
+          {% endif %}
+
+          {% if promo_collection != blank %}
+            {% for product in promo_collection.products limit: 24 %}
+              {% if promo_count >= promo_limit %}{% break %}{% endif %}
+              {% assign handle_token = ',' | append: product.handle | append: ',' %}
+              {% unless seen_handles contains handle_token %}
+                <div class="mega-menu__promo-slide">
+                  {% render 'mega-menu-product-card', product: product %}
+                </div>
+                {% assign seen_handles = seen_handles | append: product.handle | append: ',' %}
+                {% assign promo_count = promo_count | plus: 1 %}
+              {% endunless %}
+            {% endfor %}
+          {% endif %}
+
+          {% if promo_count < 2 %}
+            {% for product in fallback_products limit: 8 %}
+              {% if promo_count >= promo_limit %}{% break %}{% endif %}
+              {% assign handle_token = ',' | append: product.handle | append: ',' %}
+              {% unless seen_handles contains handle_token %}
+                <div class="mega-menu__promo-slide">
+                  {% render 'mega-menu-product-card', product: product %}
+                </div>
+                {% assign seen_handles = seen_handles | append: product.handle | append: ',' %}
+                {% assign promo_count = promo_count | plus: 1 %}
+              {% endunless %}
+            {% endfor %}
+          {% endif %}
+
+          {% if promo_count == 0 %}
+            <div class="mega-menu__promo-slide">
+              {% render 'mega-menu-product-card',
+                product: blank,
+                image: block.settings.promo_1_image,
+                eyebrow: promo_1_eyebrow,
+                heading: block.settings.promo_1_heading,
+                button_label: block.settings.promo_1_button,
+                fallback_asset: 'project-skin-banner-6.jpg'
+              %}
+            </div>
+            <div class="mega-menu__promo-slide">
+              {% render 'mega-menu-product-card',
+                product: blank,
+                image: block.settings.promo_2_image,
+                eyebrow: promo_2_eyebrow,
+                heading: block.settings.promo_2_heading,
+                button_label: block.settings.promo_2_button,
+                fallback_asset: 'project-skin-banner-2.jpg'
+              %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <button
+        class="mega-menu__promo-nav mega-menu__promo-nav--next"
+        type="button"
+        data-product-carousel-next
+        aria-label="Next products"
+      >
+        <span aria-hidden="true">{% render 'icon', name: 'arrow-right' %}</span>
+      </button>
+    </purity-product-carousel>
+    {% endif %}
+  </div>
+</div>

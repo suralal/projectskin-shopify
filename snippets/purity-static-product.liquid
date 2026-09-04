@@ -1,0 +1,55 @@
+{% liquid
+  assign card_product = product
+  if card_product == blank
+    assign card_product = collections['all'].products.first
+  endif
+  assign card_url = link
+  if card_url == blank and card_product != blank
+    assign card_url = card_product.url
+  endif
+  assign card_url = card_url | default: routes.all_products_collection_url
+%}
+<article class="ps-product{% if hover_image != blank or hover_fallback_asset != blank %} has-hover-media{% endif %}">
+  <div class="ps-product__media">
+    <a class="ps-product__media-link" href="{{ card_url }}" aria-label="{{ title | escape }}">
+      {% render 'purity-image',
+        image: image,
+        fallback_asset: fallback_asset,
+        fallback_width: 900,
+        fallback_height: 1125,
+        alt: title,
+        class: 'ps-product__image ps-product__image--primary',
+        sizes: '(min-width: 990px) 280px, 70vw'
+      %}
+      {% if hover_image != blank or hover_fallback_asset != blank %}
+        {% render 'purity-image',
+          image: hover_image,
+          fallback_asset: hover_fallback_asset,
+          fallback_width: 900,
+          fallback_height: 1125,
+          alt: title,
+          class: 'ps-product__hover-image',
+          sizes: '(min-width: 990px) 280px, 70vw'
+        %}
+      {% endif %}
+    </a>
+    {% if badge != blank %}<span class="ps-product__badge">{{ badge }}</span>{% endif %}
+    {% if card_product != blank and card_product.available %}
+      {% form 'product', card_product, class: 'ps-product__quick-form' %}
+        <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+        <button class="ps-product__quick" type="submit" aria-label="Add {{ title | escape }} to cart">Add to Cart</button>
+      {% endform %}
+    {% else %}
+      <a class="ps-product__quick" href="{{ card_url }}">Select Options</a>
+    {% endif %}
+  </div>
+  {% if tags != blank %}
+    <div class="ps-product__tags">
+      {% assign tag_list = tags | split: ',' %}
+      {% for tag in tag_list %}<span>{{ tag | strip }}</span>{% endfor %}
+    </div>
+  {% endif %}
+  {% if vendor != blank %}<small>{{ vendor }}</small>{% endif %}
+  <h3><a href="{{ card_url }}">{{ title }}</a></h3>
+  <strong>{{ price }}</strong>
+</article>

@@ -1,0 +1,54 @@
+<section id="project-skin-principles" class="psr-route-fallback psr-route-fallback--philosophy psr-page psr-phil-values">
+  <div class="container">
+    <header class="psr-phil-head psr-phil-head--center">
+      <p class="psr-phil-kicker">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      {% if section.settings.text != blank %}
+        <div class="psr-phil-head__copy rte">{{ section.settings.text }}</div>
+      {% endif %}
+    </header>
+
+    <div class="psr-phil-values__grid">
+      {% for block in section.blocks %}
+        <article class="psr-phil-value" {{ block.shopify_attributes }}>
+          <span class="psr-phil-value__seal" aria-hidden="true">{{ block.settings.icon | default: '✧' }}</span>
+          <h3>{{ block.settings.heading }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Philosophy principles",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Core values" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Care with confidence." },
+    { "type": "richtext", "id": "text", "label": "Introduction", "default": "<p>Healthy skin is not an overnight outcome. It is a considered process: understand the signal, choose the right mechanism, use it consistently, then review what changed.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "principle",
+      "name": "Principle",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon or symbol", "default": "✧" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Context before product" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Skin concerns make more sense when climate, routine, lifestyle and history are considered together." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Philosophy principles",
+      "blocks": [
+        { "type": "principle" },
+        { "type": "principle" },
+        { "type": "principle" }
+      ]
+    }
+  ]
+}
+{% endschema %}

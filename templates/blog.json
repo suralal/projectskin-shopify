@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "eyebrow": "Project Skin Journal",
+        "description": "<p>Skin science, ingredient literacy, Indian climate, and seasonal care — written to inform before you buy.</p>",
+        "articles_per_page": 10,
+        "feature_first": true,
+        "show_date": true
+      }
+    },
+    "seasons": {
+      "type": "project-skin-concern-index",
+      "blocks": {
+        "monsoon": {
+          "type": "concern",
+          "settings": {
+            "eyebrow": "Season",
+            "heading": "Monsoon",
+            "text": "Humidity does not cancel acne biology.",
+            "link": "/pages/monsoon",
+            "link_label": "Read the season"
+          }
+        },
+        "festive": {
+          "type": "concern",
+          "settings": {
+            "eyebrow": "Season",
+            "heading": "Festive",
+            "text": "Celebration skin still needs biology — not a glitter sale.",
+            "link": "/pages/festive",
+            "link_label": "Read the season"
+          }
+        },
+        "winter": {
+          "type": "concern",
+          "settings": {
+            "eyebrow": "Season",
+            "heading": "Winter",
+            "text": "Dryness is often a barrier story.",
+            "link": "/pages/winter",
+            "link_label": "Read the season"
+          }
+        },
+        "journal": {
+          "type": "concern",
+          "settings": {
+            "eyebrow": "Hub",
+            "heading": "Journal home",
+            "text": "Calendar modules and literacy threads in one place.",
+            "link": "/pages/journal",
+            "link_label": "Open journal hub"
+          }
+        }
+      },
+      "block_order": ["monsoon", "festive", "winter", "journal"],
+      "settings": {
+        "eyebrow": "Campaign calendar",
+        "heading": "Seasons as education — not sale banners",
+        "text": "Each module diagnoses climate stress first, then points to mechanisms and formulas."
+      }
+    }
+  },
+  "order": ["main", "seasons"]
+}

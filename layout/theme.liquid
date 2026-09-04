@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    {% render 'seo-meta' %}
+    {% render 'structured-data' %}
+    {% if settings.consent_enhanced %}{% render 'project-skin-consent' %}{% endif %}
+    {{ content_for_header }}
+    {% if settings.analytics_enabled %}{% render 'project-skin-analytics' %}{% endif %}
+
+    {% assign body_font = settings.font_body %}
+    {% assign heading_font = settings.font_heading %}
+    <style>
+      {{ body_font | font_face: font_display: 'swap' }}
+      {{ heading_font | font_face: font_display: 'swap' }}
+      @font-face { font-family: "Purity Sans"; src: url("{{ 'instrument-sans-500.woff2' | asset_url }}") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+      @font-face { font-family: "Purity Sans"; src: url("{{ 'instrument-sans-500.woff2' | asset_url }}") format("woff2"); font-style: normal; font-weight: 500; font-display: swap; }
+      @font-face { font-family: "Purity Sans"; src: url("{{ 'instrument-sans-700.woff2' | asset_url }}") format("woff2"); font-style: normal; font-weight: 600; font-display: swap; }
+      @font-face { font-family: "Purity Sans"; src: url("{{ 'instrument-sans-700.woff2' | asset_url }}") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+      @font-face { font-family: "Instrument Sans"; src: url("{{ 'instrument-sans-500.woff2' | asset_url }}") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+      @font-face { font-family: "Instrument Sans"; src: url("{{ 'instrument-sans-500.woff2' | asset_url }}") format("woff2"); font-style: normal; font-weight: 500; font-display: swap; }
+      @font-face { font-family: "Instrument Sans"; src: url("{{ 'instrument-sans-700.woff2' | asset_url }}") format("woff2"); font-style: normal; font-weight: 600; font-display: swap; }
+      @font-face { font-family: "Instrument Sans"; src: url("{{ 'instrument-sans-700.woff2' | asset_url }}") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+      @font-face { font-family: "Purity Editorial"; src: url("{{ 'fraunces-italic-400.woff2' | asset_url }}") format("woff2"); font-style: italic; font-weight: 400; font-display: swap; }
+      @font-face { font-family: "Purity Editorial"; src: url("{{ 'fraunces-italic-500.woff2' | asset_url }}") format("woff2"); font-style: italic; font-weight: 500; font-display: swap; }
+      @font-face { font-family: Fraunces; src: url("{{ 'fraunces-italic-400.woff2' | asset_url }}") format("woff2"); font-style: italic; font-weight: 400; font-display: swap; }
+      @font-face { font-family: Fraunces; src: url("{{ 'fraunces-italic-500.woff2' | asset_url }}") format("woff2"); font-style: italic; font-weight: 500; font-display: swap; }
+      :root {
+        --page-width: {{ settings.page_width | default: 1440 }}px;
+        --page-pad: {{ settings.page_gutter | default: 30 }}px;
+        --color-paper: {{ settings.color_canvas | default: '#ffffff' }};
+        --color-linen: {{ settings.color_surface | default: '#f5f3ee' }};
+        --color-mist: {{ settings.color_mist | default: '#e1f5ee' }};
+        --color-forest: {{ settings.color_forest | default: '#0f6e56' }};
+        --color-canvas: var(--color-paper);
+        --color-surface: var(--color-linen);
+        --color-ink: {{ settings.color_text | default: '#2c2c2a' }};
+        --color-muted: {{ settings.color_muted | default: '#6b6862' }};
+        --color-surface-alt: {{ settings.color_surface_alt | default: '#eeeae5' }};
+        --color-border: {{ settings.color_border | default: '#ddd8ce' }};
+        --color-action: {{ settings.color_primary | default: '#252724' }};
+        --color-action-hover: {{ settings.color_action_hover | default: '#111210' }};
+        --color-on-action: {{ settings.color_on_action | default: '#ffffff' }};
+        --color-accent: {{ settings.color_accent | default: '#b98783' }};
+        --color-accent-secondary: {{ settings.color_secondary | default: '#c58f65' }};
+        --color-accent-soft: {{ settings.color_accent_soft | default: '#f3e9e7' }};
+        --color-sky: {{ settings.color_sky | default: '#0096d6' }};
+        --color-blush: {{ settings.color_blush | default: '#fb8cb3' }};
+        --color-mint: {{ settings.color_mint | default: '#0f9b8e' }};
+        --color-lilac: {{ settings.color_lilac | default: '#6a479e' }};
+        --color-gold: {{ settings.color_gold | default: '#ffe300' }};
+        --color-taupe: {{ settings.color_taupe | default: '#b7a58f' }};
+        --color-cyan: {{ settings.color_cyan | default: '#00a3b1' }};
+        --text: var(--color-ink);
+        --muted: var(--color-muted);
+        --surface: var(--color-surface);
+        --surface-2: var(--color-surface-alt);
+        --accent: var(--color-action);
+        --accent-2: var(--color-accent-secondary);
+        --highlight: {{ settings.color_highlight | default: '#e6b84a' }};
+        --radius: {{ settings.radius | default: 8 }}px;
+        --font-body-family: {% if settings.use_purity_fonts %}"Instrument Sans", "Purity Sans",{% endif %}{{ body_font.family }},{{ body_font.fallback_families }};
+        --font-heading-family: {% if settings.use_purity_fonts %}Fraunces, "Purity Editorial",{% endif %}{{ heading_font.family }},{{ heading_font.fallback_families }};
+        --body-size: {{ settings.body_size | default: 15 }}px;
+        --loader-bg: {{ settings.page_loader_color | default: '#f5f3ee' }};
+      }
+    </style>
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'purity-home.css' | asset_url | stylesheet_tag }}
+    {{ 'project-skin-release.css' | asset_url | stylesheet_tag }}
+    {% if settings.consent_enhanced %}{{ 'project-skin-consent.css' | asset_url | stylesheet_tag }}{% endif %}
+    {% if shop.customer_accounts_enabled %}{{ 'customer-entry.css' | asset_url | stylesheet_tag }}{% endif %}
+    {% if template.directory == 'customers' %}{{ 'customer-account.css' | asset_url | stylesheet_tag }}{% endif %}
+    {% if request.page_type == 'product' %}{{ 'purity-product.css' | asset_url | stylesheet_tag }}{% endif %}
+    <script>
+      window.Shopify = window.Shopify || {};
+      Shopify.currency = { active: {{ cart.currency.iso_code | default: shop.currency | json }} };
+      window.PurityTheme = {
+        scrollAnimation: {{ settings.scroll_animation | json }},
+        hoverEffect: {{ settings.hover_effect | json }},
+        pageLoader: {{ settings.page_loader | json }},
+        reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        freeShippingThreshold: {{ settings.free_shipping_threshold | times: 100 | json }},
+        shopfloEnabled: {{ settings.shopflo_enabled | json }},
+        shopfloUseFloCart: {{ settings.shopflo_use_flo_cart | json }},
+        shopUrl: {{ shop.url | json }},
+        shopDomain: {{ shop.permanent_domain | json }}
+      };
+    </script>
+    {% render 'shopflo' %}
+    {% if settings.analytics_enabled %}<script src="{{ 'project-skin-analytics.js' | asset_url }}" defer></script>{% endif %}
+    {% if settings.consent_enhanced %}<script src="{{ 'project-skin-consent.js' | asset_url }}" defer></script>{% endif %}
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'purity-home.js' | asset_url }}" defer></script>
+    <script src="{{ 'ps-climate.js' | asset_url }}" defer></script>
+    <script src="{{ 'project-skin-release.js' | asset_url }}" defer></script>
+    {% if shop.customer_accounts_enabled %}<script src="{{ 'customer-entry.js' | asset_url }}" defer></script>{% endif %}
+    {% if template.directory == 'customers' %}<script src="{{ 'customer-account.js' | asset_url }}" defer></script>{% endif %}
+    {% if request.page_type == 'product' %}<script src="{{ 'purity-product.js' | asset_url }}" defer></script>{% endif %}
+  </head>
+  <body class="hover-effect--{{ settings.hover_effect }} scroll-animation--{{ settings.scroll_animation }}">
+    <a class="skip-link" href="#MainContent">Skip to content</a>
+    {% if settings.page_loader %}
+      <div class="page-loader" data-page-loader aria-hidden="true"><div class="page-loader__mark"><span></span><span></span><span></span></div></div>
+    {% endif %}
+    {% sections 'header-group' %}
+    <main id="MainContent" tabindex="-1">{{ content_for_layout }}</main>
+    {% sections 'footer-group' %}
+    {% sections 'overlay-group' %}
+  </body>
+</html>

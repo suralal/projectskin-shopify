@@ -1,0 +1,183 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "highlight_cruelty": { "type": "highlight", "settings": { "heading": "100% Vegan" } },
+        "highlight_paraben": { "type": "highlight", "settings": { "heading": "Alcohol-free" } },
+        "highlight_vegan": { "type": "highlight", "settings": { "heading": "Paraben-free" } },
+        "benefit_lift": { "type": "benefit", "settings": { "text": "Evens complexion with tint." } },
+        "benefit_wear": { "type": "benefit", "settings": { "text": "Protects and hydrates." } },
+        "benefit_separate": { "type": "benefit", "settings": { "text": "Healthy glow every day." } },
+        "action_1": { "type": "action_video", "settings": { "label": "Hydra Tint Shield application", "video_url": "https://purity.nextsky.co/cdn/shop/videos/c/vp/702d4a27d8564b98b7e0d07b3e5c13bd/702d4a27d8564b98b7e0d07b3e5c13bd.HD-1080p-7.2Mbps-56789813.mp4?v=0" } },
+        "action_2": { "type": "action_video", "settings": { "label": "Hydra Tint Shield finish", "video_url": "https://purity.nextsky.co/cdn/shop/videos/c/vp/c345545d24074f2bafd44415b2d19a70/c345545d24074f2bafd44415b2d19a70.HD-1080p-7.2Mbps-56789811.mp4?v=0" } },
+        "action_3": { "type": "action_video", "settings": { "label": "Tinted skin routine", "video_url": "https://purity.nextsky.co/cdn/shop/videos/c/vp/730a3d7eb34742b294080e53bfecf9d4/730a3d7eb34742b294080e53bfecf9d4.HD-1080p-4.8Mbps-56789817.mp4?v=0" } },
+        "action_4": { "type": "action_video", "settings": { "label": "Hydra Tint Shield close-up", "video_url": "https://purity.nextsky.co/cdn/shop/videos/c/vp/a7c94a9dac12405187c9eff70abebbd1/a7c94a9dac12405187c9eff70abebbd1.HD-1080p-4.8Mbps-56789814.mp4?v=0" } },
+        "product_info": { "type": "accordion", "settings": { "heading": "Product Details", "content": "<p>Hydrate, protect, and perfect with Hydra Tint Shield - a moisture-rich tinted sunscreen for fresh, dewy coverage. Lightweight and breathable, it evens tone and protects with SPF, making it your go-to for no-makeup days.</p>", "open": true } },
+        "how_to_use": { "type": "accordion", "settings": { "heading": "How to Use", "content": "<p>Apply to your face and neck after cleansing. Blend evenly with fingertips or a sponge for a smooth, natural finish. Can be worn alone or under foundation.</p>", "open": false } },
+        "ingredients": { "type": "accordion", "settings": { "heading": "Ingredients", "content": "<p>Even and Hydrate: HA, Niacinamide, SPF.</p>", "open": false } },
+        "pair_1": { "type": "pair", "settings": { "fallback_title": "Orange Blossom Glow", "fallback_price": "$35.00" } },
+        "pair_2": { "type": "pair", "settings": { "fallback_title": "Brighten Serum", "fallback_price": "$45.00" } }
+      },
+      "block_order": ["highlight_cruelty", "highlight_paraben", "highlight_vegan", "benefit_lift", "benefit_wear", "benefit_separate", "action_1", "action_2", "action_3", "action_4", "product_info", "how_to_use", "ingredients", "pair_1", "pair_2"],
+      "settings": {
+        "gallery_layout": "thumbnails",
+        "use_product_media": false,
+        "use_custom_content": true,
+        "title_override": "Hydra Tint Shield",
+        "price_override": "$140.00",
+        "enable_zoom": true,
+        "rating": "5.0",
+        "review_count": "2",
+        "show_demo_swatches": false,
+        "show_variant_picker": false,
+        "swatch_1_label": "Orange",
+        "swatch_1_color": "#e66b23",
+        "swatch_2_label": "Green",
+        "swatch_2_color": "#667853",
+        "inventory_text": "In Stock and ready to ship",
+        "inventory_tone": "available",
+        "show_purchase_options": false,
+        "one_time_label": "One Time Purchase",
+        "subscribe_label": "Subscribe and save",
+        "subscribe_price": "$36.00",
+        "frequency_label": "Deliver every month - 10% Off",
+        "add_label": "Add to Cart",
+        "show_dynamic_checkout": true,
+        "shipping_text": "Free shipping $175+. View shipping policy",
+        "returns_text": "30 day returns. View return policy",
+        "product_description": "<p>A tinted sunscreen with skincare benefits and a fresh, dewy finish.</p>",
+        "gift_text": "",
+        "benefits_heading": "Key Features",
+        "action_heading": "See in Action",
+        "pickup_heading": "Pickup availability",
+        "pickup_text": "Check availability at your nearest store.",
+        "pairs_heading": "Pairs Well With",
+        "help_heading": "Help Center?",
+        "help_text": "Book an appointment with our virtual stylists!",
+        "help_button": "Ask a question",
+        "question_heading": "Ask a question",
+        "disclaimer": "* This is a demonstration store - no orders shall be fulfilled.",
+        "sticky_add_to_cart": true
+      }
+    },
+    "trust": {
+      "type": "pdp-trust-strip",
+      "blocks": {
+        "sensitive": { "type": "item", "settings": { "text": "Safe for Sensitive Skin" } },
+        "non_comedogenic": { "type": "item", "settings": { "text": "Non-Comedogenic" } },
+        "vegan": { "type": "item", "settings": { "text": "Vegan and Cruelty-free" } }
+      },
+      "block_order": ["sensitive", "non_comedogenic", "vegan"],
+      "settings": { "speed": 28 }
+    },
+    "innovation": {
+      "type": "pdp-image-story",
+      "settings": {
+        "eyebrow": "3-in-1 Lip Innovation",
+        "heading": "Plump. Hydrate. Shine.",
+        "copy": "<p>Fuller lips, deep hydration, and high-gloss finish - all in one smooth swipe, for a healthy, radiant, all-day glow.</p>",
+        "image_1_alt": "Purity lip products",
+        "image_1_label": "Shop Lip Care",
+        "image_2_alt": "Purity lip color textures",
+        "image_2_label": "Explore Shades",
+        "padding_top": 76,
+        "padding_bottom": 76
+      }
+    },
+    "ingredients": {
+      "type": "pdp-ingredient-trio",
+      "blocks": {
+        "wax": { "type": "ingredient", "settings": { "heading": "Candelilla Wax", "copy": "<p>A vegan plant wax that creates a smooth, flexible texture for a lightweight, comfortable makeup finish that moves naturally with skin.</p>" } },
+        "vitamin": { "type": "ingredient", "settings": { "heading": "Vitamin E", "copy": "<p>An antioxidant-rich ingredient that helps condition and soften, supporting a fresh, healthy-looking finish all day with lasting skin comfort.</p>" } },
+        "oils": { "type": "ingredient", "settings": { "heading": "Botanical Oils", "copy": "<p>Lightweight botanical oils help makeup glide smoothly, blend effortlessly, and feel comfortable with a soft, nourished finish.</p>" } }
+      },
+      "block_order": ["wax", "vitamin", "oils"],
+      "settings": { "eyebrow": "Glow Ingredients", "heading": "Nourished from Within", "copy": "<p>Powered by skin-loving ingredients that enhance color, comfort, and a naturally radiant makeup finish.</p>", "padding_top": 68, "padding_bottom": 76 }
+    },
+    "results": {
+      "type": "pdp-results",
+      "blocks": {
+        "fuller": { "type": "result", "settings": { "heading": "Soft, fuller-looking lips", "copy": "<p>Botanical oils and shea butter lock in moisture the moment you swipe - lips feel less dry and rough, look fuller and smoother, with a soft cushiony finish.</p>" } },
+        "color": { "type": "result", "settings": { "heading": "Even, seamless color", "copy": "<p>Buildable pigments glide on evenly and blend without patchiness, delivering smooth, balanced color that enhances your natural lip tone.</p>" } },
+        "comfort": { "type": "result", "settings": { "heading": "All-day comfort", "copy": "<p>A lightweight, flexible formula moves with your lips without feeling sticky or heavy, keeping them comfortable through every smile and sip.</p>" } },
+        "shine": { "type": "result", "settings": { "heading": "Healthy-looking shine", "copy": "<p>Conditioning oils create a fresh, luminous finish without greasy residue, leaving lips looking naturally plump and polished.</p>" } }
+      },
+      "block_order": ["fuller", "color", "comfort", "shine"],
+      "settings": { "eyebrow": "What You'll See", "heading": "Results on Your Lips", "before_label": "Before", "after_label": "After", "padding_top": 72, "padding_bottom": 72 }
+    },
+    "steps": {
+      "type": "pdp-steps",
+      "blocks": {
+        "apply": { "type": "step", "settings": { "heading": "01. Apply", "copy": "<p>Start at the center of your lips and glide outward for a smooth, even layer.</p>" } },
+        "build": { "type": "step", "settings": { "heading": "02. Build", "copy": "<p>Apply a second layer for a darker shade to achieve the desired intensity and shine.</p>" } },
+        "set": { "type": "step", "settings": { "heading": "03. Set", "copy": "<p>Gently blot with a tissue to remove excess product and help the color last longer.</p>" } }
+      },
+      "block_order": ["apply", "build", "set"],
+      "settings": { "eyebrow": "How to Use", "heading": "3-Step to Perfect Color", "padding_top": 72, "padding_bottom": 76 }
+    },
+    "marquee": {
+      "type": "pdp-text-marquee",
+      "blocks": {
+        "botanical": { "type": "item", "settings": { "text": "Pure Botanical Goodness" } },
+        "organic": { "type": "item", "settings": { "text": "100% Organic Ingredients" } },
+        "clean": { "type": "item", "settings": { "text": "Clean Plant-Based Blend" } }
+      },
+      "block_order": ["botanical", "organic", "clean"],
+      "settings": { "speed": 26 }
+    },
+    "reviews": {
+      "type": "pdp-reviews",
+      "blocks": {
+        "chloe": { "type": "review", "settings": { "author": "Chloe P.", "date": "05/07/2025", "heading": "No flakes, no smudge!", "copy": "<p>I wore this for 12 hours straight and it did not move at all. It holds my curl beautifully and does not smudge under my eyes. The formula is smooth and coats every lash evenly.</p>" } },
+        "emily": { "type": "review", "settings": { "author": "Emily D.", "date": "05/07/2025", "heading": "Full lashes without clumps", "copy": "<p>This mascara adds so much volume and length without getting clumpy or flaking. My lashes look full and lifted all day, and it still feels super lightweight.</p>" } }
+      },
+      "block_order": ["chloe", "emily"],
+      "settings": { "eyebrow": "Customer Reviews", "rating": "5.0", "count": "2", "button_label": "Write a review", "padding_top": 68, "padding_bottom": 72 }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": { "section_width": "fixed", "subheading": "Our Philosophy", "heading": "Complete the Ritual", "alignment": "center", "products_to_show": 4, "padding_top": 72, "padding_bottom": 72, "show_divider": false }
+    },
+    "philosophy": {
+      "type": "pdp-philosophy",
+      "settings": { "eyebrow": "Our Philosophy", "heading": "Beautiful Color, Gentle Care", "copy": "<p>Ava Collins began with a simple question: why should lasting color compromise comfort? We craft each formula with mineral pigments and botanical oils, sharing every ingredient and its origin - because lips deserve the same care as skin.</p>", "button_label": "Discover Our Story", "padding_top": 72, "padding_bottom": 72 }
+    },
+    "commitments": {
+      "type": "pdp-commitments",
+      "blocks": {
+        "ingredients": { "type": "commitment", "settings": { "heading": "Ingredients", "copy": "<p>Mineral pigments and cold-pressed botanical oils, ethically sourced and traceable.</p>" } },
+        "bullet": { "type": "commitment", "settings": { "heading": "The Bullet", "copy": "<p>A refillable aluminum case that stays with you - only the bullet gets replaced.</p>" } },
+        "transparency": { "type": "commitment", "settings": { "heading": "Transparency", "copy": "<p>Every shade lists its full INCI, pigment source, and batch date. Nothing hidden, ever.</p>" } }
+      },
+      "block_order": ["ingredients", "bullet", "transparency"],
+      "settings": { "eyebrow": "Our Commitments", "heading": "Beauty that Lasts", "copy": "<p>Better ingredients, refillable design, and full transparency for beauty that lasts.</p>", "padding_top": 72, "padding_bottom": 88 }
+    },
+    "faq": {
+      "type": "pdp-faq",
+      "blocks": {
+        "sensitive": { "type": "faq", "settings": { "question": "Is it suitable for sensitive skin?", "answer": "<p>Yes. Our formulas are thoughtfully developed with gentle, skin-friendly ingredients suitable for most skin types, including sensitive skin.</p>" } },
+        "routine": { "type": "faq", "settings": { "question": "How do I build a routine?", "answer": "<p>Start with the basics: cleanse, moisturize, and apply sunscreen in the morning; cleanse and apply a nourishing treatment at night.</p>" } },
+        "natural": { "type": "faq", "settings": { "question": "Are the ingredients natural?", "answer": "<p>Our products prioritize naturally derived ingredients, carefully selected for safety and effectiveness, alongside gentle science-backed actives.</p>" } },
+        "mix": { "type": "faq", "settings": { "question": "Can I mix products together?", "answer": "<p>Yes. Our products are designed to layer well together. Space out stronger actives such as retinol or AHA/BHA to avoid irritation.</p>" } },
+        "cruelty": { "type": "faq", "settings": { "question": "Are your products cruelty-free?", "answer": "<p>Yes. None of our products are tested on animals at any stage of development.</p>" } }
+      },
+      "block_order": ["sensitive", "routine", "natural", "mix", "cruelty"],
+      "settings": { "eyebrow": "Before You Buy", "heading": "Frequently Asked Questions", "copy": "<p>Find clear answers about ingredients, routines, and everything you need before choosing Purity.</p>", "button_label": "Browse Help Center", "padding_top": 72, "padding_bottom": 84 }
+    },
+    "gram": {
+      "type": "pdp-gram",
+      "blocks": {
+        "image_1": { "type": "image", "settings": { "alt": "Purity hand cream" } },
+        "image_2": { "type": "image", "settings": { "alt": "Purity scalp care" } },
+        "image_3": { "type": "image", "settings": { "alt": "Purity face serum" } },
+        "image_4": { "type": "image", "settings": { "alt": "Purity beauty community" } },
+        "image_5": { "type": "image", "settings": { "alt": "Purity skin care" } },
+        "image_6": { "type": "image", "settings": { "alt": "Purity beauty routine" } }
+      },
+      "block_order": ["image_1", "image_2", "image_3", "image_4", "image_5", "image_6"],
+      "settings": { "eyebrow": "@purity_store", "heading": "Purity On Gram", "copy": "<p>Explore our gentle beauty highlights - trusted by over 15k fans.</p>", "padding_top": 72, "padding_bottom": 72 }
+    }
+  },
+  "order": ["main", "trust", "innovation", "ingredients", "results", "steps", "marquee", "reviews", "related", "philosophy", "commitments", "faq", "gram"]
+}

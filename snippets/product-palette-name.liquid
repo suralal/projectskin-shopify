@@ -1,0 +1,22 @@
+{% comment %}
+  Outputs a short palette key for the current product.
+  Keys match homepage hero palettes: serum, moisturiser, cleanser, sunscreen, clean-seal, active-boba, brand
+{% endcomment %}
+{% case product.handle %}
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    serum
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    moisturiser
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    cleanser
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    sunscreen
+  {% when 'clear-seal' %}
+    clean-seal
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    active-boba
+  {% when 'project-skin-complete-4-step-skincare-routine-kit' %}
+    brand
+  {% else %}
+    brand
+{% endcase %}

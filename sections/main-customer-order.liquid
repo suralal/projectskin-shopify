@@ -1,0 +1,84 @@
+<section class="ps-customer" data-customer-account>
+  <div class="ps-customer__shell ps-order-detail">
+    <div class="ps-order-detail__top">
+      <div>
+        <span class="ps-customer__eyebrow">Order details</span>
+        <h1>{{ order.name }}</h1>
+        <p>Placed on {{ order.created_at | date: '%d %B %Y' }}</p>
+        {% if order.cancelled %}
+          <div class="ps-form-errors" role="status">
+            Cancelled on {{ order.cancelled_at | date: '%d %B %Y' }}{% if order.cancel_reason_label %}: {{ order.cancel_reason_label }}{% endif %}
+          </div>
+        {% endif %}
+      </div>
+      <a class="ps-button-account--secondary" href="{{ routes.account_url }}">Back to account</a>
+    </div>
+
+    <div class="ps-order-detail__layout">
+      <div>
+        <div class="ps-order-products">
+          {% for line_item in order.line_items %}
+            <article class="ps-order-product">
+              {% if line_item.image %}
+                {{ line_item.image | image_url: width: 240 | image_tag: class: 'ps-order-product__image', loading: 'lazy', widths: '140,240', sizes: '84px', alt: line_item.title }}
+              {% else %}
+                <div class="ps-order-product__image"></div>
+              {% endif %}
+              <div>
+                <h2>
+                  {% if line_item.url %}<a href="{{ line_item.url }}">{{ line_item.product.title }}</a>{% else %}{{ line_item.product.title }}{% endif %}
+                </h2>
+                {% unless line_item.variant.title == 'Default Title' %}<p>{{ line_item.variant.title }}</p>{% endunless %}
+                <p>Quantity: {{ line_item.quantity }}</p>
+                {% if line_item.fulfillment %}
+                  <p>
+                    Fulfilled {{ line_item.fulfillment.created_at | date: '%d %b %Y' }}
+                    {% if line_item.fulfillment.tracking_url %} · <a href="{{ line_item.fulfillment.tracking_url }}">Track shipment</a>{% endif %}
+                  </p>
+                {% endif %}
+              </div>
+              <strong>{{ line_item.final_line_price | money_with_currency }}</strong>
+            </article>
+          {% endfor %}
+        </div>
+
+        <div class="ps-address-grid ps-order-detail__addresses">
+          <div class="ps-account-panel">
+            <h2>Shipping address</h2>
+            <div class="ps-address-summary">{{ order.shipping_address | format_address }}</div>
+          </div>
+          <div class="ps-account-panel">
+            <h2>Billing address</h2>
+            <div class="ps-address-summary">{{ order.billing_address | format_address }}</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ps-order-totals">
+        <h2>Order summary</h2>
+        <div class="ps-order-totals__row"><span>Payment</span><strong>{{ order.financial_status_label }}</strong></div>
+        <div class="ps-order-totals__row"><span>Fulfilment</span><strong>{{ order.fulfillment_status_label }}</strong></div>
+        <div class="ps-order-totals__row"><span>Subtotal</span><strong>{{ order.line_items_subtotal_price | money_with_currency }}</strong></div>
+        {% for discount_application in order.cart_level_discount_applications %}
+          <div class="ps-order-totals__row"><span>{{ discount_application.title }}</span><strong>-{{ discount_application.total_allocated_amount | money_with_currency }}</strong></div>
+        {% endfor %}
+        {% for shipping_method in order.shipping_methods %}
+          <div class="ps-order-totals__row"><span>{{ shipping_method.title }}</span><strong>{{ shipping_method.price | money_with_currency }}</strong></div>
+        {% endfor %}
+        {% for tax_line in order.tax_lines %}
+          <div class="ps-order-totals__row"><span>{{ tax_line.title }} {{ tax_line.rate | times: 100 }}%</span><strong>{{ tax_line.price | money_with_currency }}</strong></div>
+        {% endfor %}
+        {% if order.total_duties %}<div class="ps-order-totals__row"><span>Duties</span><strong>{{ order.total_duties | money_with_currency }}</strong></div>{% endif %}
+        {% if order.total_refunded_amount > 0 %}<div class="ps-order-totals__row"><span>Refunded</span><strong>-{{ order.total_refunded_amount | money_with_currency }}</strong></div>{% endif %}
+        <div class="ps-order-totals__row ps-order-totals__row--total"><span>Total</span><strong>{{ order.total_price | money_with_currency }}</strong></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer order",
+  "settings": []
+}
+{% endschema %}

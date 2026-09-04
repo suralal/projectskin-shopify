@@ -1,0 +1,156 @@
+{
+  "sections": {
+    "hero": {
+      "type": "project-skin-philosophy-hero",
+      "settings": {
+        "eyebrow": "Our philosophy",
+        "heading": "Skin is biology.\nCare should respect it.",
+        "text": "<p>Project Skin was created to move skincare beyond trends and toward better-informed, evidence-led decisions for Indian skin.</p>",
+        "primary_label": "Explore our principles",
+        "primary_link": "#project-skin-principles",
+        "secondary_label": "Meet the science",
+        "secondary_link": "/pages/the-science"
+      }
+    },
+    "principles": {
+      "type": "project-skin-philosophy-principles",
+      "blocks": {
+        "context": {
+          "type": "principle",
+          "settings": {
+            "icon": "✧",
+            "heading": "Context first",
+            "text": "Skin concerns make more sense when climate, routine, lifestyle and history are considered together."
+          }
+        },
+        "mechanism": {
+          "type": "principle",
+          "settings": {
+            "icon": "◎",
+            "heading": "Mechanism over trend",
+            "text": "An ingredient earns its place by what it is meant to do, the role it plays, and how clearly that can be explained."
+          }
+        },
+        "consistency": {
+          "type": "principle",
+          "settings": {
+            "icon": "♡",
+            "heading": "Consistency over novelty",
+            "text": "A routine must be usable long enough to learn from it. More products do not automatically create better care."
+          }
+        }
+      },
+      "block_order": ["context", "mechanism", "consistency"],
+      "settings": {
+        "eyebrow": "Core values",
+        "heading": "Care with confidence.",
+        "text": "<p>Healthy skin is not an overnight outcome. It is a considered process: understand the signal, choose the right mechanism, use it consistently, then review what changed.</p>"
+      }
+    },
+    "mission": {
+      "type": "project-skin-philosophy-mission",
+      "settings": {
+        "image_1_alt": "Gentle facial care ritual",
+        "card_1_eyebrow": "Intention",
+        "card_1_heading": "True beauty guided by intention",
+        "card_1_text": "<p>We design for Indian skin in real climates — heat, humidity, pollution, hard water and dry winters — instead of treating context as an afterthought.</p>",
+        "card_1_label": "Our principles",
+        "card_1_link": "#project-skin-principles",
+        "card_2_eyebrow": "Integrity",
+        "card_2_heading": "Evidence until every drop",
+        "card_2_text": "<p>An ingredient earns its place by mechanism, role and clarity — not trend cycles. Consistency matters more than novelty.</p>",
+        "card_2_label": "Meet the science",
+        "card_2_link": "/pages/the-science",
+        "image_2_alt": "Portrait of calm, healthy skin",
+        "badge_text": "Evidence-led"
+      }
+    },
+    "timeline": {
+      "type": "project-skin-philosophy-timeline",
+      "blocks": {
+        "y2023": {
+          "type": "milestone",
+          "settings": {
+            "year": "2023",
+            "heading": "A clearer brief",
+            "text": "We began with one idea: skincare advice should respect biology, climate and daily life — not marketing theatre."
+          }
+        },
+        "y2024": {
+          "type": "milestone",
+          "settings": {
+            "year": "2024",
+            "heading": "Formulas with a reason",
+            "text": "Every active earned its place by mechanism and routine role, built for Indian skin environments."
+          }
+        },
+        "y2025": {
+          "type": "milestone",
+          "settings": {
+            "year": "2025",
+            "heading": "Guidance that learns",
+            "text": "Recommendations, routines and check-ins connected — so care can improve with evidence over time."
+          }
+        },
+        "y2026": {
+          "type": "milestone",
+          "settings": {
+            "year": "2026",
+            "heading": "Human when it matters",
+            "text": "Technology organizes decisions. A dermatologist remains the right next step for clinical concerns."
+          }
+        }
+      },
+      "block_order": ["y2023", "y2024", "y2025", "y2026"],
+      "settings": {
+        "eyebrow": "Our story",
+        "heading": "Our story in time",
+        "text": "<p>From a clearer standard for Indian skin to a connected system of guidance, formula and follow-through.</p>"
+      }
+    },
+    "quote": {
+      "type": "project-skin-philosophy-quote",
+      "settings": {
+        "quote": "Each of our formulas is a harmony of biology, climate and craft — redefining what modern skincare should mean for Indian skin.",
+        "attribution": "Project Skin"
+      }
+    },
+    "commitment": {
+      "type": "project-skin-philosophy-commitment",
+      "blocks": {
+        "mechanism": {
+          "type": "commitment",
+          "settings": {
+            "heading": "Mechanism, not marketing",
+            "text": "We explain what an ingredient is there to do and how it fits the routine — without miracle timelines."
+          }
+        },
+        "formula": {
+          "type": "commitment",
+          "settings": {
+            "heading": "Formula integrity",
+            "text": "Actives, supporting ingredients and delivery systems should work as one considered formula."
+          }
+        },
+        "care": {
+          "type": "commitment",
+          "settings": {
+            "heading": "Human care when needed",
+            "text": "Technology can organize information. A dermatologist remains the right route for clinical concerns."
+          }
+        }
+      },
+      "block_order": ["mechanism", "formula", "care"],
+      "settings": {
+        "eyebrow": "Commitment",
+        "heading": "Built to earn your trust",
+        "text": "<p>Credibility is not a badge. It is how a formula is explained, a recommendation is reasoned, and progress is reviewed without unrealistic promises.</p>",
+        "cta_label": "Explore the science",
+        "cta_link": "/pages/the-science",
+        "secondary_label": "Speak to a dermatologist",
+        "secondary_link": "/pages/consultation"
+      }
+    }
+  },
+  "order": ["hero", "principles", "mission", "timeline", "quote", "commitment"]
+}

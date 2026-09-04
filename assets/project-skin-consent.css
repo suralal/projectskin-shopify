@@ -1,0 +1,193 @@
+html.ps-consent-enhanced #shopify-pc__banner:not([data-ps-consent-ready='true']) {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(18px);
+}
+
+html.ps-consent-enhanced #shopify-pc__banner {
+  position: fixed !important;
+  inset: auto auto 24px 24px !important;
+  z-index: 2147483640 !important;
+  width: min(408px, calc(100vw - 48px)) !important;
+  max-width: none !important;
+  padding: 22px !important;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent) !important;
+  border-radius: 10px !important;
+  background: color-mix(in srgb, var(--color-canvas) 97%, white) !important;
+  box-shadow: 0 18px 48px rgba(32, 32, 30, .14) !important;
+  color: var(--color-ink) !important;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 280ms ease, transform 380ms cubic-bezier(.22, 1, .36, 1), visibility 280ms ease;
+  animation: ps-consent-fallback 0s 9s forwards;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner .shopify-pc__banner__wrapper {
+  padding: 0 !important;
+}
+
+/* Shopify merges the dialog class into the banner element, but neutralize a
+   nested dialog too so the card never renders twice. */
+html.ps-consent-enhanced #shopify-pc__banner > .shopify-pc__banner__dialog {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: inherit !important;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner .shopify-pc__banner__body {
+  margin: 0 !important;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner :is(#shopify-pc__banner__body-title, .shopify-pc__banner__body-title) {
+  display: grid !important;
+  gap: 7px;
+  margin: 0 0 10px !important;
+  font-family: var(--font-heading-family) !important;
+  font-size: 21px !important;
+  font-style: italic;
+  font-weight: 400 !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0 !important;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner :is(#shopify-pc__banner__body-title, .shopify-pc__banner__body-title)::before {
+  content: 'PRIVACY CONTROLS';
+  font-family: var(--font-body-family) !important;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .1em;
+  color: var(--color-action);
+}
+
+html.ps-consent-enhanced #shopify-pc__banner .shopify-pc__banner__body p {
+  margin: 0 !important;
+  color: var(--color-muted) !important;
+  font-family: var(--font-body-family) !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0 !important;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner :is(#shopify-pc__banner__body-policy-link, .shopify-pc__banner__body-policy-link) {
+  color: var(--color-ink) !important;
+  font-weight: 600;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner .shopify-pc__banner__btns,
+html.ps-consent-enhanced #shopify-pc__banner .shopify-pc__banner__btns-granular {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  margin: 18px 0 0 !important;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner button {
+  min-height: 42px !important;
+  margin: 0 !important;
+  padding: 10px 14px !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: var(--color-ink) !important;
+  font-family: var(--font-body-family) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner button:hover {
+  border-color: var(--color-ink) !important;
+  transform: translateY(-1px);
+}
+
+html.ps-consent-enhanced #shopify-pc__banner :is(#shopify-pc__banner__btn-accept, .shopify-pc__banner__btn-accept) {
+  border-color: var(--color-action) !important;
+  background: var(--color-action) !important;
+  color: var(--color-on-action) !important;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner :is(#shopify-pc__banner__btn-accept, .shopify-pc__banner__btn-accept):hover {
+  border-color: var(--color-action-hover) !important;
+  background: var(--color-action-hover) !important;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner :is(#shopify-pc__banner__btn-manage-prefs, .shopify-pc__banner__btn-manage-prefs) {
+  order: 3;
+  grid-column: 1 / -1;
+  min-height: auto !important;
+  margin-top: 4px !important;
+  padding: 2px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: var(--color-muted) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+html.ps-consent-enhanced #shopify-pc__banner :is(#shopify-pc__banner__btn-manage-prefs, .shopify-pc__banner__btn-manage-prefs):hover {
+  color: var(--color-ink) !important;
+  transform: none;
+}
+
+html.ps-consent-enhanced #shopify-pc__prefs .shopify-pc__prefs__dialog {
+  border-radius: 8px !important;
+  font-family: var(--font-body-family) !important;
+}
+
+@media (max-width: 640px) {
+  html.ps-consent-enhanced #shopify-pc__banner {
+    inset: auto 12px 12px 12px !important;
+    width: auto !important;
+    padding: 20px 18px 16px !important;
+  }
+
+  html.ps-consent-enhanced #shopify-pc__banner :is(#shopify-pc__banner__body-title, .shopify-pc__banner__body-title) {
+    font-size: 20px !important;
+  }
+
+  /* Full-width on mobile would sit under the floating back-to-top control. */
+  html.ps-consent-enhanced:has(#shopify-pc__banner[data-ps-consent-ready='true']) .footer-back-to-top {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  html.ps-consent-enhanced #shopify-pc__banner .shopify-pc__banner__btns,
+  html.ps-consent-enhanced #shopify-pc__banner .shopify-pc__banner__btns-granular {
+    grid-template-columns: 1fr !important;
+  }
+
+  html.ps-consent-enhanced #shopify-pc__banner :is(#shopify-pc__banner__btn-manage-prefs, .shopify-pc__banner__btn-manage-prefs) {
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.ps-consent-enhanced #shopify-pc__banner {
+    transition: none;
+  }
+}
+
+@keyframes ps-consent-fallback {
+  to {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}

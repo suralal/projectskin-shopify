@@ -1,0 +1,28 @@
+<section class="ps-section ps-icons" style="--ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px">
+  <div class="ps-wrap ps-icons__grid">
+    {% for block in section.blocks %}
+      <a class="ps-icon-card" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+        <span class="ps-icon-card__seal" aria-hidden="true">{{ block.settings.icon }}</span>
+        <h3>{{ block.settings.heading }}</h3>
+        <p>{{ block.settings.text }}</p>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purity icon benefits",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 92 }
+  ],
+  "blocks": [
+    { "type": "benefit", "name": "Benefit", "settings": [{ "type": "text", "id": "icon", "label": "Icon or symbol", "default": "♧" }, { "type": "text", "id": "heading", "label": "Heading", "default": "Cruelty-Free" }, { "type": "textarea", "id": "text", "label": "Text", "default": "We're cruelty-free, always and forever, because we believe compassion is the true beauty." }, { "type": "url", "id": "link", "label": "Link" }] }
+  ],
+  "max_blocks": 6,
+  "presets": [{ "name": "Purity icon benefits", "blocks": [{ "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }] }]
+}
+{% endschema %}

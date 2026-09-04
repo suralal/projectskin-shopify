@@ -1,0 +1,120 @@
+<section
+  class="ps-section ps-builder ps-builder--routine"
+  style="--ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px"
+>
+  <purity-routine-builder class="ps-wrap ps-builder__inner">
+    <header class="ps-builder__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="ps-builder__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 class="ps-builder__heading">{{ section.settings.heading }}</h2>
+      {% if section.settings.description != blank %}
+        <div class="ps-builder__description rte">{{ section.settings.description }}</div>
+      {% endif %}
+    </header>
+
+    <div class="ps-builder__tabs" role="group" aria-label="Jump to a routine step">
+      {% for block in section.blocks %}
+        <button
+          class="ps-builder__tab{% if forloop.first %} is-active{% endif %}"
+          type="button"
+          aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-controls="RoutineCard-{{ section.id }}-{{ forloop.index }}"
+          data-routine-trigger
+        >
+          {{ block.settings.title }}
+        </button>
+      {% endfor %}
+    </div>
+
+    <div class="ps-builder__grid" data-routine-track>
+      {% for block in section.blocks %}
+        {% liquid
+          assign routine_product = block.settings.product
+          if routine_product == blank
+            case forloop.index
+              when 1
+                assign routine_product = all_products['refreshing-cleanser-acne-prone-skin']
+              when 2
+                assign routine_product = all_products['5-niacinamide-serum-acne-prone-skin']
+              when 3
+                assign routine_product = all_products['calming-moisturiser-acne-prone-skin']
+              when 4
+                assign routine_product = all_products['protecting-sunscreen-acne-prone-skin']
+            endcase
+          endif
+        %}
+        <div
+          class="ps-builder__step{% if forloop.first %} is-active{% endif %}"
+          id="RoutineCard-{{ section.id }}-{{ forloop.index }}"
+          data-routine-card
+          {{ block.shopify_attributes }}
+        >
+          <p class="ps-builder__step-label">{{ block.settings.title }}</p>
+          {% if routine_product != blank %}
+            {% render 'product-card', product: routine_product %}
+          {% else %}
+            {% case forloop.index %}
+              {% when 1 %}
+                {% render 'purity-static-product', fallback_asset: 'routine-cleanser.jpg', title: 'Refreshing Cleanser', vendor: 'Cleanse', price: '₹399' %}
+              {% when 2 %}
+                {% render 'purity-static-product', fallback_asset: 'product-serum.jpg', title: '5% Niacinamide Serum', vendor: 'Treat', price: '₹649' %}
+              {% when 3 %}
+                {% render 'purity-static-product', fallback_asset: 'routine-toner.jpg', title: 'Calming Moisturiser', vendor: 'Moisturise', price: '₹449' %}
+              {% else %}
+                {% render 'purity-static-product', fallback_asset: 'routine-sunscreen.jpg', title: 'Protecting Sunscreen SPF 50', vendor: 'Protect', price: '₹649' %}
+            {% endcase %}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.button_label != blank %}
+      <div class="ps-builder__footer">
+        <a class="ps-builder__cta" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+          {{ section.settings.button_label }}
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    {% endif %}
+  </purity-routine-builder>
+</section>
+
+{% schema %}
+{
+  "name": "Routine builder",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Skincare made simple" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Build Your Routine" },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the complete routine" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Routine step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Step title", "default": "Step 1. Cleanse" },
+        { "type": "product", "id": "product", "label": "Product" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Routine builder",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Step 1. Cleanse" } },
+        { "type": "step", "settings": { "title": "Step 2. Treat" } },
+        { "type": "step", "settings": { "title": "Step 3. Moisturise" } },
+        { "type": "step", "settings": { "title": "Step 4. Protect" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

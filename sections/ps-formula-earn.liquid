@@ -1,0 +1,177 @@
+{% comment %}
+  Formula literacy section: chip rail + animated molecule + dose evidence scale.
+  Styled with theme tokens (canvas, blush accent, charcoal action).
+{% endcomment %}
+<section
+  class="ps-earn"
+  id="FormulaEarn-{{ section.id }}"
+  style="--ps-earn-top: {{ section.settings.padding_top }}px; --ps-earn-bottom: {{ section.settings.padding_bottom }}px"
+>
+  <div class="ps-earn__mesh" aria-hidden="true"><i></i><i></i></div>
+
+  <div class="ps-earn__wrap">
+    <header class="ps-earn__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="ps-earn__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 class="ps-earn__heading">
+        {{ section.settings.heading }}
+        {% if section.settings.heading_italic != blank %}
+          <em>{{ section.settings.heading_italic }}</em>
+        {% endif %}
+      </h2>
+      {% if section.settings.description != blank %}
+        <div class="ps-earn__lede">{{ section.settings.description }}</div>
+      {% endif %}
+    </header>
+
+    {% if section.blocks.size > 0 %}
+      <ps-formula-earn class="ps-earn__explorer" data-section-id="{{ section.id }}">
+        <div class="ps-earn__rail" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+          {% for block in section.blocks %}
+            <button
+              class="ps-earn__chip"
+              type="button"
+              role="tab"
+              id="EarnTab-{{ section.id }}-{{ block.id }}"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-controls="EarnPanel-{{ section.id }}"
+              data-earn-tab
+              data-index="{{ forloop.index0 }}"
+              {{ block.shopify_attributes }}
+            >{{ block.settings.heading }}</button>
+          {% endfor %}
+        </div>
+
+        <div
+          class="ps-earn__body"
+          id="EarnPanel-{{ section.id }}"
+          role="tabpanel"
+          aria-labelledby="EarnTab-{{ section.id }}-{{ section.blocks.first.id }}"
+          data-earn-panel
+        >
+          <div class="ps-earn__mol" aria-hidden="true">
+            <svg class="ps-earn__svg" data-earn-mol viewBox="0 0 220 210"></svg>
+            <span class="ps-earn__molcap" data-earn-cap></span>
+          </div>
+
+          <div class="ps-earn__copy">
+            <h3 class="ps-earn__name" data-earn-name></h3>
+            <p class="ps-earn__inci" data-earn-inci></p>
+            <p class="ps-earn__mech" data-earn-mech></p>
+
+            <div class="ps-earn__dose">
+              <div class="ps-earn__dose-top">
+                <span>Our concentration</span>
+                <span data-earn-band-label></span>
+              </div>
+              <div class="ps-earn__scale">
+                <div class="ps-earn__base"></div>
+                <div class="ps-earn__band" data-earn-band></div>
+                <div class="ps-earn__mark" data-earn-mark data-v=""></div>
+              </div>
+              <div class="ps-earn__axis">
+                <span>0%</span>
+                <span data-earn-ax-mid></span>
+                <span data-earn-ax-max></span>
+              </div>
+              <p class="ps-earn__note" data-earn-note></p>
+            </div>
+
+            <div class="ps-earn__in" data-earn-in></div>
+          </div>
+        </div>
+
+        <script type="application/json" data-earn-catalog>
+          [
+            {% for block in section.blocks %}
+              {
+                "name": {{ block.settings.heading | json }},
+                "inci": {{ block.settings.inci | json }},
+                "caption": {{ block.settings.caption | json }},
+                "mechanism": {{ block.settings.mechanism | json }},
+                "note": {{ block.settings.note | json }},
+                "dose": {{ block.settings.dose | default: 5 }},
+                "bandMin": {{ block.settings.band_min | default: 2 }},
+                "bandMax": {{ block.settings.band_max | default: 5 }},
+                "scaleMax": {{ block.settings.scale_max | default: 10 }},
+                "products": {{ block.settings.products | json }},
+                "molecule": {{ block.settings.molecule | json }}
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          ]
+        </script>
+      </ps-formula-earn>
+    {% endif %}
+
+    {% if section.settings.button_label != blank and section.settings.link != blank %}
+      <div class="ps-earn__action">
+        <a class="ps-earn__cta" href="{{ section.settings.link }}">
+          {{ section.settings.button_label }}
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h11M8.5 1.5 12 5l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Formula earn its line",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Formula literacy" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Every ingredient" },
+    { "type": "inline_richtext", "id": "heading_italic", "label": "Heading italic line", "default": "has to earn its line." },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Not “enriched with.” A structure, a mechanism, and the concentration range where published trials actually show an effect.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Browse the ingredient library" },
+    { "type": "url", "id": "link", "label": "Button link" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 40, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 40, "max": 160, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Name", "default": "Niacinamide" },
+        { "type": "text", "id": "inci", "label": "INCI / form line", "default": "Niacinamide (Vitamin B3), encapsulated" },
+        { "type": "text", "id": "caption", "label": "Molecule caption", "default": "C₆H₆N₂O · pyridine-3-carboxamide" },
+        { "type": "textarea", "id": "mechanism", "label": "Mechanism", "default": "Regulates sebum at the sebocyte and interrupts pigment transfer between cells." },
+        { "type": "textarea", "id": "note", "label": "Dose note", "default": "Effect appears from about 2%. Benefit plateaus near 5%." },
+        { "type": "text", "id": "dose", "label": "Our dose %", "default": "5" },
+        { "type": "text", "id": "band_min", "label": "Evidence band min %", "default": "2" },
+        { "type": "text", "id": "band_max", "label": "Evidence band max %", "default": "5" },
+        { "type": "text", "id": "scale_max", "label": "Scale max %", "default": "10" },
+        { "type": "text", "id": "products", "label": "Formulated into", "info": "Comma-separated product names", "default": "Serum, Moisturiser, Sunscreen, Clear Seal" },
+        {
+          "type": "select",
+          "id": "molecule",
+          "label": "Molecule schematic",
+          "default": "niacinamide",
+          "options": [
+            { "value": "niacinamide", "label": "Niacinamide" },
+            { "value": "salicylic", "label": "Salicylic Acid" },
+            { "value": "zinc", "label": "Zinc PCA" },
+            { "value": "glycolic", "label": "Glycolic Acid" },
+            { "value": "ceramides", "label": "Ceramides" },
+            { "value": "tinosorb", "label": "Tinosorb S" }
+          ]
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Formula earn its line",
+      "blocks": [
+        { "type": "ingredient", "settings": { "heading": "Niacinamide", "molecule": "niacinamide", "dose": "5", "band_min": "2", "band_max": "5", "scale_max": "10" } },
+        { "type": "ingredient", "settings": { "heading": "Salicylic Acid", "molecule": "salicylic", "dose": "2", "band_min": "0.5", "band_max": "2", "scale_max": "4" } },
+        { "type": "ingredient", "settings": { "heading": "Zinc PCA", "molecule": "zinc", "dose": "0.5", "band_min": "0.1", "band_max": "1", "scale_max": "2" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

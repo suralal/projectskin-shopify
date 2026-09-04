@@ -1,0 +1,180 @@
+{% liquid
+  assign metafield_parts = section.settings.metafield_key | split: '.'
+  assign selected_product = section.settings.product | default: product
+  assign ingredient_entries = blank
+  if selected_product != blank and metafield_parts.size == 2
+    assign ingredient_entries = selected_product.metafields[metafield_parts[0]][metafield_parts[1]].value
+  endif
+%}
+
+<section
+  class="ps-section ps-ingredients"
+  style="--ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px"
+>
+  <purity-ingredient-explorer class="ps-ingredients__explorer">
+    <div class="ps-ingredients__header ps-wrap">
+      <div class="ps-ingredients__intro">
+        {% if section.settings.eyebrow != blank %}
+          <p class="ps-ingredients__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        <h2 class="ps-ingredients__heading">{{ section.settings.heading }}</h2>
+        {% if section.settings.description != blank %}
+          <div class="ps-ingredients__description rte">{{ section.settings.description }}</div>
+        {% endif %}
+      </div>
+
+      <div class="ps-ingredients__controls" aria-label="Ingredient carousel controls">
+        <p class="ps-ingredients__counter" aria-hidden="true">
+          <span data-ingredient-counter-current>1</span><span>/</span><span data-ingredient-counter-total></span>
+        </p>
+        <button class="ps-ingredients__arrow" type="button" data-ingredient-prev aria-label="Previous ingredients">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <button class="ps-ingredients__arrow" type="button" data-ingredient-next aria-label="Next ingredients">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="ps-ingredients__viewport" data-ingredient-viewport>
+      <div class="ps-ingredients__track" data-ingredient-track role="list" aria-label="Project Skin key ingredients">
+        {% if ingredient_entries != blank %}
+          {% for entry in ingredient_entries %}
+            {% liquid
+              assign entry_title = entry.heading.value | default: entry.title.value
+              assign entry_summary = entry.description.value | strip_html
+            %}
+            {% render 'ingredient-card',
+              index: forloop.index,
+              is_active: forloop.first,
+              role: entry.benefit.value,
+              title: entry_title,
+              type_label: entry.type_label.value,
+              summary: entry_summary,
+              marker: entry.marker.value,
+              icon: entry.icon.value,
+              image: entry.image.value,
+              tone: 'sage'
+            %}
+          {% endfor %}
+        {% else %}
+          {% for block in section.blocks %}
+            {% render 'ingredient-card',
+              index: forloop.index,
+              is_active: forloop.first,
+              role: block.settings.benefit,
+              title: block.settings.heading,
+              type_label: block.settings.type_label,
+              summary: block.settings.text,
+              details: block.settings.details,
+              strength: block.settings.strength,
+              marker: block.settings.marker,
+              icon: block.settings.icon,
+              image: block.settings.image,
+              tone: block.settings.tone,
+              block_attributes: block.shopify_attributes
+            %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="ps-ingredients__footer ps-wrap">
+      <div class="ps-ingredients__progress" aria-hidden="true"><span data-ingredient-progress></span></div>
+
+      <div class="ps-ingredients__detail" data-ingredient-detail aria-live="polite">
+        <div class="ps-ingredients__detail-heading">
+          <span data-ingredient-detail-role></span>
+          <h3 data-ingredient-detail-title></h3>
+          <p data-ingredient-detail-type></p>
+          <strong data-ingredient-detail-marker></strong>
+        </div>
+        <div class="ps-ingredients__detail-copy">
+          <div><span>At a glance</span><p data-ingredient-detail-summary></p></div>
+          <div><span>Why we use it</span><p data-ingredient-detail-body></p></div>
+        </div>
+      </div>
+
+      {% if section.settings.button_label != blank and section.settings.link != blank %}
+        <div class="ps-ingredients__action"><a class="ps-button" href="{{ section.settings.link }}">{{ section.settings.button_label }}</a></div>
+      {% endif %}
+    </div>
+  </purity-ingredient-explorer>
+</section>
+
+{% schema %}
+{
+  "name": "Project Skin ingredients",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Science-led actives" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Inside the Formula" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Explore the targeted actives behind Project Skin formulas and understand the role each one plays in your routine.</p>" },
+    { "type": "product", "id": "product", "label": "Product metafield source" },
+    { "type": "text", "id": "metafield_key", "label": "Info gallery metafield", "default": "custom.info_gallery" },
+    { "type": "text", "id": "button_label", "label": "Optional button label" },
+    { "type": "url", "id": "link", "label": "Optional button link" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        { "type": "text", "id": "benefit", "label": "Role", "default": "Oil balance" },
+        { "type": "text", "id": "heading", "label": "Ingredient", "default": "Niacinamide" },
+        { "type": "text", "id": "type_label", "label": "Plain-language ingredient family", "info": "Explain what it is without abbreviations, e.g. Vitamin B3 derivative or Water-binding humectant." },
+        { "type": "image_picker", "id": "image", "label": "Optional ingredient image", "info": "Use a clean ingredient or texture photograph. The designed identity panel is used when this is empty." },
+        { "type": "text", "id": "strength", "label": "Strength or form", "info": "Shown under the name, e.g. \"5% concentration\" or \"Oil-control complex\". Use plain language, not abbreviations.", "default": "5% concentration" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "molecule",
+          "options": [
+            { "value": "molecule", "label": "Molecule (general active)" },
+            { "value": "droplet", "label": "Droplet (hydration)" },
+            { "value": "oil", "label": "Oil balance" },
+            { "value": "pores", "label": "Pore care" },
+            { "value": "shield", "label": "Barrier support" },
+            { "value": "leaf", "label": "Botanical / soothing" },
+            { "value": "sun", "label": "Sun protection" },
+            { "value": "sparkle", "label": "Brightening" }
+          ]
+        },
+        { "type": "text", "id": "marker", "label": "Legacy marker", "info": "Only used if Strength is empty, and only when it contains a number." },
+        { "type": "textarea", "id": "text", "label": "Short description", "default": "A multi-tasking active selected to support balanced, clearer-looking skin." },
+        { "type": "textarea", "id": "details", "label": "Detailed explanation", "default": "Helps support the skin barrier while improving the appearance of uneven tone, visible pores, and excess oil." },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Card tone",
+          "default": "sage",
+          "options": [
+            { "value": "sage", "label": "Sage" },
+            { "value": "clay", "label": "Clay" },
+            { "value": "blue", "label": "Mineral blue" },
+            { "value": "green", "label": "Botanical green" },
+            { "value": "cream", "label": "Ceramide cream" },
+            { "value": "rose", "label": "Soft rose" }
+          ]
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Project Skin ingredients",
+      "blocks": [
+        { "type": "ingredient", "settings": { "benefit": "Oil balance", "heading": "Niacinamide", "type_label": "Vitamin B3 derivative", "strength": "5% concentration", "icon": "oil", "tone": "sage" } },
+        { "type": "ingredient", "settings": { "benefit": "Pore care", "heading": "Salicylic Acid", "type_label": "Oil-soluble BHA", "strength": "2% concentration", "icon": "pores", "tone": "clay" } },
+        { "type": "ingredient", "settings": { "benefit": "Balance", "heading": "Zinc PCA", "type_label": "Mineral + amino acid complex", "strength": "Oil-control complex", "icon": "molecule", "tone": "blue" } },
+        { "type": "ingredient", "settings": { "benefit": "Comfort", "heading": "Centella Asiatica", "type_label": "Soothing botanical", "strength": "Soothing botanical", "icon": "leaf", "tone": "green" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

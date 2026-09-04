@@ -1,0 +1,127 @@
+{% liquid
+  assign use_product_media = section.settings.use_product_media
+  assign media_count = 4
+  assign extra_count = 0
+  assign curated_only = false
+  case product.handle
+    when '5-niacinamide-serum-acne-prone-skin'
+      assign extra_count = 5
+    when 'calming-moisturiser-acne-prone-skin'
+      assign extra_count = 7
+      assign curated_only = true
+    when 'refreshing-cleanser-acne-prone-skin'
+      assign extra_count = 5
+      assign curated_only = true
+    when 'protecting-sunscreen-acne-prone-skin'
+      assign extra_count = 8
+      assign curated_only = true
+    when 'clear-seal'
+      assign extra_count = 7
+      assign curated_only = true
+    when 'active-boba-encapsulated-cream-acne-prone-skin'
+      assign extra_count = 5
+      assign curated_only = true
+    when 'project-skin-complete-4-step-skincare-routine-kit'
+      assign extra_count = 5
+      assign curated_only = true
+  endcase
+  if curated_only and extra_count > 0
+    assign use_product_media = false
+    assign media_count = extra_count
+  elsif use_product_media and product.media.size > 0
+    assign media_count = product.media.size | plus: extra_count
+  elsif extra_count > 0
+    assign media_count = extra_count
+  endif
+%}
+
+<div class="pdp-gallery pdp-gallery--thumbnails" data-product-gallery data-thumbnail-gallery>
+  <div class="pdp-thumbnail-gallery__thumbs" role="list" aria-label="Product media thumbnails">
+    {% if use_product_media and product.media.size > 0 %}
+      {% for media in product.media %}
+        <button
+          class="pdp-thumbnail-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+          type="button"
+          data-thumbnail-index="{{ forloop.index0 }}"
+          data-media-id="{{ media.id }}"
+          aria-label="View {{ display_title | escape }} image {{ forloop.index }}"
+          aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+          role="listitem"
+        >
+          {{ media.preview_image | image_url: width: 220 | image_tag: loading: 'lazy', widths: '110,160,220', sizes: '74px', alt: display_title }}
+        </button>
+      {% endfor %}
+      {% render 'product-extra-media', product: product, mode: 'gallery-thumbs', display_title: display_title, start_index: product.media.size %}
+    {% elsif extra_count > 0 %}
+      {% render 'product-extra-media', product: product, mode: 'gallery-thumbs', display_title: display_title, start_index: 0 %}
+    {% else %}
+      <button class="pdp-thumbnail-gallery__thumb is-active" type="button" data-thumbnail-index="0" aria-label="View {{ display_title | escape }} image 1" aria-current="true" role="listitem">
+        {% render 'purity-image', image: section.settings.thumbnail_image_1, fallback_asset: 'pdp-hydra-1.jpg', fallback_width: 180, fallback_height: 240, loading: 'eager', alt: display_title, sizes: '74px' %}
+      </button>
+      <button class="pdp-thumbnail-gallery__thumb" type="button" data-thumbnail-index="1" aria-label="View {{ display_title | escape }} image 2" aria-current="false" role="listitem">
+        {% render 'purity-image', image: section.settings.thumbnail_image_2, fallback_asset: 'pdp-hydra-2.jpg', fallback_width: 180, fallback_height: 240, alt: display_title, sizes: '74px' %}
+      </button>
+      <button class="pdp-thumbnail-gallery__thumb" type="button" data-thumbnail-index="2" aria-label="View {{ display_title | escape }} image 3" aria-current="false" role="listitem">
+        {% render 'purity-image', image: section.settings.thumbnail_image_3, fallback_asset: 'pdp-hydra-3.jpg', fallback_width: 180, fallback_height: 240, alt: display_title, sizes: '74px' %}
+      </button>
+      <button class="pdp-thumbnail-gallery__thumb" type="button" data-thumbnail-index="3" aria-label="View {{ display_title | escape }} image 4" aria-current="false" role="listitem">
+        {% render 'purity-image', image: section.settings.thumbnail_image_4, fallback_asset: 'pdp-hydra-4.jpg', fallback_width: 180, fallback_height: 240, alt: display_title, sizes: '74px' %}
+      </button>
+    {% endif %}
+  </div>
+
+  <div class="pdp-thumbnail-gallery__stage" data-thumbnail-stage tabindex="0" aria-label="{{ display_title | escape }} product media carousel">
+    <div class="pdp-thumbnail-gallery__track" data-thumbnail-track>
+      {% if use_product_media and product.media.size > 0 %}
+        {% for media in product.media %}
+          {% liquid
+            assign media_loading = 'lazy'
+            assign media_priority = 'auto'
+            assign media_alt = media.alt | default: display_title
+            if forloop.first
+              assign media_loading = 'eager'
+              assign media_priority = 'high'
+            endif
+          %}
+          <div class="pdp-thumbnail-gallery__slide{% if forloop.first %} is-active{% endif %}" data-product-media data-thumbnail-slide data-media-id="{{ media.id }}" aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}">
+            {% case media.media_type %}
+              {% when 'image' %}
+                {{ media | image_url: width: 1600 | image_tag: loading: media_loading, fetchpriority: media_priority, widths: '480,720,960,1200,1600', sizes: '(min-width: 990px) 608px, calc(100vw - 40px)', alt: media_alt }}
+              {% when 'video' %}
+                {{ media | video_tag: controls: true, autoplay: false, loop: true, muted: true, preload: 'metadata', playsinline: true }}
+              {% when 'external_video' %}
+                {{ media | external_video_tag }}
+              {% else %}
+                {{ media | media_tag }}
+            {% endcase %}
+            {% if section.settings.enable_zoom and media.media_type == 'image' %}<button class="pdp-gallery__zoom pdp-thumbnail-gallery__zoom" type="button" data-media-zoom aria-label="Zoom image {{ forloop.index }}">{% render 'icon', name: 'zoom' %}</button>{% endif %}
+          </div>
+        {% endfor %}
+        {% render 'product-extra-media', product: product, mode: 'gallery-slides', display_title: display_title, enable_zoom: section.settings.enable_zoom, start_index: product.media.size %}
+      {% elsif extra_count > 0 %}
+        {% render 'product-extra-media', product: product, mode: 'gallery-slides', display_title: display_title, enable_zoom: section.settings.enable_zoom, start_index: 0 %}
+      {% else %}
+        <div class="pdp-thumbnail-gallery__slide is-active" data-product-media data-thumbnail-slide aria-hidden="false">
+          {% render 'purity-image', image: section.settings.thumbnail_image_1, fallback_asset: 'pdp-hydra-1.jpg', fallback_width: 900, fallback_height: 1200, loading: 'eager', fetchpriority: 'high', alt: display_title, sizes: '(min-width: 990px) 608px, calc(100vw - 40px)' %}
+          {% if section.settings.enable_zoom %}<button class="pdp-gallery__zoom pdp-thumbnail-gallery__zoom" type="button" data-media-zoom aria-label="Zoom image 1">{% render 'icon', name: 'zoom' %}</button>{% endif %}
+        </div>
+        <div class="pdp-thumbnail-gallery__slide" data-product-media data-thumbnail-slide aria-hidden="true">
+          {% render 'purity-image', image: section.settings.thumbnail_image_2, fallback_asset: 'pdp-hydra-2.jpg', fallback_width: 900, fallback_height: 1200, alt: display_title, sizes: '(min-width: 990px) 608px, calc(100vw - 40px)' %}
+          {% if section.settings.enable_zoom %}<button class="pdp-gallery__zoom pdp-thumbnail-gallery__zoom" type="button" data-media-zoom aria-label="Zoom image 2">{% render 'icon', name: 'zoom' %}</button>{% endif %}
+        </div>
+        <div class="pdp-thumbnail-gallery__slide" data-product-media data-thumbnail-slide aria-hidden="true">
+          {% render 'purity-image', image: section.settings.thumbnail_image_3, fallback_asset: 'pdp-hydra-3.jpg', fallback_width: 900, fallback_height: 1200, alt: display_title, sizes: '(min-width: 990px) 608px, calc(100vw - 40px)' %}
+          {% if section.settings.enable_zoom %}<button class="pdp-gallery__zoom pdp-thumbnail-gallery__zoom" type="button" data-media-zoom aria-label="Zoom image 3">{% render 'icon', name: 'zoom' %}</button>{% endif %}
+        </div>
+        <div class="pdp-thumbnail-gallery__slide" data-product-media data-thumbnail-slide aria-hidden="true">
+          {% render 'purity-image', image: section.settings.thumbnail_image_4, fallback_asset: 'pdp-hydra-4.jpg', fallback_width: 900, fallback_height: 1200, alt: display_title, sizes: '(min-width: 990px) 608px, calc(100vw - 40px)' %}
+          {% if section.settings.enable_zoom %}<button class="pdp-gallery__zoom pdp-thumbnail-gallery__zoom" type="button" data-media-zoom aria-label="Zoom image 4">{% render 'icon', name: 'zoom' %}</button>{% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    <button class="pdp-thumbnail-gallery__arrow pdp-thumbnail-gallery__arrow--prev" type="button" data-thumbnail-dir="prev" aria-label="Previous product image">{% render 'icon', name: 'arrow-left' %}</button>
+    <button class="pdp-thumbnail-gallery__arrow pdp-thumbnail-gallery__arrow--next" type="button" data-thumbnail-dir="next" aria-label="Next product image">{% render 'icon', name: 'arrow-right' %}</button>
+    <span class="pdp-thumbnail-gallery__counter" data-thumbnail-counter aria-live="polite">1/{{ media_count }}</span>
+  </div>
+</div>

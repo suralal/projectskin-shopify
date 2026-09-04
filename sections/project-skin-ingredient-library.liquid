@@ -1,0 +1,49 @@
+<section
+  id="IngredientLibrary"
+  class="psr-route-fallback psr-route-fallback--science psr-page psr-section psr-section--linen psr-ing-library"
+>
+  <div class="container">
+    <div class="psr-section__head">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="psr-kicker">{{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      {% if section.settings.text != blank %}
+        <p>{{ section.settings.text }}</p>
+      {% endif %}
+    </div>
+
+    <nav class="psr-ing-library__toc" aria-label="Ingredient index">
+      <a href="#ingredient-niacinamide">Niacinamide</a>
+      <a href="#ingredient-salicylic-acid">Salicylic Acid</a>
+      <a href="#ingredient-glycolic-acid">Glycolic Acid</a>
+      <a href="#ingredient-zinc-pca">Zinc PCA</a>
+      <a href="#ingredient-ceramide-complex">Ceramides</a>
+      <a href="#ingredient-pdrn">PDRN</a>
+      <a href="#ingredient-sepicontrol">SEPICONCONTROL™</a>
+      <a href="#ingredient-saccharide-isomerate">Saccharide Isomerate</a>
+      <a href="#ingredient-tinosorb-s">Tinosorb S</a>
+      <a href="#ingredient-c15-19-alkane">C15-19 Alkane</a>
+      <a href="#ingredient-botanical-six">Botanical complex</a>
+      <a href="#ingredient-phospholipids">Phospholipids</a>
+    </nav>
+
+    <div class="psr-ing-library__grid">
+      {% render 'ingredient-library-catalog' %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ingredient library",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ingredient library" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Actives with a reason" },
+    { "type": "textarea", "id": "text", "label": "Intro", "default": "Percentage. Mechanism. Which formulas use it. Literacy first — so you understand before you buy." }
+  ],
+  "presets": [{ "name": "Ingredient library" }]
+}
+{% endschema %}

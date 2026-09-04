@@ -1,0 +1,154 @@
+{% liquid
+  assign concern_key = section.settings.concern_key | strip | downcase
+  if concern_key == blank or concern_key == 'auto'
+    assign concern_key = page.handle | default: 'acne' | strip | downcase
+  endif
+%}
+{% comment %} include (not render) so catalog assigns stay in section scope {% endcomment %}
+{% include 'concern-education-catalog', concern_key: concern_key %}
+
+{% liquid
+  assign hero_eyebrow = section.settings.eyebrow | default: concern_eyebrow
+  assign hero_heading = section.settings.heading | default: concern_title
+  assign hero_text = section.settings.text | default: concern_lede
+  if section.settings.eyebrow != blank
+    assign hero_eyebrow = section.settings.eyebrow
+  endif
+  if section.settings.heading != blank
+    assign hero_heading = section.settings.heading
+  endif
+  if section.settings.text != blank
+    assign hero_text = section.settings.text
+  endif
+%}
+
+<section class="psr-route-fallback psr-route-fallback--concern-{{ concern_key }} psr-page psr-concern" data-concern="{{ concern_key }}">
+  <div class="psr-concern__hero">
+    <div class="container psr-concern__hero-inner">
+      <p class="psr-kicker">{{ hero_eyebrow }}</p>
+      <h1>{{ hero_heading }}</h1>
+      <p class="psr-concern__lede">{{ hero_text }}</p>
+      <div class="psr-concern__hero-actions">
+        <a class="psr-button" href="#ConcernMechanism-{{ concern_key }}">{{ section.settings.primary_label | default: 'See the mechanism' }}</a>
+        <a class="psr-button psr-button--secondary" href="#ConcernShop-{{ concern_key }}">{{ section.settings.secondary_label | default: 'Shop formulas' }}</a>
+      </div>
+      <nav class="psr-concern__switch" aria-label="Other concerns">
+        <a href="/pages/acne"{% if concern_key == 'acne' %} aria-current="page"{% endif %}>Acne</a>
+        <a href="/pages/pigmentation"{% if concern_key == 'pigmentation' %} aria-current="page"{% endif %}>Pigmentation</a>
+        <a href="/pages/barrier"{% if concern_key == 'barrier' %} aria-current="page"{% endif %}>Barrier</a>
+        <a href="/pages/daily-spf"{% if concern_key == 'spf' %} aria-current="page"{% endif %}>Daily SPF</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="psr-section psr-section--linen">
+    <div class="container psr-concern__split">
+      <article class="psr-concern__panel">
+        <span class="psr-kicker">Diagnosis first</span>
+        <h2>{{ diagnosis_heading }}</h2>
+        <p>{{ diagnosis_text }}</p>
+      </article>
+      <article class="psr-concern__panel psr-concern__panel--dark">
+        <span class="psr-kicker psr-kicker--light">Biology + climate</span>
+        <h2>{{ causes_heading }}</h2>
+        <div class="psr-concern__causes">
+          {% for row in causes_rows %}
+            {% assign parts = row | split: '|' %}
+            <div>
+              <strong>{{ parts[0] | strip }}</strong>
+              <span>{{ parts[1] | strip }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div id="ConcernMechanism-{{ concern_key }}" class="psr-section">
+    <div class="container">
+      <div class="psr-section__head">
+        <div>
+          <span class="psr-kicker">Mechanism of fix</span>
+          <h2>{{ mechanism_heading }}</h2>
+        </div>
+        <p>{{ mechanism_text }}</p>
+      </div>
+
+      <div class="psr-concern__actives-head">
+        <h3>{{ actives_heading }}</h3>
+        <a class="psr-text-link" href="/pages/ingredients">Full ingredient library <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="psr-concern__actives">
+        {% for row in actives_rows %}
+          {% assign parts = row | split: '|' %}
+          <a class="psr-concern__active" href="{{ parts[4] | strip }}">
+            <span class="psr-concern__active-name">{{ parts[1] | strip }}</span>
+            <span class="psr-concern__active-pct">{{ parts[2] | strip }}</span>
+            <span class="psr-concern__active-mech">{{ parts[3] | strip }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div id="ConcernShop-{{ concern_key }}" class="psr-section psr-section--mist">
+    <div class="container">
+      <div class="psr-section__head">
+        <div>
+          <span class="psr-kicker">Then shop</span>
+          <h2>{{ products_heading }}</h2>
+        </div>
+        <p>{{ products_text }}</p>
+      </div>
+
+      <div class="psr-concern__products psr-edu-products" style="--psr-columns: {{ section.settings.columns | default: 4 }};">
+        {% for handle in product_handle_list %}
+          {% assign handle_clean = handle | strip %}
+          {% if handle_clean != blank %}
+            {% assign concern_product = all_products[handle_clean] %}
+            {% if concern_product != blank %}
+              {% render 'product-card', product: concern_product, simple_media: true %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="psr-concern__cta">
+        {% assign cta_product = all_products[shop_cta_handle] %}
+        {% if cta_product != blank %}
+          <a class="psr-button" href="{{ cta_product.url }}">{{ shop_cta_label }}</a>
+        {% endif %}
+        <a class="psr-button psr-button--secondary" href="/pages/consultation">Speak to a dermatologist</a>
+        <a class="psr-text-link" href="/pages/the-science">Explore the science <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Concern education",
+  "settings": [
+    {
+      "type": "select",
+      "id": "concern_key",
+      "label": "Concern",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Auto (from page handle)" },
+        { "value": "acne", "label": "Acne" },
+        { "value": "pigmentation", "label": "Pigmentation" },
+        { "value": "barrier", "label": "Barrier" },
+        { "value": "spf", "label": "Daily SPF" }
+      ]
+    },
+    { "type": "text", "id": "eyebrow", "label": "Hero eyebrow override" },
+    { "type": "textarea", "id": "heading", "label": "Hero heading override" },
+    { "type": "textarea", "id": "text", "label": "Hero text override" },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "See the mechanism" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button", "default": "Shop formulas" },
+    { "type": "range", "id": "columns", "label": "Product columns", "min": 2, "max": 4, "step": 1, "default": 4 }
+  ],
+  "presets": [{ "name": "Concern education" }]
+}
+{% endschema %}

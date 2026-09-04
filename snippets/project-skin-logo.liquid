@@ -1,0 +1,15 @@
+{% comment %}
+  Always renders the Project Skin SVG logo.
+  Optional: width (number, used as preferred width hint via CSS variable)
+{% endcomment %}
+{% liquid
+  assign logo_width = width | default: 140
+%}
+<span
+  class="brand-logo__image brand-logo__svg"
+  style="--logo-w: {{ logo_width }}px;"
+  role="img"
+  aria-label="{{ shop.name | escape }}"
+>
+  {% render 'icon-project-skin-logo' %}
+</span>

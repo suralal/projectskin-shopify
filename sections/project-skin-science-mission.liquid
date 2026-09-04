@@ -1,0 +1,66 @@
+<section class="psr-route-fallback psr-route-fallback--science psr-page psr-sci-mission">
+  <div class="container">
+    <div class="psr-sci-mission__grid">
+      <figure class="psr-sci-mission__media psr-sci-mission__media--wide">
+        {% if section.settings.image_1 != blank %}
+          {{ section.settings.image_1 | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 48vw, 100vw', alt: section.settings.image_1_alt }}
+        {% else %}
+          <img src="{{ 'psr-science-mission-scan.jpg' | asset_url }}" width="1600" height="1200" loading="lazy" alt="{{ section.settings.image_1_alt | escape }}">
+        {% endif %}
+      </figure>
+
+      <article class="psr-sci-mission__card">
+        <p class="psr-phil-kicker">{{ section.settings.card_1_eyebrow }}</p>
+        <h2>{{ section.settings.card_1_heading }}</h2>
+        <div class="rte">{{ section.settings.card_1_text }}</div>
+        {% if section.settings.card_1_label != blank %}
+          <a class="psr-phil-btn" href="{{ section.settings.card_1_link | default: '#science-system' }}">{{ section.settings.card_1_label }}</a>
+        {% endif %}
+      </article>
+
+      <article class="psr-sci-mission__card psr-sci-mission__card--soft">
+        <p class="psr-phil-kicker">{{ section.settings.card_2_eyebrow }}</p>
+        <h2>{{ section.settings.card_2_heading }}</h2>
+        <div class="rte">{{ section.settings.card_2_text }}</div>
+        {% if section.settings.card_2_label != blank %}
+          <a class="psr-phil-btn" href="{{ section.settings.card_2_link | default: '#science-platform' }}">{{ section.settings.card_2_label }}</a>
+        {% endif %}
+      </article>
+
+      <figure class="psr-sci-mission__media psr-sci-mission__media--portrait">
+        {% if section.settings.image_2 != blank %}
+          {{ section.settings.image_2 | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '500,800,1200,1400', sizes: '(min-width: 900px) 42vw, 100vw', alt: section.settings.image_2_alt }}
+        {% else %}
+          <img src="{{ 'psr-science-mission-routine.jpg' | asset_url }}" width="1200" height="1500" loading="lazy" alt="{{ section.settings.image_2_alt | escape }}">
+        {% endif %}
+        {% if section.settings.badge_text != blank %}
+          <span class="psr-sci-mission__badge">{{ section.settings.badge_text }}</span>
+        {% endif %}
+      </figure>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Science mission",
+  "settings": [
+    { "type": "image_picker", "id": "image_1", "label": "Top-left image" },
+    { "type": "text", "id": "image_1_alt", "label": "Top-left image alt", "default": "Guided skin scan reviewed with a specialist" },
+    { "type": "text", "id": "card_1_eyebrow", "label": "Top card eyebrow", "default": "Purpose" },
+    { "type": "text", "id": "card_1_heading", "label": "Top card heading", "default": "Technology that makes decisions clearer" },
+    { "type": "richtext", "id": "card_1_text", "label": "Top card text", "default": "<p>Explore the system to turn scattered concerns into an explainable path: what you see, why a product fits, and how to stay consistent.</p>" },
+    { "type": "text", "id": "card_1_label", "label": "Top card button", "default": "How it works" },
+    { "type": "url", "id": "card_1_link", "label": "Top card link" },
+    { "type": "text", "id": "card_2_eyebrow", "label": "Bottom card eyebrow", "default": "Follow-through" },
+    { "type": "text", "id": "card_2_heading", "label": "Bottom card heading", "default": "Built to learn with your routine" },
+    { "type": "richtext", "id": "card_2_text", "label": "Bottom card text", "default": "<p>Recommendations matter more when adherence and check-ins create a usable signal — so the next decision is better informed.</p>" },
+    { "type": "text", "id": "card_2_label", "label": "Bottom card button", "default": "See the platform" },
+    { "type": "url", "id": "card_2_link", "label": "Bottom card link" },
+    { "type": "image_picker", "id": "image_2", "label": "Bottom-right image" },
+    { "type": "text", "id": "image_2_alt", "label": "Bottom-right image alt", "default": "Daily routine guided by Project Skin" },
+    { "type": "text", "id": "badge_text", "label": "Image badge", "default": "Evidence-led" }
+  ],
+  "presets": [{ "name": "Science mission" }]
+}
+{% endschema %}

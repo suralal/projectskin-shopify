@@ -1,0 +1,66 @@
+<section class="psr-route-fallback psr-route-fallback--philosophy psr-page psr-phil-mission">
+  <div class="container">
+    <div class="psr-phil-mission__grid">
+      <figure class="psr-phil-mission__media psr-phil-mission__media--wide">
+        {% if section.settings.image_1 != blank %}
+          {{ section.settings.image_1 | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 48vw, 100vw', alt: section.settings.image_1_alt }}
+        {% else %}
+          <img src="{{ 'psr-philosophy-mission-care.jpg' | asset_url }}" width="1600" height="1060" loading="lazy" alt="{{ section.settings.image_1_alt | escape }}">
+        {% endif %}
+      </figure>
+
+      <article class="psr-phil-mission__card">
+        <p class="psr-phil-kicker">{{ section.settings.card_1_eyebrow }}</p>
+        <h2>{{ section.settings.card_1_heading }}</h2>
+        <div class="rte">{{ section.settings.card_1_text }}</div>
+        {% if section.settings.card_1_label != blank %}
+          <a class="psr-phil-btn" href="{{ section.settings.card_1_link | default: '#project-skin-principles' }}">{{ section.settings.card_1_label }}</a>
+        {% endif %}
+      </article>
+
+      <article class="psr-phil-mission__card psr-phil-mission__card--soft">
+        <p class="psr-phil-kicker">{{ section.settings.card_2_eyebrow }}</p>
+        <h2>{{ section.settings.card_2_heading }}</h2>
+        <div class="rte">{{ section.settings.card_2_text }}</div>
+        {% if section.settings.card_2_label != blank %}
+          <a class="psr-phil-btn" href="{{ section.settings.card_2_link | default: '/pages/the-science' }}">{{ section.settings.card_2_label }}</a>
+        {% endif %}
+      </article>
+
+      <figure class="psr-phil-mission__media psr-phil-mission__media--portrait">
+        {% if section.settings.image_2 != blank %}
+          {{ section.settings.image_2 | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '500,800,1200,1400', sizes: '(min-width: 900px) 42vw, 100vw', alt: section.settings.image_2_alt }}
+        {% else %}
+          <img src="{{ 'psr-philosophy-story-portrait.jpg' | asset_url }}" width="1200" height="1500" loading="lazy" alt="{{ section.settings.image_2_alt | escape }}">
+        {% endif %}
+        {% if section.settings.badge_text != blank %}
+          <span class="psr-phil-mission__badge">{{ section.settings.badge_text }}</span>
+        {% endif %}
+      </figure>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Philosophy mission",
+  "settings": [
+    { "type": "image_picker", "id": "image_1", "label": "Top-left image" },
+    { "type": "text", "id": "image_1_alt", "label": "Top-left image alt", "default": "Gentle facial care ritual" },
+    { "type": "text", "id": "card_1_eyebrow", "label": "Top card eyebrow", "default": "Intention" },
+    { "type": "text", "id": "card_1_heading", "label": "Top card heading", "default": "True beauty guided by intention" },
+    { "type": "richtext", "id": "card_1_text", "label": "Top card text", "default": "<p>We design for Indian skin in real climates — heat, humidity, pollution, hard water and dry winters — instead of treating context as an afterthought.</p>" },
+    { "type": "text", "id": "card_1_label", "label": "Top card button", "default": "Our principles" },
+    { "type": "url", "id": "card_1_link", "label": "Top card link" },
+    { "type": "text", "id": "card_2_eyebrow", "label": "Bottom card eyebrow", "default": "Integrity" },
+    { "type": "text", "id": "card_2_heading", "label": "Bottom card heading", "default": "Evidence until every drop" },
+    { "type": "richtext", "id": "card_2_text", "label": "Bottom card text", "default": "<p>An ingredient earns its place by mechanism, role and clarity — not trend cycles. Consistency matters more than novelty.</p>" },
+    { "type": "text", "id": "card_2_label", "label": "Bottom card button", "default": "Meet the science" },
+    { "type": "url", "id": "card_2_link", "label": "Bottom card link" },
+    { "type": "image_picker", "id": "image_2", "label": "Bottom-right image" },
+    { "type": "text", "id": "image_2_alt", "label": "Bottom-right image alt", "default": "Portrait of calm, healthy skin" },
+    { "type": "text", "id": "badge_text", "label": "Image badge", "default": "Evidence-led" }
+  ],
+  "presets": [{ "name": "Philosophy mission" }]
+}
+{% endschema %}

@@ -1,0 +1,46 @@
+<section class="ps-section ps-videos" style="--ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px">
+  <div class="ps-wrap">
+    {% render 'purity-section-heading', eyebrow: section.settings.eyebrow, title: section.settings.heading, copy: section.settings.description, alignment: 'center' %}
+    <purity-video-rail class="ps-video-rail">
+      {% for block in section.blocks %}
+        {% liquid
+          assign fallback_asset = 'video-1.jpg'
+          case forloop.index
+            when 2
+              assign fallback_asset = 'video-2.jpg'
+            when 3
+              assign fallback_asset = 'video-3.jpg'
+            when 4
+              assign fallback_asset = 'video-4.jpg'
+            when 5
+              assign fallback_asset = 'video-5.jpg'
+          endcase
+        %}
+        <a class="ps-video-card" href="{{ block.settings.product.url | default: block.settings.link | default: routes.all_products_collection_url }}" data-video-card {{ block.shopify_attributes }}>
+          {% if block.settings.video != blank %}{{ block.settings.video | video_tag: autoplay: false, loop: true, muted: true, controls: false, preload: 'metadata' }}{% else %}{% render 'purity-image', image: block.settings.image, fallback_asset: fallback_asset, fallback_width: 700, fallback_height: 900, alt: block.settings.title, sizes: '(min-width: 800px) 20vw, 68vw' %}{% endif %}
+          <span class="ps-video-card__play" aria-hidden="true">▶</span>
+        </a>
+      {% endfor %}
+    </purity-video-rail>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Video results",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Real routines" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Real Results—Real You" },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 }
+  ],
+  "blocks": [
+    { "type": "video", "name": "Video result", "settings": [{ "type": "video", "id": "video", "label": "Video" }, { "type": "image_picker", "id": "image", "label": "Poster image" }, { "type": "text", "id": "title", "label": "Title", "default": "Customer result" }, { "type": "product", "id": "product", "label": "Product" }, { "type": "url", "id": "link", "label": "Fallback link" }] }
+  ],
+  "max_blocks": 10,
+  "presets": [{ "name": "Video results", "blocks": [{ "type": "video" }, { "type": "video" }, { "type": "video" }, { "type": "video" }, { "type": "video" }] }]
+}
+{% endschema %}

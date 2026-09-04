@@ -1,0 +1,77 @@
+<section class="ps-template ps-search-page">
+  <div class="container">
+    <div class="ps-template__head">
+      <span class="ps-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h1>{{ section.settings.heading }}</h1>
+      {% if search.performed %}
+        <p>{{ search.results_count }} results for “{{ search.terms | escape }}”</p>
+      {% else %}
+        <p>{{ section.settings.intro }}</p>
+      {% endif %}
+    </div>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="ps-search-page__form">
+      <label class="visually-hidden" for="SearchPageInput">Search</label>
+      <span>{% render 'icon', name: 'search' %}</span>
+      <input id="SearchPageInput" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ settings.search_placeholder | escape }}">
+      <button class="ps-button" type="submit">Search</button>
+    </form>
+
+    {% if search.performed %}
+      {% paginate search.results by section.settings.items_per_page %}
+        {% if search.results_count > 0 %}
+          <div class="ps-search-results">
+            {% for item in search.results %}
+              {% case item.object_type %}
+                {% when 'product' %}
+                  {% render 'product-card', product: item %}
+                {% when 'article' %}
+                  <article class="ps-content-result">
+                    <a class="ps-content-result__media" href="{{ item.url }}">
+                      {% if item.image %}{{ item.image | image_url: width: 800 | image_tag: loading: 'lazy' }}{% endif %}
+                    </a>
+                    <span class="ps-eyebrow">Article</span>
+                    <h2><a href="{{ item.url }}">{{ item.title }}</a></h2>
+                    <p>{{ item.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+                  </article>
+                {% when 'page' %}
+                  <article class="ps-content-result ps-content-result--page">
+                    <span class="ps-eyebrow">Page</span>
+                    <h2><a href="{{ item.url }}">{{ item.title }}</a></h2>
+                    <p>{{ item.content | strip_html | truncatewords: 24 }}</p>
+                  </article>
+              {% endcase %}
+            {% endfor %}
+          </div>
+          {% if paginate.pages > 1 %}<div class="pagination">{{ paginate | default_pagination }}</div>{% endif %}
+        {% else %}
+          <div class="ps-search-empty">
+            <h2>No results found</h2>
+            <p>Try a shorter phrase or explore all products.</p>
+            <a class="ps-button" href="{{ routes.all_products_collection_url }}">Explore products</a>
+          </div>
+        {% endif %}
+      {% endpaginate %}
+    {% else %}
+      {% assign suggested_terms = settings.suggested_searches | split: ',' %}
+      <div class="predictive-search-tags ps-search-page__tags">
+        {% for term in suggested_terms %}
+          {% assign clean_term = term | strip %}
+          {% if clean_term != blank %}<a href="{{ routes.search_url }}?q={{ clean_term | url_encode }}">{{ clean_term }}</a>{% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Find your ritual" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Search Purity" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Search products, routines, collections, and journal stories." },
+    { "type": "range", "id": "items_per_page", "label": "Results per page", "min": 8, "max": 32, "step": 4, "default": 20 }
+  ]
+}
+{% endschema %}

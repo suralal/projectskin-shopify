@@ -1,0 +1,112 @@
+<section id="book-consultation" class="psr-page psr-section">
+  <div class="container psr-booking">
+    <div class="psr-booking__intro">
+      <span class="psr-kicker">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.text }}</p>
+      <ol class="psr-booking__steps">
+        {% for block in section.blocks %}
+          <li {{ block.shopify_attributes }}>
+            <span>0{{ forloop.index }}</span>
+            <div><strong>{{ block.settings.heading }}</strong><small>{{ block.settings.text }}</small></div>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <div class="psr-form">
+      <div class="psr-form__head">
+        <span class="psr-kicker">Appointment request</span>
+        <h3>{{ section.settings.form_heading }}</h3>
+        <p>{{ section.settings.form_text }}</p>
+      </div>
+
+      {% form 'contact', id: 'ProjectSkinConsultation' %}
+        {% if form.posted_successfully? %}<div class="psr-form__success" tabindex="-1">{{ section.settings.success_message }}</div>{% endif %}
+        {% if form.errors %}<div class="psr-form__errors">{{ form.errors | default_errors }}</div>{% endif %}
+        <input type="hidden" name="contact[Request type]" value="Dermatologist consultation">
+        <div class="psr-form__grid">
+          <div class="psr-field">
+            <label for="ConsultationName-{{ section.id }}">Full name</label>
+            <input id="ConsultationName-{{ section.id }}" type="text" name="contact[name]" autocomplete="name" required value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+          </div>
+          <div class="psr-field">
+            <label for="ConsultationEmail-{{ section.id }}">Email address</label>
+            <input id="ConsultationEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" autocorrect="off" autocapitalize="off" required value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+          </div>
+          <div class="psr-field">
+            <label for="ConsultationPhone-{{ section.id }}">Phone number</label>
+            <input id="ConsultationPhone-{{ section.id }}" type="tel" name="contact[phone]" autocomplete="tel" required value="{% if customer %}{{ customer.phone }}{% endif %}">
+          </div>
+          <div class="psr-field">
+            <label for="ConsultationCity-{{ section.id }}">City</label>
+            <input id="ConsultationCity-{{ section.id }}" type="text" name="contact[City]" autocomplete="address-level2" required>
+          </div>
+          <fieldset class="psr-field psr-field--full">
+            <legend>Primary skin concern</legend>
+            <div class="psr-choice-row">
+              <label class="psr-choice"><input type="radio" name="contact[Primary concern]" value="Acne and breakouts" required><span>Acne and breakouts</span></label>
+              <label class="psr-choice"><input type="radio" name="contact[Primary concern]" value="Pigmentation"><span>Pigmentation</span></label>
+              <label class="psr-choice"><input type="radio" name="contact[Primary concern]" value="Sensitivity or barrier"><span>Sensitivity or barrier</span></label>
+            </div>
+          </fieldset>
+          <div class="psr-field">
+            <label for="ConsultationFormat-{{ section.id }}">Consultation format</label>
+            <select id="ConsultationFormat-{{ section.id }}" name="contact[Consultation format]">
+              <option value="Video consultation">Video consultation</option>
+              <option value="In-person consultation">In-person consultation</option>
+            </select>
+          </div>
+          <div class="psr-field">
+            <label for="ConsultationTime-{{ section.id }}">Preferred time</label>
+            <select id="ConsultationTime-{{ section.id }}" name="contact[Preferred time]">
+              <option value="Morning">Morning, 9am–12pm</option>
+              <option value="Afternoon">Afternoon, 12pm–4pm</option>
+              <option value="Evening">Evening, 4pm–7pm</option>
+            </select>
+          </div>
+          <div class="psr-field psr-field--full">
+            <label for="ConsultationRoutine-{{ section.id }}">Current routine and relevant history</label>
+            <textarea id="ConsultationRoutine-{{ section.id }}" name="contact[Current routine and history]" placeholder="Products used, how long the concern has been present, sensitivities, and anything else the dermatologist should know."></textarea>
+          </div>
+          <label class="psr-field psr-field--full psr-consent">
+            <input type="checkbox" name="contact[Consent]" value="I consent to being contacted about this consultation" required>
+            <span>I consent to Project Skin contacting me to arrange this consultation. This request is not an emergency medical service.</span>
+          </label>
+          <div class="psr-field psr-field--full">
+            <button class="psr-button" type="submit">{{ section.settings.button_label }}</button>
+            <span class="psr-form__note">{{ section.settings.privacy_note }}</span>
+          </div>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Consultation booking",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "How it works" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A clearer next step" },
+    { "type": "textarea", "id": "text", "label": "Description", "default": "A consultation is useful when concerns recur, your current routine is unclear, or product choices require qualified clinical context." },
+    { "type": "text", "id": "form_heading", "label": "Form heading", "default": "Tell us what your skin is experiencing" },
+    { "type": "textarea", "id": "form_text", "label": "Form description", "default": "Share enough context for our team to match the right dermatologist and confirm availability." },
+    { "type": "text", "id": "button_label", "label": "Submit button label", "default": "Request consultation" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thank you. Our consultation team will contact you to confirm the next available appointment." },
+    { "type": "textarea", "id": "privacy_note", "label": "Privacy note", "default": "Your information is used only to coordinate the consultation and provide the service you request." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Process step",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Share your context" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Tell us the concern, your current routine and relevant history." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Consultation booking", "blocks": [{ "type": "step" }, { "type": "step" }, { "type": "step" }] }]
+}
+{% endschema %}

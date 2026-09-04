@@ -1,0 +1,69 @@
+{% comment %}
+  Seasonal education modules — monsoon | festive | winter
+  Literacy first; commerce secondary. Not sale banners.
+{% endcomment %}
+{% liquid
+  assign season_key = season_key | default: 'monsoon' | strip | downcase
+  if season_key == 'festival' or season_key == 'festive-season' or season_key == 'diwali'
+    assign season_key = 'festive'
+  elsif season_key == 'cold' or season_key == 'dry-winter'
+    assign season_key = 'winter'
+  elsif season_key == 'rain' or season_key == 'humidity'
+    assign season_key = 'monsoon'
+  endif
+
+  case season_key
+    when 'festive'
+      assign season_eyebrow = 'Calendar · Festive season'
+      assign season_title = 'Celebration skin still needs biology.'
+      assign season_lede = 'Long evenings, heavier makeup, later nights, and more UV exposure outdoors do not pause oil dysregulation or pigmentation. Festive care is photoprotection and barrier discipline — not a glitter sale.'
+      assign diagnosis_heading = 'What changes this season'
+      assign diagnosis_text = 'Makeup load, picking risk, irregular sleep, and outdoor events stack inflammation and barrier stress. Post-event breakouts and PIH are biology meeting calendar — not a failure of willpower.'
+      assign causes_heading = 'Why Indian festive skin reacts'
+      assign causes_blob = 'Makeup + occlusion|Long wear traps sebum and sweat against acne-prone skin.###UV still counts|Daytime functions and travel keep melanocytes active.###Sleep and stress|Later nights raise inflammation signals that show up as congestion.###Skip-SPF habits|“Indoor event” days still include UVA through glass and outdoor transfers.'
+      assign mechanism_heading = 'How we approach festive care'
+      assign mechanism_text = 'Keep the sequence. Cleanse without strip after makeup. Treat oil pathways you already know. Moisturise so barrier holds. Protect every daytime hour — festive lighting does not replace filters.'
+      assign links_heading = 'Read before you add a product'
+      assign links_blob = 'Daily SPF|/pages/daily-spf|Photoprotection is structural, not seasonal.###Acne literacy|/pages/acne|Congestion after events is a biology signal.###Pigmentation|/pages/pigmentation|PIH after inflammation needs UV control first.###Niacinamide at 5%|/pages/ingredients#ingredient-niacinamide|Oil balance for makeup-prone weeks.'
+      assign products_heading = 'Formulas that fit the calendar'
+      assign products_text = 'Support the routine you already run — do not replace literacy with a limited-time kit claim.'
+      assign product_handles = 'protecting-sunscreen-acne-prone-skin,refreshing-cleanser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,calming-moisturiser-acne-prone-skin'
+
+    when 'winter'
+      assign season_eyebrow = 'Calendar · Dry winter'
+      assign season_title = 'Winter dryness is often a barrier story.'
+      assign season_lede = 'Hard water, heaters, and cold winds raise TEWL. Acne-prone skin still needs clarification — but stripping cleansers in winter turn congestion care into a longer barrier problem.'
+      assign diagnosis_heading = 'What you are feeling'
+      assign diagnosis_text = 'Tightness after cleansing, sting from products that used to be fine, cream that “doesn’t absorb,” and rebound oiliness are classic signs the lipid layer is under stress — not that you need a richer miracle cream alone.'
+      assign causes_heading = 'Why Indian winters hit hard'
+      assign causes_blob = 'TEWL spikes|Cold, dry air pulls moisture through a compromised barrier.###Hard water|Higher pH and mineral load strip lipids during cleanse.###Over-acid habits|Summer acid routines continued unchanged into winter.###Indoor heat|Heaters and AC dry the air while skin still faces pollution outdoors.'
+      assign mechanism_heading = 'How we approach winter care'
+      assign mechanism_text = 'Replenish ceramides and phospholipids first. Soften cleanse frequency if skin feels tight. Keep treat steps, but seal them. Do not drop SPF — winter UV and pigmentation loops continue.'
+      assign links_heading = 'Read before you add a product'
+      assign links_blob = 'Barrier literacy|/pages/barrier|When cream fails, start with the lipid layer.###Ceramides|/pages/ingredients#ingredient-ceramide-complex|Skin-identical lipids that earn their place.###Cleanser acids|/pages/ingredients#ingredient-salicylic-acid|Functional BHA without abandoning comfort.###Daily SPF|/pages/daily-spf|Winter sun still drives melanin memory.'
+      assign products_heading = 'Formulas for cold, dry weeks'
+      assign products_text = 'Barrier-first moisturiser under SPF — clarity without strip.'
+      assign product_handles = 'calming-moisturiser-acne-prone-skin,refreshing-cleanser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,protecting-sunscreen-acne-prone-skin'
+
+    else
+      assign season_key = 'monsoon'
+      assign season_eyebrow = 'Calendar · Monsoon'
+      assign season_title = 'Humidity does not cancel acne biology.'
+      assign season_lede = 'Monsoon heat traps sebum, sweat, and pollution against skin. Barrier stress rises even when the air feels “moist.” Congestion care still needs oil-soluble pathways — and SPF on cloudy days.'
+      assign diagnosis_heading = 'What monsoon does to skin'
+      assign diagnosis_text = 'Higher humidity plus heat amplifies sebum. Sweat and PM2.5 sit on the surface longer. Many people strip harder to feel clean — and rebound oiliness follows. Cloudy skies still transmit UVA.'
+      assign causes_heading = 'Why this season misfires routines'
+      assign causes_blob = 'Sebum + sweat|Pores clog faster when oil mixes with humidity.###Pollution load|Oxidative stress hits an already busy barrier.###Harsh cleanse rebound|Stripping surfactants raise oil output the next day.###Skipped SPF|“It’s raining” still means UVA and pigmentation risk.'
+      assign mechanism_heading = 'How we approach monsoon care'
+      assign mechanism_text = 'Cleanse with functional BHA/AHA without strip. Regulate oil with encapsulated Niacinamide and dual sebum pathways. Moisturise lightly so barrier holds. Protect daily — monsoon is not a UV holiday.'
+      assign links_heading = 'Read before you add a product'
+      assign links_blob = 'Acne literacy|/pages/acne|Congestion is biology, not a cleanliness failure.###Salicylic Acid 2%|/pages/ingredients#ingredient-salicylic-acid|Oil-soluble work inside the pore.###Niacinamide 5%|/pages/ingredients#ingredient-niacinamide|Oil balance without abandoning comfort.###Daily SPF|/pages/daily-spf|Cloudy days still count.'
+      assign products_heading = 'Formulas for humid weeks'
+      assign products_text = 'Clear, regulate, seal, protect — the same architecture, monsoon-aware.'
+      assign product_handles = 'refreshing-cleanser-acne-prone-skin,5-niacinamide-serum-acne-prone-skin,calming-moisturiser-acne-prone-skin,protecting-sunscreen-acne-prone-skin'
+  endcase
+
+  assign causes_rows = causes_blob | split: '###'
+  assign links_rows = links_blob | split: '###'
+  assign product_handle_list = product_handles | split: ','
+%}

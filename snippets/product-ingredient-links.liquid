@@ -1,0 +1,90 @@
+{% comment %}
+  Deep links from a product PDP to ingredient library anchors.
+  Lead link uses “Read: Active at %” literacy framing.
+{% endcomment %}
+{% case product.handle %}
+  {% when '5-niacinamide-serum-acne-prone-skin' %}
+    <nav class="pdp-actives__learn" aria-label="Learn the actives">
+      <a href="/pages/ingredients#ingredient-niacinamide">Read: Niacinamide at 5%</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-sepicontrol">SEPICONCONTROL™</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-pdrn">PDRN</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/acne">Acne literacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients">Full library</a>
+    </nav>
+  {% when 'refreshing-cleanser-acne-prone-skin' %}
+    <nav class="pdp-actives__learn" aria-label="Learn the actives">
+      <a href="/pages/ingredients#ingredient-salicylic-acid">Read: Salicylic Acid at 2%</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-glycolic-acid">Glycolic Acid at 1%</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-phospholipids">Barrier lipids</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/acne">Acne literacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients">Full library</a>
+    </nav>
+  {% when 'calming-moisturiser-acne-prone-skin' %}
+    <nav class="pdp-actives__learn" aria-label="Learn the actives">
+      <a href="/pages/ingredients#ingredient-ceramide-complex">Read: Ceramides</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-c15-19-alkane">C15-19 Alkane</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-botanical-six">Botanical complex</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/barrier">Barrier literacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients">Full library</a>
+    </nav>
+  {% when 'protecting-sunscreen-acne-prone-skin' %}
+    <nav class="pdp-actives__learn" aria-label="Learn the actives">
+      <a href="/pages/ingredients#ingredient-tinosorb-s">Read: Tinosorb S</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-zinc-pca">Zinc PCA</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-niacinamide">Niacinamide</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/daily-spf">Daily SPF literacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients">Full library</a>
+    </nav>
+  {% when 'active-boba-encapsulated-cream-acne-prone-skin' %}
+    <nav class="pdp-actives__learn" aria-label="Learn the actives">
+      <a href="/pages/ingredients#ingredient-niacinamide">Read: Niacinamide</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-salicylic-acid">Salicylic Acid</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-ceramide-complex">Ceramides</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/acne">Acne literacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients">Full library</a>
+    </nav>
+  {% when 'clear-seal' %}
+    <nav class="pdp-actives__learn" aria-label="Learn the actives">
+      <a href="/pages/ingredients#ingredient-salicylic-acid">Read: Salicylic Acid</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-glycolic-acid">Glycolic Acid</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients#ingredient-niacinamide">Niacinamide</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/acne">Acne literacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/ingredients">Full library</a>
+    </nav>
+  {% when 'project-skin-complete-4-step-skincare-routine-kit' %}
+    <nav class="pdp-actives__learn" aria-label="Learn the actives">
+      <a href="/pages/ingredients">Browse ingredient library</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/acne">Acne literacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="/pages/the-science">The science</a>
+    </nav>
+  {% else %}
+    <p class="pdp-actives__learn">
+      <a href="/pages/ingredients">Explore the ingredient library</a>
+    </p>
+{% endcase %}

@@ -1,0 +1,13 @@
+{% liquid
+  assign heading_level = level | default: 'h2'
+  assign heading_alignment = alignment | default: 'center'
+%}
+<div class="ps-heading ps-heading--{{ heading_alignment }}">
+  {% if eyebrow != blank %}<span class="ps-eyebrow">{{ eyebrow }}</span>{% endif %}
+  {% if title != blank %}
+    <{{ heading_level }} class="ps-title{% if underline %} ps-title--underline ps-title--{{ underline_style | default: 'curve' }}{% endif %}">
+      {{ title }}
+    </{{ heading_level }}>
+  {% endif %}
+  {% if copy != blank %}<div class="ps-heading__copy rte">{{ copy }}</div>{% endif %}
+</div>

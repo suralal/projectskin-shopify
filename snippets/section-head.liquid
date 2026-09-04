@@ -1,0 +1,9 @@
+<div class="section-head section-head--{{ alignment | default: 'left' }}">
+  <div class="section-head__copy">
+    {% if subheading != blank %}<div class="eyebrow">{{ subheading }}</div>{% endif %}
+    {% if heading != blank %}
+      <h2 class="{% if underline %}animated-underline animated-underline--{{ underline_style | default: 'simple' }}{% endif %}"{% if underline %} style="--underline-color:{{ underline_color | default: 'currentColor' }}"{% endif %}>{{ heading }}</h2>
+    {% endif %}
+    {% if description != blank %}<div class="rte section-head__description">{{ description }}</div>{% endif %}
+  </div>
+</div>

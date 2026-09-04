@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "routine": {
+      "type": "ps-routine-tracker",
+      "settings": {
+        "eyebrow": "Your routine",
+        "heading": "Built for your city. Tracked by you.",
+        "lede": "Four steps, one sequence. Pick your city, name your main concern, get a climate-aware plan — then check in daily. No perfection required; consistency is the point."
+      }
+    }
+  },
+  "order": ["routine"]
+}

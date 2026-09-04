@@ -1,0 +1,68 @@
+<section class="ps-section ps-shades" style="--ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px">
+  <div class="ps-wrap">
+    {% render 'purity-section-heading', eyebrow: section.settings.eyebrow, title: section.settings.heading, copy: section.settings.description, alignment: 'center' %}
+    <purity-tabs>
+      <div class="ps-shades__faces" role="tablist" aria-label="Choose your shade">
+        {% for block in section.blocks %}
+          {% liquid
+            assign fallback_asset = 'shade-1.jpg'
+            case forloop.index
+              when 2
+                assign fallback_asset = 'shade-2.jpg'
+              when 3
+                assign fallback_asset = 'shade-3.jpg'
+              when 4
+                assign fallback_asset = 'shade-4.jpg'
+            endcase
+          %}
+          <button class="ps-shade-face ps-tab{% if forloop.first %} is-active{% endif %}" id="ShadeTab-{{ section.id }}-{{ forloop.index }}" type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="ShadePanel-{{ section.id }}-{{ forloop.index }}" title="{{ block.settings.title }}" {{ block.shopify_attributes }}>
+            {% render 'purity-image', image: block.settings.image, fallback_asset: fallback_asset, fallback_width: 220, fallback_height: 130, alt: block.settings.title %}
+          </button>
+        {% endfor %}
+      </div>
+      {% for block in section.blocks %}
+        <div id="ShadePanel-{{ section.id }}-{{ forloop.index }}" role="tabpanel" aria-labelledby="ShadeTab-{{ section.id }}-{{ forloop.index }}" {% unless forloop.first %}hidden{% endunless %}>
+          <div class="ps-shades__grid">
+            {% if block.settings.collection != blank and block.settings.collection.products_count > 0 %}
+              {% for product in block.settings.collection.products limit: 4 %}{% render 'product-card', product: product %}{% endfor %}
+            {% else %}
+              {% render 'purity-static-product', fallback_asset: 'product-lipstick.jpg', title: 'Glossy Lipstick', vendor: 'Femme Aura', price: '$75.00', badge: 'Hot' %}
+              {% render 'purity-static-product', fallback_asset: 'product-patch.jpg', title: 'Soft Glow Blush', vendor: 'Skin Story', price: '$65.00', badge: 'New' %}
+              {% render 'purity-static-product', fallback_asset: 'product-serum.jpg', title: 'Barrier Serum', vendor: 'Gently', price: '$96.00', badge: 'New' %}
+              {% render 'purity-static-product', fallback_asset: 'product-shield.jpg', title: 'Hydra Tint Shield', vendor: 'Purity Theme', price: '$140.00', badge: 'New' %}
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </purity-tabs>
+    <div class="ps-shades__recommend">
+      <span class="ps-eyebrow">{{ section.settings.recommend_eyebrow }}</span>
+      <p>{{ section.settings.recommend_text }}</p>
+      <a class="ps-button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label }}</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shade finder",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by shade" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Choose Your Shade" },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "text", "id": "recommend_eyebrow", "label": "Recommendation eyebrow", "default": "Not sure?" },
+    { "type": "textarea", "id": "recommend_text", "label": "Recommendation text", "default": "Tell us about your skin and we'll recommend a routine made for you." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Start My Quiz" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 92 }
+  ],
+  "blocks": [
+    { "type": "shade", "name": "Shade", "settings": [{ "type": "text", "id": "title", "label": "Title", "default": "Light" }, { "type": "image_picker", "id": "image", "label": "Face image" }, { "type": "collection", "id": "collection", "label": "Product collection" }] }
+  ],
+  "max_blocks": 8,
+  "presets": [{ "name": "Shade finder", "blocks": [{ "type": "shade" }, { "type": "shade" }, { "type": "shade" }, { "type": "shade" }] }]
+}
+{% endschema %}

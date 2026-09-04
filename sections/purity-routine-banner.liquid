@@ -1,0 +1,32 @@
+<section class="ps-section ps-routine-banner" style="--ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px">
+  <a class="ps-wrap ps-routine-banner__layout" href="{{ section.settings.link | default: routes.all_products_collection_url }}">
+    <div class="ps-routine-banner__copy">
+      <span class="ps-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="ps-title">{{ section.settings.heading }}</h2>
+      {% if section.settings.text != blank %}<div class="rte">{{ section.settings.text }}</div>{% endif %}
+      <span class="ps-button">{{ section.settings.button_label }}</span>
+    </div>
+    <div class="ps-routine-banner__media">
+      {% render 'purity-image', image: section.settings.image, fallback_asset: 'bundle-desktop.jpg', fallback_width: 1600, fallback_height: 900, alt: section.settings.heading, sizes: '(min-width: 800px) 60vw, 100vw' %}
+    </div>
+  </a>
+</section>
+
+{% schema %}
+{
+  "name": "Routine banner",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Build a ritual" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Find Your Routine" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Simple steps. Thoughtful formulas. Your everyday glow.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 }
+  ],
+  "presets": [{ "name": "Routine banner" }]
+}
+{% endschema %}

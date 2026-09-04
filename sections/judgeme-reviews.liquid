@@ -1,0 +1,89 @@
+<section
+  class="pdp-section pdp-reviews-judgeme page-width-pdp"
+  id="PdpReviews"
+  style="--pdp-pad-top: {{ section.settings.padding_top }}px; --pdp-pad-bottom: {{ section.settings.padding_bottom }}px"
+>
+  {% if section.settings.heading != blank %}
+    <header class="pdp-section-head">
+      {% if section.settings.eyebrow != blank %}<p class="pdp-eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+      <h2>{{ section.settings.heading }}</h2>
+      {% if section.settings.intro != blank %}
+        <p class="pdp-reviews-judgeme__intro">{{ section.settings.intro }}</p>
+      {% endif %}
+    </header>
+  {% endif %}
+
+  {% liquid
+    assign review_count = 0
+    if product.metafields.judgeme.widget contains 'data-number-of-reviews="'
+      assign review_count_chunk = product.metafields.judgeme.widget | split: 'data-number-of-reviews="' | last | split: '"' | first
+      assign review_count = review_count_chunk | plus: 0
+    endif
+    if shop.metafields.judgeme.shop_reviews_count != blank
+      assign shop_review_count = shop.metafields.judgeme.shop_reviews_count | plus: 0
+    else
+      assign shop_review_count = 0
+    endif
+    assign show_fallback = false
+    if section.settings.show_fallback_when_empty and review_count == 0
+      assign show_fallback = true
+    endif
+  %}
+
+  {% if show_fallback %}
+    {% render 'product-reviews-fallback', product: product %}
+  {% endif %}
+
+  <!-- Start of Judge.me code -->
+  {% assign has_legacy = false %}
+  {% if product.metafields.judgeme.widget.size > 20 %}
+    {% assign has_legacy = true %}
+  {% endif %}
+  <div style="clear:both"></div>
+  {% if show_fallback %}
+    <div class="pdp-reviews-judgeme__verified">
+      <p>Verified reviews live in Judge.me. Leave the first published review — it replaces early notes automatically.</p>
+    </div>
+  {% endif %}
+  <div
+    id="judgeme_product_reviews"
+    class="jdgm-widget jdgm-review-widget{% if show_fallback %} jdgm-widget--with-fallback{% endif %}"
+    data-product-title="{{ product.title | escape }}"
+    data-id="{{ product.id }}"
+    data-product-id="{{ product.id }}"
+    data-widget="review"
+    data-auto-install="false"
+    data-shop-reviews-count="{{ shop_review_count | escape }}"
+    data-entry-point="review_widget.js"
+    data-entry-key="review-widget/main.js"
+  >
+    {% if has_legacy %}
+      <div class="jdgm-legacy-widget-content" style="display: none;">{{ product.metafields.judgeme.widget }}</div>
+    {% endif %}
+  </div>
+  {% if product.metafields.judgeme.review_widget_data %}
+    <script>
+      jdgm = window.jdgm || {};
+      jdgm.data = jdgm.data || {};
+      jdgm.data.reviewWidget = jdgm.data.reviewWidget || {};
+      jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }};
+    </script>
+  {% endif %}
+  <!-- End of Judge.me code -->
+</section>
+
+{% schema %}
+{
+  "name": "Judge.me reviews",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer reviews" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What customers say" },
+    { "type": "text", "id": "intro", "label": "Intro", "default": "Texture, climate, and consistency — from people building the same routine." },
+    { "type": "checkbox", "id": "show_fallback_when_empty", "label": "Show curated feedback when Judge.me has 0 reviews", "default": true },
+    { "type": "paragraph", "content": "Requires the Judge.me app for verified reviews and write-a-review. Fallback cards appear only while the product has zero published reviews." },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 68 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 }
+  ],
+  "presets": [{ "name": "Judge.me reviews" }]
+}
+{% endschema %}

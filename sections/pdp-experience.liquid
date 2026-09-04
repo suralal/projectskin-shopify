@@ -1,0 +1,92 @@
+{% liquid
+  assign show_section = true
+  assign handle_list = section.settings.product_handles | strip | downcase
+  if handle_list != blank
+    assign show_section = false
+    if handle_list contains product.handle
+      assign show_section = true
+    endif
+  endif
+
+  capture catalog_experience
+    render 'product-experience-catalog', product: product
+  endcapture
+  assign catalog_experience = catalog_experience | strip
+  assign use_catalog = false
+  if section.settings.use_formula_catalog and catalog_experience != blank
+    assign use_catalog = true
+  endif
+  if catalog_experience == blank and section.blocks.size == 0
+    assign show_section = false
+  endif
+%}
+{% if show_section %}
+<section
+  class="pdp-section pdp-experience"
+  style="--pdp-pad-top: {{ section.settings.padding_top }}px; --pdp-pad-bottom: {{ section.settings.padding_bottom }}px"
+>
+  <div class="page-width-pdp">
+    <header class="pdp-section-head pdp-section-head--center">
+      {% if section.settings.eyebrow != blank %}
+        <p class="pdp-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+    </header>
+    <div class="pdp-experience__grid">
+      {% if use_catalog %}
+        {{ catalog_experience }}
+      {% else %}
+        {% for block in section.blocks %}
+          <article class="pdp-experience__card" {{ block.shopify_attributes }}>
+            {% if block.settings.kicker != blank %}
+              <p class="pdp-experience__kicker">{{ block.settings.kicker }}</p>
+            {% endif %}
+            <h3>{{ block.settings.title }}</h3>
+            {% if block.settings.text != blank %}
+              <p>{{ block.settings.text }}</p>
+            {% endif %}
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "PDP experience",
+  "settings": [
+    { "type": "text", "id": "product_handles", "label": "Only show for product handles", "info": "Comma-separated handles. Leave blank to show on all products." },
+    { "type": "checkbox", "id": "use_formula_catalog", "label": "Use built-in formula catalog", "default": true, "info": "Pulls product-specific FOR / FEEL / FINISH copy from the Project Skin formula drafts." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The experience" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "How it feels on skin" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Experience item",
+      "settings": [
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "FOR" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Oily and acne-prone skin" },
+        { "type": "textarea", "id": "text", "label": "Supporting text", "default": "Formulated for Indian climate and congestion-prone routines." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "PDP experience",
+      "blocks": [
+        { "type": "item", "settings": { "kicker": "FOR", "title": "Oily and acne-prone skin", "text": "Built for congestion, excess oil, and everyday Indian climate." } },
+        { "type": "item", "settings": { "kicker": "FEEL", "title": "Lightweight water-serum", "text": "Fast-absorbing texture that layers cleanly under moisturiser and SPF." } },
+        { "type": "item", "settings": { "kicker": "FINISH", "title": "Fragrance-free", "text": "No added fragrance — focused on actives, comfort, and clarity." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+{% comment %}
+  Sitewide ingredient library entries.
+  Renders detailed education cards: % + mechanism + products.
+  Optional: filter_slug to render a single entry.
+{% endcomment %}
+{% liquid
+  assign filter_slug = filter_slug | default: blank | strip | downcase
+  assign catalog = 'niacinamide|Niacinamide|5% (encapsulated in serum)|Vitamin B3 derivative|Oil balance, pores, uneven tone|Supports oil balance and a clearer-looking texture when delivered in a stabilised matrix — not just listed on a label.|5-niacinamide-serum-acne-prone-skin|active-boba-encapsulated-cream-acne-prone-skin|clear-seal|protecting-sunscreen-acne-prone-skin|oil|sage###salicylic-acid|Salicylic Acid|2% in cleanser|Oil-soluble BHA|Congestion, breakouts, pores|An oil-soluble exfoliant that works inside the pore. At functional rinse-off levels it clears buildup without turning cleanse into a strip.|refreshing-cleanser-acne-prone-skin|active-boba-encapsulated-cream-acne-prone-skin|clear-seal||pores|clay###glycolic-acid|Glycolic Acid|1% in cleanser|Water-soluble AHA|Surface renewal, texture|Pairs with BHA so water-soluble and oil-soluble pathways work together in one step — meaningful acid work, not a token mention.|refreshing-cleanser-acne-prone-skin|clear-seal|||sparkle|rose###zinc-pca|Zinc PCA|0.5% in sunscreen|Sebum-control mineral salt|Oiliness, wearability|Helps regulate sebum so formulas stay wearable in Indian heat and humidity — especially critical in daily SPF.|protecting-sunscreen-acne-prone-skin|5-niacinamide-serum-acne-prone-skin|active-boba-encapsulated-cream-acne-prone-skin||oil|blue###ceramide-complex|Ceramide Complex|Barrier lipid system|Skin-identical lipids|Barrier repair, comfort|Replenishes the lipid matrix acne-prone skin often compromises — so treatment does not abandon the barrier.|calming-moisturiser-acne-prone-skin|active-boba-encapsulated-cream-acne-prone-skin|refreshing-cleanser-acne-prone-skin||shield|cream###pdrn|PDRN|Recovery support active|Polydeoxyribonucleotide|Recovery, smoother finish|Included as a DNA-repair–oriented recovery signal for skin that needs clarity and resilience together.|5-niacinamide-serum-acne-prone-skin||||sparkle|rose###sepicontrol|SEPICONCONTROL™ A5|Dual sebum pathway|Acne-focused complex|Sebum, congestion|Works with Zinc PCA on a second sebum-regulation pathway — a dual system most single-active Niacinamide serums skip.|5-niacinamide-serum-acne-prone-skin||||pores|clay###saccharide-isomerate|Saccharide Isomerate|Next-gen humectant|Sugar-based hydration|Lasting moisture|Helps skin hold water through the treat and moisturise steps so actives stay comfortable on oily, acne-prone skin.|5-niacinamide-serum-acne-prone-skin|calming-moisturiser-acne-prone-skin|||droplet|blue###tinosorb-s|Tinosorb S|Four-filter hybrid|Next-gen organic UV filter|UVA defence|A modern European filter chosen for true UVA coverage and photostability — part of broader coverage than two-filter SPFs.|protecting-sunscreen-acne-prone-skin||||sun|cream###c15-19-alkane|C15-19 Alkane|Plant-derived emollient base|Sustainable hydrocarbon emollient|Cushion without grease|Used in European prestige moisturisers — delivers slip and comfort that still sits under SPF without pilling.|calming-moisturiser-acne-prone-skin||||droplet|sage###botanical-six|Six-botanical complex|Evidence-led botanical blend|Amla, Licorice, Tulsi, Black Seed, Neem, Phytic Acid|Brightening, antioxidant, anti-acne support|Botanicals with a clear role — brightening, antioxidant defence, and anti-acne activity in one pre-formulated complex.|calming-moisturiser-acne-prone-skin||||leaf|green###phospholipids|Phospholipids + Sphingolipids|Barrier-replenishing lipids|Lipid matrix support|Repair while cleansing / moisturising|Help replenish barrier lipids during cleanse and moisturise so clarity does not come at the cost of tightness.|refreshing-cleanser-acne-prone-skin|calming-moisturiser-acne-prone-skin|||shield|cream'
+  assign rows = catalog | split: '###'
+%}
+
+{% for line in rows %}
+  {% assign parts = line | split: '|' %}
+  {% assign slug = parts[0] | strip %}
+  {% if filter_slug == blank or filter_slug == slug %}
+    {% liquid
+      assign name = parts[1] | strip
+      assign strength = parts[2] | strip
+      assign family = parts[3] | strip
+      assign concerns = parts[4] | strip
+      assign mechanism = parts[5] | strip
+      assign p1 = parts[6] | strip
+      assign p2 = parts[7] | strip
+      assign p3 = parts[8] | strip
+      assign p4 = parts[9] | strip
+      assign tone = parts[11] | strip | default: 'sage'
+    %}
+    <article class="psr-ing-card psr-ing-card--{{ tone }}" id="ingredient-{{ slug }}" data-ingredient-slug="{{ slug }}">
+      <header class="psr-ing-card__head">
+        <p class="psr-ing-card__role">{{ family }}</p>
+        <h3>{{ name }}</h3>
+        {% if strength != blank %}
+          <p class="psr-ing-card__strength">{{ strength }}</p>
+        {% endif %}
+      </header>
+      <div class="psr-ing-card__body">
+        <div>
+          <span class="psr-ing-card__label">Mechanism</span>
+          <p>{{ mechanism }}</p>
+        </div>
+        <div>
+          <span class="psr-ing-card__label">Concerns</span>
+          <p>{{ concerns }}</p>
+        </div>
+      </div>
+      <footer class="psr-ing-card__products">
+        <span class="psr-ing-card__label">In Project Skin formulas</span>
+        <div class="psr-ing-card__links">
+          {% if p1 != blank %}
+            {% assign prod = all_products[p1] %}
+            {% if prod != blank and prod.url != blank %}
+              <a href="{{ prod.url }}">{{ prod.title | split: ' - ' | first | split: ' – ' | first }}</a>
+            {% else %}
+              <a href="/products/{{ p1 }}">{{ p1 | replace: '-', ' ' }}</a>
+            {% endif %}
+          {% endif %}
+          {% if p2 != blank %}
+            {% assign prod = all_products[p2] %}
+            {% if prod != blank and prod.url != blank %}
+              <a href="{{ prod.url }}">{{ prod.title | split: ' - ' | first | split: ' – ' | first }}</a>
+            {% else %}
+              <a href="/products/{{ p2 }}">{{ p2 | replace: '-', ' ' }}</a>
+            {% endif %}
+          {% endif %}
+          {% if p3 != blank %}
+            {% assign prod = all_products[p3] %}
+            {% if prod != blank and prod.url != blank %}
+              <a href="{{ prod.url }}">{{ prod.title | split: ' - ' | first | split: ' – ' | first }}</a>
+            {% else %}
+              <a href="/products/{{ p3 }}">{{ p3 | replace: '-', ' ' }}</a>
+            {% endif %}
+          {% endif %}
+          {% if p4 != blank %}
+            {% assign prod = all_products[p4] %}
+            {% if prod != blank and prod.url != blank %}
+              <a href="{{ prod.url }}">{{ prod.title | split: ' - ' | first | split: ' – ' | first }}</a>
+            {% else %}
+              <a href="/products/{{ p4 }}">{{ p4 | replace: '-', ' ' }}</a>
+            {% endif %}
+          {% endif %}
+        </div>
+      </footer>
+    </article>
+  {% endif %}
+{% endfor %}

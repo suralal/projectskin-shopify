@@ -1,0 +1,41 @@
+<section class="psr-page psr-consult-hero">
+  <div class="container">
+    <div class="psr-consult-hero__frame">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '800,1200,1800,2400', sizes: '100vw', alt: section.settings.image_alt }}
+      {% else %}
+        <img src="{{ 'project-skin-consultation-hero.jpg' | asset_url }}" width="2200" height="1238" loading="eager" fetchpriority="high" alt="Indian dermatologist conducting an online skincare consultation">
+      {% endif %}
+      <div class="psr-consult-hero__content">
+        <span class="psr-kicker">{{ section.settings.eyebrow }}</span>
+        <h1>{{ section.settings.heading | newline_to_br }}</h1>
+        <p>{{ section.settings.text }}</p>
+        <div class="psr-consult-meta" aria-label="Consultation details">
+          <span>{{ section.settings.duration }}</span>
+          <span>{{ section.settings.format }}</span>
+          <span>{{ section.settings.follow_up }}</span>
+        </div>
+        <a class="psr-button" href="{{ section.settings.button_link | default: '#book-consultation' }}">{{ section.settings.button_label }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Consultation hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Dermatologist consultation" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Clinical guidance.\nPersonal context." },
+    { "type": "textarea", "id": "text", "label": "Description", "default": "Talk through recurring concerns, existing products and routine history with a qualified dermatologist, then leave with a clear plan." },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "image_alt", "label": "Image alternative text", "default": "Dermatologist consultation" },
+    { "type": "text", "id": "duration", "label": "Duration label", "default": "30 minute consultation" },
+    { "type": "text", "id": "format", "label": "Format label", "default": "Secure video call" },
+    { "type": "text", "id": "follow_up", "label": "Follow-up label", "default": "Written routine summary" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Request an appointment" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Consultation hero" }]
+}
+{% endschema %}

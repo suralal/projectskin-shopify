@@ -1,0 +1,21 @@
+<section class="section {% if section.settings.section_width == 'full' %}full{% endif %}" style="padding-top:{{ section.settings.padding_top }}px;padding-bottom:{{ section.settings.padding_bottom }}px;{% if section.settings.show_divider %}border-top:1px solid var(--line);{% endif %}">
+  <div class="{% unless section.settings.section_width == 'full' %}container{% endunless %}">
+    {% render 'section-head', subheading: section.settings.subheading, heading: section.settings.heading, description: section.settings.description, alignment: section.settings.alignment, underline: section.settings.heading_underline, underline_style: section.settings.underline_style, underline_color: section.settings.underline_color %}
+    <div class="bundle-builder" data-bundle data-min="{{ section.settings.minimum_items }}" data-max="{{ section.settings.maximum_items }}" data-discount="{{ section.settings.discount_code | escape }}">
+      <div class="bundle-builder__grid">
+        {% for block in section.blocks %}{% assign p = block.settings.product %}{% if p %}
+          <label class="bundle-item" {{ block.shopify_attributes }}>
+            <input type="checkbox" data-bundle-item value="{{ p.selected_or_first_available_variant.id }}" {% unless p.available %}disabled{% endunless %}>
+            <span class="bundle-item__check">✓</span>
+            <span class="bundle-item__media">{% if p.featured_image %}{{ p.featured_image | image_url: width:700 | image_tag: loading:'lazy' }}{% endif %}</span>
+            <span class="bundle-item__copy"><strong>{{ p.title }}</strong><span>{{ p.price | money }}</span>{% unless p.available %}<small>Sold out</small>{% endunless %}</span>
+          </label>
+        {% endif %}{% endfor %}
+      </div>
+      <div class="bundle-bar"><div><strong data-bundle-count>0 selected</strong><div class="muted">Choose {{ section.settings.minimum_items }}–{{ section.settings.maximum_items }} items{% if section.settings.discount_value > 0 %} · Save {{ section.settings.discount_value }}%{% endif %}</div></div><button class="btn" type="button" data-bundle-add disabled>{{ section.settings.button_label }}</button></div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{"name":"Product bundle","tag":"section","class":"section-wrapper","settings":[{"type":"select","id":"section_width","label":"Section width","default":"fixed","options":[{"value":"fixed","label":"Fixed width"},{"value":"stretch","label":"Stretch width"},{"value":"full","label":"Full width"}]},{"type":"text","id":"subheading","label":"Subheading"},{"type":"text","id":"heading","label":"Heading"},{"type":"checkbox","id":"heading_underline","label":"Enable heading underline animation","default":true},{"type":"select","id":"underline_style","label":"Underline style","default":"curve","options":[{"value":"simple","label":"Simple"},{"value":"curve","label":"Curve stroke"},{"value":"squiggle","label":"Squiggle"}]},{"type":"color","id":"underline_color","label":"Underline color","default":"#171714"},{"type":"richtext","id":"description","label":"Description"},{"type":"select","id":"alignment","label":"Alignment","default":"left","options":[{"value":"left","label":"Left"},{"value":"center","label":"Center"},{"value":"right","label":"Right"}]},{"type":"text","id":"discount_code","label":"Discount code"},{"type":"range","id":"discount_value","label":"Discount value","min":0,"max":50,"step":1,"default":10,"unit":"%"},{"type":"range","id":"minimum_items","label":"Minimum items to require","min":1,"max":6,"step":1,"default":2},{"type":"range","id":"maximum_items","label":"Maximum items","min":2,"max":12,"step":1,"default":4},{"type":"text","id":"button_label","label":"Button label","default":"Add bundle to cart"},{"type":"range","id":"padding_top","label":"Top padding","min":0,"max":120,"step":4,"default":64,"unit":"px"},{"type":"range","id":"padding_bottom","label":"Bottom padding","min":0,"max":120,"step":4,"default":64,"unit":"px"},{"type":"checkbox","id":"show_divider","label":"Show divider","default":false}],"blocks":[{"type":"product","name":"Product","settings":[{"type":"product","id":"product","label":"Product"}]}],"max_blocks":12,"presets":[{"name":"Product bundle"}]}
+{% endschema %}

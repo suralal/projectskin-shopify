@@ -1,0 +1,171 @@
+<section class="ps-section ps-hero" data-active-palette="neutral" style="--ps-hero-height: {{ section.settings.desktop_height }}px">
+  <purity-slider class="ps-hero-slider" data-autoplay="{{ section.settings.autoplay }}" data-interval="{{ section.settings.interval | times: 1000 }}" data-adaptive-palette="{{ section.settings.adaptive_palette }}">
+    <div class="ps-hero__track" data-ps-track>
+      {% for block in section.blocks %}
+        {% liquid
+          case block.settings.fallback_banner
+            when 'banner_2'
+              assign fallback_asset = 'project-skin-hero-2.svg'
+            when 'banner_3'
+              assign fallback_asset = 'project-skin-hero-3.svg'
+            when 'banner_4'
+              assign fallback_asset = 'project-skin-hero-4.svg'
+            when 'banner_5'
+              assign fallback_asset = 'project-skin-hero-5.svg'
+            when 'banner_6'
+              assign fallback_asset = 'project-skin-hero-6.jpg'
+            when 'scan_track_adapt'
+              assign fallback_asset = 'project-skin-banner-3.jpg'
+            else
+              assign fallback_asset = 'project-skin-hero-1.svg'
+          endcase
+          assign image_loading = 'lazy'
+          assign image_priority = 'auto'
+          if forloop.first
+            assign image_loading = 'eager'
+            assign image_priority = 'high'
+          endif
+          assign hero_tone = block.settings.text_tone
+          assign hero_palette = block.settings.palette | default: 'auto'
+          if hero_palette == 'auto'
+            case block.settings.fallback_banner
+              when 'banner_1'
+                assign hero_palette = 'sunscreen'
+              when 'banner_2'
+                assign hero_palette = 'moisturiser'
+              when 'banner_3'
+                assign hero_palette = 'cleanser'
+              when 'banner_4'
+                assign hero_palette = 'serum'
+              when 'banner_5'
+                assign hero_palette = 'clean-seal'
+              when 'banner_6'
+                assign hero_palette = 'active-boba'
+              when 'scan_track_adapt'
+                assign hero_palette = 'scan'
+              else
+                assign hero_palette = 'neutral'
+            endcase
+          endif
+          assign image_alt = block.settings.image_alt | default: block.settings.heading
+
+          assign cta_label = block.settings.button_label | default: 'Shop now'
+          if cta_label == blank
+            assign cta_label = 'Shop now'
+          endif
+          assign hero_product = block.settings.product
+          assign cta_url = block.settings.link
+          if hero_product != blank
+            assign cta_url = hero_product.url
+          elsif cta_url == blank
+            case block.settings.fallback_banner
+              when 'banner_1'
+                assign hero_product = all_products['protecting-sunscreen-acne-prone-skin']
+              when 'banner_2'
+                assign hero_product = all_products['calming-moisturiser-acne-prone-skin']
+              when 'banner_3'
+                assign hero_product = all_products['refreshing-cleanser-acne-prone-skin']
+              when 'banner_4'
+                assign hero_product = all_products['5-niacinamide-serum-acne-prone-skin']
+              when 'banner_5'
+                assign hero_product = all_products['clear-seal']
+              when 'banner_6'
+                assign hero_product = all_products['active-boba-encapsulated-cream-acne-prone-skin']
+              when 'scan_track_adapt'
+                assign cta_url = routes.all_products_collection_url
+              else
+                assign cta_url = routes.all_products_collection_url
+            endcase
+            if hero_product != blank
+              assign cta_url = hero_product.url
+            endif
+          endif
+          if cta_url == blank
+            assign cta_url = routes.all_products_collection_url
+          endif
+          if section.settings.show_price and hero_product != blank
+            assign cta_price = hero_product.selected_or_first_available_variant.price | money
+            assign cta_label = cta_label | append: ' · ' | append: cta_price
+          endif
+
+          assign has_overlay = false
+          if block.settings.eyebrow != blank or block.settings.heading != blank or block.settings.text != blank
+            assign has_overlay = true
+          endif
+        %}
+        <article
+          class="ps-hero__slide ps-hero__slide--{{ hero_tone }}{% unless has_overlay %} ps-hero__slide--image-only{% endunless %}{% if block.settings.fallback_banner == 'scan_track_adapt' %} ps-hero__slide--scan{% if block.settings.image == blank %} ps-hero__slide--contain{% endif %}{% endif %}"
+          data-ps-slide
+          data-hero-tone="{{ hero_tone }}"
+          data-hero-palette="{{ hero_palette }}"
+          aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="ps-hero__media">
+            {% render 'purity-image', image: block.settings.image, fallback_asset: fallback_asset, fallback_width: 2880, fallback_height: 1620, alt: image_alt, loading: image_loading, fetchpriority: image_priority, sizes: '100vw' %}
+          </div>
+          {% if has_overlay %}
+            <div class="ps-hero__copy ps-hero__copy--{{ block.settings.position }}">
+              {% if block.settings.eyebrow != blank %}<span class="ps-eyebrow">{{ block.settings.eyebrow }}</span>{% endif %}
+              {% if block.settings.heading != blank %}
+                {% if forloop.first %}<h1>{{ block.settings.heading | newline_to_br }}</h1>{% else %}<h2>{{ block.settings.heading | newline_to_br }}</h2>{% endif %}
+              {% endif %}
+              {% if block.settings.text != blank %}<div class="rte">{{ block.settings.text }}</div>{% endif %}
+              <a class="ps-button{% unless hero_tone == 'dark' %} ps-button--light{% endunless %}" href="{{ cta_url }}">{{ cta_label }}</a>
+            </div>
+          {% else %}
+            {% if forloop.first %}<h1 class="visually-hidden">{{ image_alt | default: shop.name }}</h1>{% endif %}
+            <a class="ps-hero__shop-now ps-button" href="{{ cta_url }}">{{ cta_label }}</a>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+    {% if section.blocks.size > 1 %}
+      {% if section.settings.show_arrows %}
+        <button class="ps-hero__arrow ps-hero__arrow--prev" type="button" data-ps-prev aria-label="Previous slide">‹</button>
+        <button class="ps-hero__arrow ps-hero__arrow--next" type="button" data-ps-next aria-label="Next slide">›</button>
+      {% endif %}
+      <div class="ps-hero__controls">
+        {% for block in section.blocks %}<button class="ps-hero__dot{% if forloop.first %} is-active{% endif %}" type="button" data-ps-dot aria-label="Go to slide {{ forloop.index }}"></button>{% endfor %}
+      </div>
+    {% endif %}
+  </purity-slider>
+</section>
+
+{% schema %}
+{
+  "name": "Purity hero",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "range", "id": "desktop_height", "label": "Minimum desktop height", "min": 520, "max": 820, "step": 20, "unit": "px", "default": 720 },
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-change slides", "default": true },
+    { "type": "range", "id": "interval", "label": "Change slides every", "min": 3, "max": 10, "step": 1, "unit": "s", "default": 5 },
+    { "type": "checkbox", "id": "adaptive_palette", "label": "Adapt controls and marquee to each banner", "default": true },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
+    { "type": "checkbox", "id": "show_price", "label": "Show price on product CTAs", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "select", "id": "fallback_banner", "label": "Built-in banner", "default": "banner_1", "options": [{ "value": "banner_1", "label": "1 · Sunscreen" }, { "value": "banner_2", "label": "2 · Moisturiser" }, { "value": "banner_3", "label": "3 · Cleanser" }, { "value": "banner_4", "label": "4 · Niacinamide serum" }, { "value": "banner_5", "label": "5 · Clean Seal" }, { "value": "banner_6", "label": "6 · Active Boba" }, { "value": "scan_track_adapt", "label": "Scan · Track · Adapt" }] },
+        { "type": "product", "id": "product", "label": "Shop now product", "info": "Used for the Shop now CTA. Tech / scan banners fall back to all products." },
+        { "type": "text", "id": "image_alt", "label": "Image alt text" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+        { "type": "textarea", "id": "heading", "label": "Heading" },
+        { "type": "richtext", "id": "text", "label": "Text" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+        { "type": "url", "id": "link", "label": "Button link override" },
+        { "type": "select", "id": "palette", "label": "Banner color family", "default": "auto", "options": [{ "value": "auto", "label": "Automatic" }, { "value": "sunscreen", "label": "Sunscreen sun + gold" }, { "value": "moisturiser", "label": "Moisturiser sky + blush" }, { "value": "cleanser", "label": "Cleanser mint" }, { "value": "serum", "label": "Serum lilac" }, { "value": "clean-seal", "label": "Clean Seal blush" }, { "value": "active-boba", "label": "Active Boba taupe" }, { "value": "scan", "label": "Digital scan blush" }, { "value": "neutral", "label": "Neutral" }] },
+        { "type": "select", "id": "text_tone", "label": "Text color", "default": "light", "options": [{ "value": "light", "label": "Light" }, { "value": "dark", "label": "Dark" }] },
+        { "type": "select", "id": "position", "label": "Content position", "default": "left", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }] }
+      ]
+    }
+  ],
+  "max_blocks": 7,
+  "presets": [{ "name": "Purity hero", "blocks": [{ "type": "slide" }, { "type": "slide" }, { "type": "slide" }] }]
+}
+{% endschema %}
