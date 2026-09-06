@@ -1,18 +1,27 @@
 {% liquid
-  assign seo_title = page_title
-  if current_tags
-    assign meta_tags = current_tags | join: ', '
-    assign seo_title = seo_title | append: ' – ' | append: meta_tags
+  if request.page_type == 'index'
+    assign seo_title = 'Project Skin™ – Science-Backed Acne Skincare Online in India'
+  else
+    assign seo_title = page_title
+    if current_tags
+      assign meta_tags = current_tags | join: ', '
+      assign seo_title = seo_title | append: ' – ' | append: meta_tags
+    endif
+    unless seo_title contains shop.name
+      assign seo_title = seo_title | append: ' – ' | append: shop.name
+    endunless
   endif
-  unless seo_title contains shop.name
-    assign seo_title = seo_title | append: ' – ' | append: shop.name
-  endunless
   assign default_brand_desc = 'Science-backed acne skincare engineered for Indian skin. Real active concentrations, lightweight barrier-first formulas, and dermatologist guidance.'
   assign seo_description = page_description | default: shop.description | default: default_brand_desc | strip_html | strip_newlines | truncate: 160
 %}
 <title>{{ seo_title | escape }}</title>
 {% if seo_description != blank %}<meta name="description" content="{{ seo_description | escape }}">{% endif %}
 <link rel="canonical" href="{{ canonical_url }}">
+<link rel="alternate" hreflang="en-IN" href="{{ canonical_url }}">
+<link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
+<meta name="geo.region" content="IN">
+<meta name="geo.placename" content="India">
+<meta name="target-country" content="IN">
 {%- liquid
   assign favicon_image = settings.favicon
   if favicon_image != blank

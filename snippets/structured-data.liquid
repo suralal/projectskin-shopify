@@ -2,10 +2,103 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": {{ shop.name | json }},
-  "url": {{ shop.url | json }}
+  "@id": "{{ shop.url }}/#organization",
+  "name": "Project Skin",
+  "alternateName": ["The Project Skin", "Project Skin India"],
+  "legalName": "Nureya Beauty and Wellness Pvt Limited",
+  "url": {{ shop.url | json }},
+  "logo": {
+    "@type": "ImageObject",
+    "url": "{{ 'LOGO_PNG.jpg' | asset_url | prepend: 'https:' }}",
+    "width": 100,
+    "height": 50
+  },
+  "sameAs": [
+    "https://www.instagram.com/projectskin.co",
+    "https://www.linkedin.com/company/nureya-beauty-and-wellness-pvt-ltd-skin/",
+    "https://www.facebook.com/share/1BS6aAnFib/",
+    "https://youtube.com/@projectskin-co"
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+918446544458",
+      "contactType": "customer service",
+      "areaServed": "IN",
+      "availableLanguage": ["English", "Hindi"]
+    }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "IN"
+  }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Brand",
+  "@id": "{{ shop.url }}/#brand",
+  "name": "Project Skin",
+  "alternateName": ["The Project Skin", "Project Skin India"],
+  "url": {{ shop.url | json }},
+  "logo": "{{ 'LOGO_PNG.jpg' | asset_url | prepend: 'https:' }}",
+  "description": "Science-backed acne skincare engineered for Indian skin. Real active concentrations, lightweight barrier-first formulas, and dermatologist guidance."
+}
+</script>
+{% if request.page_type == 'index' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Project Skin Site Navigation",
+  "itemListElement": [
+    {
+      "@type": "SiteNavigationElement",
+      "position": 1,
+      "name": "Shop All Formulations",
+      "description": "Science-backed acne skincare products",
+      "url": "{{ shop.url }}/collections/all"
+    },
+    {
+      "@type": "SiteNavigationElement",
+      "position": 2,
+      "name": "Acne Care",
+      "description": "Targeted active serums and spot treatments",
+      "url": "{{ shop.url }}/collections/acne-care"
+    },
+    {
+      "@type": "SiteNavigationElement",
+      "position": 3,
+      "name": "Protecting Sunscreen SPF 50",
+      "description": "Broad-spectrum photoprotection for Indian UV",
+      "url": "{{ shop.url }}/products/protecting-sunscreen-acne-prone-skin"
+    },
+    {
+      "@type": "SiteNavigationElement",
+      "position": 4,
+      "name": "Calming Barrier Moisturiser",
+      "description": "Lightweight ceramide barrier hydration",
+      "url": "{{ shop.url }}/products/calming-moisturiser-acne-prone-skin"
+    },
+    {
+      "@type": "SiteNavigationElement",
+      "position": 5,
+      "name": "Free Consultation",
+      "description": "Personalized dermatologist skin assessment",
+      "url": "{{ shop.url }}/pages/consultation"
+    },
+    {
+      "@type": "SiteNavigationElement",
+      "position": 6,
+      "name": "The Science",
+      "description": "Formulations engineered for Indian heat, humidity, and pollution",
+      "url": "{{ shop.url }}/pages/the-science"
+    }
+  ]
+}
+</script>
+{% endif %}
 {% capture search_target %}{{ shop.url }}{{ routes.search_url }}?q={search_term_string}{% endcapture %}
 <script type="application/ld+json">
 {
@@ -40,10 +133,23 @@
   "offers": {
     "@type": "Offer",
     "url": {{ canonical_url | json }},
-    "priceCurrency": {{ cart.currency.iso_code | default: shop.currency | json }},
+    "priceCurrency": {{ cart.currency.iso_code | default: shop.currency | default: 'INR' | json }},
     "price": {{ product.selected_or_first_available_variant.price | divided_by: 100.0 | json }},
     "availability": "https://schema.org/{% if product.selected_or_first_available_variant.available %}InStock{% else %}OutOfStock{% endif %}",
-    "itemCondition": "https://schema.org/NewCondition"
+    "itemCondition": "https://schema.org/NewCondition",
+    "areaServed": "IN",
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "IN"
+      },
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "INR"
+      }
+    }
   }
 }
 </script>
