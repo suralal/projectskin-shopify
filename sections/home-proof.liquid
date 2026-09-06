@@ -1,0 +1,152 @@
+<style>
+  .proof-header-text {
+    color: #181818;
+  }
+  .proof-subheader-text {
+    color: #1B1813;
+  }
+  .proof-card {
+    background-color: #F7F7F7;
+    border-radius: 12px;
+  }
+  .proof-card-number {
+    color: #50463E;
+  }
+  .proof-card-text {
+    color: #630D2D;
+  }
+  
+  /* Logo Slider */
+  .logo-slider-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    margin-top: 5rem;
+  }
+  
+  .logo-slider-container::before,
+  .logo-slider-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+  }
+  
+  .logo-slider-container::before {
+    left: 0;
+    background: linear-gradient(to right, white, rgba(255,255,255,0));
+  }
+  
+  .logo-slider-container::after {
+    right: 0;
+    background: linear-gradient(to left, white, rgba(255,255,255,0));
+  }
+  
+  .logo-slide-track {
+    display: flex;
+    width: max-content;
+    animation: scrollLogos 25s linear infinite;
+  }
+  
+  .logo-slide-set {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    padding-right: 80px;
+    flex-shrink: 0;
+  }
+  
+  .logo-slide-set img {
+    height: 36px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  @keyframes scrollLogos {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>
+
+<section class="py-24 bg-white">
+  <div class="container mx-auto px-6 md:px-12 lg:px-20 text-center">
+    
+    
+    <div class="max-w-[700px] mx-auto mb-16">
+      <h2 class="proof-header-text font-bold text-[30px] md:text-[36px] lg:text-[44px] leading-tight mb-4">Proof before promises.</h2>
+      <p class="proof-subheader-text font-normal text-[18px]">Fair question. Here's the honest answer.</p>
+    </div>
+
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1200px] mx-auto">
+      
+        <div class="proof-card p-10 flex flex-col justify-base items-center min-h-[220px] pt-20">
+          <h3 class="proof-card-number font-bold text-[24px] md:text-[36px] mb-4">2</h3>
+          <p class="proof-card-text font-medium text-[15px] md:text-[16px] leading-snug px-2">Dermatologists on the formulation team</p>
+        </div>
+      
+        <div class="proof-card p-10 flex flex-col justify-base items-center min-h-[220px] pt-20">
+          <h3 class="proof-card-number font-bold text-[24px] md:text-[36px] mb-4">100%</h3>
+          <p class="proof-card-text font-medium text-[15px] md:text-[16px] leading-snug px-2">of formulas dermat-tested</p>
+        </div>
+      
+        <div class="proof-card p-10 flex flex-col justify-base items-center min-h-[220px] pt-20">
+          <h3 class="proof-card-number font-bold text-[24px] md:text-[36px] mb-4">Lab-tested</h3>
+          <p class="proof-card-text font-medium text-[15px] md:text-[16px] leading-snug px-2">concentrations verified before launch, not assumed</p>
+        </div>
+      
+        <div class="proof-card p-10 flex flex-col justify-base items-center min-h-[220px] pt-20">
+          <h3 class="proof-card-number font-bold text-[24px] md:text-[36px] mb-4">250+</h3>
+          <p class="proof-card-text font-medium text-[15px] md:text-[16px] leading-snug px-2">beta testers used the system before you</p>
+        </div>
+      
+    </div>
+    
+    
+    <div class="logo-slider-container">
+      <div class="logo-slide-track">
+        
+        <div class="logo-slide-set">
+          <img src="{{ 'home_logo_1.png' | asset_url }}" alt="Logo 1" loading="lazy">
+          <img src="{{ 'home_logo_2.png' | asset_url }}" alt="Logo 2" loading="lazy">
+          <img src="{{ 'home_logo_3.png' | asset_url }}" alt="Logo 3" loading="lazy">
+          <img src="{{ 'home_logo_4.png' | asset_url }}" alt="Logo 4" loading="lazy">
+          <img src="{{ 'home_logo_5.png' | asset_url }}" alt="Logo 5" loading="lazy">
+        </div>
+        
+        
+        <div class="logo-slide-set">
+          <img src="{{ 'home_logo_1.png' | asset_url }}" alt="Logo 1" loading="lazy">
+          <img src="{{ 'home_logo_2.png' | asset_url }}" alt="Logo 2" loading="lazy">
+          <img src="{{ 'home_logo_3.png' | asset_url }}" alt="Logo 3" loading="lazy">
+          <img src="{{ 'home_logo_4.png' | asset_url }}" alt="Logo 4" loading="lazy">
+          <img src="{{ 'home_logo_5.png' | asset_url }}" alt="Logo 5" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+</div>
+{% schema %}
+{
+  "name": "Home Proof",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Proof before promises."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Proof"
+    }
+  ]
+}
+{% endschema %}

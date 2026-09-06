@@ -1,0 +1,1234 @@
+<style>
+  .home-products {
+    background-color: #FFFFFF;
+    width: 100%;
+  }
+  .products-heading {
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 110%;
+    color: #181818;
+  }
+  .products-paragraph {
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 140%;
+    color: #1B1813;
+  }
+  
+  /* Product Card Styling */
+  .product-image-wrap {
+    background-color: #F8F8F8;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-title {
+    font-family: 'Google Sans Flex', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #181818;
+  }
+  .product-price-current {
+    font-family: 'Google Sans Flex', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: #181818;
+  }
+  .product-price-compare {
+    font-family: 'Google Sans Flex', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: #A0A0A0;
+    text-decoration: line-through;
+  }
+  
+  /* Hover interactions */
+  .product-hover-ui {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  }
+  .product-card:hover .product-hover-ui {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .product-card img {
+    transition: transform 0.4s ease;
+  }
+  .product-card:hover img {
+    transform: scale(1.04);
+  }
+
+  @media (max-width: 1024px) {
+    .products-heading { font-size: 36px; }
+  }
+  @media (max-width: 768px) {
+    .products-heading { font-size: 30px; }
+    .products-paragraph { font-size: 14px; }
+  }
+
+  /* Remove number spinners from modal quantity inputs */
+  .qty-input::-webkit-outer-spin-button,
+  .qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .qty-input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  /* Properly hide text when buttons are in a loading state */
+  button.loading > span {
+    opacity: 0 !important;
+  }
+</style>
+
+<section class="home-products py-20 lg:py-24">
+  <div class="container mx-auto px-6 md:px-12 lg:px-20">
+    
+    
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-28">
+      <div class="max-w-[650px]">
+        <h2 class="products-heading mb-10">The Acne System</h2>
+        <p class="products-paragraph">Four steps designed to work together, plus two treatments for active breakouts. Each label lists its concentrations—because numbers matter.</p>
+      </div>
+      
+      
+        <a href="/collections/all" class="inline-flex items-center justify-center px-10 py-4 text-white font-medium text-[16px] transition-opacity hover:opacity-90" style="background-color: var(--color-primary);">
+          Shop all products
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="ml-2.5">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+      
+    </div>
+
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      
+      
+
+      
+        <div class="product-card cursor-pointer group relative" onclick="window.location.href='/products/5-niacinamide-serum-acne-prone-skin'">
+          <div class="product-image-wrap aspect-square flex items-center justify-center mb-5 px-6 relative">
+            <img src="{{ 'Screenshot_2026-07-23_014448.png' | asset_url }}" alt="5% Niacinamide Serum - Acne Prone Skin" class="w-full h-[75%] object-contain mix-blend-multiply" loading="lazy">
+            
+            
+            <div class="product-hover-ui absolute bottom-4 w-full px-4 flex gap-2 h-[42px] z-10">
+              <button type="button" onclick="event.stopPropagation();" class="quick-view-btn flex-grow text-white text-[15px] font-medium flex items-center justify-center gap-2 rounded-[6px] transition-opacity hover:opacity-80" style="background-color: var(--color-primary);" data-target="QuickViewModal-15430713573747">
+                Quick view
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+              <product-form class="h-full">
+                <form action="/cart/add" method="post" accept-charset="UTF-8" class="m-0 p-0 h-full flex" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form">
+                  <input type="hidden" name="form_type" value="product">
+                  <input type="hidden" name="utf8" value="✓">
+                  <input type="hidden" name="id" value="63064403575155">
+                  <button type="submit" name="add" onclick="event.stopPropagation();" class="w-[42px] h-[42px] text-white text-2xl font-light flex items-center justify-center rounded-[6px] transition-opacity hover:opacity-80 flex-shrink-0 relative" style="background-color: var(--color-primary);">
+                    <span class="transition-opacity"> + </span>
+                    <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                      <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                    </div>
+                  </button>
+                </form>
+              </product-form>
+            </div>
+          </div>
+          
+          <div class="product-meta">
+            <h3 class="product-title mb-1.5">5% Niacinamide Serum - Acne Prone Skin</h3>
+            <div class="flex gap-2 items-center mb-1.5">
+              <span class="product-price-current">Rs. 649.00</span>
+              
+            </div>
+            
+            <div class="flex items-center text-[#E58C17] text-[12px] gap-1">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+              
+              <span class="text-[#333] ml-1">(0)</span>
+            </div>
+          </div>
+        </div>
+          
+          <div id="QuickViewModal-15430713573747" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 lg:p-8" aria-hidden="true">
+            <div class="modal-overlay absolute inset-0 bg-black/60 transition-opacity"></div>
+            
+            <div class="modal-content relative bg-white w-full max-w-[800px] max-h-[90vh] overflow-y-auto rounded-xl flex flex-col md:flex-row shadow-2xl transition-transform transform scale-95 opacity-0 duration-300" style="font-family: 'Instrument Sans', sans-serif;">
+              
+              
+              <button type="button" class="close-modal absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center transition-opacity hover:opacity-80">
+                <img src="{{ 'quickview_close_button.svg' | asset_url }}" alt="Close" class="w-full h-full object-contain">
+              </button>
+
+              
+              <div class="w-full md:w-[45%] bg-[#F8F8F8] flex items-center justify-center p-8 min-h-[300px]">
+                <img src="{{ 'Screenshot_2026-07-23_014448.png' | asset_url }}" alt="5% Niacinamide Serum - Acne Prone Skin" class="w-full h-auto max-h-[400px] object-contain mix-blend-multiply">
+              </div>
+
+              
+              <div class="w-full md:w-[55%] p-6 md:p-8 flex flex-col text-left">
+                <h2 class="text-2xl md:text-[28px] font-semibold text-[#181818] mb-3 leading-tight">5% Niacinamide Serum - Acne Prone Skin</h2>
+                
+                
+                <div class="flex items-center gap-2 mb-4">
+                  
+                  
+                  <div class="flex items-center text-white px-2 py-0.5 rounded-sm text-sm font-medium gap-1" style="background-color: var(--color-primary);">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    0
+                  </div>
+                  <span class="text-[13px] text-gray-800 font-medium">0 reviews</span>
+                </div>
+
+                
+                
+                <div class="flex items-baseline gap-3 mb-2" id="price-container-15430713573747">
+                  <span class="text-2xl md:text-[26px] font-semibold text-black current-price">Rs. 649.00</span>
+                  
+                </div>
+                
+                <p class="text-[12px] text-gray-500 mb-6">Taxes included. Shipping calculated at checkout.</p>
+
+                
+                <product-form class="mt-auto block w-full">
+                  
+                  <form method="post" action="/cart/add" id="quick-add-form-15430713573747" accept-charset="UTF-8" class="flex flex-col gap-5 w-full" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form"><input type="hidden" name="form_type" value="product" /><input type="hidden" name="utf8" value="✓" />
+                    <input type="hidden" name="id" value="63064403575155" class="variant-id-input">
+                    
+                    
+                    
+                      
+                        
+                          <div class="variant-selector w-full">
+                            <p class="text-[13px] font-medium text-gray-900 mb-2">Size</p>
+                            <div class="grid grid-cols-2 gap-3 w-full">
+                              
+                                
+                                
+                                
+                                
+                                <button type="button" 
+                                  class="variant-btn flex flex-col items-center justify-center p-3 border rounded-sm transition-colors ring-1"
+                                  style="border-color: var(--color-primary); --tw-ring-color: var(--color-primary);"
+                                  data-variant-id="63064403575155"
+                                  data-price="Rs. 649.00"
+                                  data-compare="Rs. 599.00"
+                                  data-inventory="48"
+                                  data-inventory-policy="deny"
+                                >
+                                  <span class="text-sm font-semibold option-title" style="color: var(--color-primary);">30 ml</span>
+                                  <span class="text-xs text-gray-500 option-price">Rs. 649.00</span>
+                                </button>
+                              
+                            </div>
+                          </div>
+                        
+                      
+                    
+
+                    
+                    <div class="flex flex-col gap-2 w-full">
+                      <div class="flex justify-between items-center w-full">
+                        <span class="text-[13px] font-medium text-gray-900">In Stock</span>
+                        <span class="text-[13px] font-semibold text-black inventory-count">
+                          
+                            48
+                          
+                        </span>
+                      </div>
+                      
+                      <div class="flex items-center border border-gray-200 rounded-sm w-full h-[46px]">
+                        <button type="button" class="w-12 h-full flex items-center justify-center text-gray-500 hover:text-black qty-minus" aria-label="Decrease quantity" disabled style="opacity: 0.5; cursor: not-allowed;">
+                          <svg width="12" height="2" viewBox="0 0 12 2" fill="currentColor"><path d="M0 0h12v2H0z"/></svg>
+                        </button>
+                        
+                        
+                        <input type="number" name="quantity" value="1" min="1" max="48" class="flex-grow text-center h-full border-none focus:ring-0 text-sm font-semibold p-0 qty-input" aria-label="Quantity" style="box-shadow: none !important; outline: none !important;" readonly>
+                        <button type="button" class="w-12 h-full flex items-center justify-center text-gray-500 hover:text-black qty-plus" aria-label="Increase quantity" >
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M5 5V0h2v5h5v2H7v5H5V7H0V5h5z"/></svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    
+                    <style>
+                      .add-to-cart-btn:disabled + .buy-now-btn { display: none !important; }
+                    </style>
+                    <div class="flex gap-3 mt-2 w-full action-buttons-container">
+                      <button type="submit" name="add" class="add-to-cart-btn flex-1 h-[46px] flex items-center justify-center bg-[#F3F4F6] hover:bg-[#E5E7EB] text-black text-[14px] font-semibold rounded-sm transition-colors relative" >
+                        
+                          <span class="flex items-center transition-opacity">
+                            Add to cart
+                            <img src="{{ 'product_card_cart_Icon.svg' | asset_url }}" alt="Cart" class="ml-2 w-5 h-5 object-contain">
+                          </span>
+                        
+                        <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                          <svg class="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </div>
+                      </button>
+                      <button type="button" class="buy-now-btn flex-1 h-[46px] flex items-center justify-center text-white text-[14px] font-semibold rounded-sm transition-opacity hover:opacity-80 relative" style="background-color: var(--color-primary);" >
+                        <span class="btn-text transition-opacity">Buy Now</span>
+                        <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                          <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  <input type="hidden" name="product-id" value="15430713573747" /><input type="hidden" name="section-id" value="template--28664208982387__home_products" /></form>
+                </product-form>
+
+                <a href="/products/5-niacinamide-serum-acne-prone-skin" class="mt-4 text-[13px] font-semibold text-[#0052B5] hover:underline text-left">View more details</a>
+              </div>
+            </div>
+          </div>
+
+      
+        <div class="product-card cursor-pointer group relative" onclick="window.location.href='/products/active-boba-encapsulated-cream-acne-prone-skin'">
+          <div class="product-image-wrap aspect-square flex items-center justify-center mb-5 px-6 relative">
+            <img src="{{ 'boba_Cream_f339326d-5bfb-43e7-a8ca-86e29331f772.jpg' | asset_url }}" alt="Active Boba Encapsulated Cream - Acne Prone Skin" class="w-full h-[75%] object-contain mix-blend-multiply" loading="lazy">
+            
+            
+            <div class="product-hover-ui absolute bottom-4 w-full px-4 flex gap-2 h-[42px] z-10">
+              <button type="button" onclick="event.stopPropagation();" class="quick-view-btn flex-grow text-white text-[15px] font-medium flex items-center justify-center gap-2 rounded-[6px] transition-opacity hover:opacity-80" style="background-color: var(--color-primary);" data-target="QuickViewModal-15430715081075">
+                Quick view
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+              <product-form class="h-full">
+                <form action="/cart/add" method="post" accept-charset="UTF-8" class="m-0 p-0 h-full flex" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form">
+                  <input type="hidden" name="form_type" value="product">
+                  <input type="hidden" name="utf8" value="✓">
+                  <input type="hidden" name="id" value="63064409899379">
+                  <button type="submit" name="add" onclick="event.stopPropagation();" class="w-[42px] h-[42px] text-white text-2xl font-light flex items-center justify-center rounded-[6px] transition-opacity hover:opacity-80 flex-shrink-0 relative" style="background-color: var(--color-primary);">
+                    <span class="transition-opacity"> + </span>
+                    <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                      <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                    </div>
+                  </button>
+                </form>
+              </product-form>
+            </div>
+          </div>
+          
+          <div class="product-meta">
+            <h3 class="product-title mb-1.5">Active Boba Encapsulated Cream - Acne Prone Skin</h3>
+            <div class="flex gap-2 items-center mb-1.5">
+              <span class="product-price-current">Rs. 1,199.00</span>
+              
+            </div>
+            
+            <div class="flex items-center text-[#E58C17] text-[12px] gap-1">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+              
+              <span class="text-[#333] ml-1">(0)</span>
+            </div>
+          </div>
+        </div>
+          
+          <div id="QuickViewModal-15430715081075" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 lg:p-8" aria-hidden="true">
+            <div class="modal-overlay absolute inset-0 bg-black/60 transition-opacity"></div>
+            
+            <div class="modal-content relative bg-white w-full max-w-[800px] max-h-[90vh] overflow-y-auto rounded-xl flex flex-col md:flex-row shadow-2xl transition-transform transform scale-95 opacity-0 duration-300" style="font-family: 'Instrument Sans', sans-serif;">
+              
+              
+              <button type="button" class="close-modal absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center transition-opacity hover:opacity-80">
+                <img src="{{ 'quickview_close_button.svg' | asset_url }}" alt="Close" class="w-full h-full object-contain">
+              </button>
+
+              
+              <div class="w-full md:w-[45%] bg-[#F8F8F8] flex items-center justify-center p-8 min-h-[300px]">
+                <img src="{{ 'boba_Cream_f339326d-5bfb-43e7-a8ca-86e29331f772.jpg' | asset_url }}" alt="Active Boba Encapsulated Cream - Acne Prone Skin" class="w-full h-auto max-h-[400px] object-contain mix-blend-multiply">
+              </div>
+
+              
+              <div class="w-full md:w-[55%] p-6 md:p-8 flex flex-col text-left">
+                <h2 class="text-2xl md:text-[28px] font-semibold text-[#181818] mb-3 leading-tight">Active Boba Encapsulated Cream - Acne Prone Skin</h2>
+                
+                
+                <div class="flex items-center gap-2 mb-4">
+                  
+                  
+                  <div class="flex items-center text-white px-2 py-0.5 rounded-sm text-sm font-medium gap-1" style="background-color: var(--color-primary);">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    0
+                  </div>
+                  <span class="text-[13px] text-gray-800 font-medium">0 reviews</span>
+                </div>
+
+                
+                
+                <div class="flex items-baseline gap-3 mb-2" id="price-container-15430715081075">
+                  <span class="text-2xl md:text-[26px] font-semibold text-black current-price">Rs. 1,199.00</span>
+                  
+                </div>
+                
+                <p class="text-[12px] text-gray-500 mb-6">Taxes included. Shipping calculated at checkout.</p>
+
+                
+                <product-form class="mt-auto block w-full">
+                  
+                  <form method="post" action="/cart/add" id="quick-add-form-15430715081075" accept-charset="UTF-8" class="flex flex-col gap-5 w-full" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form"><input type="hidden" name="form_type" value="product" /><input type="hidden" name="utf8" value="✓" />
+                    <input type="hidden" name="id" value="63064409899379" class="variant-id-input">
+                    
+                    
+                    
+                      
+                        
+                          <div class="variant-selector w-full">
+                            <p class="text-[13px] font-medium text-gray-900 mb-2">Size</p>
+                            <div class="grid grid-cols-2 gap-3 w-full">
+                              
+                                
+                                
+                                
+                                
+                                <button type="button" 
+                                  class="variant-btn flex flex-col items-center justify-center p-3 border rounded-sm transition-colors ring-1"
+                                  style="border-color: var(--color-primary); --tw-ring-color: var(--color-primary);"
+                                  data-variant-id="63064409899379"
+                                  data-price="Rs. 1,199.00"
+                                  data-compare="Rs. 1,199.00"
+                                  data-inventory="0"
+                                  data-inventory-policy="deny"
+                                >
+                                  <span class="text-sm font-semibold option-title" style="color: var(--color-primary);">70 gms</span>
+                                  <span class="text-xs text-gray-500 option-price">Rs. 1,199.00</span>
+                                </button>
+                              
+                            </div>
+                          </div>
+                        
+                      
+                    
+
+                    
+                    <div class="flex flex-col gap-2 w-full">
+                      <div class="flex justify-between items-center w-full">
+                        <span class="text-[13px] font-medium text-gray-900">In Stock</span>
+                        <span class="text-[13px] font-semibold text-black inventory-count">
+                          
+                        </span>
+                      </div>
+                      
+                      <div class="flex items-center border border-gray-200 rounded-sm w-full h-[46px]">
+                        <button type="button" class="w-12 h-full flex items-center justify-center text-gray-500 hover:text-black qty-minus" aria-label="Decrease quantity" disabled style="opacity: 0.5; cursor: not-allowed;">
+                          <svg width="12" height="2" viewBox="0 0 12 2" fill="currentColor"><path d="M0 0h12v2H0z"/></svg>
+                        </button>
+                        
+                        
+                        <input type="number" name="quantity" value="1" min="1"  class="flex-grow text-center h-full border-none focus:ring-0 text-sm font-semibold p-0 qty-input" aria-label="Quantity" style="box-shadow: none !important; outline: none !important;" readonly>
+                        <button type="button" class="w-12 h-full flex items-center justify-center text-gray-500 hover:text-black qty-plus" aria-label="Increase quantity" disabled style="opacity: 0.5; cursor: not-allowed;">
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M5 5V0h2v5h5v2H7v5H5V7H0V5h5z"/></svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    
+                    <style>
+                      .add-to-cart-btn:disabled + .buy-now-btn { display: none !important; }
+                    </style>
+                    <div class="flex gap-3 mt-2 w-full action-buttons-container">
+                      <button type="submit" name="add" class="add-to-cart-btn flex-1 h-[46px] flex items-center justify-center bg-[#F3F4F6] hover:bg-[#E5E7EB] text-black text-[14px] font-semibold rounded-sm transition-colors relative" disabled>
+                        
+                          <span class="transition-opacity">Sold out</span>
+                        
+                        <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                          <svg class="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </div>
+                      </button>
+                      <button type="button" class="buy-now-btn flex-1 h-[46px] flex items-center justify-center text-white text-[14px] font-semibold rounded-sm transition-opacity hover:opacity-80 relative" style="background-color: var(--color-primary);" disabled>
+                        <span class="btn-text transition-opacity">Buy Now</span>
+                        <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                          <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  <input type="hidden" name="product-id" value="15430715081075" /><input type="hidden" name="section-id" value="template--28664208982387__home_products" /></form>
+                </product-form>
+
+                <a href="/products/active-boba-encapsulated-cream-acne-prone-skin" class="mt-4 text-[13px] font-semibold text-[#0052B5] hover:underline text-left">View more details</a>
+              </div>
+            </div>
+          </div>
+
+      
+        <div class="product-card cursor-pointer group relative" onclick="window.location.href='/products/calming-moisturiser-acne-prone-skin'">
+          <div class="product-image-wrap aspect-square flex items-center justify-center mb-5 px-6 relative">
+            <img src="{{ '1.jpg' | asset_url }}" alt="Calming Moisturiser - Acne Prone Skin" class="w-full h-[75%] object-contain mix-blend-multiply" loading="lazy">
+            
+            
+            <div class="product-hover-ui absolute bottom-4 w-full px-4 flex gap-2 h-[42px] z-10">
+              <button type="button" onclick="event.stopPropagation();" class="quick-view-btn flex-grow text-white text-[15px] font-medium flex items-center justify-center gap-2 rounded-[6px] transition-opacity hover:opacity-80" style="background-color: var(--color-primary);" data-target="QuickViewModal-15430714229107">
+                Quick view
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+              <product-form class="h-full">
+                <form action="/cart/add" method="post" accept-charset="UTF-8" class="m-0 p-0 h-full flex" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form">
+                  <input type="hidden" name="form_type" value="product">
+                  <input type="hidden" name="utf8" value="✓">
+                  <input type="hidden" name="id" value="63064405803379">
+                  <button type="submit" name="add" onclick="event.stopPropagation();" class="w-[42px] h-[42px] text-white text-2xl font-light flex items-center justify-center rounded-[6px] transition-opacity hover:opacity-80 flex-shrink-0 relative" style="background-color: var(--color-primary);">
+                    <span class="transition-opacity"> + </span>
+                    <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                      <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                    </div>
+                  </button>
+                </form>
+              </product-form>
+            </div>
+          </div>
+          
+          <div class="product-meta">
+            <h3 class="product-title mb-1.5">Calming Moisturiser - Acne Prone Skin</h3>
+            <div class="flex gap-2 items-center mb-1.5">
+              <span class="product-price-current">Rs. 449.00</span>
+              
+            </div>
+            
+            <div class="flex items-center text-[#E58C17] text-[12px] gap-1">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+              
+              <span class="text-[#333] ml-1">(0)</span>
+            </div>
+          </div>
+        </div>
+          
+          <div id="QuickViewModal-15430714229107" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 lg:p-8" aria-hidden="true">
+            <div class="modal-overlay absolute inset-0 bg-black/60 transition-opacity"></div>
+            
+            <div class="modal-content relative bg-white w-full max-w-[800px] max-h-[90vh] overflow-y-auto rounded-xl flex flex-col md:flex-row shadow-2xl transition-transform transform scale-95 opacity-0 duration-300" style="font-family: 'Instrument Sans', sans-serif;">
+              
+              
+              <button type="button" class="close-modal absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center transition-opacity hover:opacity-80">
+                <img src="{{ 'quickview_close_button.svg' | asset_url }}" alt="Close" class="w-full h-full object-contain">
+              </button>
+
+              
+              <div class="w-full md:w-[45%] bg-[#F8F8F8] flex items-center justify-center p-8 min-h-[300px]">
+                <img src="{{ '1.jpg' | asset_url }}" alt="Calming Moisturiser - Acne Prone Skin" class="w-full h-auto max-h-[400px] object-contain mix-blend-multiply">
+              </div>
+
+              
+              <div class="w-full md:w-[55%] p-6 md:p-8 flex flex-col text-left">
+                <h2 class="text-2xl md:text-[28px] font-semibold text-[#181818] mb-3 leading-tight">Calming Moisturiser - Acne Prone Skin</h2>
+                
+                
+                <div class="flex items-center gap-2 mb-4">
+                  
+                  
+                  <div class="flex items-center text-white px-2 py-0.5 rounded-sm text-sm font-medium gap-1" style="background-color: var(--color-primary);">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    0
+                  </div>
+                  <span class="text-[13px] text-gray-800 font-medium">0 reviews</span>
+                </div>
+
+                
+                
+                <div class="flex items-baseline gap-3 mb-2" id="price-container-15430714229107">
+                  <span class="text-2xl md:text-[26px] font-semibold text-black current-price">Rs. 449.00</span>
+                  
+                </div>
+                
+                <p class="text-[12px] text-gray-500 mb-6">Taxes included. Shipping calculated at checkout.</p>
+
+                
+                <product-form class="mt-auto block w-full">
+                  
+                  <form method="post" action="/cart/add" id="quick-add-form-15430714229107" accept-charset="UTF-8" class="flex flex-col gap-5 w-full" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form"><input type="hidden" name="form_type" value="product" /><input type="hidden" name="utf8" value="✓" />
+                    <input type="hidden" name="id" value="63064405803379" class="variant-id-input">
+                    
+                    
+                    
+                      
+                        
+                          <div class="variant-selector w-full">
+                            <p class="text-[13px] font-medium text-gray-900 mb-2">Size</p>
+                            <div class="grid grid-cols-2 gap-3 w-full">
+                              
+                                
+                                
+                                
+                                
+                                <button type="button" 
+                                  class="variant-btn flex flex-col items-center justify-center p-3 border rounded-sm transition-colors ring-1"
+                                  style="border-color: var(--color-primary); --tw-ring-color: var(--color-primary);"
+                                  data-variant-id="63064405803379"
+                                  data-price="Rs. 449.00"
+                                  data-compare="Rs. 379.00"
+                                  data-inventory="49"
+                                  data-inventory-policy="deny"
+                                >
+                                  <span class="text-sm font-semibold option-title" style="color: var(--color-primary);">60 gms</span>
+                                  <span class="text-xs text-gray-500 option-price">Rs. 449.00</span>
+                                </button>
+                              
+                            </div>
+                          </div>
+                        
+                      
+                    
+
+                    
+                    <div class="flex flex-col gap-2 w-full">
+                      <div class="flex justify-between items-center w-full">
+                        <span class="text-[13px] font-medium text-gray-900">In Stock</span>
+                        <span class="text-[13px] font-semibold text-black inventory-count">
+                          
+                            49
+                          
+                        </span>
+                      </div>
+                      
+                      <div class="flex items-center border border-gray-200 rounded-sm w-full h-[46px]">
+                        <button type="button" class="w-12 h-full flex items-center justify-center text-gray-500 hover:text-black qty-minus" aria-label="Decrease quantity" disabled style="opacity: 0.5; cursor: not-allowed;">
+                          <svg width="12" height="2" viewBox="0 0 12 2" fill="currentColor"><path d="M0 0h12v2H0z"/></svg>
+                        </button>
+                        
+                        
+                        <input type="number" name="quantity" value="1" min="1" max="49" class="flex-grow text-center h-full border-none focus:ring-0 text-sm font-semibold p-0 qty-input" aria-label="Quantity" style="box-shadow: none !important; outline: none !important;" readonly>
+                        <button type="button" class="w-12 h-full flex items-center justify-center text-gray-500 hover:text-black qty-plus" aria-label="Increase quantity" >
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M5 5V0h2v5h5v2H7v5H5V7H0V5h5z"/></svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    
+                    <style>
+                      .add-to-cart-btn:disabled + .buy-now-btn { display: none !important; }
+                    </style>
+                    <div class="flex gap-3 mt-2 w-full action-buttons-container">
+                      <button type="submit" name="add" class="add-to-cart-btn flex-1 h-[46px] flex items-center justify-center bg-[#F3F4F6] hover:bg-[#E5E7EB] text-black text-[14px] font-semibold rounded-sm transition-colors relative" >
+                        
+                          <span class="flex items-center transition-opacity">
+                            Add to cart
+                            <img src="{{ 'product_card_cart_Icon.svg' | asset_url }}" alt="Cart" class="ml-2 w-5 h-5 object-contain">
+                          </span>
+                        
+                        <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                          <svg class="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </div>
+                      </button>
+                      <button type="button" class="buy-now-btn flex-1 h-[46px] flex items-center justify-center text-white text-[14px] font-semibold rounded-sm transition-opacity hover:opacity-80 relative" style="background-color: var(--color-primary);" >
+                        <span class="btn-text transition-opacity">Buy Now</span>
+                        <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                          <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  <input type="hidden" name="product-id" value="15430714229107" /><input type="hidden" name="section-id" value="template--28664208982387__home_products" /></form>
+                </product-form>
+
+                <a href="/products/calming-moisturiser-acne-prone-skin" class="mt-4 text-[13px] font-semibold text-[#0052B5] hover:underline text-left">View more details</a>
+              </div>
+            </div>
+          </div>
+
+      
+        <div class="product-card cursor-pointer group relative" onclick="window.location.href='/products/clear-seal'">
+          <div class="product-image-wrap aspect-square flex items-center justify-center mb-5 px-6 relative">
+            <img src="{{ 'seal.jpg' | asset_url }}" alt="Clear Seal Next-Gen Liquid Patch Technology - Acne Prone Skin" class="w-full h-[75%] object-contain mix-blend-multiply" loading="lazy">
+            
+            
+            <div class="product-hover-ui absolute bottom-4 w-full px-4 flex gap-2 h-[42px] z-10">
+              <button type="button" onclick="event.stopPropagation();" class="quick-view-btn flex-grow text-white text-[15px] font-medium flex items-center justify-center gap-2 rounded-[6px] transition-opacity hover:opacity-80" style="background-color: var(--color-primary);" data-target="QuickViewModal-15442488394099">
+                Quick view
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+              <product-form class="h-full">
+                <form action="/cart/add" method="post" accept-charset="UTF-8" class="m-0 p-0 h-full flex" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form">
+                  <input type="hidden" name="form_type" value="product">
+                  <input type="hidden" name="utf8" value="✓">
+                  <input type="hidden" name="id" value="63109179507059">
+                  <button type="submit" name="add" onclick="event.stopPropagation();" class="w-[42px] h-[42px] text-white text-2xl font-light flex items-center justify-center rounded-[6px] transition-opacity hover:opacity-80 flex-shrink-0 relative" style="background-color: var(--color-primary);">
+                    <span class="transition-opacity"> + </span>
+                    <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                      <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                    </div>
+                  </button>
+                </form>
+              </product-form>
+            </div>
+          </div>
+          
+          <div class="product-meta">
+            <h3 class="product-title mb-1.5">Clear Seal Next-Gen Liquid Patch Technology - Acne Prone Skin</h3>
+            <div class="flex gap-2 items-center mb-1.5">
+              <span class="product-price-current">Rs. 399.00</span>
+              
+            </div>
+            
+            <div class="flex items-center text-[#E58C17] text-[12px] gap-1">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                
+              
+              <span class="text-[#333] ml-1">(0)</span>
+            </div>
+          </div>
+        </div>
+          
+          <div id="QuickViewModal-15442488394099" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 lg:p-8" aria-hidden="true">
+            <div class="modal-overlay absolute inset-0 bg-black/60 transition-opacity"></div>
+            
+            <div class="modal-content relative bg-white w-full max-w-[800px] max-h-[90vh] overflow-y-auto rounded-xl flex flex-col md:flex-row shadow-2xl transition-transform transform scale-95 opacity-0 duration-300" style="font-family: 'Instrument Sans', sans-serif;">
+              
+              
+              <button type="button" class="close-modal absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center transition-opacity hover:opacity-80">
+                <img src="{{ 'quickview_close_button.svg' | asset_url }}" alt="Close" class="w-full h-full object-contain">
+              </button>
+
+              
+              <div class="w-full md:w-[45%] bg-[#F8F8F8] flex items-center justify-center p-8 min-h-[300px]">
+                <img src="{{ 'seal.jpg' | asset_url }}" alt="Clear Seal Next-Gen Liquid Patch Technology - Acne Prone Skin" class="w-full h-auto max-h-[400px] object-contain mix-blend-multiply">
+              </div>
+
+              
+              <div class="w-full md:w-[55%] p-6 md:p-8 flex flex-col text-left">
+                <h2 class="text-2xl md:text-[28px] font-semibold text-[#181818] mb-3 leading-tight">Clear Seal Next-Gen Liquid Patch Technology - Acne Prone Skin</h2>
+                
+                
+                <div class="flex items-center gap-2 mb-4">
+                  
+                  
+                  <div class="flex items-center text-white px-2 py-0.5 rounded-sm text-sm font-medium gap-1" style="background-color: var(--color-primary);">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    0
+                  </div>
+                  <span class="text-[13px] text-gray-800 font-medium">0 reviews</span>
+                </div>
+
+                
+                
+                <div class="flex items-baseline gap-3 mb-2" id="price-container-15442488394099">
+                  <span class="text-2xl md:text-[26px] font-semibold text-black current-price">Rs. 399.00</span>
+                  
+                </div>
+                
+                <p class="text-[12px] text-gray-500 mb-6">Taxes included. Shipping calculated at checkout.</p>
+
+                
+                <product-form class="mt-auto block w-full">
+                  
+                  <form method="post" action="/cart/add" id="quick-add-form-15442488394099" accept-charset="UTF-8" class="flex flex-col gap-5 w-full" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form"><input type="hidden" name="form_type" value="product" /><input type="hidden" name="utf8" value="✓" />
+                    <input type="hidden" name="id" value="63109179507059" class="variant-id-input">
+                    
+                    
+                    
+                      
+                        
+                          <div class="variant-selector w-full">
+                            <p class="text-[13px] font-medium text-gray-900 mb-2">Size</p>
+                            <div class="grid grid-cols-2 gap-3 w-full">
+                              
+                                
+                                
+                                
+                                
+                                <button type="button" 
+                                  class="variant-btn flex flex-col items-center justify-center p-3 border rounded-sm transition-colors ring-1"
+                                  style="border-color: var(--color-primary); --tw-ring-color: var(--color-primary);"
+                                  data-variant-id="63109179507059"
+                                  data-price="Rs. 399.00"
+                                  data-compare=""
+                                  data-inventory="-1"
+                                  data-inventory-policy="deny"
+                                >
+                                  <span class="text-sm font-semibold option-title" style="color: var(--color-primary);">20 ml</span>
+                                  <span class="text-xs text-gray-500 option-price">Rs. 399.00</span>
+                                </button>
+                              
+                            </div>
+                          </div>
+                        
+                      
+                    
+
+                    
+                    <div class="flex flex-col gap-2 w-full">
+                      <div class="flex justify-between items-center w-full">
+                        <span class="text-[13px] font-medium text-gray-900">In Stock</span>
+                        <span class="text-[13px] font-semibold text-black inventory-count">
+                          
+                        </span>
+                      </div>
+                      
+                      <div class="flex items-center border border-gray-200 rounded-sm w-full h-[46px]">
+                        <button type="button" class="w-12 h-full flex items-center justify-center text-gray-500 hover:text-black qty-minus" aria-label="Decrease quantity" disabled style="opacity: 0.5; cursor: not-allowed;">
+                          <svg width="12" height="2" viewBox="0 0 12 2" fill="currentColor"><path d="M0 0h12v2H0z"/></svg>
+                        </button>
+                        
+                        
+                        <input type="number" name="quantity" value="1" min="1"  class="flex-grow text-center h-full border-none focus:ring-0 text-sm font-semibold p-0 qty-input" aria-label="Quantity" style="box-shadow: none !important; outline: none !important;" readonly>
+                        <button type="button" class="w-12 h-full flex items-center justify-center text-gray-500 hover:text-black qty-plus" aria-label="Increase quantity" >
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M5 5V0h2v5h5v2H7v5H5V7H0V5h5z"/></svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    
+                    <style>
+                      .add-to-cart-btn:disabled + .buy-now-btn { display: none !important; }
+                    </style>
+                    <div class="flex gap-3 mt-2 w-full action-buttons-container">
+                      <button type="submit" name="add" class="add-to-cart-btn flex-1 h-[46px] flex items-center justify-center bg-[#F3F4F6] hover:bg-[#E5E7EB] text-black text-[14px] font-semibold rounded-sm transition-colors relative" >
+                        
+                          <span class="flex items-center transition-opacity">
+                            Add to cart
+                            <img src="{{ 'product_card_cart_Icon.svg' | asset_url }}" alt="Cart" class="ml-2 w-5 h-5 object-contain">
+                          </span>
+                        
+                        <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                          <svg class="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </div>
+                      </button>
+                      <button type="button" class="buy-now-btn flex-1 h-[46px] flex items-center justify-center text-white text-[14px] font-semibold rounded-sm transition-opacity hover:opacity-80 relative" style="background-color: var(--color-primary);" >
+                        <span class="btn-text transition-opacity">Buy Now</span>
+                        <div class="loading__spinner hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-5 h-5">
+                          <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  <input type="hidden" name="product-id" value="15442488394099" /><input type="hidden" name="section-id" value="template--28664208982387__home_products" /></form>
+                </product-form>
+
+                <a href="/products/clear-seal" class="mt-4 text-[13px] font-semibold text-[#0052B5] hover:underline text-left">View more details</a>
+              </div>
+            </div>
+          </div>
+
+      
+
+    </div>
+  </div>
+</section>
+
+
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Modal Open/Close Logic
+      const quickViewBtns = document.querySelectorAll('.quick-view-btn');
+      const modals = document.querySelectorAll('[id^="QuickViewModal-"]');
+      
+      quickViewBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = btn.getAttribute('data-target');
+          const modal = document.getElementById(targetId);
+          if(modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+              const overlay = modal.querySelector('.modal-overlay');
+              const content = modal.querySelector('.modal-content');
+              if(overlay) overlay.classList.add('opacity-100');
+              if(content) {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+              }
+            }, 10);
+            document.body.style.overflow = 'hidden';
+          }
+        });
+      });
+
+      const closeModals = () => {
+        modals.forEach(modal => {
+          const overlay = modal.querySelector('.modal-overlay');
+          const content = modal.querySelector('.modal-content');
+          if(overlay) overlay.classList.remove('opacity-100');
+          if(content) {
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+          }
+          setTimeout(() => {
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+          }, 300);
+        });
+      };
+
+      modals.forEach(modal => {
+        const closeBtn = modal.querySelector('.close-modal');
+        const overlay = modal.querySelector('.modal-overlay');
+        if(closeBtn) closeBtn.addEventListener('click', closeModals);
+        if(overlay) overlay.addEventListener('click', closeModals);
+      });
+
+      // Variant Selection Logic
+      const variantBtns = document.querySelectorAll('.variant-btn');
+      const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim() || '#E83A7E';
+
+      variantBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const container = this.closest('.modal-content');
+          const siblingBtns = this.parentElement.querySelectorAll('.variant-btn');
+          
+          // Reset styling
+          siblingBtns.forEach(b => {
+            b.classList.remove('ring-1');
+            b.classList.add('border-gray-200');
+            b.style.borderColor = '';
+            b.style.removeProperty('--tw-ring-color');
+            const t = b.querySelector('.option-title');
+            if(t) { t.style.color = '#181818'; }
+          });
+          
+          // Apply active styling
+          this.classList.remove('border-gray-200');
+          this.classList.add('ring-1');
+          this.style.borderColor = primaryColor;
+          this.style.setProperty('--tw-ring-color', primaryColor);
+          const activeT = this.querySelector('.option-title');
+          if(activeT) { activeT.style.color = primaryColor; }
+          
+          // Update Hidden Input
+          const variantId = this.getAttribute('data-variant-id');
+          const idInput = container.querySelector('.variant-id-input');
+          if(idInput) idInput.value = variantId;
+          
+          // Update Prices
+          const price = this.getAttribute('data-price');
+          const compare = this.getAttribute('data-compare');
+          const currentPriceEl = container.querySelector('.current-price');
+          const comparePriceEl = container.querySelector('.compare-price');
+          const discountBadgeEl = container.querySelector('.discount-badge');
+          
+          if(currentPriceEl) currentPriceEl.innerHTML = price;
+          
+          if(compare && compare !== '' && parseFloat(compare.replace(/[^0-9.-]+/g,"")) > parseFloat(price.replace(/[^0-9.-]+/g,""))) {
+            if(comparePriceEl) {
+              comparePriceEl.innerHTML = compare;
+              comparePriceEl.style.display = 'inline';
+            }
+            if(discountBadgeEl) {
+               const pVal = parseFloat(price.replace(/[^0-9.]/g,""));
+               const cVal = parseFloat(compare.replace(/[^0-9.]/g,""));
+               const disc = Math.round(((cVal - pVal) / cVal) * 100);
+               discountBadgeEl.innerHTML = disc + '% OFF';
+               discountBadgeEl.style.display = 'inline';
+            }
+          } else {
+            if(comparePriceEl) comparePriceEl.style.display = 'none';
+            if(discountBadgeEl) discountBadgeEl.style.display = 'none';
+          }
+          
+          // Update Inventory
+          const invQty = parseInt(this.getAttribute('data-inventory'));
+          const invPolicy = this.getAttribute('data-inventory-policy');
+          const invCountEl = container.querySelector('.inventory-count');
+          const addToCartBtn = container.querySelector('.add-to-cart-btn');
+          const qtyInput = container.querySelector('.qty-input');
+          const qtyPlusBtn = container.querySelector('.qty-plus');
+          
+          const qtyMinusBtn = container.querySelector('.qty-minus');
+          
+          if(qtyInput) {
+            qtyInput.value = 1;
+            if (qtyMinusBtn) {
+              qtyMinusBtn.disabled = true;
+              qtyMinusBtn.style.opacity = '0.5';
+              qtyMinusBtn.style.cursor = 'not-allowed';
+            }
+            if (invPolicy === 'deny' && invQty > 0) {
+              qtyInput.setAttribute('max', invQty);
+              if (invQty <= 1 && qtyPlusBtn) {
+                qtyPlusBtn.disabled = true;
+                qtyPlusBtn.style.opacity = '0.5';
+                qtyPlusBtn.style.cursor = 'not-allowed';
+              } else if (qtyPlusBtn) {
+                qtyPlusBtn.disabled = false;
+                qtyPlusBtn.style.opacity = '1';
+                qtyPlusBtn.style.cursor = 'pointer';
+              }
+            } else {
+              qtyInput.removeAttribute('max');
+              if (qtyPlusBtn) {
+                qtyPlusBtn.disabled = false;
+                qtyPlusBtn.style.opacity = '1';
+                qtyPlusBtn.style.cursor = 'pointer';
+              }
+            }
+          }
+          
+          if(invQty > 0) {
+            if(invCountEl) invCountEl.innerHTML = invQty;
+            if(addToCartBtn) {
+              addToCartBtn.disabled = false;
+              const span = addToCartBtn.querySelector('span');
+              if(span) {
+                span.innerHTML = `
+                  Add to cart 
+                  <img src="{{ 'product_card_cart_Icon.svg' | asset_url }}" alt="Cart" class="ml-2 w-5 h-5 object-contain">
+                `;
+              }
+            }
+          } else if (invPolicy === 'continue') {
+            if(invCountEl) invCountEl.innerHTML = '';
+            if(addToCartBtn) {
+               addToCartBtn.disabled = false;
+               const span = addToCartBtn.querySelector('span');
+               if(span) {
+                 span.innerHTML = `
+                  Add to cart 
+                  <img src="{{ 'product_card_cart_Icon.svg' | asset_url }}" alt="Cart" class="ml-2 w-5 h-5 object-contain">
+                 `;
+               }
+            }
+          } else {
+            if(invCountEl) invCountEl.innerHTML = '0';
+            if(addToCartBtn) {
+              addToCartBtn.disabled = true;
+              const span = addToCartBtn.querySelector('span');
+              if(span) span.innerHTML = 'Sold out';
+            }
+          }
+        });
+      });
+      
+      // Quantity Logic
+      const minusBtns = document.querySelectorAll('.qty-minus');
+      const plusBtns = document.querySelectorAll('.qty-plus');
+      
+      minusBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const input = this.nextElementSibling;
+          let val = parseInt(input.value);
+          if(val > 1) {
+            input.value = val - 1;
+          }
+          if (parseInt(input.value) <= 1) {
+            this.disabled = true;
+            this.style.opacity = '0.5';
+            this.style.cursor = 'not-allowed';
+          }
+          const plusBtn = this.parentElement.querySelector('.qty-plus');
+          const max = parseInt(input.getAttribute('max'));
+          if (!isNaN(max) && parseInt(input.value) < max) {
+            plusBtn.disabled = false;
+            plusBtn.style.opacity = '1';
+            plusBtn.style.cursor = 'pointer';
+          }
+        });
+      });
+      
+      plusBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const input = this.previousElementSibling;
+          let val = parseInt(input.value);
+          const max = parseInt(input.getAttribute('max'));
+          if (!isNaN(max) && val >= max) return;
+          
+          input.value = val + 1;
+          
+          const minusBtn = this.parentElement.querySelector('.qty-minus');
+          if (parseInt(input.value) > 1) {
+            minusBtn.disabled = false;
+            minusBtn.style.opacity = '1';
+            minusBtn.style.cursor = 'pointer';
+          }
+          
+          if (!isNaN(max) && parseInt(input.value) >= max) {
+            this.disabled = true;
+            this.style.opacity = '0.5';
+            this.style.cursor = 'not-allowed';
+          }
+        });
+      });
+      
+      // Buy Now Logic
+      const buyNowBtns = document.querySelectorAll('.buy-now-btn');
+      buyNowBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const form = this.closest('form');
+          const formData = new FormData(form);
+          
+          const spinner = this.querySelector('.loading__spinner');
+          
+          this.classList.add('loading');
+          if(spinner) spinner.classList.remove('hidden');
+          this.disabled = true;
+          
+          fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            setTimeout(() => {
+              
+
+              handleFloCheckoutBtn();
+              this.classList.remove('loading');
+              if(spinner) spinner.classList.add('hidden');
+              this.disabled = false;
+            }, 500);
+          })
+          .catch(error => {
+            console.error('Error adding to cart:', error);
+            this.classList.remove('loading');
+            if(spinner) spinner.classList.add('hidden');
+            this.disabled = false;
+          });
+        });
+      });
+    });
+  </script>
+
+</div>
+{% schema %}
+{
+  "name": "Home Products Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Acne System"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop all products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Products Grid"
+    }
+  ]
+}
+{% endschema %}

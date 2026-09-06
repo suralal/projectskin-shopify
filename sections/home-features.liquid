@@ -1,0 +1,122 @@
+<style>
+  .home-features {
+    background-color: #FFFFFF;
+    width: 100%;
+  }
+  .features-heading {
+    font-weight: 600;
+    font-size: 52px;
+    line-height: 110%;
+    letter-spacing: 0.02em;
+    color: #50463E;
+  }
+  .features-heading em {
+    font-style: italic;
+    color: var(--color-primary);
+  }
+  .features-paragraph {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 160%;
+    color: #1B1813;
+  }
+  .feature-card {
+    background-color: #FFFAF4;
+    border-radius: 8px;
+    transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.4s ease;
+  }
+  .feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+  }
+  .feature-card-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #16140F;
+  }
+  .feature-card-desc {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 150%;
+    color: #16140F;
+  }
+  @media (max-width: 1024px) {
+    .features-heading { font-size: 36px; }
+  }
+  @media (max-width: 768px) {
+    .features-heading { font-size: 30px; }
+    .features-paragraph { font-size: 15px; }
+  }
+</style>
+
+<section id="home-features" class="home-features py-24 lg:py-32">
+  <div class="container mx-auto px-6 md:px-12 lg:px-20">
+    
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-16 lg:mb-24 items-start">
+      <div>
+        <h2 class="features-heading max-w-[100%]">
+          Your serum isn't failing you. The <em>approach is.</em>
+        </h2>
+      </div>
+      <div>
+        <p class="features-paragraph max-w-[550px]">
+          Acne is biology — hormones, sebum, bacteria, barrier damage, and the climate you live in. The industry's answer is one trending ingredient at a label-friendly percentage. Ours is a system: formulations engineered to work together, at concentrations with clinical evidence behind them, built for Indian heat, humidity, UV and pollution.
+        </p>
+      </div>
+    </div>
+
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      
+      
+        <div class="feature-card p-10 lg:p-12 flex flex-col items-center text-center cursor-default">
+          
+          <img src="{{ 'home_section_2_stomach.svg' | asset_url }}" alt="Right actives" class="w-[50px] h-[50px] mb-6 object-contain" loading="lazy">
+          
+          <h3 class="feature-card-title mb-3">Right actives</h3>
+          <p class="feature-card-desc">Designed to support a smarter approach to your daily wellness routine.</p>
+        </div>
+      
+        <div class="feature-card p-10 lg:p-12 flex flex-col items-center text-center cursor-default">
+          
+          <img src="{{ 'home_section_2_liquid.svg' | asset_url }}" alt="Right concentrations" class="w-[50px] h-[50px] mb-6 object-contain" loading="lazy">
+          
+          <h3 class="feature-card-title mb-3">Right concentrations</h3>
+          <p class="feature-card-desc">Purpose-built formulas to complement your energy by day and recovery by night.</p>
+        </div>
+      
+        <div class="feature-card p-10 lg:p-12 flex flex-col items-center text-center cursor-default">
+          
+          <img src="{{ 'home_section_2_delivery.svg' | asset_url }}" alt="Right delivery" class="w-[50px] h-[50px] mb-6 object-contain" loading="lazy">
+          
+          <h3 class="feature-card-title mb-3">Right delivery</h3>
+          <p class="feature-card-desc">Thoughtfully selected ingredients with transparency in every bottle.</p>
+        </div>
+      
+
+    </div>
+  </div>
+</section>
+
+
+</div>
+{% schema %}
+{
+  "name": "Home Features",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your serum isn't failing you. The approach is."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Features"
+    }
+  ]
+}
+{% endschema %}

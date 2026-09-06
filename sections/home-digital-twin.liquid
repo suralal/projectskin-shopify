@@ -1,0 +1,250 @@
+<style>
+  .digital-twin-section {
+    background-color: #FFFFFF;
+    padding: 80px 20px;
+    text-align: center;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) {
+    .digital-twin-section {
+      padding: 120px 40px 0px;
+    }
+  }
+  
+  .digital-twin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  /* Text Styles */
+  .dt-heading {
+    color: #181818;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 16px 0;
+  }
+  @media (min-width: 768px) {
+    .dt-heading {
+      font-size: 36px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .dt-heading {
+      font-size: 56px;
+    }
+  }
+  
+  .dt-subheading {
+    color: #4A4A4A;
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 650px;
+    margin: 0 auto 32px auto;
+  }
+  
+  .dt-btn {
+    background-color: #F9428B;
+    color: #FFFFFF;
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    margin-bottom: 60px;
+  }
+  .dt-btn:hover {
+    opacity: 0.9;
+    color: #FFFFFF;
+  }
+  .dt-btn svg {
+    margin-left: 8px;
+  }
+  
+  /* Image and Cards Container */
+  .dt-graphic-area {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .dt-main-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+  }
+  
+  /* Floating Cards */
+  .dt-card {
+    background-color: #F8F8F8;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: left;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+    position: absolute;
+    width: 280px;
+    animation: floatCard 6s ease-in-out infinite;
+    z-index: 2;
+  }
+  
+  .dt-card-icon {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 16px;
+    display: block;
+    object-fit: contain;
+  }
+  
+  .dt-card-title {
+    color: #181818;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  
+  .dt-card-text {
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  
+  /* Specific Card Positions */
+  .dt-card-1 {
+    top: 20%;
+    left: -8%;
+    animation-delay: 0s;
+  }
+  .dt-card-2 {
+    bottom: 12%;
+    left: -4%;
+    animation-delay: 1.5s;
+  }
+  .dt-card-3 {
+    top: 10%;
+    right: -8%;
+    animation-delay: 3s;
+  }
+  .dt-card-4 {
+    bottom: 5%;
+    right: -4%;
+    animation-delay: 4.5s;
+  }
+  
+  @keyframes floatCard {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+  }
+  
+  /* Responsive Fallback */
+  @media (max-width: 990px) {
+    .dt-graphic-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .dt-main-img {
+      order: -1;
+      margin-bottom: 20px;
+    }
+    .dt-card {
+      position: relative;
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      width: 100%;
+      max-width: 400px;
+      animation: floatCard 6s ease-in-out infinite;
+    }
+  }
+</style>
+
+<section id="home-digital-twin" class="digital-twin-section">
+  <div class="digital-twin-container">
+    <h2 class="dt-heading">Meet your skin's digital twin.</h2>
+    <p class="dt-subheading">An AI facial scan maps your acne severity, oil levels and pigmentation into a digital twin of your skin — so progress becomes a chart, not a feeling. Think calorie tracker, but for your face.</p>
+    
+    <a href="#home-waitlist" class="dt-btn">
+      Join the waitlist
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </a>
+    
+    <div class="dt-graphic-area">
+      <img src="{{ 'home_page_section_7_bg.webp' | asset_url }}" alt="Digital Twin Scan" class="dt-main-img" loading="lazy">
+      
+      
+        <div class="dt-card dt-card-1">
+          <img src="{{ 'home_page_section_7_facial_scan.svg' | asset_url }}" alt="AI facial scan" class="dt-card-icon" loading="lazy">
+          <h3 class="dt-card-title">AI facial scan</h3>
+          <p class="dt-card-text">Severity, oil and pigmentation, mapped and scored in seconds.</p>
+        </div>
+      
+        <div class="dt-card dt-card-2">
+          <img src="{{ 'home_page_section_7_progress.svg' | asset_url }}" alt="Progress tracking" class="dt-card-icon" loading="lazy">
+          <h3 class="dt-card-title">Progress tracking</h3>
+          <p class="dt-card-text">Photo timelines and skin scores that show whether the routine is working, with evidence.</p>
+        </div>
+      
+        <div class="dt-card dt-card-3">
+          <img src="{{ 'home_page_section_7_challenges.svg' | asset_url }}" alt="Challenges that build consistency" class="dt-card-icon" loading="lazy">
+          <h3 class="dt-card-title">Challenges that build consistency</h3>
+          <p class="dt-card-text">Streaks and structured challenges, because the routine only works if you do it.</p>
+        </div>
+      
+        <div class="dt-card dt-card-4">
+          <img src="{{ 'home_page_section_7_premium.svg' | asset_url }}" alt="Premium" class="dt-card-icon" loading="lazy">
+          <h3 class="dt-card-title">Premium</h3>
+          <p class="dt-card-text">A skin-health coach who reviews your progress with you every week.</p>
+        </div>
+      
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const dtBtns = document.querySelectorAll('.dt-btn');
+    dtBtns.forEach(btn => {
+      if(btn.getAttribute('href') && btn.getAttribute('href').includes('#home-waitlist')) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = document.getElementById('home-waitlist');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+    });
+  });
+</script>
+
+
+</div>
+{% schema %}
+{
+  "name": "Home Digital Twin",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Meet your skin's digital twin."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Digital Twin"
+    }
+  ]
+}
+{% endschema %}

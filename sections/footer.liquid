@@ -1,190 +1,106 @@
-<footer class="footer">
-  {% if section.settings.show_services %}
-    <div class="container footer-services">
-      <article class="footer-service">
-        {% render 'icon', name: 'shipping' %}
-        <div>
-          <h3>{{ section.settings.shipping_heading }}</h3>
-          <p>{{ section.settings.shipping_text }}</p>
+{% liquid
+  assign facebook_url = settings.social_facebook | default: 'https://www.facebook.com/share/1BS6aAnFib/?mibextid=wwXIfr'
+  assign linkedin_url = settings.social_linkedin | default: 'https://www.linkedin.com/company/nureya-beauty-and-wellness-pvt-ltd-skin/'
+  assign instagram_url = settings.social_instagram | default: 'https://www.instagram.com/projectskin.co?igsh=MTdyMnJvb2FleXAwdw=='
+  assign youtube_url = settings.social_youtube | default: 'https://youtube.com/@projectskin-co?si=-XU6Nrk8cOZx7eyg'
+  assign whatsapp_url = section.settings.whatsapp_url
+  if whatsapp_url == blank
+    assign whatsapp_url = 'https://wa.me/918446544458?text=Hi,%20I%20need%20to%20know%20more%20about%20your%20acne%20range%20products%20https://theprojectskin.com/'
+  endif
+%}
+
+<footer class="ps-footer-wrapper w-full bg-[#1A1A1A] text-white" style="margin-top: 0 !important;">
+  <div class="container mx-auto pt-16 pb-32 px-6 lg:px-16 xl:px-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 w-full">
+      
+      <!-- Brand & Social Icons -->
+      <div class="flex flex-col lg:col-span-4">
+        <div class="mb-8 max-w-[90px]">
+          <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+            <img src="{{ 'LOGO_PNG.jpg' | asset_url }}" alt="Project Skin" width="320" height="161" class="w-full h-auto object-contain">
+          </a>
         </div>
-      </article>
-      <article class="footer-service">
-        {% render 'icon', name: 'guarantee' %}
-        <div>
-          <h3>{{ section.settings.guarantee_heading }}</h3>
-          <p>{{ section.settings.guarantee_text }}</p>
+        
+        <div class="flex gap-x-6">
+          <a href="{{ facebook_url }}" target="_blank" rel="noopener" class="w-[35px] h-[35px] rounded-full bg-[#333333] hover:bg-[#4D4D4D] flex items-center justify-center transition-colors text-white" aria-label="Facebook">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+          </a>
+          <a href="{{ linkedin_url }}" target="_blank" rel="noopener" class="w-[35px] h-[35px] rounded-full bg-[#333333] hover:bg-[#4D4D4D] flex items-center justify-center transition-colors text-white" aria-label="LinkedIn">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/></svg>
+          </a>
+          <a href="{{ instagram_url }}" target="_blank" rel="noopener" class="w-[35px] h-[35px] rounded-full bg-[#333333] hover:bg-[#4D4D4D] flex items-center justify-center transition-colors text-white" aria-label="Instagram">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="{{ youtube_url }}" target="_blank" rel="noopener" class="w-[35px] h-[35px] rounded-full bg-[#333333] hover:bg-[#4D4D4D] flex items-center justify-center transition-colors text-white" aria-label="YouTube">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.501 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.377.55 9.377.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
         </div>
-      </article>
-      <article class="footer-service">
-        {% render 'icon', name: 'support' %}
-        <div>
-          <h3>{{ section.settings.support_heading }}</h3>
-          <p>{{ section.settings.support_text }}</p>
+      </div>
+
+      <!-- Company Overview -->
+      <div class="flex flex-col lg:col-span-2 lg:col-start-5">
+        <h2 class="text-[#D9D8D7] text-[15px] font-bold mb-6">{{ section.settings.company_heading | default: 'Company Overview' }}</h2>
+        <div class="flex flex-col gap-y-3">
+          <a href="{{ section.settings.link_about_url | default: '/pages/about' }}" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors">{{ section.settings.link_about_label | default: 'About Us' }}</a>
+          <a href="{{ section.settings.link_account_url | default: '/account' }}" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors">{{ section.settings.link_account_label | default: 'My Account' }}</a>
+          <a href="{{ section.settings.link_contact_url | default: '/pages/contact-us' }}" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors">{{ section.settings.link_contact_label | default: 'Contact Us' }}</a>
+          <a href="{{ section.settings.link_faq_url | default: '/pages/faq' }}" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors">{{ section.settings.link_faq_label | default: "FAQ's" }}</a>
+          <a href="{{ section.settings.link_guarantee_url | default: '/pages/money-back-guarantee' }}" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors">{{ section.settings.link_guarantee_label | default: 'Money Back Guarantee' }}</a>
         </div>
-      </article>
+      </div>
+
+      <!-- Policies -->
+      <div class="flex flex-col lg:col-span-2 lg:col-start-8">
+        <h2 class="text-[#D9D8D7] text-[15px] font-bold mb-6">Policies</h2>
+        <div class="flex flex-col gap-y-3">
+          <a href="/policies/terms-of-service" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors">Terms & Conditions</a>
+          <a href="/policies/shipping-policy" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors">Shipping Policy</a>
+          <a href="/policies/refund-policy" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors">Return & Refund Policy</a>
+          <a href="/pages/payment-policy" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors">Payment Policy</a>
+          <a href="/pages/corporate-policy" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors">Corporate Policy</a>
+        </div>
+      </div>
+
+      <!-- Contact us -->
+      <div class="flex flex-col lg:col-span-2 lg:col-start-11">
+        <h2 class="text-[#D9D8D7] text-[15px] font-bold mb-6">{{ section.settings.contact_heading | default: 'Contact us' }}</h2>
+        <div class="flex flex-col gap-y-2">
+          <p class="text-[#D9D8D7] text-[14px]">{{ section.settings.contact_intro | default: 'Need help fast?' }}</p>
+          <a href="mailto:{{ section.settings.email | default: 'support@theprojectskin.com' }}" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors underline underline-offset-4 decoration-[#555] hover:decoration-white inline-block w-fit whitespace-nowrap">Email - {{ section.settings.email | default: 'support@theprojectskin.com' }}</a>
+          <a href="{{ whatsapp_url }}" target="_blank" rel="noopener" class="text-[#D9D8D7] hover:text-white text-[14px] transition-colors underline underline-offset-4 decoration-[#555] hover:decoration-white inline-block w-fit whitespace-nowrap">{{ section.settings.whatsapp_label | default: 'WhatsApp' }}</a>
+        </div>
+      </div>
+
     </div>
-  {% endif %}
-
-  {% liquid
-    assign facebook_url = settings.social_facebook | default: 'https://www.facebook.com/share/1BS6aAnFib/?mibextid=wwXIfr'
-    assign linkedin_url = settings.social_linkedin | default: 'https://www.linkedin.com/company/nureya-beauty-and-wellness-pvt-ltd-skin/'
-    assign instagram_url = settings.social_instagram | default: 'https://www.instagram.com/projectskin.co'
-    assign youtube_url = settings.social_youtube | default: 'https://youtube.com/@projectskin-co'
-    assign whatsapp_url = section.settings.whatsapp_url
-    if whatsapp_url == blank
-      assign whatsapp_url = 'https://wa.me/918446544458?text=Hi,%20I%20need%20to%20know%20more%20about%20your%20acne%20range%20products'
-    endif
-  %}
-
-  <div class="container footer-main">
-    <section class="footer-contact">
-      <a class="footer-brand-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-        {% render 'project-skin-logo', width: 160 %}
-      </a>
-      <h2>{{ section.settings.contact_heading }}</h2>
-      {% if section.settings.contact_intro != blank %}
-        <p class="footer-contact__intro">{{ section.settings.contact_intro }}</p>
-      {% endif %}
-      {% if section.settings.email != blank %}
-        <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
-      {% endif %}
-      {% if section.settings.whatsapp_label != blank %}
-        <a href="{{ whatsapp_url }}" target="_blank" rel="noopener">{{ section.settings.whatsapp_label }}</a>
-      {% endif %}
-
-      <div class="footer-socials" aria-label="Social media">
-        <a href="{{ facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', name: 'facebook' %}</a>
-        <a href="{{ linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn">{% render 'icon', name: 'linkedin' %}</a>
-        <a href="{{ instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>
-        <a href="{{ youtube_url }}" target="_blank" rel="noopener" aria-label="YouTube">{% render 'icon', name: 'youtube' %}</a>
-      </div>
-    </section>
-
-    <nav class="footer-menu" aria-label="{{ section.settings.company_heading | escape }}">
-      <h2>{{ section.settings.company_heading }}</h2>
-      <div class="footer-menu__links">
-        {% if section.settings.link_about_label != blank %}
-          <a href="{{ section.settings.link_about_url | default: '/pages/about' }}">{{ section.settings.link_about_label }}</a>
-        {% endif %}
-        {% if section.settings.link_science_label != blank %}
-          <a href="{{ section.settings.link_science_url | default: '/pages/the-science' }}">{{ section.settings.link_science_label }}</a>
-        {% endif %}
-        {% if section.settings.link_ingredients_label != blank %}
-          <a href="{{ section.settings.link_ingredients_url | default: '/pages/ingredients' }}">{{ section.settings.link_ingredients_label }}</a>
-        {% endif %}
-        {% if section.settings.link_journal_label != blank %}
-          <a href="{{ section.settings.link_journal_url | default: '/pages/journal' }}">{{ section.settings.link_journal_label }}</a>
-        {% endif %}
-        {% if section.settings.link_philosophy_label != blank %}
-          <a href="{{ section.settings.link_philosophy_url | default: '/pages/philosophy' }}">{{ section.settings.link_philosophy_label }}</a>
-        {% endif %}
-        {% if section.settings.link_account_label != blank %}
-          {% liquid
-            assign footer_account_url = section.settings.link_account_url | default: routes.account_url
-            if footer_account_url == routes.account_url or footer_account_url == '/account'
-              assign footer_account_url = shop.url | append: routes.account_url
-            endif
-          %}
-          <a href="{{ footer_account_url }}">{{ section.settings.link_account_label }}</a>
-        {% endif %}
-        {% if section.settings.link_contact_label != blank %}
-          <a href="{{ section.settings.link_contact_url | default: '/pages/contact' }}">{{ section.settings.link_contact_label }}</a>
-        {% endif %}
-        {% if section.settings.link_faq_label != blank %}
-          <a href="{{ section.settings.link_faq_url | default: '/pages/faq' }}">{{ section.settings.link_faq_label }}</a>
-        {% endif %}
-        {% if section.settings.link_guarantee_label != blank %}
-          <a href="{{ section.settings.link_guarantee_url | default: '/pages/money-back-guarantee' }}">{{ section.settings.link_guarantee_label }}</a>
-        {% endif %}
-      </div>
-    </nav>
-
-    {% for block in section.blocks %}
-      <details class="footer-menu" open {{ block.shopify_attributes }}>
-        <summary>{{ block.settings.heading }}</summary>
-        <div class="footer-menu__links">
-          {% for link in block.settings.menu.links %}
-            <a href="{{ link.url }}">{{ link.title }}</a>
-          {% endfor %}
-        </div>
-      </details>
-    {% endfor %}
-
-    {% if section.settings.show_newsletter %}
-      <section class="footer-newsletter-wrap">
-        <h2>{{ section.settings.newsletter_heading }}</h2>
-        <p>{{ section.settings.newsletter_text }}</p>
-        {% form 'customer', class: 'footer-newsletter' %}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <label class="visually-hidden" for="FooterEmail-{{ section.id }}">Email address</label>
-          <input
-            id="FooterEmail-{{ section.id }}"
-            type="email"
-            name="contact[email]"
-            value="{{ form.email }}"
-            placeholder="{{ section.settings.newsletter_placeholder }}"
-            autocomplete="email"
-            required
-          >
-          <button type="submit">{{ section.settings.newsletter_button }}</button>
-          {% if form.posted_successfully? %}<p class="footer-newsletter__message">Thanks for subscribing.</p>{% endif %}
-          {% if form.errors %}<div class="footer-newsletter__message">{{ form.errors | default_errors }}</div>{% endif %}
-        {% endform %}
-        {% if section.settings.newsletter_terms != blank %}
-          <div class="footer-newsletter__terms rte">{{ section.settings.newsletter_terms }}</div>
-        {% endif %}
-      </section>
-    {% endif %}
   </div>
 
-  <div class="container footer-bottom">
-    <div class="footer-localization">
-      <span>{{ section.settings.copyright_text | default: 'Copyright © 2026 Nureya Beauty and Wellness Pvt Limited' }}</span>
-    </div>
-
-    {% if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 %}
-      <div class="footer-payments" aria-label="Payment methods">
-        {% for type in shop.enabled_payment_types %}
-          {{ type | payment_type_svg_tag: class: 'footer-payment-icon' }}
-        {% endfor %}
+  <!-- Bottom Copyright Bar -->
+  <div class="w-full border-t border-[#333333]">
+    <div class="container mx-auto py-8 px-6 lg:px-16 xl:px-24 flex flex-col md:flex-row justify-between items-center text-[#A3A3A3] text-[14px]">
+      <div class="w-full text-left">
+        {{ section.settings.copyright_text | default: 'Copyright © 2026 Nureya Beauty and Wellness Pvt Limited' }}
       </div>
-    {% endif %}
+    </div>
   </div>
 </footer>
 
-<button class="footer-back-to-top" type="button" data-back-to-top aria-label="Back to top">
-  {% render 'icon', name: 'arrow-up' %}
-</button>
+<!-- Floating WhatsApp Widget -->
+<div class="pz3-floating-icon">
+  <a href="{{ whatsapp_url }}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <div class="pz3-icon-container">
+      <img src="{{ 'whatsapp.png' | asset_url }}" width="34" height="34" alt="WhatsApp icon">
+    </div>
+  </a>
+</div>
 
 {% schema %}
 {
   "name": "Footer",
   "settings": [
-    { "type": "checkbox", "id": "show_services", "label": "Show service benefits", "default": false },
-    { "type": "text", "id": "shipping_heading", "label": "Shipping heading", "default": "Free Shipping" },
-    { "type": "textarea", "id": "shipping_text", "label": "Shipping text", "default": "Enjoy free worldwide shipping and returns, with customs and duties taxes included." },
-    { "type": "text", "id": "guarantee_heading", "label": "Guarantee heading", "default": "100-Day money Back" },
-    { "type": "textarea", "id": "guarantee_text", "label": "Guarantee text", "default": "Enjoy free returns within 100 days, as long as the product remains unused and undamaged." },
-    { "type": "text", "id": "support_heading", "label": "Support heading", "default": "Support Online" },
-    { "type": "textarea", "id": "support_text", "label": "Support text", "default": "We support customers 24/7, send questions and we will solve for you immediately." },
-    { "type": "header", "content": "Contact" },
-    { "type": "text", "id": "contact_heading", "label": "Heading", "default": "Contact us" },
-    { "type": "text", "id": "contact_intro", "label": "Intro", "default": "Need help fast?" },
-    { "type": "text", "id": "email", "label": "Email", "default": "support@theprojectskin.com" },
-    { "type": "text", "id": "whatsapp_label", "label": "WhatsApp label", "default": "WhatsApp" },
-    { "type": "url", "id": "whatsapp_url", "label": "WhatsApp link" },
     { "type": "header", "content": "Company overview" },
-    { "type": "text", "id": "company_heading", "label": "Heading", "default": "Company Overview" },
+    { "type": "text", "id": "company_heading", "label": "Company Heading", "default": "Company Overview" },
     { "type": "text", "id": "link_about_label", "label": "About label", "default": "About Us" },
     { "type": "url", "id": "link_about_url", "label": "About link" },
-    { "type": "text", "id": "link_science_label", "label": "Science label", "default": "The Science" },
-    { "type": "url", "id": "link_science_url", "label": "Science link" },
-    { "type": "text", "id": "link_ingredients_label", "label": "Ingredients label", "default": "Ingredients" },
-    { "type": "url", "id": "link_ingredients_url", "label": "Ingredients link" },
-    { "type": "text", "id": "link_journal_label", "label": "Journal label", "default": "Journal" },
-    { "type": "url", "id": "link_journal_url", "label": "Journal link" },
-    { "type": "text", "id": "link_philosophy_label", "label": "Philosophy label", "default": "Philosophy" },
-    { "type": "url", "id": "link_philosophy_url", "label": "Philosophy link" },
     { "type": "text", "id": "link_account_label", "label": "Account label", "default": "My Account" },
     { "type": "url", "id": "link_account_url", "label": "Account link" },
     { "type": "text", "id": "link_contact_label", "label": "Contact label", "default": "Contact Us" },
@@ -193,28 +109,15 @@
     { "type": "url", "id": "link_faq_url", "label": "FAQ link" },
     { "type": "text", "id": "link_guarantee_label", "label": "Guarantee label", "default": "Money Back Guarantee" },
     { "type": "url", "id": "link_guarantee_url", "label": "Guarantee link" },
-    { "type": "header", "content": "Newsletter" },
-    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter", "default": true },
-    { "type": "text", "id": "newsletter_heading", "label": "Heading", "default": "Stay in the loop" },
-    { "type": "textarea", "id": "newsletter_text", "label": "Text", "default": "Get Project Skin tips, launches, and routine updates straight to your inbox." },
-    { "type": "text", "id": "newsletter_placeholder", "label": "Placeholder", "default": "Enter your email..." },
-    { "type": "text", "id": "newsletter_button", "label": "Button", "default": "Subscribe" },
-    { "type": "richtext", "id": "newsletter_terms", "label": "Terms" },
+    { "type": "header", "content": "Contact" },
+    { "type": "text", "id": "contact_heading", "label": "Contact Heading", "default": "Contact us" },
+    { "type": "text", "id": "contact_intro", "label": "Contact Intro", "default": "Need help fast?" },
+    { "type": "text", "id": "email", "label": "Email", "default": "support@theprojectskin.com" },
+    { "type": "text", "id": "whatsapp_label", "label": "WhatsApp label", "default": "WhatsApp" },
+    { "type": "url", "id": "whatsapp_url", "label": "WhatsApp link" },
     { "type": "header", "content": "Bottom bar" },
-    { "type": "text", "id": "copyright_text", "label": "Copyright text", "default": "Copyright © 2026 Nureya Beauty and Wellness Pvt Limited" },
-    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true }
+    { "type": "text", "id": "copyright_text", "label": "Copyright text", "default": "Copyright © 2026 Nureya Beauty and Wellness Pvt Limited" }
   ],
-  "blocks": [
-    {
-      "type": "menu",
-      "name": "Menu",
-      "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Explore" },
-        { "type": "link_list", "id": "menu", "label": "Menu" }
-      ]
-    }
-  ],
-  "max_blocks": 2,
   "presets": [{ "name": "Footer" }]
 }
 {% endschema %}
