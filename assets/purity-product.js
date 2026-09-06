@@ -298,7 +298,12 @@
     });
   };
 
+  let isReviewModalOpening = false;
   const triggerJudgemeWriteReview = (triggerEl) => {
+    if (isReviewModalOpening) return;
+    isReviewModalOpening = true;
+    setTimeout(() => { isReviewModalOpening = false; }, 800);
+
     const root = document.getElementById('judgeme_product_reviews') || document.querySelector('.jdgm-review-widget');
     let productId = triggerEl ? triggerEl.getAttribute('data-product-id') : null;
     if (!productId && root) {

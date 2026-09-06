@@ -238,29 +238,5 @@ Dev N.|India|Consultation path|Knew when to escalate vs stay cosmetic. That alon
         more.textContent = collapsed ? 'Show less' : 'Show more feedback';
       });
     }
-
-    var writeBtn = root.querySelector('[data-write-review-trigger]');
-    if (writeBtn) {
-      writeBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (typeof window.triggerJudgemeWriteReview === 'function') {
-          window.triggerJudgemeWriteReview(writeBtn);
-        } else {
-          var pid = writeBtn.getAttribute('data-product-id');
-          var fallback = writeBtn.getAttribute('data-fallback-url');
-          if (window.jdgm && window.jdgm._WriteReviewModal && window.jdgm.$ && pid) {
-            try {
-              document.querySelectorAll('.jdgm-review-widget-modal.jdgm-write-review-modal').forEach(function (m) { m.remove(); });
-              var m = new window.jdgm._WriteReviewModal(window.jdgm.$);
-              m.setup('jdgm-review-widget-modal', pid, {}).then(function (ok) {
-                if (ok) m.showModalPage(1);
-              });
-              return;
-            } catch (err) {}
-          }
-          if (fallback) window.open(fallback, '_blank', 'noopener,noreferrer');
-        }
-      });
-    }
   })();
 </script>
