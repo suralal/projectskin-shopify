@@ -763,7 +763,7 @@
   overflow: hidden;
   aspect-ratio: 3 / 4;
   border-radius: 16px;
-  background: #f6f4ef;
+  background: #ffffff;
   border: 0;
   box-shadow: none;
 }
@@ -774,7 +774,7 @@
 .ps-product[data-product-palette="clean-seal"],
 .ps-product[data-product-palette="active-boba"],
 .ps-product[data-product-palette="brand"] {
-  --card-media-bg: #f6f4ef;
+  --card-media-bg: #ffffff;
 }
 .ps-product__media-link { position: absolute; inset: 0; display: block; z-index: 1; }
 .ps-product__gallery {
@@ -786,7 +786,7 @@
   position: absolute;
   inset: 0;
   display: block;
-  background: #f6f4ef;
+  background: #ffffff;
 }
 .ps-product__gallery-image {
   position: absolute;
