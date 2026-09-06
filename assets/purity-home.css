@@ -118,7 +118,7 @@
 }
 /* Banner-matched accents (pulled from current hero creatives) */
 .ps-hero[data-active-palette="sunscreen"] { --ps-active-accent: #d4b84a; --ps-active-secondary: #ffe300; }
-.ps-hero[data-active-palette="moisturiser"] { --ps-active-accent: #fb8cb3; --ps-active-secondary: #2e5bff; }
+.ps-hero[data-active-palette="moisturiser"] { --ps-active-accent: #324a73; --ps-active-secondary: #c0d4e4; }
 .ps-hero[data-active-palette="cleanser"] { --ps-active-accent: #0f9b8e; --ps-active-secondary: #7ec8b8; }
 .ps-hero[data-active-palette="serum"] { --ps-active-accent: #6a479e; --ps-active-secondary: #a99dc8; }
 .ps-hero[data-active-palette="clean-seal"] { --ps-active-accent: #00a3b1; --ps-active-secondary: #c45a5a; }
@@ -273,7 +273,7 @@
   transition: background-color 420ms ease, border-color 420ms ease;
 }
 .ps-benefits[data-active-palette="sunscreen"] { --ps-active-accent: #d4b84a; --ps-active-secondary: #ffe300; }
-.ps-benefits[data-active-palette="moisturiser"] { --ps-active-accent: #fb8cb3; --ps-active-secondary: #2e5bff; }
+.ps-benefits[data-active-palette="moisturiser"] { --ps-active-accent: #324a73; --ps-active-secondary: #c0d4e4; }
 .ps-benefits[data-active-palette="cleanser"] { --ps-active-accent: #0f9b8e; --ps-active-secondary: #7ec8b8; }
 .ps-benefits[data-active-palette="serum"] { --ps-active-accent: #6a479e; --ps-active-secondary: #a99dc8; }
 .ps-benefits[data-active-palette="clean-seal"] { --ps-active-accent: #00a3b1; --ps-active-secondary: #c45a5a; }
@@ -336,7 +336,7 @@
   box-shadow: 0 8px 30px rgba(196, 160, 53, 0.06);
 }
 .announcement[data-active-palette="moisturiser"],
-.site-header-wrap[data-active-palette="moisturiser"] { --ps-active-accent: #fb8cb3; --ps-active-secondary: #2e5bff; }
+.site-header-wrap[data-active-palette="moisturiser"] { --ps-active-accent: #324a73; --ps-active-secondary: #c0d4e4; }
 .announcement[data-active-palette="cleanser"],
 .site-header-wrap[data-active-palette="cleanser"] { --ps-active-accent: #0f9b8e; --ps-active-secondary: #7ec8b8; }
 .announcement[data-active-palette="serum"],

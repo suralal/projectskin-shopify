@@ -39,10 +39,10 @@
   --pdp-accent-mist: #efeaf6;
 }
 .pdp-main[data-product-palette="moisturiser"] {
-  --pdp-accent: #2e5bff;
-  --pdp-accent-hover: #1f45d6;
-  --pdp-accent-soft: #eef1ff;
-  --pdp-accent-mist: #e8ecff;
+  --pdp-accent: #324a73;
+  --pdp-accent-hover: #243756;
+  --pdp-accent-soft: #e2edf7;
+  --pdp-accent-mist: #f0f5fa;
 }
 .pdp-main[data-product-palette="cleanser"] {
   --pdp-accent: #0f9b8e;
@@ -123,7 +123,7 @@
   aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: 8px;
-  border: 1px solid #f0f0f0;
+  border: none;
   background: #ffffff;
 }
 .pdp-gallery__item--half {
@@ -208,7 +208,7 @@
   min-width: 0;
   overflow: hidden;
   border-radius: 8px;
-  border: 1px solid #f0f0f0;
+  border: none;
   background: #ffffff;
   touch-action: pan-y;
 }
@@ -447,7 +447,7 @@
   background: #faf9f6;
 }
 .pdp-diff[data-product-palette="serum"] { --pdp-diff-accent: #6a479e; }
-.pdp-diff[data-product-palette="moisturiser"] { --pdp-diff-accent: #2e5bff; }
+.pdp-diff[data-product-palette="moisturiser"] { --pdp-diff-accent: #324a73; }
 .pdp-diff[data-product-palette="cleanser"] { --pdp-diff-accent: #0f9b8e; }
 .pdp-diff[data-product-palette="sunscreen"] { --pdp-diff-accent: #c4a035; }
 .pdp-diff[data-product-palette="clean-seal"] { --pdp-diff-accent: #00a3b1; }
@@ -952,7 +952,7 @@
   --pdp-strip-bg: #f3f0ea;
 }
 .pdp-trust-strip[data-product-palette="serum"] { --pdp-accent: #6a479e; --pdp-strip-bg: #efeaf6; }
-.pdp-trust-strip[data-product-palette="moisturiser"] { --pdp-accent: #2e5bff; --pdp-strip-bg: #eef1ff; }
+.pdp-trust-strip[data-product-palette="moisturiser"] { --pdp-accent: #324a73; --pdp-strip-bg: #e2edf7; }
 .pdp-trust-strip[data-product-palette="cleanser"] { --pdp-accent: #0f9b8e; --pdp-strip-bg: #e7f6f4; }
 .pdp-trust-strip[data-product-palette="sunscreen"] { --pdp-accent: #c4a035; --pdp-strip-bg: #faf6ea; }
 .pdp-trust-strip[data-product-palette="clean-seal"] { --pdp-accent: #00a3b1; --pdp-strip-bg: #e6f7f8; }
