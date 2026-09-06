@@ -43,6 +43,17 @@
     }
   }
 
+  const updateShipping=cart=>{
+    if(!cart)return;
+    qa('[data-shipping-progress]').forEach(root=>{
+      const threshold=Number(root.dataset.threshold)||0,msg=q('[data-shipping-message]',root),bar=q('[data-shipping-bar]',root);
+      if(!threshold)return;
+      const remaining=Math.max(0,threshold-cart.total_price);
+      if(msg)msg.innerHTML=remaining>0?`You're <strong>${money(remaining)}</strong> away from free shipping`:`You've unlocked <strong>free shipping</strong>`;
+      if(bar)bar.style.width=`${Math.min(100,(cart.total_price/threshold)*100)}%`;
+    });
+  };
+
   async function refreshCart(open=true){
     try {
       const r=await fetchWithTimeout('/cart.js', { headers: { Accept: 'application/json' } }, 5000);
@@ -55,6 +66,7 @@
       });
       const bodyEl=q('[data-cart-body]'), subtotal=q('[data-cart-subtotal]');
       if(subtotal) subtotal.textContent=money(cart.total_price);
+      updateShipping(cart);
       if(bodyEl){
         bodyEl.innerHTML=cart.item_count?cart.items.map((i,idx)=>`
           <div class="cart-item" data-line="${idx+1}">
@@ -259,7 +271,7 @@
   document.addEventListener('click',e=>{if(e.target.closest('[data-filter-open]')){filter?.classList.add('is-open');filterBackdrop?.classList.add('is-open');document.body.classList.add('no-scroll')}if(e.target.closest('[data-filter-close]'))closeFilter()});
 
   // Free shipping progress in the drawer.
-  const updateShipping=cart=>{const root=q('[data-shipping-progress]');if(!root)return;const threshold=Number(root.dataset.threshold)||0,msg=q('[data-shipping-message]',root),bar=q('[data-shipping-bar]',root);if(!threshold)return;const remaining=Math.max(0,threshold-cart.total_price);if(msg)msg.innerHTML=remaining>0?`You're <strong>${money(remaining)}</strong> away from free shipping`:`You've unlocked <strong>free shipping</strong>`;if(bar)bar.style.width=`${Math.min(100,(cart.total_price/threshold)*100)}%`};
+  const updateShipping=cart=>{if(!cart)return;qa('[data-shipping-progress]').forEach(root=>{const threshold=Number(root.dataset.threshold)||0,msg=q('[data-shipping-message]',root),bar=q('[data-shipping-bar]',root);if(!threshold)return;const remaining=Math.max(0,threshold-cart.total_price);if(msg)msg.innerHTML=remaining>0?`You're <strong>${money(remaining)}</strong> away from free shipping`:`You've unlocked <strong>free shipping</strong>`;if(bar)bar.style.width=`${Math.min(100,(cart.total_price/threshold)*100)}%`})};
   fetch('/cart.js').then(r=>r.json()).then(updateShipping).catch(()=>{});
   document.addEventListener('submit',e=>{const form=e.target.closest('[data-discount-form]');if(!form)return;e.preventDefault();const code=q('[data-discount-code]',form)?.value.trim();if(code)location.href=`/discount/${encodeURIComponent(code)}?redirect=${encodeURIComponent(location.pathname+location.search)}`});
 

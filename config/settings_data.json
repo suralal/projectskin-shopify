@@ -9,6 +9,8 @@
     "card_secondary_image": true,
     "card_video_hover": true,
     "use_project_skin_fonts": true,
+    "free_shipping_threshold": 999,
+    "free_shipping_message": true,
     "shopflo_enabled": true,
     "shopflo_use_flo_cart": true,
     "search_placeholder": "Search serum, cleanser, sunscreen…",

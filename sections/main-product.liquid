@@ -186,7 +186,11 @@
             Buy it now
           </button>
         {% endif %}
-        <ul class="pdp-policy-list" role="list"><li>{% render 'icon', name: 'shipping' %}{{ section.settings.shipping_text }}</li><li>{% render 'icon', name: 'guarantee' %}{{ section.settings.returns_text }}</li></ul>
+        <ul class="pdp-policy-list" role="list">
+          <li>{% render 'icon', name: 'shipping' %}{{ section.settings.shipping_text | default: 'Free shipping on orders above ₹999' }}</li>
+          <li>{% render 'icon', name: 'guarantee' %}{{ section.settings.returns_text | default: '30 day returns. View return policy' }}</li>
+          <li>{% render 'icon', name: 'verified' %}<span>Instant UPI / Cards / Cash on Delivery (COD)</span></li>
+        </ul>
         {% render 'pdp-share', product: product %}
         {% if outcome_blocks.size > 0 %}
           <div class="pdp-outcomes" aria-label="Key product outcomes">
