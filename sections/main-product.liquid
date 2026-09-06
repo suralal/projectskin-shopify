@@ -175,19 +175,16 @@
           <button class="pdp-atc" type="submit" data-product-submit data-add-label="{{ section.settings.add_label | escape }}" {% unless current_variant.available %}disabled{% endunless %}>{% if current_variant.available %}{{ section.settings.add_label }} - {{ display_price }}{% else %}Sold out{% endif %}</button>
         </div>
         {% if section.settings.show_dynamic_checkout %}
-          {% if settings.shopflo_enabled %}
-            <button
-              class="pdp-buy-now shopify-payment-button__button shopify-payment-button__button--unbranded"
-              type="button"
-              id="flo-buy-now-button"
-              name="flo-buy-now-button"
-              data-pdp-buy-now
-            >
-              Buy it now
-            </button>
-          {% else %}
-            <button class="pdp-buy-now" type="button" data-pdp-buy-now>Buy it now</button>
-          {% endif %}
+          <button
+            class="pdp-buy-now shopify-payment-button__button shopify-payment-button__button--unbranded"
+            type="button"
+            id="flo-buy-now-button"
+            name="flo-buy-now-button"
+            data-pdp-buy-now
+            onclick="if(typeof handleFloBuyNowBtn==='function'){handleFloBuyNowBtn(event);return false;}"
+          >
+            Buy it now
+          </button>
         {% endif %}
         <ul class="pdp-policy-list" role="list"><li>{% render 'icon', name: 'shipping' %}{{ section.settings.shipping_text }}</li><li>{% render 'icon', name: 'guarantee' %}{{ section.settings.returns_text }}</li></ul>
         {% render 'pdp-share', product: product %}

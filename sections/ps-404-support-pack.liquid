@@ -211,16 +211,16 @@
       <div class="ps-field-row">
         <div class="ps-field">
           <label for="PackContactName-{{ section.id }}">Name</label>
-          <input id="PackContactName-{{ section.id }}" type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name" required>
+          <input id="PackContactName-{{ section.id }}" type="text" name="contact[name]" value="{{ form.name | escape }}" autocomplete="name" required>
         </div>
         <div class="ps-field">
           <label for="PackContactEmail-{{ section.id }}">Email</label>
-          <input id="PackContactEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" required>
+          <input id="PackContactEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email | escape }}" autocomplete="email" required>
         </div>
       </div>
       <div class="ps-field">
         <label for="PackContactPhone-{{ section.id }}">Phone <span>(optional)</span></label>
-        <input id="PackContactPhone-{{ section.id }}" type="tel" name="contact[phone]" value="{{ form.phone }}" autocomplete="tel">
+        <input id="PackContactPhone-{{ section.id }}" type="tel" name="contact[phone]" value="{{ form.phone | escape }}" autocomplete="tel">
       </div>
       <div class="ps-field">
         <label for="PackContactTopic-{{ section.id }}">Topic</label>
@@ -234,7 +234,7 @@
       </div>
       <div class="ps-field">
         <label for="PackContactMessage-{{ section.id }}">Message</label>
-        <textarea id="PackContactMessage-{{ section.id }}" name="contact[body]" rows="7" required>{{ form.body }}</textarea>
+        <textarea id="PackContactMessage-{{ section.id }}" name="contact[body]" rows="7" required>{{ form.body | escape }}</textarea>
       </div>
       <button class="ps-button" type="submit">Send message</button>
     {% endform %}

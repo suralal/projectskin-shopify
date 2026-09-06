@@ -94,6 +94,14 @@
   {% elsif mode == 'gallery-slides' %}
     {% for asset_name in extra_list %}
       {% assign slide_index = start_at | plus: forloop.index0 %}
+      {% liquid
+        assign img_loading = 'lazy'
+        assign img_priority = 'auto'
+        if start_at == 0 and forloop.first
+          assign img_loading = 'eager'
+          assign img_priority = 'high'
+        endif
+      %}
       <div
         class="pdp-thumbnail-gallery__slide{% if start_at == 0 and forloop.first %} is-active{% endif %}"
         data-product-media
@@ -105,7 +113,8 @@
           src="{{ asset_name | asset_url }}"
           width="819"
           height="1024"
-          loading="lazy"
+          loading="{{ img_loading }}"
+          fetchpriority="{{ img_priority }}"
           alt="{{ display_title | escape }}"
           sizes="(min-width: 990px) 608px, calc(100vw - 40px)"
         >
@@ -116,12 +125,21 @@
     {% endfor %}
   {% elsif mode == 'gallery-grid' %}
     {% for asset_name in extra_list %}
+      {% liquid
+        assign grid_loading = 'lazy'
+        assign grid_priority = 'auto'
+        if forloop.first
+          assign grid_loading = 'eager'
+          assign grid_priority = 'high'
+        endif
+      %}
       <div class="pdp-gallery__item{% if forloop.index < 3 %} pdp-gallery__item--half{% endif %}" data-product-media>
         <img
           src="{{ asset_name | asset_url }}"
           width="819"
           height="1024"
-          loading="lazy"
+          loading="{{ grid_loading }}"
+          fetchpriority="{{ grid_priority }}"
           alt="{{ display_title | escape }}"
           sizes="(min-width: 990px) 50vw, 92vw"
         >

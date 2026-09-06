@@ -13,11 +13,11 @@
         <div class="ps-account-form__row">
           <div class="ps-field">
             <label for="RegisterFirstName">First name</label>
-            <input id="RegisterFirstName" type="text" name="customer[first_name]" autocomplete="given-name" value="{% if form.first_name %}{{ form.first_name }}{% endif %}">
+            <input id="RegisterFirstName" type="text" name="customer[first_name]" autocomplete="given-name" value="{% if form.first_name %}{{ form.first_name | escape }}{% endif %}">
           </div>
           <div class="ps-field">
             <label for="RegisterLastName">Last name</label>
-            <input id="RegisterLastName" type="text" name="customer[last_name]" autocomplete="family-name" value="{% if form.last_name %}{{ form.last_name }}{% endif %}">
+            <input id="RegisterLastName" type="text" name="customer[last_name]" autocomplete="family-name" value="{% if form.last_name %}{{ form.last_name | escape }}{% endif %}">
           </div>
         </div>
 
@@ -30,7 +30,7 @@
             autocomplete="email"
             autocapitalize="off"
             spellcheck="false"
-            value="{% if form.email %}{{ form.email }}{% endif %}"
+            value="{% if form.email %}{{ form.email | escape }}{% endif %}"
             required
           >
         </div>

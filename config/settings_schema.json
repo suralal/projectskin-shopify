@@ -128,7 +128,7 @@
         "type": "checkbox",
         "id": "shopflo_enabled",
         "label": "Enable Shopflo checkout",
-        "default": false,
+        "default": true,
         "info": "Loads the Shopflo bridge and routes Checkout / Buy it now through Shopflo. Requires the Shopflo app to be connected on this store."
       },
       {

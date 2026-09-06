@@ -25,40 +25,152 @@
     const qty=e.target.closest('[data-qty]');if(qty){const wrap=qty.closest('.quantity');const input=q('input',wrap);input.value=Math.max(1,(parseInt(input.value)||1)+(qty.dataset.qty==='plus'?1:-1));return;}
     const sw=e.target.closest('[data-card-swatch]');if(sw){e.preventDefault();const card=sw.closest('.product-card');qa('[data-card-swatch]',card).forEach(x=>x.classList.remove('is-active'));sw.classList.add('is-active');const img=q('.product-card__primary',card);if(img&&sw.dataset.image)img.src=sw.dataset.image;return;}
   });
-  async function refreshCart(open=true){
-    const r=await fetch('/cart.js'); const cart=await r.json();
-    qa('[data-cart-count]').forEach(el=>{
-      el.textContent=cart.item_count;
-      el.classList.toggle('is-hidden', !cart.item_count);
-      if(cart.item_count) el.removeAttribute('hidden');
-      else el.setAttribute('hidden','');
-    });
-    const bodyEl=q('[data-cart-body]'), subtotal=q('[data-cart-subtotal]');
-    if(subtotal) subtotal.textContent=money(cart.total_price);
-    if(bodyEl){
-      bodyEl.innerHTML=cart.item_count?cart.items.map((i,idx)=>`<div class="cart-item"><img src="${i.image||''}" alt=""><div><a class="cart-item__title" href="${i.url}">${i.product_title}</a>${i.variant_title&&i.variant_title!=='Default Title'?`<div class="cart-item__variant">${i.variant_title}</div>`:''}<div>${i.quantity} × ${money(i.final_price)}</div><button class="cart-item__remove" data-cart-remove="${idx+1}">Remove</button></div><strong>${money(i.final_line_price)}</strong></div>`).join(''):`<div class="cart-empty"><h3>Your cart is empty</h3><p class="muted">Discover something made for your routine.</p></div>`;
-    }
-    if(open){
-      const openThemeCart=()=>openDrawer('[data-cart-drawer]');
-      if(window.PurityTheme?.shopfloEnabled&&window.PurityTheme?.shopfloUseFloCart&&window.PurityShopflo?.openCartWhenReady){
-        window.PurityShopflo.openCartWhenReady(4500).then((opened)=>{if(!opened)openThemeCart();});
-        return;
+  async function fetchWithTimeout(url, options = {}, timeoutMs = 6000) {
+    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timeout = controller ? setTimeout(() => controller.abort(), timeoutMs) : null;
+    try {
+      const fetchOpts = controller ? { ...options, signal: controller.signal } : options;
+      const res = await fetch(url, fetchOpts);
+      if (timeout) clearTimeout(timeout);
+      if (!res.ok) throw new Error('Network error. Please try again.');
+      return res;
+    } catch (err) {
+      if (timeout) clearTimeout(timeout);
+      if (err.name === 'AbortError') {
+        throw new Error('Request timed out. Please check your connection.');
       }
-      if(window.PurityShopflo?.cart?.())return;
-      openThemeCart();
+      throw err;
+    }
+  }
+
+  async function refreshCart(open=true){
+    try {
+      const r=await fetchWithTimeout('/cart.js', { headers: { Accept: 'application/json' } }, 5000);
+      const cart=await r.json();
+      qa('[data-cart-count]').forEach(el=>{
+        el.textContent=cart.item_count;
+        el.classList.toggle('is-hidden', !cart.item_count);
+        if(cart.item_count) el.removeAttribute('hidden');
+        else el.setAttribute('hidden','');
+      });
+      const bodyEl=q('[data-cart-body]'), subtotal=q('[data-cart-subtotal]');
+      if(subtotal) subtotal.textContent=money(cart.total_price);
+      if(bodyEl){
+        bodyEl.innerHTML=cart.item_count?cart.items.map((i,idx)=>`
+          <div class="cart-item" data-line="${idx+1}">
+            <img src="${i.image||''}" alt="${(i.title||'').replace(/"/g,'&quot;')}">
+            <div class="cart-item__main">
+              <a class="cart-item__title" href="${i.url}">${i.product_title}</a>
+              ${i.variant_title&&i.variant_title!=='Default Title'?`<div class="cart-item__variant">${i.variant_title}</div>`:''}
+              <div class="cart-item__unit-price">${money(i.final_price)}</div>
+              <div class="cart-item__controls">
+                <div class="cart-item__quantity">
+                  <button type="button" class="cart-item__qty-btn" data-cart-qty="minus" data-line="${idx+1}" aria-label="Decrease quantity">−</button>
+                  <span class="cart-item__qty-val" data-cart-qty-val>${i.quantity}</span>
+                  <button type="button" class="cart-item__qty-btn" data-cart-qty="plus" data-line="${idx+1}" aria-label="Increase quantity">+</button>
+                </div>
+                <button class="cart-item__remove" type="button" data-cart-remove="${idx+1}" aria-label="Remove item">Remove</button>
+              </div>
+            </div>
+            <strong class="cart-item__line-price">${money(i.final_line_price)}</strong>
+          </div>
+        `).join(''):`<div class="cart-empty"><h3>Your cart is empty</h3><p class="muted">Discover something made for your routine.</p></div>`;
+      }
+      if(open){
+        const openThemeCart=()=>openDrawer('[data-cart-drawer]');
+        if(window.PurityTheme?.shopfloEnabled&&window.PurityTheme?.shopfloUseFloCart&&window.PurityShopflo?.openCartWhenReady){
+          window.PurityShopflo.openCartWhenReady(4500).then((opened)=>{if(!opened)openThemeCart();});
+          return;
+        }
+        if(window.PurityShopflo?.cart?.())return;
+        openThemeCart();
+      }
+    } catch(e) {
+      console.error(e);
     }
   }
   function money(cents){try{return new Intl.NumberFormat(undefined,{style:'currency',currency:window.Shopify?.currency?.active||'USD'}).format(cents/100)}catch(e){return (cents/100).toFixed(2)}}
   document.addEventListener('submit',async e=>{
     const form=e.target.closest('form[action*="/cart/add"]'); if(!form)return; e.preventDefault();
     const btn=q('[type="submit"]',form); if(btn){btn.disabled=true;btn.dataset.oldText=btn.textContent;btn.textContent='Adding…'}
-    try{const fd=new FormData(form);await fetch('/cart/add.js',{method:'POST',body:fd,headers:{Accept:'application/json'}});await refreshCart(true)}catch(err){showToast('Unable to add this item. Please try again.')}finally{if(btn){btn.disabled=false;btn.textContent=btn.dataset.oldText||'Add to cart'}}
+    try{
+      const fd=new FormData(form);
+      await fetchWithTimeout('/cart/add.js',{method:'POST',body:fd,headers:{Accept:'application/json'}}, 6000);
+      await refreshCart(true);
+    }catch(err){
+      showToast(err.message||'Unable to add this item. Please try again.');
+    }finally{
+      if(btn){btn.disabled=false;btn.textContent=btn.dataset.oldText||'Add to cart'}
+    }
   });
-  document.addEventListener('click',async e=>{const rem=e.target.closest('[data-cart-remove]');if(!rem)return;await fetch('/cart/change.js',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({line:Number(rem.dataset.cartRemove),quantity:0})});refreshCart(false)});
+  document.addEventListener('click',async e=>{
+    const qtyBtn=e.target.closest('[data-cart-qty]');
+    if(qtyBtn){
+      const line=Number(qtyBtn.dataset.line);
+      const isPlus=qtyBtn.dataset.cartQty==='plus';
+      const wrap=qtyBtn.closest('.cart-item__quantity');
+      const valEl=wrap?wrap.querySelector('[data-cart-qty-val]'):null;
+      const currentVal=valEl?parseInt(valEl.textContent)||1:1;
+      const newQty=isPlus?currentVal+1:currentVal-1;
+      if(wrap)wrap.style.opacity='0.4';
+      try{
+        await fetchWithTimeout('/cart/change.js',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify({line:line,quantity:newQty})
+        }, 6000);
+        await refreshCart(false);
+      }catch(err){
+        showToast(err.message||'Unable to update cart.');
+      }finally{
+        if(wrap)wrap.style.opacity='1';
+      }
+      return;
+    }
+    const pageQtyBtn=e.target.closest('[data-cart-page-qty]');
+    if(pageQtyBtn){
+      const line=Number(pageQtyBtn.dataset.line);
+      const isPlus=pageQtyBtn.dataset.cartPageQty==='plus';
+      const wrap=pageQtyBtn.closest('.cart-item__quantity');
+      const valEl=wrap?wrap.querySelector('[data-cart-page-qty-val]'):null;
+      const currentVal=valEl?parseInt(valEl.textContent)||1:1;
+      const newQty=isPlus?currentVal+1:currentVal-1;
+      if(wrap)wrap.style.opacity='0.4';
+      try{
+        await fetchWithTimeout('/cart/change.js',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify({line:line,quantity:newQty})
+        }, 6000);
+        window.location.reload();
+      }catch(err){
+        showToast(err.message||'Unable to update cart.');
+        if(wrap)wrap.style.opacity='1';
+      }
+      return;
+    }
+    const rem=e.target.closest('[data-cart-remove]');
+    if(!rem)return;
+    const line=Number(rem.dataset.cartRemove);
+    const itemEl=rem.closest('.cart-item');
+    if(itemEl)itemEl.style.opacity='0.4';
+    try{
+      await fetchWithTimeout('/cart/change.js',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({line:line,quantity:0})
+      }, 6000);
+      await refreshCart(false);
+    }catch(err){
+      showToast(err.message||'Unable to remove item.');
+      if(itemEl)itemEl.style.opacity='1';
+    }
+  });
   document.addEventListener('click',e=>{
     const checkout=e.target.closest('[data-shopflo-checkout], #checkout2');
     if(!checkout)return;
     e.preventDefault();
+    if(typeof window.handleFloCheckoutBtn === 'function'){window.handleFloCheckoutBtn();return;}
     if(window.PurityShopflo?.checkout){window.PurityShopflo.checkout();return;}
     const shop=window.PurityTheme?.shopUrl||(window.Shopify?.shop?`https://${window.Shopify.shop}`:'');
     window.location.assign(`${shop}/checkout`);

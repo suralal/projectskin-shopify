@@ -42,23 +42,31 @@
       if (!form) return;
 
       // Prefer Shopflo Buy Now when the bridge is available (live Project Skin flow).
-      if (window.PurityTheme?.shopfloEnabled) {
-        if (window.PurityShopflo?.buyNow?.(event)) return;
-        if (window.PurityShopflo?.floActive?.() && typeof window.handleFloBuyNowBtn === 'function') {
-          window.handleFloBuyNowBtn(event);
-          return;
-        }
+      if (typeof window.handleFloBuyNowBtn === 'function') {
+        window.handleFloBuyNowBtn(event);
+        return;
+      }
+      if (window.PurityShopflo?.buyNow?.(event)) return;
+      if (window.PurityShopflo?.floActive?.() && typeof window.handleFloBuyNowBtn === 'function') {
+        window.handleFloBuyNowBtn(event);
+        return;
       }
 
       button.disabled = true;
       const previous = button.textContent;
       button.textContent = 'Preparing checkout...';
+      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      const timeout = controller ? setTimeout(() => controller.abort(), 6000) : null;
       try {
-        const response = await fetch('/cart/add.js', { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const fetchOpts = { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } };
+        if (controller) fetchOpts.signal = controller.signal;
+        const response = await fetch('/cart/add.js', fetchOpts);
+        if (timeout) clearTimeout(timeout);
         if (!response.ok) throw new Error('Unable to prepare checkout');
         const shop = window.PurityTheme?.shopUrl || (window.Shopify?.shop ? `https://${window.Shopify.shop}` : '');
         window.location.assign(`${shop}/checkout`);
       } catch (error) {
+        if (timeout) clearTimeout(timeout);
         console.error(error);
         button.textContent = 'Please try again';
         setTimeout(() => { button.textContent = previous; button.disabled = false; }, 1400);

@@ -27,6 +27,7 @@
 <link rel="icon" href="{{ favicon_png }}" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="{{ favicon_apple }}">
 <meta name="theme-color" content="#1f473e">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 {% if request.page_type == 'search' or request.page_type == 'cart' or request.page_type == '404' %}<meta name="robots" content="noindex,follow">{% else %}<meta name="robots" content="index,follow,max-image-preview:large">{% endif %}
 <meta property="og:site_name" content="{{ shop.name | escape }}">
 <meta property="og:url" content="{{ canonical_url }}">

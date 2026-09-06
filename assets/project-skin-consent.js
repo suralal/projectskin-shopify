@@ -74,6 +74,21 @@
 
     var observer = new MutationObserver(findBanner);
     observer.observe(document.documentElement, { childList: true, subtree: true });
+
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest('[data-ps-consent-reopen]');
+      if (!trigger) return;
+      e.preventDefault();
+      var banner = document.getElementById('shopify-pc__banner');
+      if (banner) {
+        banner.style.display = 'block';
+        reveal(banner);
+        var manageBtn = find(banner, 'btn-manage-prefs');
+        if (manageBtn) manageBtn.click();
+      } else if (window.Shopify && window.Shopify.customerPrivacy && typeof window.Shopify.customerPrivacy.showPreferences === 'function') {
+        window.Shopify.customerPrivacy.showPreferences();
+      }
+    });
   }
 
   if (document.readyState === 'complete') begin();

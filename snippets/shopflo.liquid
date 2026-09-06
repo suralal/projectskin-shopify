@@ -5,23 +5,24 @@
   Theme Dev (127.0.0.1) fails that check, so we rewrite shop-url /
   shop_url / shopUrl to the real storefront domain before the bundle runs.
 {%- endcomment -%}
-{%- if settings.shopflo_enabled -%}
+{%- assign is_shopflo_enabled = true -%}
+{%- if settings.shopflo_enabled == false -%}
+  {%- assign is_shopflo_enabled = false -%}
+{%- endif -%}
+{%- if is_shopflo_enabled -%}
   <script>
     window.PurityTheme = window.PurityTheme || {};
     window.PurityTheme.shopfloEnabled = true;
-    window.PurityTheme.shopfloUseFloCart = {{ settings.shopflo_use_flo_cart | json }};
+    window.PurityTheme.shopfloUseFloCart = {% if settings.shopflo_use_flo_cart == false %}false{% else %}true{% endif %};
     window.PurityTheme.shopUrl = {{ shop.url | json }};
     window.PurityTheme.shopDomain = {{ shop.permanent_domain | json }};
-    window.PurityTheme.shopfloHost = {{ shop.domain | json }};
+    window.PurityTheme.shopfloHost = 'theprojectskin.com';
 
     (function installShopfloShopUrlShim() {
-      var realHost = {{ shop.domain | json }};
-      if (!realHost) return;
-
+      var realHost = 'theprojectskin.com';
       var current = window.location.host || '';
       var hostname = window.location.hostname || '';
-      var isLocalPreview = /^(127\.0\.0\.1|localhost)$/i.test(hostname);
-      if (!isLocalPreview && current === realHost) return;
+      if (current === realHost) return;
 
       function shouldRewriteValue(value) {
         if (!value) return false;
@@ -30,6 +31,7 @@
         return (
           decoded === current ||
           decoded === hostname ||
+          decoded === 'q9wi15-80.myshopify.com' ||
           /^(127\.0\.0\.1|localhost)(:\d+)?$/i.test(decoded)
         );
       }

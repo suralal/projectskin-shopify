@@ -9,8 +9,8 @@
     "card_secondary_image": true,
     "card_video_hover": true,
     "use_project_skin_fonts": true,
-    "shopflo_enabled": false,
-    "shopflo_use_flo_cart": false,
+    "shopflo_enabled": true,
+    "shopflo_use_flo_cart": true,
     "search_placeholder": "Search serum, cleanser, sunscreen…",
     "suggested_searches": "Serum,Cleanser,Moisturiser,Sunscreen,Niacinamide"
   }

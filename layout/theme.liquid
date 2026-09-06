@@ -66,6 +66,11 @@
         --loader-bg: {{ settings.page_loader_color | default: '#f5f3ee' }};
       }
     </style>
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    <link rel="preconnect" href="https://bridge.shopflo.com" crossorigin>
+    <link rel="preload" href="{{ 'instrument-sans-500.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ 'fraunces-italic-400.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
     {{ 'theme.css' | asset_url | stylesheet_tag }}
     {{ 'purity-home.css' | asset_url | stylesheet_tag }}
     {{ 'project-skin-release.css' | asset_url | stylesheet_tag }}
@@ -82,8 +87,8 @@
         pageLoader: {{ settings.page_loader | json }},
         reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
         freeShippingThreshold: {{ settings.free_shipping_threshold | times: 100 | json }},
-        shopfloEnabled: {{ settings.shopflo_enabled | json }},
-        shopfloUseFloCart: {{ settings.shopflo_use_flo_cart | json }},
+        shopfloEnabled: {{ settings.shopflo_enabled | default: true | json }},
+        shopfloUseFloCart: {{ settings.shopflo_use_flo_cart | default: true | json }},
         shopUrl: {{ shop.url | json }},
         shopDomain: {{ shop.permanent_domain | json }}
       };

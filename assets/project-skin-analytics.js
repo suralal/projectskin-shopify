@@ -28,6 +28,35 @@
     if (config.debug) console.info('[Project Skin analytics] ' + label, payload || '');
   }
 
+  function captureUtms() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
+      var captured = {};
+      var hasNew = false;
+      keys.forEach(function (k) {
+        var v = params.get(k);
+        if (v) {
+          sessionStorage.setItem('ps_' + k, v);
+          captured[k] = v;
+          hasNew = true;
+        } else {
+          var stored = sessionStorage.getItem('ps_' + k);
+          if (stored) captured[k] = stored;
+        }
+      });
+      if (hasNew && Object.keys(captured).length > 0 && !sessionStorage.getItem('ps_utm_synced')) {
+        sessionStorage.setItem('ps_utm_synced', 'true');
+        fetch('/cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ attributes: captured })
+        }).catch(function () {});
+      }
+    } catch (e) {}
+  }
+  captureUtms();
+
   function validGa4Id(value) {
     return /^G-[A-Z0-9]+$/i.test(value || '');
   }
@@ -344,8 +373,16 @@
       send('routine_step_selected', { step_name: (routineTrigger.textContent || '').trim() }, { standard: false });
     }
 
+    var buyNow = event.target.closest('[data-pdp-buy-now], #flo-buy-now-button, [name="flo-buy-now-button"]');
+    if (buyNow && Date.now() - lastCheckoutAt > 1500) {
+      lastCheckoutAt = Date.now();
+      var buyItems = page.product ? [page.product] : cartState.items;
+      var buyValue = page.product ? Number(page.product.price) : cartState.value;
+      send('begin_checkout', ecommercePayload(buyItems, buyValue), { standard: true });
+    }
+
     var checkout = event.target.closest('[name="checkout"], [data-shopflo-checkout], a[href*="/checkout"]');
-    if (checkout && Date.now() - lastCheckoutAt > 1500) {
+    if (checkout && !buyNow && Date.now() - lastCheckoutAt > 1500) {
       lastCheckoutAt = Date.now();
       send('begin_checkout', ecommercePayload(cartState.items, cartState.value), { standard: true });
     }

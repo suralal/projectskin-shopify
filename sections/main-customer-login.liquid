@@ -24,7 +24,7 @@
               autocomplete="email"
               autocapitalize="off"
               spellcheck="false"
-              value="{{ form.email }}"
+              value="{{ form.email | escape }}"
               required
             >
           </div>
@@ -52,7 +52,7 @@
               autocomplete="email"
               autocapitalize="off"
               spellcheck="false"
-              value="{% if form.email %}{{ form.email }}{% endif %}"
+              value="{% if form.email %}{{ form.email | escape }}{% endif %}"
               required
             >
           </div>

@@ -28,15 +28,15 @@
         <div class="psr-form__grid">
           <div class="psr-field">
             <label for="ConsultationName-{{ section.id }}">Full name</label>
-            <input id="ConsultationName-{{ section.id }}" type="text" name="contact[name]" autocomplete="name" required value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+            <input id="ConsultationName-{{ section.id }}" type="text" name="contact[name]" autocomplete="name" required value="{% if form.name %}{{ form.name | escape }}{% elsif customer %}{{ customer.name | escape }}{% endif %}">
           </div>
           <div class="psr-field">
             <label for="ConsultationEmail-{{ section.id }}">Email address</label>
-            <input id="ConsultationEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" autocorrect="off" autocapitalize="off" required value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+            <input id="ConsultationEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" autocorrect="off" autocapitalize="off" required value="{% if form.email %}{{ form.email | escape }}{% elsif customer %}{{ customer.email | escape }}{% endif %}">
           </div>
           <div class="psr-field">
             <label for="ConsultationPhone-{{ section.id }}">Phone number</label>
-            <input id="ConsultationPhone-{{ section.id }}" type="tel" name="contact[phone]" autocomplete="tel" required value="{% if customer %}{{ customer.phone }}{% endif %}">
+            <input id="ConsultationPhone-{{ section.id }}" type="tel" name="contact[phone]" autocomplete="tel" required value="{% if customer %}{{ customer.phone | escape }}{% endif %}">
           </div>
           <div class="psr-field">
             <label for="ConsultationCity-{{ section.id }}">City</label>

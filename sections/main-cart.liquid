@@ -52,8 +52,13 @@
                   {% endunless %}
                   <div class="ps-cart-line__quantity">
                     <label for="CartQuantity-{{ forloop.index }}">Quantity</label>
-                    <input id="CartQuantity-{{ forloop.index }}" name="updates[]" value="{{ item.quantity }}" min="0" type="number" inputmode="numeric">
-                    <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0">Remove</a>
+                    <div class="cart-item__quantity">
+                      <button type="button" class="cart-item__qty-btn" data-cart-page-qty="minus" data-line="{{ forloop.index }}" aria-label="Decrease quantity">−</button>
+                      <span class="cart-item__qty-val" data-cart-page-qty-val>{{ item.quantity }}</span>
+                      <button type="button" class="cart-item__qty-btn" data-cart-page-qty="plus" data-line="{{ forloop.index }}" aria-label="Increase quantity">+</button>
+                    </div>
+                    <input id="CartQuantity-{{ forloop.index }}" name="updates[]" value="{{ item.quantity }}" min="0" type="number" inputmode="numeric" style="display:none;">
+                    <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="cart-item__remove">Remove</a>
                   </div>
                 </div>
                 <div class="ps-cart-line__price">
@@ -68,7 +73,7 @@
           {% if settings.show_cart_note %}
             <div class="ps-cart-note">
               <label for="CartNote">Order note</label>
-              <textarea id="CartNote" name="note" rows="4" placeholder="Add a note for your order">{{ cart.note }}</textarea>
+              <textarea id="CartNote" name="note" rows="4" placeholder="Add a note for your order">{{ cart.note | escape }}</textarea>
             </div>
           {% endif %}
 
@@ -89,19 +94,16 @@
           {% endfor %}
           <div class="ps-cart-summary__row ps-cart-summary__total"><span>Subtotal</span><strong>{{ cart.total_price | money }}</strong></div>
           <p>Taxes and shipping calculated at checkout.</p>
-          {% if settings.shopflo_enabled %}
-            <button
-              class="ps-button ps-button--full"
-              type="button"
-              id="checkout2"
-              name="checkout2"
-              data-shopflo-checkout
-            >
-              {{ section.settings.checkout_label }}
-            </button>
-          {% else %}
-            <button class="ps-button ps-button--full" type="submit" name="checkout" form="MainCartForm">{{ section.settings.checkout_label }}</button>
-          {% endif %}
+          <button
+            class="ps-button ps-button--full"
+            type="button"
+            id="checkout2"
+            name="checkout2"
+            data-shopflo-checkout
+            onclick="if(typeof handleFloCheckoutBtn==='function'){handleFloCheckoutBtn();return false;}"
+          >
+            {{ section.settings.checkout_label }}
+          </button>
           <a class="ps-text-button" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
 
           {% if settings.show_discount_field %}
