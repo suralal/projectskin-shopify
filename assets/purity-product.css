@@ -1234,11 +1234,17 @@
   font-size: 14px;
   line-height: 1.5;
 }
+.pdp-reviews-judgeme .jdgm-widget--with-fallback .jm-review-widget-minimal-header,
+.pdp-reviews-judgeme .jdgm-widget--with-fallback .jm-no-reviews-state,
 .pdp-reviews-judgeme .jdgm-widget--with-fallback .jdgm-rev-widg__header,
 .pdp-reviews-judgeme .jdgm-widget--with-fallback .jdgm-rev-widg__summary,
 .pdp-reviews-judgeme .jdgm-widget--with-fallback .jdgm-histogram,
 .pdp-reviews-judgeme .jdgm-widget--with-fallback .jdgm-rev-widg__reviews {
   display: none !important;
+}
+.jdgm-review-widget-modal,
+.jdgm-write-review-modal {
+  z-index: 2147483640 !important;
 }
 .pdp-reviews-fallback {
   margin: 8px 0 8px;
@@ -1327,6 +1333,9 @@
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
   transition: transform 160ms ease, background 160ms ease;
 }
 .pdp-reviews-fallback__write:hover {

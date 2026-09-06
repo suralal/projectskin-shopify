@@ -137,7 +137,16 @@ Dev N.|India|Consultation path|Knew when to escalate vs stay cosmetic. That alon
     </div>
     <div class="pdp-reviews-fallback__cta">
       <p>Real voices on texture, climate, and consistency — while verified Judge.me reviews accumulate.</p>
-      <a class="pdp-reviews-fallback__write" href="#judgeme_product_reviews">Write a verified review</a>
+      <button
+        type="button"
+        class="pdp-reviews-fallback__write"
+        data-write-review-trigger
+        data-product-id="{{ product.id }}"
+        data-fallback-url="https://api.judge.me/storefront_reviews/new?shop_domain={{ shop.permanent_domain | default: 'q9wi15-80.myshopify.com' }}&platform=shopify&product_id={{ product.id }}"
+        aria-label="Write a verified review for {{ product.title | escape }}"
+      >
+        Write a verified review
+      </button>
     </div>
   </div>
 
@@ -227,6 +236,30 @@ Dev N.|India|Consultation path|Knew when to escalate vs stay cosmetic. That alon
         var collapsed = list.getAttribute('data-collapsed') !== 'false';
         list.setAttribute('data-collapsed', collapsed ? 'false' : 'true');
         more.textContent = collapsed ? 'Show less' : 'Show more feedback';
+      });
+    }
+
+    var writeBtn = root.querySelector('[data-write-review-trigger]');
+    if (writeBtn) {
+      writeBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (typeof window.triggerJudgemeWriteReview === 'function') {
+          window.triggerJudgemeWriteReview(writeBtn);
+        } else {
+          var pid = writeBtn.getAttribute('data-product-id');
+          var fallback = writeBtn.getAttribute('data-fallback-url');
+          if (window.jdgm && window.jdgm._WriteReviewModal && window.jdgm.$ && pid) {
+            try {
+              document.querySelectorAll('.jdgm-review-widget-modal.jdgm-write-review-modal').forEach(function (m) { m.remove(); });
+              var m = new window.jdgm._WriteReviewModal(window.jdgm.$);
+              m.setup('jdgm-review-widget-modal', pid, {}).then(function (ok) {
+                if (ok) m.showModalPage(1);
+              });
+              return;
+            } catch (err) {}
+          }
+          if (fallback) window.open(fallback, '_blank', 'noopener,noreferrer');
+        }
       });
     }
   })();
