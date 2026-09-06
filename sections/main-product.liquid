@@ -186,11 +186,16 @@
             Buy it now
           </button>
         {% endif %}
-        <ul class="pdp-policy-list" role="list">
-          <li>{% render 'icon', name: 'shipping' %}{{ section.settings.shipping_text | default: 'Free shipping on orders above ₹999' }}</li>
-          <li>{% render 'icon', name: 'guarantee' %}{{ section.settings.returns_text | default: '30 day returns. View return policy' }}</li>
-          <li>{% render 'icon', name: 'verified' %}<span>Instant UPI / Cards / Cash on Delivery (COD)</span></li>
-        </ul>
+        {% if section.settings.shipping_text != blank or section.settings.returns_text != blank %}
+          <ul class="pdp-policy-list" role="list">
+            {% if section.settings.shipping_text != blank %}
+              <li>{% render 'icon', name: 'shipping' %}{{ section.settings.shipping_text }}</li>
+            {% endif %}
+            {% if section.settings.returns_text != blank %}
+              <li>{% render 'icon', name: 'guarantee' %}{{ section.settings.returns_text }}</li>
+            {% endif %}
+          </ul>
+        {% endif %}
         {% render 'pdp-share', product: product %}
         {% if outcome_blocks.size > 0 %}
           <div class="pdp-outcomes" aria-label="Key product outcomes">
@@ -302,8 +307,8 @@
     { "type": "text", "id": "frequency_label", "label": "Frequency label", "default": "Deliver every month - 10% Off" },
     { "type": "text", "id": "add_label", "label": "Add button label", "default": "Add to Cart" },
     { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show Buy it now", "default": true },
-    { "type": "text", "id": "shipping_text", "label": "Shipping message", "default": "Free shipping $175+. View shipping policy" },
-    { "type": "text", "id": "returns_text", "label": "Returns message", "default": "30 day returns. View return policy" },
+    { "type": "text", "id": "shipping_text", "label": "Shipping message" },
+    { "type": "text", "id": "returns_text", "label": "Returns message" },
     { "type": "richtext", "id": "product_description", "label": "Short product description" },
     { "type": "richtext", "id": "gift_text", "label": "Gift message" },
     { "type": "text", "id": "benefits_heading", "label": "Benefits heading", "default": "Top Benefits" },
