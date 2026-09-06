@@ -1,0 +1,52 @@
+{% layout none %}<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>{{ shop.name | escape }} · Google Merchant Center Product Feed</title>
+    <link>{{ shop.url }}</link>
+    <description>{{ shop.description | default: 'Science-backed acne skincare engineered for Indian skin.' | escape }}</description>
+    {% for product in collections.all.products %}
+      {% for variant in product.variants %}
+        <item>
+          <g:id>{{ variant.id }}</g:id>
+          <g:item_group_id>{{ product.id }}</g:item_group_id>
+          <g:title>{{ product.title | escape }}{% unless variant.title contains 'Default' %} – {{ variant.title | escape }}{% endunless %}</g:title>
+          <g:description>{{ product.description | strip_html | strip_newlines | truncate: 5000 | escape }}</g:description>
+          <g:link>{{ shop.url }}{{ variant.url }}</g:link>
+          {% if variant.image %}
+            <g:image_link>https:{{ variant.image | image_url: width: 1200 }}</g:image_link>
+          {% elsif product.featured_image %}
+            <g:image_link>https:{{ product.featured_image | image_url: width: 1200 }}</g:image_link>
+          {% endif %}
+          {% for img in product.images limit: 4 %}
+            {% unless img.id == product.featured_image.id %}
+              <g:additional_image_link>https:{{ img | image_url: width: 1200 }}</g:additional_image_link>
+            {% endunless %}
+          {% endfor %}
+          <g:condition>new</g:condition>
+          <g:availability>{% if variant.available %}in_stock{% else %}out_of_stock{% endif %}</g:availability>
+          <g:price>{{ variant.price | divided_by: 100.0 | round: 2 }} INR</g:price>
+          {% if variant.compare_at_price > variant.price %}
+            <g:sale_price>{{ variant.price | divided_by: 100.0 | round: 2 }} INR</g:sale_price>
+          {% endif %}
+          <g:brand>Project Skin</g:brand>
+          {% if variant.barcode != blank %}
+            <g:gtin>{{ variant.barcode | escape }}</g:gtin>
+            <g:identifier_exists>yes</g:identifier_exists>
+          {% else %}
+            <g:identifier_exists>no</g:identifier_exists>
+          {% endif %}
+          {% if variant.sku != blank %}
+            <g:mpn>{{ variant.sku | escape }}</g:mpn>
+          {% endif %}
+          <g:google_product_category>Health &amp; Beauty &gt; Personal Care &gt; Cosmetics &gt; Skin Care</g:google_product_category>
+          <g:product_type>{{ product.type | default: 'Skincare' | escape }}</g:product_type>
+          <g:shipping>
+            <g:country>IN</g:country>
+            <g:service>Standard Delivery</g:service>
+            <g:price>0.00 INR</g:price>
+          </g:shipping>
+        </item>
+      {% endfor %}
+    {% endfor %}
+  </channel>
+</rss>

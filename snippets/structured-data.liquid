@@ -104,21 +104,52 @@
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": {{ shop.name | json }},
+  "@id": "{{ shop.url }}/#website",
+  "name": "Project Skin",
+  "alternateName": ["The Project Skin", "Project Skin India"],
   "url": {{ shop.url | json }},
   "potentialAction": {
     "@type": "SearchAction",
-    "target": {{ search_target | strip | json }},
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+    },
     "query-input": "required name=search_term_string"
   }
 }
 </script>
+{% if request.page_type == 'collection' and collection %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ collection.title | json }},
+  "url": {{ canonical_url | json }},
+  "description": {{ collection.description | default: 'Science-backed acne skincare formulations engineered for Indian skin.' | strip_html | truncate: 500 | json }},
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {% for item in collection.products limit: 12 %}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.index }},
+          "url": "{{ shop.url }}{{ item.url }}",
+          "name": {{ item.title | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
+{% endif %}
 {% if request.page_type == 'product' and product %}
 {% liquid
   assign brand_name = product.vendor
   if brand_name == blank or brand_name == 'My Store'
     assign brand_name = 'Project Skin'
   endif
+  assign jm_rating = product.metafields.judgeme.all_reviews_rating | default: product.metafields.reviews.rating.value
+  assign jm_count = product.metafields.judgeme.all_reviews_count | default: product.metafields.reviews.rating_count.value
 %}
 <script type="application/ld+json">
 {
@@ -127,9 +158,26 @@
   "name": {{ product.title | json }},
   "url": {{ canonical_url | json }},
   "description": {{ product.description | strip_html | strip_newlines | truncate: 5000 | json }},
-  {% if product.featured_image %}"image": [{{ product.featured_image | image_url: width: 1600 | prepend: 'https:' | json }}],{% endif %}
+  "category": "Health & Beauty > Personal Care > Cosmetics > Skin Care",
+  {% if product.images.size > 0 %}
+  "image": [
+    {% for img in product.images limit: 5 %}
+      {{ img | image_url: width: 1200 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  {% elsif product.featured_image %}
+  "image": [{{ product.featured_image | image_url: width: 1600 | prepend: 'https:' | json }}],
+  {% endif %}
   "brand": {"@type":"Brand","name":{{ brand_name | json }}},
   {% if product.selected_or_first_available_variant.sku != blank %}"sku": {{ product.selected_or_first_available_variant.sku | json }},{% endif %}
+  {% if product.selected_or_first_available_variant.barcode != blank %}"gtin": {{ product.selected_or_first_available_variant.barcode | json }},{% endif %}
+  {% if jm_count and jm_count > 0 and jm_rating and jm_rating > 0 %}
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ jm_rating | json }},
+    "reviewCount": {{ jm_count | json }}
+  },
+  {% endif %}
   "offers": {
     "@type": "Offer",
     "url": {{ canonical_url | json }},
@@ -149,6 +197,14 @@
         "value": "0",
         "currency": "INR"
       }
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "IN",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 30,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/FreeReturn"
     }
   }
 }

@@ -22,6 +22,15 @@
 <meta name="geo.region" content="IN">
 <meta name="geo.placename" content="India">
 <meta name="target-country" content="IN">
+{% if settings.google_site_verification != blank %}
+  <meta name="google-site-verification" content="{{ settings.google_site_verification | escape }}">
+{% endif %}
+{% if settings.bing_site_verification != blank %}
+  <meta name="msvalidate.01" content="{{ settings.bing_site_verification | escape }}">
+{% endif %}
+{% if settings.pinterest_site_verification != blank %}
+  <meta name="p:domain_verify" content="{{ settings.pinterest_site_verification | escape }}">
+{% endif %}
 {%- liquid
   assign favicon_image = settings.favicon
   if favicon_image != blank

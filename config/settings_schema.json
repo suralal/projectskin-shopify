@@ -254,5 +254,30 @@
       { "type": "url", "id": "social_x", "label": "X" },
       { "type": "url", "id": "social_snapchat", "label": "Snapchat" }
     ]
+  },
+  {
+    "name": "Search engine verification",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Verify ownership with Google Search Console, Bing, and Pinterest."
+      },
+      {
+        "type": "text",
+        "id": "google_site_verification",
+        "label": "Google Search Console code",
+        "info": "Paste the verification token or code from Google Search Console HTML tag method"
+      },
+      {
+        "type": "text",
+        "id": "bing_site_verification",
+        "label": "Bing Webmaster code"
+      },
+      {
+        "type": "text",
+        "id": "pinterest_site_verification",
+        "label": "Pinterest verification code"
+      }
+    ]
   }
 ]
