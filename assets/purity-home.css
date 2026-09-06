@@ -796,10 +796,9 @@
   object-fit: cover;
   object-position: center;
   padding: 0;
-  background: #f6f4ef;
+  background: #ffffff;
   opacity: 0;
-  /* Crop baked-in colored frames from packshots */
-  transform: scale(1.24);
+  transform: none;
   transform-origin: center center;
   transition: opacity 280ms ease;
   pointer-events: none;
@@ -863,8 +862,8 @@
   object-fit: cover;
   object-position: center;
   padding: 0;
-  background: #f6f4ef;
-  transform: scale(1.24);
+  background: #ffffff;
+  transform: none;
   transform-origin: center center;
 }
 .ps-product__hover-image,
