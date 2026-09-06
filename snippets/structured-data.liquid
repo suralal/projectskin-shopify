@@ -21,6 +21,12 @@
 }
 </script>
 {% if request.page_type == 'product' and product %}
+{% liquid
+  assign brand_name = product.vendor
+  if brand_name == blank or brand_name == 'My Store'
+    assign brand_name = 'Project Skin'
+  endif
+%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -29,7 +35,7 @@
   "url": {{ canonical_url | json }},
   "description": {{ product.description | strip_html | strip_newlines | truncate: 5000 | json }},
   {% if product.featured_image %}"image": [{{ product.featured_image | image_url: width: 1600 | prepend: 'https:' | json }}],{% endif %}
-  {% if product.vendor != blank %}"brand": {"@type":"Brand","name":{{ product.vendor | json }}},{% endif %}
+  "brand": {"@type":"Brand","name":{{ brand_name | json }}},
   {% if product.selected_or_first_available_variant.sku != blank %}"sku": {{ product.selected_or_first_available_variant.sku | json }},{% endif %}
   "offers": {
     "@type": "Offer",
@@ -39,6 +45,45 @@
     "availability": "https://schema.org/{% if product.selected_or_first_available_variant.available %}InStock{% else %}OutOfStock{% endif %}",
     "itemCondition": "https://schema.org/NewCondition"
   }
+}
+</script>
+{% endif %}
+
+{% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'page' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    }
+    {% if request.page_type == 'product' and product %}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ product.title | json }},
+        "item": {{ canonical_url | json }}
+      }
+    {% elsif request.page_type == 'collection' and collection %}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ collection.title | json }},
+        "item": {{ canonical_url | json }}
+      }
+    {% elsif request.page_type == 'page' and page %}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ page.title | json }},
+        "item": {{ canonical_url | json }}
+      }
+    {% endif %}
+  ]
 }
 </script>
 {% endif %}
