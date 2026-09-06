@@ -2,8 +2,8 @@
   {% render 'purity-section-heading', eyebrow: section.settings.eyebrow, title: section.settings.heading, copy: section.settings.description, alignment: 'center' %}
   <div class="ps-gram__viewport">
     <div class="ps-gram__track">
-      {% for duplicate in (1..2) %}
-        <div class="ps-gram__group" {% if duplicate == 2 %}aria-hidden="true"{% endif %}>
+      {% for duplicate in (1..4) %}
+        <div class="ps-gram__group" {% if duplicate > 1 %}aria-hidden="true"{% endif %}>
           {% for block in section.blocks %}
             {% liquid
               assign card_link = block.settings.link | default: section.settings.instagram_link | default: 'https://www.instagram.com/projectskin.co/'
@@ -104,8 +104,8 @@
     { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Explore our gentle beauty highlights – trusted by over 10k fans.</p>" },
     { "type": "url", "id": "instagram_link", "label": "Instagram link" },
     { "type": "range", "id": "speed", "label": "Marquee speed", "min": 12, "max": 60, "step": 2, "unit": "s", "default": 28 },
-    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 60 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 104 }
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 28 }
   ],
   "blocks": [
     {

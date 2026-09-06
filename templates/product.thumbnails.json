@@ -176,7 +176,7 @@
         "image_6": { "type": "image", "settings": { "alt": "Purity beauty routine" } }
       },
       "block_order": ["image_1", "image_2", "image_3", "image_4", "image_5", "image_6"],
-      "settings": { "eyebrow": "@purity_store", "heading": "Purity On Gram", "copy": "<p>Explore our gentle beauty highlights - trusted by over 15k fans.</p>", "padding_top": 72, "padding_bottom": 72 }
+      "settings": { "eyebrow": "@purity_store", "heading": "Purity On Gram", "copy": "<p>Explore our gentle beauty highlights - trusted by over 15k fans.</p>", "padding_top": 48, "padding_bottom": 28 }
     }
   },
   "order": ["main", "trust", "innovation", "ingredients", "results", "steps", "marquee", "reviews", "related", "philosophy", "commitments", "faq", "gram"]

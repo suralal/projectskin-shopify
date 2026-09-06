@@ -1993,7 +1993,11 @@
   background: linear-gradient(180deg, transparent, rgba(0,0,0,.28));
   pointer-events: none;
 }
-@keyframes ps-gram { to { transform: translateX(-50%); } }
+@keyframes ps-gram {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-25%, 0, 0); }
+}
+.ps-gram .ps-heading { margin: 0 auto 20px; }
 
 /* Header and footer parity refinements */
 .site-header-wrap { background: var(--color-paper, #ffffff); border-bottom: 0; backdrop-filter: blur(14px); }
