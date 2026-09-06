@@ -2,27 +2,14 @@
 # robots.txt.liquid for Project Skin (theprojectskin.com)
 # Reference: https://shopify.dev/docs/themes/seo/robots-txt
 {%- endcomment -%}
-{% for group in robots.default_groups %}
-  {{- group.user_agent -}}
+{%- for group in robots.default_groups -%}
+{{ group.user_agent }}
 
-  {% for rule in group.rules %}
-    {{- rule -}}
-  {% endfor %}
+{% for rule in group.rules -%}
+{{ rule }}
+{% endfor -%}
 
-  {%- if group.user_agent.value == '*' -%}
-    {{ 'Disallow: /checkouts/' }}
-    {{ 'Disallow: /checkout' }}
-    {{ 'Disallow: /carts/' }}
-    {{ 'Disallow: /orders/' }}
-    {{ 'Disallow: /account' }}
-    {{ 'Disallow: /collections/*sort_by*' }}
-    {{ 'Disallow: /*?*q=*' }}
-    {{ 'Disallow: /*?*preview_theme_id*' }}
-    {{ 'Allow: /collections/all' }}
-    {{ 'Allow: /products/*' }}
-  {%- endif -%}
-
-  {%- if group.sitemap != blank -%}
-    {{ group.sitemap }}
-  {%- endif -%}
+{%- if group.sitemap != blank -%}
+{{ group.sitemap }}
+{%- endif -%}
 {% endfor %}
