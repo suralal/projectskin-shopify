@@ -1,0 +1,339 @@
+{% comment %}
+  Shared Shop-by-Concern literacy landing (acne, pigmentation, barrier, daily SPF).
+  Narrative-first. No product grid — shop via secondary CTA.
+{% endcomment %}
+{{ 'ps-concern-landing.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign concern_key = section.settings.concern_key | strip | downcase
+  if concern_key == blank or concern_key == 'auto'
+    assign concern_key = page.handle | default: 'acne' | strip | downcase
+  endif
+%}
+{% include 'concern-education-catalog', concern_key: concern_key %}
+
+{% liquid
+  if section.settings.eyebrow != blank
+    assign concern_eyebrow = section.settings.eyebrow
+  endif
+  if section.settings.heading != blank
+    assign concern_title = section.settings.heading
+  endif
+  if section.settings.text != blank
+    assign concern_lede = section.settings.text
+  endif
+  if section.settings.primary_label != blank
+    assign primary_label = section.settings.primary_label
+  else
+    assign primary_label = 'Keep reading'
+  endif
+  if section.settings.secondary_label != blank
+    assign secondary_label = section.settings.secondary_label
+  endif
+  if section.settings.secondary_link != blank
+    assign secondary_link = section.settings.secondary_link
+  endif
+  if section.settings.trust_1 != blank
+    assign trust_1 = section.settings.trust_1
+  endif
+  if section.settings.trust_2 != blank
+    assign trust_2 = section.settings.trust_2
+  endif
+  if section.settings.trust_3 != blank
+    assign trust_3 = section.settings.trust_3
+  endif
+  if section.settings.diagnosis_heading != blank
+    assign diagnosis_heading = section.settings.diagnosis_heading
+  endif
+  if section.settings.diagnosis_text != blank
+    assign diagnosis_text = section.settings.diagnosis_text
+  endif
+  if section.settings.why_heading != blank
+    assign why_heading = section.settings.why_heading
+  endif
+  if section.settings.why_text != blank
+    assign why_text = section.settings.why_text
+  endif
+  if section.settings.why_quote != blank
+    assign why_quote = section.settings.why_quote
+  endif
+  if section.settings.mechanism_heading != blank
+    assign mechanism_heading = section.settings.mechanism_heading
+  endif
+  if section.settings.mechanism_text != blank
+    assign mechanism_text = section.settings.mechanism_text
+  endif
+  if section.settings.band_heading != blank
+    assign band_heading = section.settings.band_heading
+  endif
+  if section.settings.band_text != blank
+    assign band_text = section.settings.band_text
+  endif
+  if section.settings.promise_heading != blank
+    assign promise_heading = section.settings.promise_heading
+  endif
+%}
+
+<section
+  class="ps-concern psr-route-fallback psr-route-fallback--concern-{{ concern_key }}"
+  data-ps-concern="{{ concern_key }}"
+  id="ConcernLanding-{{ section.id }}"
+>
+  <div class="ps-concern__hero">
+    <div class="ps-concern__wrap ps-concern__hero-grid">
+      <div class="ps-concern__copy">
+        <p class="ps-concern__kicker">{{ concern_eyebrow }}</p>
+        <h1>{{ concern_title }}</h1>
+        <p class="ps-concern__lede">{{ concern_lede }}</p>
+        <div class="ps-concern__actions">
+          <a class="ps-concern__btn" href="#ConcernMechanism-{{ section.id }}">{{ primary_label }}</a>
+          <a class="ps-concern__btn ps-concern__btn--ghost" href="{{ secondary_link }}">{{ secondary_label }}</a>
+        </div>
+        <ul class="ps-concern__trust">
+          <li><span class="ps-concern__trust-icon" aria-hidden="true">◎</span>{{ trust_1 }}</li>
+          <li><span class="ps-concern__trust-icon" aria-hidden="true">◎</span>{{ trust_2 }}</li>
+          <li><span class="ps-concern__trust-icon" aria-hidden="true">◎</span>{{ trust_3 }}</li>
+        </ul>
+        <nav class="ps-concern__switch" aria-label="Other concerns">
+          <a href="/pages/acne"{% if concern_key == 'acne' %} aria-current="page"{% endif %}>Acne</a>
+          <a href="/pages/pigmentation"{% if concern_key == 'pigmentation' %} aria-current="page"{% endif %}>Pigmentation</a>
+          <a href="/pages/barrier"{% if concern_key == 'barrier' %} aria-current="page"{% endif %}>Barrier</a>
+          <a href="/pages/daily-spf"{% if concern_key == 'spf' %} aria-current="page"{% endif %}>Daily SPF</a>
+        </nav>
+      </div>
+
+      <div class="ps-concern__hero-media">
+        {% render 'purity-image',
+          image: section.settings.hero_image,
+          fallback_asset: hero_asset,
+          fallback_width: 880,
+          fallback_height: 1100,
+          alt: concern_title,
+          sizes: '(min-width: 900px) 42vw, 92vw',
+          loading: 'eager',
+          fetchpriority: 'high'
+        %}
+        <span class="ps-concern__pin ps-concern__pin--1">{{ pin_1 }}</span>
+        <span class="ps-concern__pin ps-concern__pin--2">{{ pin_2 }}</span>
+        <span class="ps-concern__pin ps-concern__pin--3">{{ pin_3 }}</span>
+        <span class="ps-concern__pin ps-concern__pin--4">{{ pin_4 }}</span>
+        <div class="ps-concern__insight">
+          <strong>Skin insight</strong>
+          <div class="ps-concern__meter">
+            <div class="ps-concern__meter-row"><span>{{ meter_1_label }}</span><div class="ps-concern__meter-bar"><span style="width:{{ meter_1_width }}"></span></div></div>
+            <div class="ps-concern__meter-row"><span>{{ meter_2_label }}</span><div class="ps-concern__meter-bar"><span style="width:{{ meter_2_width }}"></span></div></div>
+            <div class="ps-concern__meter-row"><span>{{ meter_3_label }}</span><div class="ps-concern__meter-bar"><span style="width:{{ meter_3_width }}"></span></div></div>
+            <div class="ps-concern__meter-row"><span>{{ meter_4_label }}</span><div class="ps-concern__meter-bar"><span style="width:{{ meter_4_width }}"></span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ps-concern__section" id="ConcernDiagnosis-{{ section.id }}">
+    <div class="ps-concern__wrap">
+      <div class="ps-concern__diag-grid">
+        <div class="ps-concern__diag-visual">
+          {% render 'purity-image',
+            image: section.settings.diagnosis_image,
+            fallback_asset: diagnosis_asset,
+            fallback_width: 1400,
+            fallback_height: 1000,
+            alt: diagnosis_heading,
+            sizes: '(min-width: 900px) 46vw, 92vw',
+            loading: 'lazy'
+          %}
+          <span class="ps-concern__badge ps-concern__badge--1">01</span>
+          <span class="ps-concern__badge ps-concern__badge--2">02</span>
+          <span class="ps-concern__badge ps-concern__badge--3">03</span>
+          <span class="ps-concern__badge ps-concern__badge--4">04</span>
+        </div>
+        <div class="ps-concern__copy">
+          <p class="ps-concern__kicker">Diagnosis first</p>
+          <h2>{{ diagnosis_heading }}</h2>
+          <p>{{ diagnosis_text }}</p>
+        </div>
+      </div>
+
+      <div class="ps-concern__diag-cards">
+        <article class="ps-concern__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: signal_1_asset, fallback_width: 900, fallback_height: 900, alt: signal_1_title, sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>{{ signal_1_title }}</strong>
+          <span>{{ signal_1_text }}</span>
+        </article>
+        <article class="ps-concern__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: signal_2_asset, fallback_width: 900, fallback_height: 900, alt: signal_2_title, sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>{{ signal_2_title }}</strong>
+          <span>{{ signal_2_text }}</span>
+        </article>
+        <article class="ps-concern__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: signal_3_asset, fallback_width: 900, fallback_height: 900, alt: signal_3_title, sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>{{ signal_3_title }}</strong>
+          <span>{{ signal_3_text }}</span>
+        </article>
+        <article class="ps-concern__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: signal_4_asset, fallback_width: 900, fallback_height: 900, alt: signal_4_title, sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>{{ signal_4_title }}</strong>
+          <span>{{ signal_4_text }}</span>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="ps-concern__section ps-concern__section--soft" id="ConcernWhy-{{ section.id }}">
+    <div class="ps-concern__wrap ps-concern__why-grid">
+      <div>
+        <div class="ps-concern__copy">
+          <p class="ps-concern__kicker">Biology + climate</p>
+          <h2>{{ why_heading }}</h2>
+          <p>{{ why_text }}</p>
+        </div>
+        <div class="ps-concern__why-points">
+          <div class="ps-concern__why-point"><i aria-hidden="true">01</i><div><strong>{{ why_1_title }}</strong><span>{{ why_1_text }}</span></div></div>
+          <div class="ps-concern__why-point"><i aria-hidden="true">02</i><div><strong>{{ why_2_title }}</strong><span>{{ why_2_text }}</span></div></div>
+          <div class="ps-concern__why-point"><i aria-hidden="true">03</i><div><strong>{{ why_3_title }}</strong><span>{{ why_3_text }}</span></div></div>
+          <div class="ps-concern__why-point"><i aria-hidden="true">04</i><div><strong>{{ why_4_title }}</strong><span>{{ why_4_text }}</span></div></div>
+        </div>
+      </div>
+      <figure class="ps-concern__why-quote">
+        {% render 'purity-image',
+          image: section.settings.why_image,
+          fallback_asset: why_asset,
+          fallback_width: 900,
+          fallback_height: 1125,
+          alt: '',
+          sizes: '(min-width: 900px) 40vw, 92vw',
+          loading: 'lazy'
+        %}
+        <figcaption>{{ why_quote }}</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="ps-concern__section" id="ConcernMechanism-{{ section.id }}">
+    <div class="ps-concern__wrap">
+      <div class="ps-concern__section-head">
+        <div>
+          <p class="ps-concern__kicker">Mechanism of fix</p>
+          <h2>{{ mechanism_heading }}</h2>
+          <p>{{ mechanism_text }}</p>
+        </div>
+        <a class="ps-concern__link" href="/pages/ingredients">View full ingredient library <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="ps-concern__mech-grid">
+        <article class="ps-concern__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: mech_1_asset, fallback_width: 900, fallback_height: 1200, alt: mech_1_title, sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-concern__step">{{ mech_1_step }}</span>
+          <h3>{{ mech_1_title }}</h3>
+          <em>{{ mech_1_em }}</em>
+          <p>{{ mech_1_text }}</p>
+        </article>
+        <article class="ps-concern__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: mech_2_asset, fallback_width: 900, fallback_height: 1200, alt: mech_2_title, sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-concern__step">{{ mech_2_step }}</span>
+          <h3>{{ mech_2_title }}</h3>
+          <em>{{ mech_2_em }}</em>
+          <p>{{ mech_2_text }}</p>
+        </article>
+        <article class="ps-concern__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: mech_3_asset, fallback_width: 900, fallback_height: 1200, alt: mech_3_title, sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-concern__step">{{ mech_3_step }}</span>
+          <h3>{{ mech_3_title }}</h3>
+          <em>{{ mech_3_em }}</em>
+          <p>{{ mech_3_text }}</p>
+        </article>
+        <article class="ps-concern__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: mech_4_asset, fallback_width: 900, fallback_height: 1200, alt: mech_4_title, sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-concern__step">{{ mech_4_step }}</span>
+          <h3>{{ mech_4_title }}</h3>
+          <em>{{ mech_4_em }}</em>
+          <p>{{ mech_4_text }}</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="ps-concern__section ps-concern__section--ink" style="padding: 0;">
+    <div class="ps-concern__band">
+      <div class="ps-concern__band-media">
+        {% render 'purity-image',
+          image: section.settings.band_image,
+          fallback_asset: band_asset,
+          fallback_width: 1536,
+          fallback_height: 1024,
+          alt: '',
+          sizes: '(min-width: 900px) 48vw, 100vw',
+          loading: 'lazy'
+        %}
+      </div>
+      <div class="ps-concern__band-copy">
+        <h2>{{ band_heading }}</h2>
+        <p>{{ band_text }}</p>
+        <ul class="ps-concern__band-stats">
+          <li><i aria-hidden="true">◎</i>{{ band_1 }}</li>
+          <li><i aria-hidden="true">◎</i>{{ band_2 }}</li>
+          <li><i aria-hidden="true">◎</i>{{ band_3 }}</li>
+          <li><i aria-hidden="true">◎</i>{{ band_4 }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="ps-concern__section">
+    <div class="ps-concern__wrap ps-concern__promise">
+      <h2>{{ promise_heading }}</h2>
+      <ul class="ps-concern__promise-list">
+        <li><i aria-hidden="true">◎</i><div><strong>Dermatologist informed</strong><span>Guidance shaped with clinical context — not miracle timelines.</span></div></li>
+        <li><i aria-hidden="true">◎</i><div><strong>Transparent ingredients</strong><span>Named actives, honest concentrations, and a clear role for each line.</span></div></li>
+        <li><i aria-hidden="true">◎</i><div><strong>Designed for Indian skin</strong><span>Heat, humidity, hard water, and UV are part of the formula brief.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Concern literacy",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "select",
+      "id": "concern_key",
+      "label": "Concern",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Auto (from page handle)" },
+        { "value": "acne", "label": "Acne" },
+        { "value": "pigmentation", "label": "Pigmentation" },
+        { "value": "barrier", "label": "Barrier" },
+        { "value": "spf", "label": "Daily SPF" }
+      ]
+    },
+    { "type": "text", "id": "eyebrow", "label": "Hero eyebrow override" },
+    { "type": "textarea", "id": "heading", "label": "Hero heading override" },
+    { "type": "textarea", "id": "text", "label": "Hero text override" },
+    { "type": "text", "id": "primary_label", "label": "Primary CTA", "default": "Keep reading" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary CTA" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary CTA link" },
+    { "type": "text", "id": "trust_1", "label": "Trust 1 override" },
+    { "type": "text", "id": "trust_2", "label": "Trust 2 override" },
+    { "type": "text", "id": "trust_3", "label": "Trust 3 override" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image" },
+    { "type": "image_picker", "id": "diagnosis_image", "label": "Diagnosis image" },
+    { "type": "text", "id": "diagnosis_heading", "label": "Diagnosis heading override" },
+    { "type": "textarea", "id": "diagnosis_text", "label": "Diagnosis text override" },
+    { "type": "text", "id": "why_heading", "label": "Why heading override" },
+    { "type": "textarea", "id": "why_text", "label": "Why text override" },
+    { "type": "textarea", "id": "why_quote", "label": "Why quote override" },
+    { "type": "image_picker", "id": "why_image", "label": "Why image" },
+    { "type": "text", "id": "mechanism_heading", "label": "Mechanism heading override" },
+    { "type": "textarea", "id": "mechanism_text", "label": "Mechanism text override" },
+    { "type": "image_picker", "id": "band_image", "label": "Lifestyle band image" },
+    { "type": "text", "id": "band_heading", "label": "Band heading override" },
+    { "type": "textarea", "id": "band_text", "label": "Band text override" },
+    { "type": "text", "id": "promise_heading", "label": "Promise heading override" }
+  ],
+  "presets": [{ "name": "Concern literacy" }]
+}
+{% endschema %}

@@ -144,8 +144,8 @@
     "name": "Search",
     "settings": [
       { "type": "checkbox", "id": "predictive_search", "label": "Enable predictive search", "default": true },
-      { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "Search lipstick, serum, perfume ..." },
-      { "type": "textarea", "id": "suggested_searches", "label": "Suggested searches", "default": "Serum,Hydration,Lipstick,SPF,Hair care" },
+      { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "Search serum, cleanser, sunscreen…" },
+      { "type": "textarea", "id": "suggested_searches", "label": "Suggested searches", "default": "Serum,Cleanser,Moisturiser,Sunscreen,Niacinamide" },
       { "type": "collection", "id": "search_suggestions", "label": "Suggested product collection" }
     ]
   },

@@ -1,6 +1,16 @@
-<section class="ps-section ps-products" style="--ps-bg: {{ section.settings.background }}; --ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px">
+<section
+  class="ps-section ps-products ps-products--loved"
+  style="--ps-bg: {{ section.settings.background }}; --ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px"
+>
   <div class="ps-wrap">
-    {% render 'purity-section-heading', eyebrow: section.settings.eyebrow, title: section.settings.heading, copy: section.settings.description, alignment: 'center' %}
+    <header class="ps-best-head">
+      {% if section.settings.heading != blank %}
+        <h2 class="ps-best-head__title">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <div class="ps-best-head__copy rte">{{ section.settings.description }}</div>
+      {% endif %}
+    </header>
 
     {% liquid
       assign curated_products = section.blocks | where: 'type', 'product'
@@ -9,16 +19,21 @@
       if curated_products.size > 0
         assign use_curated = true
       endif
+      assign card_layout = section.settings.card_layout | default: 'loved'
     %}
 
     {% if use_curated %}
       <purity-product-carousel class="ps-product-carousel">
         <div class="ps-product-carousel__viewport" data-product-carousel-viewport>
-          <div class="ps-products__grid" data-product-carousel-track>
+          <div class="ps-products__grid{% if card_layout == 'loved' %} ps-products__grid--loved{% endif %}" data-product-carousel-track>
             {% for block in curated_products %}
               {% if block.settings.product != blank %}
                 <div {{ block.shopify_attributes }}>
-                  {% render 'product-card', product: block.settings.product %}
+                  {% if card_layout == 'loved' %}
+                    {% render 'product-card-loved', product: block.settings.product %}
+                  {% else %}
+                    {% render 'product-card', product: block.settings.product %}
+                  {% endif %}
                 </div>
               {% endif %}
             {% endfor %}
@@ -46,9 +61,15 @@
           <div id="Panel-{{ section.id }}-{{ forloop.index }}"{% if tab_blocks.size > 1 %} role="tabpanel" aria-labelledby="Tab-{{ section.id }}-{{ forloop.index }}"{% else %} {{ block.shopify_attributes }}{% endif %} {% unless forloop.first %}hidden{% endunless %}>
             <purity-product-carousel class="ps-product-carousel">
               <div class="ps-product-carousel__viewport" data-product-carousel-viewport>
-                <div class="ps-products__grid" data-product-carousel-track>
+                <div class="ps-products__grid{% if card_layout == 'loved' %} ps-products__grid--loved{% endif %}" data-product-carousel-track>
                   {% if tab_collection != blank and tab_collection.products_count > 0 %}
-                    {% for product in tab_collection.products limit: section.settings.products_to_show %}{% render 'product-card', product: product %}{% endfor %}
+                    {% for product in tab_collection.products limit: section.settings.products_to_show %}
+                      {% if card_layout == 'loved' %}
+                        {% render 'product-card-loved', product: product %}
+                      {% else %}
+                        {% render 'product-card', product: product %}
+                      {% endif %}
+                    {% endfor %}
                   {% else %}
                     <p class="ps-products__empty">Add products in Shopify Admin to populate this tab.</p>
                   {% endif %}
@@ -71,12 +92,16 @@
   "class": "section-wrapper",
   "settings": [
     { "type": "color", "id": "background", "label": "Background", "default": "#ffffff" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Best seller" },
-    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Popular Picks" },
+    { "type": "select", "id": "card_layout", "label": "Card layout", "default": "loved", "options": [
+      { "value": "loved", "label": "Bestsellers (Kiehl’s-inspired)" },
+      { "value": "classic", "label": "Classic vertical cards" }
+    ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow (classic only)", "default": "Best seller" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Explore our bestsellers" },
     { "type": "richtext", "id": "description", "label": "Description" },
     { "type": "range", "id": "products_to_show", "label": "Products per tab", "min": 2, "max": 8, "step": 1, "default": 5, "info": "Used when tabs pull from a collection. Ignored for curated product blocks." },
-    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 92 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 104 }
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 }
   ],
   "blocks": [
     {

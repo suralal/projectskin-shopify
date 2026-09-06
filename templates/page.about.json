@@ -1,0 +1,92 @@
+{
+  "sections": {
+    "about": {
+      "type": "ps-editorial-page",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "title": "Literacy before the jar",
+            "text": "A customer who understands congestion, barrier stress, and UV load rarely buys the wrong product twice. Education is part of the product."
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "title": "Built for Indian conditions",
+            "text": "Heat, humidity, hard water, pollution, and year-round UV are not afterthoughts. They shape which actives we choose and how we deliver them."
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "title": "Named doses, named roles",
+            "text": "When concentration matters, we show it. Every ingredient must earn its place with a mechanism — not a decorative label claim."
+          }
+        },
+        "p4": {
+          "type": "point",
+          "settings": {
+            "title": "Comfort is not optional",
+            "text": "Acne-prone care that abandons the barrier creates a longer problem. Clarity and repair belong in the same sequence."
+          }
+        },
+        "c1": {
+          "type": "card",
+          "settings": {
+            "title": "Acne literacy",
+            "text": "Breakouts are biology meeting climate — not a cleanliness failure."
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "title": "Barrier first",
+            "text": "When cream fails, the lipid layer is usually the real issue."
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "title": "Daily SPF",
+            "text": "In India, photoprotection is structural — not a summer accessory."
+          }
+        },
+        "c4": {
+          "type": "card",
+          "settings": {
+            "title": "Seasonal modules",
+            "text": "Monsoon, festive, and winter change the same biology in different ways."
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "c1", "c2", "c3", "c4"],
+      "settings": {
+        "route_key": "about",
+        "eyebrow": "About Project Skin",
+        "heading": "We brought the why back to skincare.",
+        "text": "Project Skin exists because the industry sold ritual instead of root cause. We sell literacy first, formulations second — for Indian skin, climate, and real routines.",
+        "primary_label": "Read our philosophy",
+        "primary_link": "/pages/philosophy",
+        "secondary_label": "Explore the science",
+        "secondary_link": "/pages/the-science",
+        "fallback_asset": "project-skin-philosophy-people.jpg",
+        "body_heading": "What we stand for",
+        "body_text": "Skin is an organ, not a canvas. What you apply interacts with biology, barrier lipids, and the environment you live in. Our work starts there — then the formula.",
+        "split_eyebrow": "Why India",
+        "split_heading": "Engineered for this climate — not adapted later.",
+        "split_text": "Global routines often assume mild seasons and soft water. Urban India stacks UV extremes, monsoon humidity, winter TEWL, hard-water cleanses, and pollution in one year. That is the brief we design against.",
+        "split_fallback": "psr-science-mission-scan.jpg",
+        "cards_heading": "Start with a literacy path",
+        "cards_text": "Pick the story that matches what you see on your skin — then decide what to buy.",
+        "cta_heading": "Prefer a conversation?",
+        "cta_text": "Thirty minutes with a dermatologist — climate, history, and a plan you can keep.",
+        "cta_label": "Book a consultation",
+        "cta_link": "/pages/consultation",
+        "cta_secondary_label": "Shop the range",
+        "cta_secondary_link": "/collections/all"
+      }
+    }
+  },
+  "order": ["about"]
+}

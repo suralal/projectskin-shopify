@@ -1,62 +1,64 @@
 <section
-  class="pdp-section pdp-related page-width-pdp"
+  class="pdp-section pdp-related"
   style="--pdp-pad-top: {{ section.settings.padding_top }}px; --pdp-pad-bottom: {{ section.settings.padding_bottom }}px"
 >
-  <header class="pdp-section-head{% if section.settings.alignment == 'center' %} pdp-section-head--center{% endif %}">
-    {% if section.settings.subheading != blank %}
-      <p class="pdp-eyebrow">{{ section.settings.subheading }}</p>
-    {% endif %}
-    {% if section.settings.heading != blank %}
-      <h2>{{ section.settings.heading }}</h2>
-    {% endif %}
-    {% if section.settings.description != blank %}
-      <div class="rte">{{ section.settings.description }}</div>
-    {% endif %}
-  </header>
+  <div class="page-width-pdp">
+    <header class="pdp-section-head{% if section.settings.alignment == 'center' %} pdp-section-head--center{% endif %}">
+      {% if section.settings.subheading != blank %}
+        <p class="pdp-eyebrow">{{ section.settings.subheading }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <div class="rte">{{ section.settings.description }}</div>
+      {% endif %}
+    </header>
 
-  {% liquid
-    assign related_limit = section.settings.products_to_show | default: 4
-    assign shown = 0
-    assign used_collection = false
-    assign related_collection = section.settings.collection
-    if related_collection == blank and product != blank
-      assign related_collection = product.collections.first
-    endif
-  %}
+    {% liquid
+      assign related_limit = section.settings.products_to_show | default: 4
+      assign shown = 0
+      assign used_collection = false
+      assign related_collection = section.settings.collection
+      if related_collection == blank and product != blank
+        assign related_collection = product.collections.first
+      endif
+    %}
 
-  <div class="psr-edu-products pdp-related__grid" style="--psr-columns: {{ section.settings.columns | default: 4 }};">
-    {% if related_collection != blank and related_collection.products_count > 1 %}
-      {% assign used_collection = true %}
-      {% for related_product in related_collection.products %}
-        {% if related_product.id != product.id %}
-          {% render 'product-card', product: related_product %}
-          {% assign shown = shown | plus: 1 %}
-          {% if shown >= related_limit %}{% break %}{% endif %}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-
-    {% if shown == 0 %}
-      {% capture handle_blob %}{% render 'product-related-handles', product: product %}{% endcapture %}
-      {% assign handle_list = handle_blob | strip | split: ',' %}
-      {% for handle in handle_list %}
-        {% assign handle_clean = handle | strip %}
-        {% if handle_clean != blank %}
-          {% assign related_product = all_products[handle_clean] %}
-          {% if related_product != blank and related_product.id != product.id %}
+    <div class="psr-edu-products pdp-related__grid" style="--psr-columns: {{ section.settings.columns | default: 4 }};">
+      {% if related_collection != blank and related_collection.products_count > 1 %}
+        {% assign used_collection = true %}
+        {% for related_product in related_collection.products %}
+          {% if related_product.id != product.id %}
             {% render 'product-card', product: related_product %}
             {% assign shown = shown | plus: 1 %}
             {% if shown >= related_limit %}{% break %}{% endif %}
           {% endif %}
-        {% endif %}
-      {% endfor %}
+        {% endfor %}
+      {% endif %}
+
+      {% if shown == 0 %}
+        {% capture handle_blob %}{% render 'product-related-handles', product: product %}{% endcapture %}
+        {% assign handle_list = handle_blob | strip | split: ',' %}
+        {% for handle in handle_list %}
+          {% assign handle_clean = handle | strip %}
+          {% if handle_clean != blank %}
+            {% assign related_product = all_products[handle_clean] %}
+            {% if related_product != blank and related_product.id != product.id %}
+              {% render 'product-card', product: related_product %}
+              {% assign shown = shown | plus: 1 %}
+              {% if shown >= related_limit %}{% break %}{% endif %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if shown == 0 %}
+      <p class="pdp-related__empty">Explore the full Project Skin sequence to build cleanse → treat → moisturise → protect.</p>
+      <a class="psr-button" href="{{ routes.all_products_collection_url }}">Shop all formulas</a>
     {% endif %}
   </div>
-
-  {% if shown == 0 %}
-    <p class="pdp-related__empty">Explore the full Project Skin sequence to build cleanse → treat → moisturise → protect.</p>
-    <a class="psr-button" href="{{ routes.all_products_collection_url }}">Shop all formulas</a>
-  {% endif %}
 </section>
 
 {% schema %}

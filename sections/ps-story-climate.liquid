@@ -1,0 +1,136 @@
+{% comment %}
+  Interactive city climate story — pick a city, watch the stress story animate.
+  (Skin analysis & report lives on /pages/skin-profile via editorial landing.)
+{% endcomment %}
+{{ 'ps-skin-smart-stories.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ps-skin-smart-stories.js' | asset_url }}" defer></script>
+
+<ps-story-climate
+  class="ps-scl"
+  id="ClimateStory-{{ section.id }}"
+  style="--ps-scl-top: {{ section.settings.padding_top }}px; --ps-scl-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <header class="ps-scl__hero">
+    <div class="ps-scl__hero-copy" data-reveal>
+      <p class="ps-story-kicker">{{ section.settings.eyebrow }}</p>
+      <h1>{{ section.settings.heading }}</h1>
+      <p class="ps-scl__lede">{{ section.settings.text }}</p>
+    </div>
+    <div class="ps-scl__orb" aria-hidden="true" data-scl-orb>
+      <i></i><i></i><i></i>
+    </div>
+  </header>
+
+  <section class="ps-scl__picker" aria-label="Choose your city">
+    <p class="ps-scl__picker-label" data-reveal>Where does your skin live?</p>
+    <div class="ps-scl__cities" role="tablist" data-scl-cities data-reveal>
+      {% comment %} Cities injected by JS for interactivity; Liquid seeds accessible fallbacks {% endcomment %}
+      <button type="button" class="ps-scl__city is-active" role="tab" aria-selected="true" data-city="Delhi">Delhi</button>
+      <button type="button" class="ps-scl__city" role="tab" aria-selected="false" data-city="Jaipur">Jaipur</button>
+      <button type="button" class="ps-scl__city" role="tab" aria-selected="false" data-city="Kolkata">Kolkata</button>
+      <button type="button" class="ps-scl__city" role="tab" aria-selected="false" data-city="Mumbai">Mumbai</button>
+      <button type="button" class="ps-scl__city" role="tab" aria-selected="false" data-city="Hyderabad">Hyderabad</button>
+      <button type="button" class="ps-scl__city" role="tab" aria-selected="false" data-city="Bengaluru">Bengaluru</button>
+      <button type="button" class="ps-scl__city" role="tab" aria-selected="false" data-city="Chennai">Chennai</button>
+      <button type="button" class="ps-scl__city" role="tab" aria-selected="false" data-city="Kochi">Kochi</button>
+    </div>
+
+    <div class="ps-scl__seasons" data-reveal>
+      <button type="button" class="ps-scl__season is-active" data-season="annual">Year-round</button>
+      <button type="button" class="ps-scl__season" data-season="monsoon">Monsoon</button>
+      <button type="button" class="ps-scl__season" data-season="winter">Winter</button>
+    </div>
+  </section>
+
+  <section class="ps-scl__story" aria-live="polite">
+    <div class="ps-scl__story-copy" data-reveal>
+      <p class="ps-story-kicker" data-scl-city-label>Delhi</p>
+      <h2 data-scl-headline>Dry air + heavy pollution — your barrier works overtime.</h2>
+      <p data-scl-body>Low humidity pulls water out faster than you replace it. Particulate crosses the barrier and burns through your antioxidant reserve — why SPF alone is not enough here.</p>
+    </div>
+
+    <div class="ps-scl__meters" data-reveal data-reveal-delay="80">
+      <div class="ps-scl__meter" data-axis="uv">
+        <div class="ps-scl__meter-top">
+          <span>UV</span>
+          <strong data-scl-val>—</strong>
+        </div>
+        <div class="ps-scl__bar"><i data-scl-bar></i></div>
+      </div>
+      <div class="ps-scl__meter" data-axis="pm">
+        <div class="ps-scl__meter-top">
+          <span>PM₂.₅</span>
+          <strong data-scl-val>—</strong>
+        </div>
+        <div class="ps-scl__bar"><i data-scl-bar></i></div>
+      </div>
+      <div class="ps-scl__meter" data-axis="hum">
+        <div class="ps-scl__meter-top">
+          <span>Humidity</span>
+          <strong data-scl-val>—</strong>
+        </div>
+        <div class="ps-scl__bar"><i data-scl-bar></i></div>
+      </div>
+      <div class="ps-scl__meter" data-axis="water">
+        <div class="ps-scl__meter-top">
+          <span>Water hardness</span>
+          <strong data-scl-val>—</strong>
+        </div>
+        <div class="ps-scl__bar"><i data-scl-bar></i></div>
+      </div>
+      <div class="ps-scl__meter" data-axis="swing">
+        <div class="ps-scl__meter-top">
+          <span>Seasonal swing</span>
+          <strong data-scl-val>—</strong>
+        </div>
+        <div class="ps-scl__bar"><i data-scl-bar></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ps-scl__focus" data-reveal>
+    <p class="ps-story-kicker">What this asks of your routine</p>
+    <div class="ps-scl__chips" data-scl-chips></div>
+  </section>
+
+  <section class="ps-scl__close" data-reveal>
+    <h2>{{ section.settings.cta_heading }}</h2>
+    <p>{{ section.settings.cta_text }}</p>
+    <div class="ps-scl__close-actions">
+      <a class="ps-story-btn" href="{{ section.settings.button_link | default: '/pages/routine-finder' }}">{{ section.settings.button_label }}</a>
+      <a class="ps-story-btn ps-story-btn--ghost" href="{{ section.settings.secondary_link | default: '/' }}">{{ section.settings.secondary_label }}</a>
+    </div>
+  </section>
+</ps-story-climate>
+
+{% schema %}
+{
+  "name": "Climate story",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Climate literacy · City story" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Your city writes on your skin." },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Lede",
+      "default": "UV, humidity, pollution, hard water, seasonal swing — five pressures that change what “gentle” and “enough” actually mean."
+    },
+    { "type": "text", "id": "cta_heading", "label": "Closing heading", "default": "Carry this into a routine." },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "Closing text",
+      "default": "A climate-aware sequence starts with where you live — then matches cleanse, treat, moisturise, protect."
+    },
+    { "type": "text", "id": "button_label", "label": "Primary CTA", "default": "Find my routine" },
+    { "type": "url", "id": "button_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary CTA", "default": "Back to home" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0, "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 40, "max": 120, "step": 4, "unit": "px", "default": 88, "label": "Bottom padding" }
+  ],
+  "presets": [{ "name": "Climate story" }]
+}
+{% endschema %}

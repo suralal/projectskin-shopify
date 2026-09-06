@@ -4,6 +4,7 @@
   assign available_count = 0
   assign routine_image = section.settings.image
   assign routine_fallback = 'project-skin-routine-kit.jpg'
+  assign is_compact = section.settings.compact
 
   for block in section.blocks
     assign routine_product = block.settings.product
@@ -22,41 +23,82 @@
 %}
 
 <section
-  class="ps-routine-bundle"
+  class="ps-routine-bundle{% if is_compact %} ps-routine-bundle--compact ps-routine-bundle--kit{% endif %}"
   data-psr-routine-bundle
   style="--routine-bg: {{ section.settings.background }}; --routine-pad-top: {{ section.settings.padding_top }}px; --routine-pad-bottom: {{ section.settings.padding_bottom }}px"
 >
-  <div class="ps-routine-bundle__inner">
-    <div class="ps-routine-bundle__media">
-      {% if kit_product != blank %}<a href="{{ kit_product.url }}" aria-label="View {{ kit_product.title | escape }}">{% endif %}
-        {% render 'purity-image', image: routine_image, fallback_asset: routine_fallback, fallback_width: 756, fallback_height: 1024, alt: section.settings.image_alt, sizes: '(min-width: 900px) 42vw, 100vw', loading: 'lazy' %}
-      {% if kit_product != blank %}</a>{% endif %}
+  {% if is_compact %}
+    <div class="ps-routine-bundle__kit">
+      <a class="ps-routine-bundle__kit-media" href="{% if kit_product != blank %}{{ kit_product.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" aria-label="View the complete kit">
+        {% render 'purity-image', image: routine_image, fallback_asset: routine_fallback, fallback_width: 900, fallback_height: 900, alt: section.settings.image_alt, sizes: '(min-width: 900px) 360px, 42vw', loading: 'lazy' %}
+        {% if kit_savings > 0 %}
+          <span class="ps-routine-bundle__kit-badge">Save {{ kit_savings | money }}</span>
+        {% endif %}
+      </a>
 
-      {% if section.settings.show_hotspots %}
-        <div class="ps-routine-bundle__hotspots" aria-label="Explore the routine">
-          {% for block in section.blocks %}
-            {% if block.settings.product != blank %}
-              <button
-                class="ps-routine-bundle__hotspot{% if forloop.first %} is-active{% endif %}"
-                type="button"
-                style="--hotspot-x: {{ block.settings.hotspot_x }}%; --hotspot-y: {{ block.settings.hotspot_y }}%"
-                data-routine-hotspot="{{ forloop.index0 }}"
-                aria-label="View step {{ forloop.index }}: {{ block.settings.product.title | escape }}"
-              ><span>{{ forloop.index }}</span></button>
+      <div class="ps-routine-bundle__kit-copy">
+        {% if section.settings.eyebrow != blank %}<p class="ps-routine-bundle__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        <h2 class="ps-routine-bundle__heading">{{ section.settings.heading }}</h2>
+        {% if section.settings.description != blank %}<div class="ps-routine-bundle__description">{{ section.settings.description }}</div>{% endif %}
+
+        {% if section.blocks.size > 0 %}
+          <ul class="ps-routine-bundle__includes">
+            {% for block in section.blocks %}
+              {% if block.settings.product != blank or block.settings.step_label != blank %}
+                <li {{ block.shopify_attributes }}>{{ block.settings.step_label | default: block.settings.title | default: block.settings.product.title }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if kit_product != blank %}
+          <div class="ps-routine-bundle__kit-price">
+            <strong>{{ kit_product.selected_or_first_available_variant.price | money }}</strong>
+            {% if kit_savings > 0 %}
+              <s>{{ routine_total | money }}</s>
+              <span>Save {{ kit_savings | money }}</span>
             {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      {% if kit_savings > 0 %}
-        <span class="ps-routine-bundle__saving">Save {{ kit_savings | money }} with the complete kit</span>
-      {% endif %}
+          </div>
+          <a class="ps-routine-bundle__add ps-routine-bundle__add--kit" href="{{ kit_product.url }}">
+            {{ section.settings.kit_link_label | default: 'Shop the complete kit' }}
+          </a>
+        {% endif %}
+      </div>
     </div>
+  {% else %}
+  <div class="ps-routine-bundle__inner">
+      <div class="ps-routine-bundle__media">
+        {% if kit_product != blank %}<a href="{{ kit_product.url }}" aria-label="View {{ kit_product.title | escape }}">{% endif %}
+          {% render 'purity-image', image: routine_image, fallback_asset: routine_fallback, fallback_width: 756, fallback_height: 1024, alt: section.settings.image_alt, sizes: '(min-width: 900px) 42vw, 100vw', loading: 'lazy' %}
+        {% if kit_product != blank %}</a>{% endif %}
+
+        {% if section.settings.show_hotspots %}
+          <div class="ps-routine-bundle__hotspots" aria-label="Explore the routine">
+            {% for block in section.blocks %}
+              {% if block.settings.product != blank %}
+                <button
+                  class="ps-routine-bundle__hotspot{% if forloop.first %} is-active{% endif %}"
+                  type="button"
+                  style="--hotspot-x: {{ block.settings.hotspot_x }}%; --hotspot-y: {{ block.settings.hotspot_y }}%"
+                  data-routine-hotspot="{{ forloop.index0 }}"
+                  aria-label="View step {{ forloop.index }}: {{ block.settings.product.title | escape }}"
+                ><span>{{ forloop.index }}</span></button>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if kit_savings > 0 %}
+          <span class="ps-routine-bundle__saving">Save {{ kit_savings | money }} with the complete kit</span>
+        {% endif %}
+      </div>
 
     <div class="ps-routine-bundle__content">
-      {% if section.settings.eyebrow != blank %}<p class="ps-routine-bundle__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
-      <h2 class="ps-routine-bundle__heading">{{ section.settings.heading }}</h2>
-      {% if section.settings.description != blank %}<div class="ps-routine-bundle__description">{{ section.settings.description }}</div>{% endif %}
+      <div class="ps-routine-bundle__intro">
+        {% if section.settings.eyebrow != blank %}<p class="ps-routine-bundle__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        <h2 class="ps-routine-bundle__heading">{{ section.settings.heading }}</h2>
+        {% if section.settings.description != blank %}<div class="ps-routine-bundle__description">{{ section.settings.description }}</div>{% endif %}
+      </div>
 
       <div class="ps-routine-bundle__products">
         {% for block in section.blocks %}
@@ -103,19 +145,20 @@
       </div>
 
       <div class="ps-routine-bundle__actions">
-        <button class="ps-routine-bundle__add" type="button" data-routine-add {% if available_count == 0 %}disabled{% endif %}>
-          {{ section.settings.button_label }} <span aria-hidden="true">·</span> <span data-routine-total>{{ routine_total | money }}</span>
-        </button>
+          <button class="ps-routine-bundle__add" type="button" data-routine-add {% if available_count == 0 %}disabled{% endif %}>
+            {{ section.settings.button_label }} <span aria-hidden="true">·</span> <span data-routine-total>{{ routine_total | money }}</span>
+          </button>
+          {% if kit_product != blank %}
+            <a class="ps-routine-bundle__kit-link" href="{{ kit_product.url }}">
+              {{ section.settings.kit_link_label }} for <strong>{{ kit_product.selected_or_first_available_variant.price | money }}</strong>{% if kit_savings > 0 %} and save {{ kit_savings | money }}{% endif %}
+              <span aria-hidden="true">→</span>
+            </a>
+          {% endif %}
         <p data-routine-status aria-live="polite"></p>
-        {% if kit_product != blank %}
-          <a class="ps-routine-bundle__kit-link" href="{{ kit_product.url }}">
-            {{ section.settings.kit_link_label }} for <strong>{{ kit_product.selected_or_first_available_variant.price | money }}</strong>{% if kit_savings > 0 %} and save {{ kit_savings | money }}{% endif %}
-            <span aria-hidden="true">→</span>
-          </a>
-        {% endif %}
       </div>
     </div>
   </div>
+  {% endif %}
 </section>
 
 {% schema %}
@@ -124,6 +167,7 @@
   "tag": "section",
   "class": "section-wrapper",
   "settings": [
+    { "type": "checkbox", "id": "compact", "label": "Compact strip (no large image)", "default": false, "info": "Use on the homepage when the kit already appears in the hero banner." },
     { "type": "color", "id": "background", "label": "Background", "default": "#ffffff" },
     { "type": "image_picker", "id": "image", "label": "Routine image" },
     { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Project Skin complete four-step routine" },

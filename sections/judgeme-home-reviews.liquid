@@ -2,12 +2,15 @@
   assign jm = shop.metafields.judgeme
   assign review_count = jm.all_reviews_count | default: 0 | plus: 0
   assign review_rating = jm.all_reviews_rating | default: 0
-  assign has_carousel = false
-  if jm.featured_carousel != blank and jm.featured_carousel.size > 20
-    assign has_carousel = true
+
+  # Judge.me often ships an empty carousel shell. Treat zero published reviews as empty.
+  assign has_published_reviews = false
+  if review_count > 0
+    assign has_published_reviews = true
   endif
+
   assign show_fallback = false
-  if section.settings.show_fallback_when_empty and has_carousel == false
+  if section.settings.show_fallback_when_empty and has_published_reviews == false
     assign show_fallback = true
   endif
 %}
@@ -20,7 +23,7 @@
   <div class="ps-wrap">
     {% render 'purity-section-heading', eyebrow: section.settings.eyebrow, title: section.settings.heading, copy: section.settings.description, alignment: 'center' %}
 
-    {% if review_count > 0 %}
+    {% if has_published_reviews %}
       <p class="ps-judgeme-home__aggregate">
         <span
           class="jdgm-all-reviews-rating"
@@ -33,35 +36,51 @@
     {% endif %}
 
     {% if show_fallback %}
-      <div class="ps-review-rail">
+      <div class="ps-review-grid" role="list">
         {% for block in section.blocks %}
-          {% liquid
-            assign fallback_asset = 'review-1.jpg'
-            case forloop.index
-              when 2
-                assign fallback_asset = 'review-2.jpg'
-              when 3
-                assign fallback_asset = 'review-3.jpg'
-              when 4
-                assign fallback_asset = 'review-4.jpg'
-            endcase
-          %}
-          <article class="ps-review-card" {{ block.shopify_attributes }}>
-            <div class="ps-review-card__image">{% render 'purity-image', image: block.settings.image, fallback_asset: fallback_asset, fallback_width: 900, fallback_height: 670, alt: block.settings.heading, sizes: '320px' %}</div>
-            <div class="ps-review-card__copy">
-              <div class="ps-review-card__stars" aria-label="{{ block.settings.rating }} out of 5 stars">★★★★★</div>
-              <h3>{{ block.settings.heading }}</h3>
-              <div class="rte">{{ block.settings.quote }}</div>
-              {% if block.settings.author != blank %}<small>{{ block.settings.author }} · Early feedback</small>{% endif %}
+          {% assign star_rating = block.settings.rating | default: 5 %}
+          <article class="ps-review-quote" role="listitem" {{ block.shopify_attributes }}>
+            <div class="ps-review-quote__top">
+              <div class="ps-review-quote__stars" aria-label="{{ star_rating }} out of 5 stars">
+                {% for i in (1..5) %}
+                  <span class="ps-review-quote__star{% if i > star_rating %} is-empty{% endif %}" aria-hidden="true">★</span>
+                {% endfor %}
+              </div>
+              {% if block.settings.product != blank %}
+                <span class="ps-review-quote__product">{{ block.settings.product }}</span>
+              {% endif %}
             </div>
+
+            {% if block.settings.heading != blank %}
+              <h3 class="ps-review-quote__title">{{ block.settings.heading }}</h3>
+            {% endif %}
+
+            {% if block.settings.quote != blank %}
+              <div class="ps-review-quote__body rte">{{ block.settings.quote }}</div>
+            {% endif %}
+
+            <footer class="ps-review-quote__by">
+              {% if block.settings.author != blank %}
+                <strong>{{ block.settings.author }}</strong>
+              {% endif %}
+              {% if block.settings.location != blank %}
+                <span>{{ block.settings.location }}</span>
+              {% endif %}
+            </footer>
           </article>
         {% endfor %}
       </div>
-      <p class="ps-judgeme-home__note">Verified Judge.me reviews replace these cards automatically once published.</p>
+      {% if section.settings.fallback_note != blank %}
+        <p class="ps-judgeme-home__note">{{ section.settings.fallback_note }}</p>
+      {% endif %}
     {% endif %}
 
     <!-- Start of Judge.me code -->
-    <div class="jdgm-carousel-wrapper ps-judgeme-home__carousel" data-auto-install="false"{% if show_fallback %} hidden{% endif %}>
+    <div
+      class="jdgm-carousel-wrapper ps-judgeme-home__carousel"
+      data-auto-install="false"
+      {% if show_fallback %}hidden{% endif %}
+    >
       {{ jm.featured_carousel }}
     </div>
     <!-- End of Judge.me code -->
@@ -77,8 +96,9 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What customers see" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Results You Can See" },
     { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Texture, climate, and consistency — from people building the same routine.</p>" },
-    { "type": "checkbox", "id": "show_fallback_when_empty", "label": "Show curated cards when Judge.me carousel is empty", "default": true },
-    { "type": "paragraph", "content": "Requires the Judge.me app embed. Carousel content is managed in Judge.me → Settings → Widgets → Reviews Carousel." },
+    { "type": "checkbox", "id": "show_fallback_when_empty", "label": "Show curated cards when Judge.me has 0 reviews", "default": true },
+    { "type": "text", "id": "fallback_note", "label": "Fallback note", "default": "Community notes while verified Judge.me reviews accumulate." },
+    { "type": "paragraph", "content": "Requires the Judge.me app embed. Curated quote cards show when the store has zero published reviews." },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 }
   ],
@@ -87,11 +107,12 @@
       "type": "review",
       "name": "Fallback review",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "product", "label": "Product", "default": "Niacinamide Serum" },
         { "type": "text", "id": "heading", "label": "Heading", "default": "Softer, calmer skin" },
         { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>My skin feels balanced and looks visibly brighter.</p>" },
-        { "type": "text", "id": "author", "label": "Author", "default": "Maya R." }
+        { "type": "text", "id": "author", "label": "Author", "default": "Maya R." },
+        { "type": "text", "id": "location", "label": "Location", "default": "Mumbai" }
       ]
     }
   ],
@@ -100,10 +121,39 @@
     {
       "name": "Judge.me home reviews",
       "blocks": [
-        { "type": "review" },
-        { "type": "review" },
-        { "type": "review" },
-        { "type": "review" }
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "product": "Niacinamide Serum",
+            "heading": "Oil calmed without the strip",
+            "quote": "<p>Six weeks on the niacinamide serum — oil feels more predictable, not overnight clear. The 5% callout made me trust the treat step.</p>",
+            "author": "Ananya M.",
+            "location": "Mumbai"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "product": "Refreshing Cleanser",
+            "heading": "Monsoon cleanser that stays gentle",
+            "quote": "<p>Humidity usually means I over-wash. This cleanser clears congestion without the next-day oil spike.</p>",
+            "author": "Arjun P.",
+            "location": "Kolkata"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "product": "Protecting Sunscreen",
+            "heading": "SPF I actually reapply",
+            "quote": "<p>Aqua-gel finish works in Chennai heat. No white cast on my tone, and I finally reapply after lunch.</p>",
+            "author": "Karan M.",
+            "location": "Chennai"
+          }
+        }
       ]
     }
   ]

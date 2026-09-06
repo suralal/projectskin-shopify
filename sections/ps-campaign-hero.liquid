@@ -1,0 +1,188 @@
+{% liquid
+  assign hero_product = section.settings.product
+  if hero_product == blank
+    assign hero_product = all_products['clear-seal']
+  endif
+
+  assign cta_url = section.settings.button_link
+  if cta_url == blank and hero_product != blank
+    assign cta_url = hero_product.url
+  endif
+  if cta_url == blank
+    assign cta_url = routes.all_products_collection_url
+  endif
+
+  assign cta_label = section.settings.button_label | default: 'Shop now'
+  if section.settings.show_price and hero_product != blank
+    assign cta_price = hero_product.selected_or_first_available_variant.price | money
+    assign cta_label = cta_label | append: ' · ' | append: cta_price
+  endif
+
+  assign image_alt = section.settings.image_alt | default: 'Project Skin Clear Seal — Clear today. Confident always.'
+  assign show_copy = false
+  if section.settings.show_copy_panel and section.settings.heading != blank
+    assign show_copy = true
+  endif
+%}
+
+<section
+  class="ps-campaign-hero{% if show_copy %} ps-campaign-hero--split{% else %} ps-campaign-hero--image{% endif %}"
+  style="--ps-camp-pad-top: {{ section.settings.padding_top }}px; --ps-camp-pad-bottom: {{ section.settings.padding_bottom }}px;"
+  data-active-palette="{{ section.settings.palette | default: 'clean-seal' }}"
+>
+  <div class="ps-campaign-hero__shell">
+    <div class="ps-campaign-hero__board">
+      <a class="ps-campaign-hero__media" href="{{ cta_url }}" aria-label="{{ cta_label | escape }}">
+        {% if section.settings.image != blank %}
+          {{
+            section.settings.image
+            | image_url: width: 2400
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '800,1200,1600,2000,2400',
+              sizes: '(min-width: 1280px) 1200px, calc(100vw - 48px)',
+              alt: image_alt
+          }}
+        {% else %}
+          <img
+            src="{{ 'project-skin-hero-clear-seal.jpg' | asset_url }}"
+            width="1024"
+            height="249"
+            alt="{{ image_alt | escape }}"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {% endif %}
+      </a>
+
+      {% if show_copy %}
+        <div class="ps-campaign-hero__panel">
+          {% if section.settings.eyebrow != blank %}
+            <p class="ps-campaign-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+          {% endif %}
+          <h1 class="ps-campaign-hero__heading">
+            <span>{{ section.settings.heading }}</span>
+            {% if section.settings.heading_accent != blank %}
+              <em>{{ section.settings.heading_accent }}</em>
+            {% endif %}
+          </h1>
+          {% if section.settings.text != blank %}
+            <div class="ps-campaign-hero__lede">{{ section.settings.text }}</div>
+          {% endif %}
+          {% if section.blocks.size > 0 %}
+            <ul class="ps-campaign-hero__features" role="list">
+              {% for block in section.blocks %}
+                <li class="ps-campaign-hero__feature" {{ block.shopify_attributes }}>
+                  <span class="ps-campaign-hero__feature-icon" aria-hidden="true">
+                    {% case block.settings.icon %}
+                      {% when 'drop' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5c2.8 3.6 5.5 6.7 5.5 10a5.5 5.5 0 1 1-11 0c0-3.3 2.7-6.4 5.5-10Z" stroke="currentColor" stroke-width="1.5"/><path d="M10.2 15.2c.5 1.4 1.6 2.2 2.8 2.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                      {% when 'shield' %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 19 6.2v5.1c0 4.4-2.9 7.7-7 9.2-4.1-1.5-7-4.8-7-9.2V6.2L12 3.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m9.2 12.1 1.9 1.9 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% else %}
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 13.7 9.2 19.5 11 13.7 12.8 12 18.5 10.3 12.8 4.5 11l5.8-1.8L12 3.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                    {% endcase %}
+                  </span>
+                  {% if block.settings.label != blank %}
+                    <span class="ps-campaign-hero__feature-label">{{ block.settings.label }}</span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% else %}
+        <h1 class="visually-hidden">{{ image_alt }}</h1>
+      {% endif %}
+
+      <div class="ps-campaign-hero__bar">
+        <div class="ps-campaign-hero__bar-copy">
+          {% if section.settings.bar_eyebrow != blank %}
+            <span class="ps-campaign-hero__bar-eyebrow">{{ section.settings.bar_eyebrow }}</span>
+          {% endif %}
+          {% if section.settings.bar_text != blank %}
+            <p>{{ section.settings.bar_text }}</p>
+          {% endif %}
+        </div>
+        <div class="ps-campaign-hero__bar-actions">
+          {% if section.settings.trust_left != blank or section.settings.trust_right != blank %}
+            <p class="ps-campaign-hero__trust">
+              {% if section.settings.trust_left != blank %}
+                <span>
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="m3.2 8.2 2.8 2.8 6.8-6.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {{ section.settings.trust_left }}
+                </span>
+              {% endif %}
+              {% if section.settings.trust_left != blank and section.settings.trust_right != blank %}
+                <i aria-hidden="true"></i>
+              {% endif %}
+              {% if section.settings.trust_right != blank %}
+                <span>{{ section.settings.trust_right }}</span>
+              {% endif %}
+            </p>
+          {% endif %}
+          <a class="ps-campaign-hero__cta" href="{{ cta_url }}">{{ cta_label }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Campaign hero",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Campaign image", "info": "Uses the Clear Seal creative when empty." },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Project Skin Clear Seal — Clear today. Confident always." },
+    { "type": "checkbox", "id": "show_copy_panel", "label": "Show HTML copy panel beside image", "default": false, "info": "Keep off when the creative already includes headline and features." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Clear Seal" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Clear today." },
+    { "type": "text", "id": "heading_accent", "label": "Accent heading", "default": "Confident always." },
+    { "type": "richtext", "id": "text", "label": "Supporting text", "default": "<p>Target breakouts. Calm skin. Keep it clear.</p>" },
+    { "type": "header", "content": "Action bar" },
+    { "type": "text", "id": "bar_eyebrow", "label": "Bar eyebrow", "default": "Limited drop" },
+    { "type": "text", "id": "bar_text", "label": "Bar text", "default": "Clear Seal · target breakouts, calm skin, keep it clear." },
+    { "type": "product", "id": "product", "label": "Product for CTA" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+    { "type": "url", "id": "button_link", "label": "Button link override" },
+    { "type": "checkbox", "id": "show_price", "label": "Show price on CTA", "default": true },
+    { "type": "text", "id": "trust_left", "label": "Trust badge left", "default": "Dermatologically tested" },
+    { "type": "text", "id": "trust_right", "label": "Trust badge right", "default": "Recommended for acne-prone skin" },
+    { "type": "select", "id": "palette", "label": "Accent palette", "default": "clean-seal", "options": [
+      { "value": "clean-seal", "label": "Clear Seal cyan" },
+      { "value": "forest", "label": "Forest" },
+      { "value": "neutral", "label": "Neutral" }
+    ] },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 20 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 8 }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "sparkle", "options": [
+          { "value": "sparkle", "label": "Sparkle" },
+          { "value": "drop", "label": "Drop" },
+          { "value": "shield", "label": "Shield" }
+        ] },
+        { "type": "text", "id": "label", "label": "Label", "default": "Fights Acne" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Campaign hero",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "sparkle", "label": "Fights Acne" } },
+        { "type": "feature", "settings": { "icon": "drop", "label": "Soothes Skin" } },
+        { "type": "feature", "settings": { "icon": "shield", "label": "Strengthens Barrier" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

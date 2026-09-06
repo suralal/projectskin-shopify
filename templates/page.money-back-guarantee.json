@@ -1,0 +1,74 @@
+{
+  "sections": {
+    "guarantee": {
+      "type": "ps-editorial-page",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "title": "Try with a clear window",
+            "text": "If an unopened or eligible product does not feel right within the stated return window, contact us with your order details."
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "title": "Literacy still comes first",
+            "text": "We would rather you understand the mechanism before you buy — and we stand behind that honesty when something is not the right fit."
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "title": "How to start a return",
+            "text": "Write to support with your order number, product, and a short note. We will confirm eligibility and next steps."
+          }
+        },
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "question": "Does every product qualify?",
+            "answer": "Eligibility follows the store return policy — typically unused or within the published window. Opened hygiene products may have limits for safety reasons."
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "question": "How long do I have?",
+            "answer": "Use the window shown at checkout and in your order email. If you are unsure, contact us before the window closes."
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "question": "Will I get a full refund?",
+            "answer": "Approved returns are refunded to the original payment method after we receive and check the item, minus any stated shipping exceptions."
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3", "f1", "f2", "f3"],
+      "settings": {
+        "route_key": "guarantee",
+        "eyebrow": "Promise",
+        "heading": "Buy with clarity. Return with dignity.",
+        "text": "We want you confident in the science — and supported if a formula is not the right match. Here is how our money-back promise works in plain language.",
+        "primary_label": "Contact support",
+        "primary_link": "/pages/contact",
+        "secondary_label": "Read FAQs",
+        "secondary_link": "/pages/faq",
+        "fallback_asset": "psr-philosophy-trust-1.jpg",
+        "body_heading": "The spirit of the promise",
+        "body_text": "Project Skin is literacy-led. That means fewer impulse stacks and more intentional purchases. When something still misses, we handle returns carefully and respectfully.",
+        "faq_heading": "Return questions",
+        "faq_text": "Short answers. For order-specific cases, write to us with your details.",
+        "cta_heading": "Need help with an order?",
+        "cta_text": "Our team will guide eligibility, pickup or ship-back steps, and refund timing.",
+        "cta_label": "Contact us",
+        "cta_link": "/pages/contact",
+        "cta_secondary_label": "Browse formulas",
+        "cta_secondary_link": "/collections/all"
+      }
+    }
+  },
+  "order": ["guarantee"]
+}

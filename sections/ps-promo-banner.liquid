@@ -1,0 +1,287 @@
+{% comment %}
+  Contained promo banner — Derma Co-style structure:
+  inset margins, rounded board, side arrows, moderate height (not full-bleed).
+{% endcomment %}
+<section
+  class="ps-promo-banner"
+  data-active-palette="neutral"
+  style="--ps-promo-radius: {{ section.settings.corner_radius }}px; --ps-promo-pad-top: {{ section.settings.padding_top }}px; --ps-promo-pad-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="ps-promo-banner__shell">
+    <purity-slider
+      class="ps-promo-banner__slider"
+      data-autoplay="{{ section.settings.autoplay }}"
+      data-interval="{{ section.settings.interval | times: 1000 }}"
+      data-adaptive-palette="{{ section.settings.adaptive_palette }}"
+    >
+      {% if section.blocks.size > 1 and section.settings.show_arrows %}
+        <button class="ps-promo-banner__arrow ps-promo-banner__arrow--prev" type="button" data-ps-prev aria-label="Previous banner">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      {% endif %}
+
+      <div class="ps-promo-banner__board">
+        <div class="ps-promo-banner__track" data-ps-track>
+          {% for block in section.blocks %}
+            {% liquid
+              assign fallback_mobile_asset = blank
+              assign fallback_width = 3200
+              assign fallback_height = 851
+              case block.settings.fallback_banner
+                when 'clear_seal'
+                  assign fallback_asset = 'project-skin-hero-clear-seal.jpg'
+                when 'banner_2'
+                  assign fallback_asset = 'project-skin-hero-2.jpg'
+                when 'banner_3'
+                  assign fallback_asset = 'project-skin-hero-cleanser-desktop.png'
+                  assign fallback_mobile_asset = 'project-skin-hero-cleanser-mobile.png'
+                when 'banner_4'
+                  assign fallback_asset = 'project-skin-hero-serum-desktop.png'
+                  assign fallback_mobile_asset = 'project-skin-hero-serum-mobile.png'
+                  assign fallback_width = 3200
+                  assign fallback_height = 851
+                when 'banner_clearer'
+                  assign fallback_asset = 'project-skin-hero-clearer-desktop.png'
+                  assign fallback_mobile_asset = 'project-skin-hero-clearer-mobile.png'
+                when 'banner_5'
+                  assign fallback_asset = 'project-skin-hero-5.jpg'
+                when 'banner_6'
+                  assign fallback_asset = 'project-skin-hero-active-boba-desktop.png'
+                  assign fallback_mobile_asset = 'project-skin-hero-active-boba-mobile.png'
+                  assign fallback_width = 3200
+                  assign fallback_height = 865
+                when 'banner_kit'
+                  assign fallback_asset = 'project-skin-hero-kit-desktop.png'
+                  assign fallback_mobile_asset = 'project-skin-hero-kit-mobile.png'
+                  assign fallback_width = 3200
+                  assign fallback_height = 851
+                when 'scan_track_adapt'
+                  assign fallback_asset = 'project-skin-banner-3.jpg'
+                else
+                  assign fallback_asset = 'project-skin-hero-1.jpg'
+              endcase
+
+              assign image_loading = 'lazy'
+              assign image_priority = 'auto'
+              if forloop.first
+                assign image_loading = 'eager'
+                assign image_priority = 'high'
+              endif
+
+              assign hero_palette = block.settings.palette | default: 'auto'
+              if hero_palette == 'auto'
+                case block.settings.fallback_banner
+                  when 'banner_1'
+                    assign hero_palette = 'sunscreen'
+                  when 'banner_2'
+                    assign hero_palette = 'moisturiser'
+                  when 'banner_3'
+                    assign hero_palette = 'cleanser'
+                  when 'banner_4'
+                    assign hero_palette = 'serum'
+                  when 'banner_clearer'
+                    assign hero_palette = 'clearer'
+                  when 'banner_5'
+                    assign hero_palette = 'clean-seal'
+                  when 'clear_seal'
+                    assign hero_palette = 'clean-seal'
+                  when 'banner_6'
+                    assign hero_palette = 'active-boba'
+                  when 'banner_kit'
+                    assign hero_palette = 'neutral'
+                  when 'scan_track_adapt'
+                    assign hero_palette = 'scan'
+                  else
+                    assign hero_palette = 'neutral'
+                endcase
+              endif
+
+              assign image_alt = block.settings.image_alt | default: block.settings.heading | default: shop.name
+              assign cta_label = block.settings.button_label | default: 'Shop now'
+              if cta_label == blank
+                assign cta_label = 'Shop now'
+              endif
+
+              assign hero_product = block.settings.product
+              assign cta_url = block.settings.link
+              if hero_product != blank
+                assign cta_url = hero_product.url
+              elsif cta_url == blank
+                case block.settings.fallback_banner
+                  when 'banner_1'
+                    assign hero_product = all_products['protecting-sunscreen-acne-prone-skin']
+                  when 'banner_2'
+                    assign hero_product = all_products['calming-moisturiser-acne-prone-skin']
+                  when 'banner_3'
+                    assign hero_product = all_products['refreshing-cleanser-acne-prone-skin']
+                  when 'banner_4'
+                    assign hero_product = all_products['5-niacinamide-serum-acne-prone-skin']
+                  when 'banner_clearer'
+                    assign hero_product = all_products['5-niacinamide-serum-acne-prone-skin']
+                  when 'banner_5'
+                    assign hero_product = all_products['clear-seal']
+                  when 'clear_seal'
+                    assign hero_product = all_products['clear-seal']
+                  when 'banner_6'
+                    assign hero_product = all_products['active-boba-encapsulated-cream-acne-prone-skin']
+                  when 'banner_kit'
+                    assign hero_product = all_products['project-skin-complete-4-step-skincare-routine-kit']
+                  when 'scan_track_adapt'
+                    assign cta_url = '/pages/the-science'
+                  else
+                    assign cta_url = routes.all_products_collection_url
+                endcase
+                if hero_product != blank
+                  assign cta_url = hero_product.url
+                endif
+              endif
+              if cta_url == blank
+                assign cta_url = routes.all_products_collection_url
+              endif
+              if section.settings.show_price and hero_product != blank
+                assign cta_price = hero_product.selected_or_first_available_variant.price | money
+                assign cta_label = cta_label | append: ' · ' | append: cta_price
+              endif
+
+              assign has_copy = false
+              if block.settings.heading != blank or block.settings.offer_code != blank or block.settings.text != blank
+                assign has_copy = true
+              endif
+
+              assign has_responsive_fallback = false
+              if block.settings.image == blank and fallback_mobile_asset != blank
+                assign has_responsive_fallback = true
+              endif
+            %}
+            <article
+              class="ps-promo-banner__slide{% if has_copy %} ps-promo-banner__slide--split{% endif %}{% if has_responsive_fallback %} ps-promo-banner__slide--responsive{% endif %}"
+              data-ps-slide
+              data-hero-palette="{{ hero_palette }}"
+              aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}"
+              {{ block.shopify_attributes }}
+            >
+              <a class="ps-promo-banner__media" href="{{ cta_url }}" tabindex="-1" aria-hidden="true">
+                {% if has_responsive_fallback %}
+                  <picture>
+                    <source media="(max-width: 989px)" srcset="{{ fallback_mobile_asset | asset_url }}">
+                    <img
+                      src="{{ fallback_asset | asset_url }}"
+                      width="{{ fallback_width }}"
+                      height="{{ fallback_height }}"
+                      loading="{{ image_loading }}"
+                      {% if image_priority != 'auto' %}fetchpriority="{{ image_priority }}"{% endif %}
+                      alt="{{ image_alt | escape }}"
+                    >
+                  </picture>
+                {% else %}
+                  {% render 'purity-image', image: block.settings.image, fallback_asset: fallback_asset, fallback_width: 2400, fallback_height: 900, alt: image_alt, loading: image_loading, fetchpriority: image_priority, sizes: '(min-width: 1280px) 1180px, calc(100vw - 48px)' %}
+                {% endif %}
+              </a>
+
+              {% if has_copy %}
+                <div class="ps-promo-banner__copy">
+                  {% if block.settings.eyebrow != blank %}
+                    <p class="ps-promo-banner__eyebrow">{{ block.settings.eyebrow }}</p>
+                  {% endif %}
+                  {% if block.settings.heading != blank %}
+                    {% if forloop.first %}
+                      <h1 class="ps-promo-banner__heading">{{ block.settings.heading | newline_to_br }}</h1>
+                    {% else %}
+                      <h2 class="ps-promo-banner__heading">{{ block.settings.heading | newline_to_br }}</h2>
+                    {% endif %}
+                  {% endif %}
+                  {% if block.settings.text != blank %}
+                    <div class="ps-promo-banner__text">{{ block.settings.text }}</div>
+                  {% endif %}
+                  {% if block.settings.offer_code != blank %}
+                    <p class="ps-promo-banner__code">Code: <strong>{{ block.settings.offer_code }}</strong></p>
+                  {% endif %}
+                  <a class="ps-promo-banner__cta" href="{{ cta_url }}">{{ cta_label }}</a>
+                </div>
+              {% else %}
+                {% if forloop.first %}<h1 class="visually-hidden">{{ image_alt }}</h1>{% endif %}
+                <a class="ps-promo-banner__cta ps-promo-banner__cta--float" href="{{ cta_url }}">{{ cta_label }}</a>
+              {% endif %}
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if section.blocks.size > 1 and section.settings.show_arrows %}
+        <button class="ps-promo-banner__arrow ps-promo-banner__arrow--next" type="button" data-ps-next aria-label="Next banner">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      {% endif %}
+
+      {% if section.blocks.size > 1 %}
+        <div class="ps-promo-banner__dots" role="tablist" aria-label="Banner slides">
+          {% for block in section.blocks %}
+            <button class="ps-promo-banner__dot{% if forloop.first %} is-active{% endif %}" type="button" data-ps-dot aria-label="Go to slide {{ forloop.index }}"></button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </purity-slider>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo banner",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "paragraph", "content": "Contained rounded banner carousel — structured like modern DTC promo heroes (not full-bleed)." },
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-rotate slides", "default": true },
+    { "type": "range", "id": "interval", "label": "Rotate every", "min": 3, "max": 10, "step": 1, "unit": "s", "default": 5 },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show side arrows", "default": true },
+    { "type": "checkbox", "id": "adaptive_palette", "label": "Adapt accents to each slide", "default": true },
+    { "type": "checkbox", "id": "show_price", "label": "Show price on product CTAs", "default": true },
+    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 8, "max": 28, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 48, "step": 4, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 48, "step": 4, "unit": "px", "default": 12 }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "select", "id": "fallback_banner", "label": "Built-in banner", "default": "clear_seal", "options": [
+          { "value": "clear_seal", "label": "Clear Seal campaign" },
+          { "value": "banner_1", "label": "1 · Sunscreen" },
+          { "value": "banner_2", "label": "2 · Moisturiser" },
+          { "value": "banner_3", "label": "3 · Cleanser (desktop + mobile)" },
+          { "value": "banner_4", "label": "4 · Niacinamide serum (desktop + mobile)" },
+          { "value": "banner_clearer", "label": "Clearer Skin / Brighter You (desktop + mobile)" },
+          { "value": "banner_5", "label": "5 · Clean Seal (legacy)" },
+          { "value": "banner_6", "label": "6 · Active Boba / Skinphy (desktop + mobile)" },
+          { "value": "banner_kit", "label": "7 · Complete kit (desktop + mobile)" },
+          { "value": "scan_track_adapt", "label": "Scan · Track · Adapt" }
+        ] },
+        { "type": "product", "id": "product", "label": "Shop product" },
+        { "type": "text", "id": "image_alt", "label": "Image alt text" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow (split layout)" },
+        { "type": "textarea", "id": "heading", "label": "Heading (enables split layout)" },
+        { "type": "richtext", "id": "text", "label": "Text" },
+        { "type": "text", "id": "offer_code", "label": "Offer code" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+        { "type": "url", "id": "link", "label": "Button link override" },
+        { "type": "select", "id": "palette", "label": "Color family", "default": "auto", "options": [
+          { "value": "auto", "label": "Automatic" },
+          { "value": "sunscreen", "label": "Sunscreen" },
+          { "value": "moisturiser", "label": "Moisturiser" },
+          { "value": "cleanser", "label": "Cleanser" },
+          { "value": "serum", "label": "Serum" },
+          { "value": "clearer", "label": "Clearer Skin" },
+          { "value": "clean-seal", "label": "Clear Seal" },
+          { "value": "active-boba", "label": "Active Boba" },
+          { "value": "scan", "label": "Scan" },
+          { "value": "neutral", "label": "Neutral" }
+        ] }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{ "name": "Promo banner", "blocks": [{ "type": "slide" }] }]
+}
+{% endschema %}

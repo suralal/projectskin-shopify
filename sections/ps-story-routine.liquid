@@ -1,0 +1,129 @@
+{% comment %}
+  Interactive routine finder — guided story quiz → four-step plan.
+{% endcomment %}
+{{ 'ps-skin-smart-stories.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ps-skin-smart-stories.js' | asset_url }}" defer></script>
+
+<ps-story-routine
+  class="ps-sr psr-route-fallback psr-route-fallback--routine-finder psr-route-fallback--smart-lab"
+  id="RoutineStory-{{ section.id }}"
+  data-kit-url="{{ section.settings.kit_link | default: '/products/project-skin-complete-4-step-skincare-routine-kit' }}"
+  style="--ps-sr-top: {{ section.settings.padding_top }}px; --ps-sr-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <header class="ps-sr__hero" data-sr-screen="intro">
+    <div class="ps-sr__hero-copy" data-reveal>
+      <p class="ps-story-kicker">{{ section.settings.eyebrow }}</p>
+      <h1>{{ section.settings.heading }}</h1>
+      <p class="ps-sr__lede">{{ section.settings.text }}</p>
+      <button class="ps-story-btn" type="button" data-sr-begin>{{ section.settings.start_label }}</button>
+    </div>
+    <div class="ps-sr__path" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <div class="ps-sr__shell is-hidden" data-sr-shell>
+    <div class="ps-sr__progress" aria-hidden="true">
+      <span data-sr-progress></span>
+    </div>
+    <p class="ps-sr__step-label" data-sr-step-label>Question 1 of 3</p>
+
+    <div class="ps-sr__screens">
+      <section class="ps-sr__screen" data-sr-screen="concern" hidden>
+        <h2>What do you want to change first?</h2>
+        <p class="ps-sr__hint">Pick the concern that shows up most often — we will build around it.</p>
+        <div class="ps-sr__options" data-sr-options="concern">
+          <button type="button" data-value="oil">Oil &amp; shine</button>
+          <button type="button" data-value="congestion">Congestion &amp; breakouts</button>
+          <button type="button" data-value="marks">Marks &amp; uneven tone</button>
+          <button type="button" data-value="barrier">Tight, reactive barrier</button>
+        </div>
+      </section>
+
+      <section class="ps-sr__screen" data-sr-screen="climate" hidden>
+        <h2>What does your environment feel like?</h2>
+        <p class="ps-sr__hint">Not perfect science — an honest read of your daily air and water.</p>
+        <div class="ps-sr__options" data-sr-options="climate">
+          <button type="button" data-value="dry">Dry / AC-heavy</button>
+          <button type="button" data-value="humid">Humid / sticky</button>
+          <button type="button" data-value="polluted">Polluted / dusty</button>
+          <button type="button" data-value="mixed">Mixed — changes by hour</button>
+        </div>
+      </section>
+
+      <section class="ps-sr__screen" data-sr-screen="pace" hidden>
+        <h2>How much routine can you keep?</h2>
+        <p class="ps-sr__hint">Consistency beats intensity. Choose what you will still do in week four.</p>
+        <div class="ps-sr__options" data-sr-options="pace">
+          <button type="button" data-value="minimal">Two steps, max</button>
+          <button type="button" data-value="core">A clear four-step</button>
+          <button type="button" data-value="focused">Four steps + spot care</button>
+        </div>
+      </section>
+
+      <section class="ps-sr__screen ps-sr__screen--result" data-sr-screen="result" hidden>
+        <p class="ps-story-kicker">Your sequence</p>
+        <h2 data-sr-result-title>A routine you can keep.</h2>
+        <p class="ps-sr__result-story" data-sr-result-story></p>
+
+        <ol class="ps-sr__steps" data-sr-steps>
+          <li>
+            <span>01 · Cleanse</span>
+            <strong>Refreshing Cleanser</strong>
+            <p>Clear residue without stripping the barrier.</p>
+          </li>
+          <li>
+            <span>02 · Treat</span>
+            <strong>5% Niacinamide Serum</strong>
+            <p>Oil, pores, and tone — one honest concentration.</p>
+          </li>
+          <li>
+            <span>03 · Moisturise</span>
+            <strong>Calming Moisturiser</strong>
+            <p>Lightweight gel support when cream feels too much.</p>
+          </li>
+          <li>
+            <span>04 · Protect</span>
+            <strong>Protecting Sunscreen</strong>
+            <p>Daily photoprotection for Indian UV.</p>
+          </li>
+        </ol>
+
+        <div class="ps-sr__result-actions">
+          <a class="ps-story-btn" href="{{ section.settings.kit_link | default: '/products/project-skin-complete-4-step-skincare-routine-kit' }}" data-sr-kit>
+            {{ section.settings.kit_label }}
+          </a>
+          <button class="ps-story-btn ps-story-btn--ghost" type="button" data-sr-restart>Start over</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="ps-sr__nav">
+      <button class="ps-story-btn ps-story-btn--ghost" type="button" data-sr-back hidden>Back</button>
+    </div>
+  </div>
+</ps-story-routine>
+
+{% schema %}
+{
+  "name": "Routine story",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Get skin smart · Routine finder" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find a sequence you will still follow next month." },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Lede",
+      "default": "Three questions. One four-step story — cleanse, treat, moisturise, protect — shaped by concern and climate, not trends."
+    },
+    { "type": "text", "id": "start_label", "label": "Start button", "default": "Start the finder" },
+    { "type": "text", "id": "kit_label", "label": "Kit CTA", "default": "Shop the complete kit" },
+    { "type": "url", "id": "kit_link", "label": "Kit link" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0, "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 40, "max": 120, "step": 4, "unit": "px", "default": 88, "label": "Bottom padding" }
+  ],
+  "presets": [{ "name": "Routine story" }]
+}
+{% endschema %}

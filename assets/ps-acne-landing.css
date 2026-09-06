@@ -1,0 +1,587 @@
+/* Acne concern landing — black type on white, natural photography */
+.ps-acne {
+  --ps-acne-ink: #111111;
+  --ps-acne-muted: #5c5c5c;
+  --ps-acne-line: #e6e6e6;
+  --ps-acne-paper: #ffffff;
+  --ps-acne-soft: #f5f5f5;
+  --ps-acne-surface: #ffffff;
+  --ps-acne-accent: #111111;
+  --ps-acne-accent-soft: #333333;
+  color: var(--ps-acne-ink);
+  background: var(--ps-acne-surface);
+}
+.ps-acne * { box-sizing: border-box; }
+.ps-acne__wrap {
+  width: min(100% - 48px, 1180px);
+  margin-inline: auto;
+}
+
+/* —— Hero —— */
+.ps-acne__hero {
+  padding: clamp(40px, 6vw, 72px) 0 clamp(48px, 7vw, 80px);
+  background: var(--ps-acne-paper);
+}
+.ps-acne__hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+.ps-acne__kicker {
+  margin: 0 0 14px;
+  color: var(--ps-acne-accent-soft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ps-acne__hero h1 {
+  margin: 0 0 16px;
+  max-width: 14ch;
+  font-family: var(--font-heading-family);
+  font-size: clamp(36px, 4.6vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+.ps-acne__lede {
+  margin: 0 0 28px;
+  max-width: 42ch;
+  color: var(--ps-acne-muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+.ps-acne__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.ps-acne__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: var(--ps-acne-accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.ps-acne__btn:hover { opacity: 0.88; }
+.ps-acne__btn--ghost {
+  background: #fff;
+  border-color: rgba(17, 17, 17, 0.28);
+  color: var(--ps-acne-ink);
+}
+.ps-acne__trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ps-acne__trust li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ps-acne-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+.ps-acne__trust-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--ps-acne-soft);
+  color: var(--ps-acne-ink);
+  font-size: 14px;
+}
+.ps-acne__hero-media {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: #d8d8d8;
+}
+.ps-acne__hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+}
+.ps-acne__pin {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 8px rgba(0,0,0,.45);
+  pointer-events: none;
+}
+.ps-acne__pin::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(255,255,255,.35);
+  flex-shrink: 0;
+}
+.ps-acne__pin--1 { top: 18%; left: 8%; }
+.ps-acne__pin--2 { top: 34%; right: 10%; flex-direction: row-reverse; }
+.ps-acne__pin--3 { top: 52%; left: 6%; }
+.ps-acne__pin--4 { top: 68%; right: 12%; flex-direction: row-reverse; }
+.ps-acne__insight {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 3;
+  padding: 14px 16px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 28px rgba(0,0,0,.12);
+}
+.ps-acne__insight strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ps-acne-ink);
+}
+.ps-acne__meter {
+  display: grid;
+  gap: 8px;
+}
+.ps-acne__meter-row {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 10px;
+  align-items: center;
+  font-size: 11px;
+  color: var(--ps-acne-muted);
+}
+.ps-acne__meter-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(17,17,17,.1);
+  overflow: hidden;
+}
+.ps-acne__meter-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #111;
+}
+
+/* —— Shared section chrome —— */
+.ps-acne__section {
+  padding: clamp(56px, 8vw, 88px) 0;
+}
+.ps-acne__section--soft { background: var(--ps-acne-soft); }
+.ps-acne__section--ink {
+  background: #111;
+  color: #fff;
+}
+.ps-acne__section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(28px, 4vw, 40px);
+}
+.ps-acne__section-head h2,
+.ps-acne__copy h2 {
+  margin: 10px 0 0;
+  font-family: var(--font-heading-family);
+  font-size: clamp(28px, 3.4vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+.ps-acne__section-head p,
+.ps-acne__copy p {
+  margin: 12px 0 0;
+  max-width: 48ch;
+  color: var(--ps-acne-muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.ps-acne__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ps-acne-ink);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+.ps-acne__link:hover { opacity: 0.7; }
+
+/* —— Diagnosis —— */
+.ps-acne__diag-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+  margin-bottom: 28px;
+  align-items: center;
+}
+.ps-acne__diag-visual {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  background: #ddd;
+}
+.ps-acne__diag-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ps-acne__badge {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.94);
+  color: var(--ps-acne-ink);
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+.ps-acne__badge--1 { top: 18%; left: 22%; }
+.ps-acne__badge--2 { top: 28%; right: 24%; }
+.ps-acne__badge--3 { bottom: 30%; left: 28%; }
+.ps-acne__badge--4 { bottom: 22%; right: 20%; }
+.ps-acne__diag-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.ps-acne__diag-card {
+  text-align: center;
+}
+.ps-acne__diag-card figure {
+  margin: 0 auto 14px;
+  width: min(100%, 148px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e8e8e8;
+  border: 1px solid var(--ps-acne-line);
+}
+.ps-acne__diag-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ps-acne__diag-card strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 650;
+}
+.ps-acne__diag-card span {
+  display: block;
+  color: var(--ps-acne-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* —— Why —— */
+.ps-acne__why-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+}
+.ps-acne__why-points {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+  margin-top: 28px;
+}
+.ps-acne__why-point {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.ps-acne__why-point i {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ps-acne-ink);
+  border: 1px solid var(--ps-acne-line);
+  font-style: normal;
+  font-size: 13px;
+  font-weight: 700;
+}
+.ps-acne__why-point strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+.ps-acne__why-point span {
+  color: var(--ps-acne-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.ps-acne__why-quote {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: #cfcfcf;
+}
+.ps-acne__why-quote img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ps-acne__why-quote figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 28px 24px;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .78));
+  color: #fff;
+  font-family: var(--font-heading-family);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+/* —— Mechanism —— */
+.ps-acne__mech-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  position: relative;
+}
+.ps-acne__mech-card {
+  position: relative;
+  min-width: 0;
+}
+.ps-acne__mech-card figure {
+  margin: 0 0 16px;
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: #f2f2f2;
+  border: 1px solid var(--ps-acne-line);
+}
+.ps-acne__mech-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.ps-acne__mech-card .ps-acne__step {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ps-acne-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.ps-acne__mech-card h3 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 650;
+}
+.ps-acne__mech-card em {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ps-acne-accent-soft);
+  font-style: normal;
+  font-size: 13px;
+  font-weight: 600;
+}
+.ps-acne__mech-card p {
+  margin: 0;
+  color: var(--ps-acne-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.ps-acne__mech-card:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 28%;
+  right: -14px;
+  z-index: 1;
+  color: rgba(17,17,17,.28);
+  font-size: 18px;
+}
+
+/* —— Lifestyle band —— */
+.ps-acne__band {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 0;
+  align-items: stretch;
+  overflow: hidden;
+}
+.ps-acne__band-media {
+  min-height: 360px;
+  background: #1a1a1a;
+}
+.ps-acne__band-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+.ps-acne__band-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(36px, 6vw, 72px) clamp(28px, 5vw, 64px);
+}
+.ps-acne__band-copy h2 {
+  margin: 0 0 14px;
+  font-family: var(--font-heading-family);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.ps-acne__band-copy > p {
+  margin: 0 0 32px;
+  max-width: 36ch;
+  color: rgba(255,255,255,.72);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.ps-acne__band-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ps-acne__band-stats li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.ps-acne__band-stats i {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.35);
+  font-style: normal;
+  font-size: 14px;
+}
+
+/* —— Promise —— */
+.ps-acne__promise {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+.ps-acne__promise h2 {
+  margin: 0;
+  max-width: 12ch;
+  font-family: var(--font-heading-family);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.ps-acne__promise-list {
+  display: grid;
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ps-acne__promise-list li {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.ps-acne__promise-list i {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--ps-acne-soft);
+  color: var(--ps-acne-ink);
+  border: 1px solid var(--ps-acne-line);
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 700;
+}
+.ps-acne__promise-list strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+.ps-acne__promise-list span {
+  color: var(--ps-acne-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 1100px) {
+  .ps-acne__mech-grid,
+  .ps-acne__diag-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ps-acne__mech-card:not(:last-child)::after { display: none; }
+}
+@media (max-width: 860px) {
+  .ps-acne__wrap { width: min(100% - 32px, 1180px); }
+  .ps-acne__hero-grid,
+  .ps-acne__diag-grid,
+  .ps-acne__why-grid,
+  .ps-acne__band,
+  .ps-acne__promise { grid-template-columns: 1fr; }
+  .ps-acne__section-head { align-items: flex-start; flex-direction: column; }
+  .ps-acne__band-media { min-height: 280px; aspect-ratio: 4 / 3; }
+  .ps-acne__pin { font-size: 10px; }
+  .ps-acne__hero h1 { max-width: none; }
+}
+@media (max-width: 560px) {
+  .ps-acne__diag-cards,
+  .ps-acne__why-points,
+  .ps-acne__mech-grid,
+  .ps-acne__band-stats { grid-template-columns: 1fr; }
+}

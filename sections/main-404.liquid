@@ -16,7 +16,18 @@
       '/pages/journal': ['journal', 'Journal – Project Skin'],
       '/pages/monsoon': ['monsoon', 'Monsoon – Project Skin'],
       '/pages/festive': ['festive', 'Festive – Project Skin'],
-      '/pages/winter': ['winter', 'Winter – Project Skin']
+      '/pages/winter': ['winter', 'Winter – Project Skin'],
+      '/pages/about': ['about', 'About – Project Skin'],
+      '/pages/consultation': ['consultation', 'Consultation – Project Skin'],
+      '/pages/climate': ['climate', 'Climate – Project Skin'],
+      '/pages/routine': ['routine', 'Routine – Project Skin'],
+      '/pages/routine-finder': ['routine-finder', 'Routine finder – Project Skin'],
+      '/pages/skin-profile': ['skin-profile', 'Skin analysis & report – Project Skin'],
+      '/pages/smart-lab': ['smart-lab', 'Get Skin Smart – Project Skin'],
+      '/pages/faq': ['faq', 'FAQ – Project Skin'],
+      '/pages/contact': ['contact', 'Contact – Project Skin'],
+      '/pages/contact-us': ['contact', 'Contact – Project Skin'],
+      '/pages/money-back-guarantee': ['guarantee', 'Money-back promise – Project Skin']
     };
     var hit = map[path];
     var route = hit ? hit[0] : 'not-found';
@@ -25,7 +36,57 @@
   })();
 </script>
 <style>
-  html[data-psr-fallback-route] .psr-route-fallback { display: none; }
+  /* Hide inactive literacy sections */
+  html[data-psr-fallback-route] .psr-route-fallback { display: none !important; }
+
+  /* Theme uses content-visibility + contain-intrinsic-size:800px on late sections.
+     That leaves blank 800px placeholders on 404 fallback routes — force paint. */
+  html[data-psr-fallback-route] #MainContent .shopify-section {
+    content-visibility: visible !important;
+    contain-intrinsic-size: auto !important;
+  }
+
+  /* Collapse Shopify section wrappers that only exist for inactive routes.
+     Without this, wrappers keep large empty height and push active content below the fold. */
+  html[data-psr-fallback-route] #MainContent .shopify-section:has(.psr-route-fallback) {
+    display: none !important;
+    min-height: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    content-visibility: hidden !important;
+  }
+
+  html[data-psr-fallback-route='philosophy'] #MainContent .shopify-section:has(.psr-route-fallback--philosophy),
+  html[data-psr-fallback-route='science'] #MainContent .shopify-section:has(.psr-route-fallback--science),
+  html[data-psr-fallback-route='ingredients'] #MainContent .shopify-section:has(.psr-route-fallback--ingredients),
+  html[data-psr-fallback-route='ingredients'] #MainContent .shopify-section:has(.psr-route-fallback--science),
+  html[data-psr-fallback-route='acne'] #MainContent .shopify-section:has(.psr-route-fallback--concern-acne),
+  html[data-psr-fallback-route='pigmentation'] #MainContent .shopify-section:has(.psr-route-fallback--concern-pigmentation),
+  html[data-psr-fallback-route='barrier'] #MainContent .shopify-section:has(.psr-route-fallback--concern-barrier),
+  html[data-psr-fallback-route='spf'] #MainContent .shopify-section:has(.psr-route-fallback--concern-spf),
+  html[data-psr-fallback-route='journal'] #MainContent .shopify-section:has(.psr-route-fallback--journal),
+  html[data-psr-fallback-route='monsoon'] #MainContent .shopify-section:has(.psr-route-fallback--season-monsoon),
+  html[data-psr-fallback-route='festive'] #MainContent .shopify-section:has(.psr-route-fallback--season-festive),
+  html[data-psr-fallback-route='winter'] #MainContent .shopify-section:has(.psr-route-fallback--season-winter),
+  html[data-psr-fallback-route='about'] #MainContent .shopify-section:has(.psr-route-fallback--about),
+  html[data-psr-fallback-route='consultation'] #MainContent .shopify-section:has(.psr-route-fallback--consultation),
+  html[data-psr-fallback-route='climate'] #MainContent .shopify-section:has(.psr-route-fallback--climate),
+  html[data-psr-fallback-route='routine'] #MainContent .shopify-section:has(.psr-route-fallback--routine),
+  html[data-psr-fallback-route='routine-finder'] #MainContent .shopify-section:has(.psr-route-fallback--routine-finder),
+  html[data-psr-fallback-route='skin-profile'] #MainContent .shopify-section:has(.psr-route-fallback--skin-profile),
+  html[data-psr-fallback-route='smart-lab'] #MainContent .shopify-section:has(.psr-route-fallback--smart-lab),
+  html[data-psr-fallback-route='faq'] #MainContent .shopify-section:has(.psr-route-fallback--faq),
+  html[data-psr-fallback-route='contact'] #MainContent .shopify-section:has(.psr-route-fallback--contact),
+  html[data-psr-fallback-route='guarantee'] #MainContent .shopify-section:has(.psr-route-fallback--guarantee) {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    content-visibility: visible !important;
+    contain-intrinsic-size: auto !important;
+  }
+
   html[data-psr-fallback-route='philosophy'] .psr-route-fallback--philosophy,
   html[data-psr-fallback-route='science'] .psr-route-fallback--science,
   html[data-psr-fallback-route='ingredients'] .psr-route-fallback--ingredients,
@@ -37,7 +98,18 @@
   html[data-psr-fallback-route='journal'] .psr-route-fallback--journal,
   html[data-psr-fallback-route='monsoon'] .psr-route-fallback--season-monsoon,
   html[data-psr-fallback-route='festive'] .psr-route-fallback--season-festive,
-  html[data-psr-fallback-route='winter'] .psr-route-fallback--season-winter { display: block; }
+  html[data-psr-fallback-route='winter'] .psr-route-fallback--season-winter,
+  html[data-psr-fallback-route='about'] .psr-route-fallback--about,
+  html[data-psr-fallback-route='consultation'] .psr-route-fallback--consultation,
+  html[data-psr-fallback-route='climate'] .psr-route-fallback--climate,
+  html[data-psr-fallback-route='routine'] .psr-route-fallback--routine,
+  html[data-psr-fallback-route='routine-finder'] .psr-route-fallback--routine-finder,
+  html[data-psr-fallback-route='skin-profile'] .psr-route-fallback--skin-profile,
+  html[data-psr-fallback-route='smart-lab'] .psr-route-fallback--smart-lab,
+  html[data-psr-fallback-route='faq'] .psr-route-fallback--faq,
+  html[data-psr-fallback-route='contact'] .psr-route-fallback--contact,
+  html[data-psr-fallback-route='guarantee'] .psr-route-fallback--guarantee { display: block !important; }
+
   html[data-psr-fallback-route='philosophy'] .psr-404-default,
   html[data-psr-fallback-route='science'] .psr-404-default,
   html[data-psr-fallback-route='ingredients'] .psr-404-default,
@@ -48,7 +120,17 @@
   html[data-psr-fallback-route='journal'] .psr-404-default,
   html[data-psr-fallback-route='monsoon'] .psr-404-default,
   html[data-psr-fallback-route='festive'] .psr-404-default,
-  html[data-psr-fallback-route='winter'] .psr-404-default { display: none; }
+  html[data-psr-fallback-route='winter'] .psr-404-default,
+  html[data-psr-fallback-route='about'] .psr-404-default,
+  html[data-psr-fallback-route='consultation'] .psr-404-default,
+  html[data-psr-fallback-route='climate'] .psr-404-default,
+  html[data-psr-fallback-route='routine'] .psr-404-default,
+  html[data-psr-fallback-route='routine-finder'] .psr-404-default,
+  html[data-psr-fallback-route='skin-profile'] .psr-404-default,
+  html[data-psr-fallback-route='smart-lab'] .psr-404-default,
+  html[data-psr-fallback-route='faq'] .psr-404-default,
+  html[data-psr-fallback-route='contact'] .psr-404-default,
+  html[data-psr-fallback-route='guarantee'] .psr-404-default { display: none !important; }
 </style>
 <section class="section psr-404-default"><div class="container"><h1>404</h1><p>Page not found.</p><a class="btn" href="{{ routes.root_url }}">Back home</a></div></section>
 {% schema %}{"name":"404 page","settings":[]}{% endschema %}

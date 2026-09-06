@@ -1,20 +1,103 @@
 {
   "sections": {
+    "intro": {
+      "type": "ps-editorial-page",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "title": "UV load",
+            "text": "Indian cities spend long stretches in high-to-extreme UV. Pigmentation and barrier stress continue on cloudy days."
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "title": "Humidity & heat",
+            "text": "Monsoon humidity slows water loss but raises sebum, sweat, and congestion risk — damp is not the same as hydrated."
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "title": "Hard water",
+            "text": "Mineral-heavy washes strip lipids and leave residue. Barrier tightness after cleansing is often water chemistry, not ‘weak skin’."
+          }
+        },
+        "p4": {
+          "type": "point",
+          "settings": {
+            "title": "Pollution & season swing",
+            "text": "Oxidative load outdoors plus AC and heaters indoors create the same barrier story across one Indian year."
+          }
+        },
+        "c1": {
+          "type": "card",
+          "settings": {
+            "title": "Monsoon module",
+            "text": "Humidity does not cancel acne biology — or the need for daily SPF."
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "title": "Winter module",
+            "text": "Dryness is often a barrier story — cream alone is not the fix."
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "title": "Festive module",
+            "text": "Makeup, late nights, and UV still need photoprotection and barrier discipline."
+          }
+        },
+        "c4": {
+          "type": "card",
+          "settings": {
+            "title": "Routine finder",
+            "text": "Turn climate context into a four-step sequence you can keep."
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "c1", "c2", "c3", "c4"],
+      "settings": {
+        "route_key": "climate",
+        "eyebrow": "Climate literacy",
+        "heading": "Your city writes on your skin.",
+        "text": "UV, humidity, pollution, hard water, and seasonal swing are not mood boards — they are measurable pressures. Read the factors, then explore your city’s profile below.",
+        "primary_label": "Explore city profiles",
+        "primary_link": "#ClimateExplorer",
+        "secondary_label": "Find a routine",
+        "secondary_link": "/pages/routine-finder",
+        "fallback_asset": "psr-science-commit-human.jpg",
+        "body_heading": "Five pressures worth understanding",
+        "body_text": "Indian skincare fails when routines assume mild seasons and soft water. Start with the environment — then match cleanse, treat, moisturise, protect.",
+        "cards_heading": "Carry this into a season",
+        "cards_text": "Each calendar module diagnoses first — then points to mechanisms.",
+        "cta_heading": "Ready for a climate-aware sequence?",
+        "cta_text": "Use the explorer, then build a routine you will still follow next month.",
+        "cta_label": "Open routine finder",
+        "cta_link": "/pages/routine-finder",
+        "cta_secondary_label": "Book consultation",
+        "cta_secondary_link": "/pages/consultation"
+      }
+    },
     "climate_explorer": {
       "type": "ps-climate-signature",
       "settings": {
         "layout": "full",
-        "eyebrow": "Your city's skin environment",
+        "eyebrow": "City explorer",
         "heading": "Five factors.",
         "heading_italic": "One profile.",
-        "description": "<p>UV, humidity, pollution, water hardness and seasonal swing — ranked for your city. Compare cities, switch seasons, and save a profile for your routine.</p>",
+        "description": "<p>UV, humidity, pollution, water hardness and seasonal swing — ranked for your city. Compare cities, switch seasons, and take the profile into your routine.</p>",
         "button_label": "Build my routine",
-        "routine_link": "/pages/routine",
+        "routine_link": "/pages/routine-finder",
         "detail_label": "",
         "padding_top": 56,
         "padding_bottom": 72
       }
     }
   },
-  "order": ["climate_explorer"]
+  "order": ["intro", "climate_explorer"]
 }

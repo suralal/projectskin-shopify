@@ -3,8 +3,8 @@
 {% endcomment %}
 {% assign clim_layout = section.settings.layout | default: 'teaser' %}
 <section
-  class="ps-clim{% if clim_layout == 'teaser' %} ps-clim--teaser{% endif %}"
-  id="ClimateSignature-{{ section.id }}"
+  class="ps-clim{% if clim_layout == 'teaser' %} ps-clim--teaser{% endif %}{% if clim_layout == 'full' %} psr-route-fallback psr-route-fallback--climate{% endif %}"
+  id="ClimateExplorer"
   style="--ps-clim-top: {{ section.settings.padding_top }}px; --ps-clim-bottom: {{ section.settings.padding_bottom }}px"
 >
   <div class="ps-clim__mesh" aria-hidden="true"><i></i><i></i></div>
@@ -35,7 +35,8 @@
         <div class="ps-clim__cities" role="tablist" aria-label="{{ section.settings.heading | escape }}" data-clim-cities></div>
         {% if clim_layout == 'full' %}
           <div class="ps-clim__seasons" role="tablist" aria-label="Season" data-clim-seasons>
-            <button type="button" class="ps-clim__season is-on" data-season="annual" role="tab" aria-selected="true">Year-round</button>
+            <button type="button" class="ps-clim__season is-on" data-season="live" role="tab" aria-selected="true"><span class="ps-clim__live-dot" aria-hidden="true"></span> Live today</button>
+            <button type="button" class="ps-clim__season" data-season="annual" role="tab" aria-selected="false">Year-round</button>
             <button type="button" class="ps-clim__season" data-season="monsoon" role="tab" aria-selected="false">Monsoon</button>
             <button type="button" class="ps-clim__season" data-season="winter" role="tab" aria-selected="false">Winter</button>
           </div>
@@ -52,8 +53,15 @@
               </div>
               <p class="ps-clim__idx-l"><span data-clim-idx-city></span> skin stress</p>
               <p class="ps-clim__idx-rank" data-clim-idx-rank></p>
+              <div class="ps-clim__live-pill" data-clim-live-pill>
+                <span class="ps-clim__live-dot" aria-hidden="true"></span>
+                <span data-clim-live-text>Live environmental feed</span>
+              </div>
             </div>
             <div class="ps-clim__teaser-main">
+              <div class="ps-clim__live-meta" data-clim-live-meta>
+                <span data-clim-live-weather></span>
+              </div>
               <div class="ps-clim__driver-chips" data-clim-driver-chips aria-label="Top stressors"></div>
               <p class="ps-clim__v-h" data-clim-v-h></p>
               <div class="ps-clim__pills" data-clim-pills></div>
@@ -83,6 +91,10 @@
               <div class="ps-clim__score-copy">
                 <p class="ps-clim__idx-l"><span data-clim-idx-city></span> skin stress</p>
                 <p class="ps-clim__idx-rank" data-clim-idx-rank></p>
+                <div class="ps-clim__live-pill" data-clim-live-pill>
+                  <span class="ps-clim__live-dot" aria-hidden="true"></span>
+                  <span data-clim-live-text>Live environmental feed</span>
+                </div>
               </div>
             </div>
             <div class="ps-clim__head-actions">
@@ -104,6 +116,10 @@
           </div>
 
           <div class="ps-clim__hero-cards" data-clim-hero-cards aria-label="Top stressors"></div>
+
+          <div class="ps-clim__live-meta ps-clim__live-meta--full" data-clim-live-meta>
+            <span data-clim-live-weather></span>
+          </div>
 
           <div class="ps-clim__verdict">
             <p class="ps-clim__v-h" data-clim-v-h></p>
@@ -208,7 +224,7 @@
       "type": "textarea",
       "id": "source_note",
       "label": "Source note",
-      "default": "Scores compare eight major Indian cities on five stress axes using illustrative annual averages. Humidity and seasonal swing are plotted as stress — both very dry and very humid read high. Monsoon and winter toggles apply seasonal modifiers for education, not live forecasts."
+      "default": "Live scores integrate real-time temperature, relative humidity, diurnal swing, peak UV, and particulate matter (PM2.5/PM10) via Open-Meteo & national air monitoring networks. Water hardness represents central groundwater baseline data (CGWB). Year-round, monsoon, and winter models reflect multi-year climatological baselines."
     },
     {
       "type": "textarea",

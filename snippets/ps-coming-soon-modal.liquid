@@ -1,0 +1,483 @@
+{% comment %}
+  Project Skin — Coming Soon Modal Popup for Feature Pages
+  (Dermatologist Consultation, Skin Analysis & Report, Routine Finder)
+{% endcomment %}
+
+<div class="ps-cs-modal" id="psComingSoonModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="psComingSoonTitle">
+  <div class="ps-cs-modal__backdrop" data-cs-close tabindex="-1"></div>
+  <div class="ps-cs-modal__dialog">
+    <button class="ps-cs-modal__close" type="button" data-cs-close aria-label="Close dialog">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <div class="ps-cs-modal__body">
+      <div class="ps-cs-modal__badge">
+        <span class="ps-cs-modal__dot"></span>
+        <span>Coming Soon</span>
+      </div>
+
+      <div class="ps-cs-modal__icon-wrap" id="psComingSoonIcon">
+        <!-- SVG injected dynamically -->
+      </div>
+
+      <h2 class="ps-cs-modal__title" id="psComingSoonTitle">
+        Dermatologist Consultation
+      </h2>
+
+      <p class="ps-cs-modal__subtitle" id="psComingSoonSubtitle">
+        Clinical Guidance & Routine Review
+      </p>
+
+      <p class="ps-cs-modal__desc" id="psComingSoonDesc">
+        We are preparing one-on-one virtual consultations with certified dermatologists for personalized clinical acne guidance.
+      </p>
+
+      <div class="ps-cs-modal__notify-box">
+        <p class="ps-cs-modal__notify-label">Be the first to know when it goes live:</p>
+        <form class="ps-cs-modal__form" id="psComingSoonForm" onsubmit="window.psSubmitComingSoon(event)">
+          <div class="ps-cs-modal__input-row">
+            <input
+              type="email"
+              id="psComingSoonEmail"
+              class="ps-cs-modal__input"
+              placeholder="Enter your email address"
+              required
+              aria-label="Email address"
+            >
+            <button type="submit" class="ps-cs-modal__submit">Notify me</button>
+          </div>
+          <div class="ps-cs-modal__feedback" id="psComingSoonFeedback" hidden>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>You're on the early access list! We'll notify you first.</span>
+          </div>
+        </form>
+      </div>
+
+      <div class="ps-cs-modal__actions">
+        <button type="button" class="ps-cs-modal__btn-secondary" data-cs-close>
+          Explore Bestsellers
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ps-cs-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ps-cs-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .ps-cs-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 18, 16, 0.62);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+  }
+
+  .ps-cs-modal__dialog {
+    position: relative;
+    z-index: 2;
+    width: min(500px, calc(100vw - 32px));
+    max-height: min(90vh, 720px);
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.28),
+                0 0 0 1px rgba(0, 0, 0, 0.06);
+    padding: 36px 32px 32px;
+    text-align: center;
+    transform: translateY(18px) scale(0.97);
+    transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+  }
+
+  .ps-cs-modal.is-open .ps-cs-modal__dialog {
+    transform: translateY(0) scale(1);
+  }
+
+  .ps-cs-modal__close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #f7f5f2;
+    color: #252724;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 180ms ease, transform 180ms ease, color 180ms ease;
+  }
+
+  .ps-cs-modal__close:hover {
+    background: #ebe7e1;
+    color: #000;
+    transform: scale(1.05);
+  }
+
+  .ps-cs-modal__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 14px;
+    background: #f5f2ed;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4a4641;
+    margin-bottom: 20px;
+  }
+
+  .ps-cs-modal__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #b58055;
+    box-shadow: 0 0 0 2px rgba(181, 128, 85, 0.25);
+    animation: psCsPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes psCsPulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.25);
+      opacity: 0.7;
+    }
+  }
+
+  .ps-cs-modal__icon-wrap {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: #f8f6f2;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    display: grid;
+    place-items: center;
+    color: #252724;
+  }
+
+  .ps-cs-modal__title {
+    margin: 0 0 6px;
+    font-family: var(--font-heading-family);
+    font-size: clamp(24px, 3.2vw, 30px);
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.18;
+    color: #1a1a19;
+  }
+
+  .ps-cs-modal__subtitle {
+    margin: 0 0 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #8c827a;
+  }
+
+  .ps-cs-modal__desc {
+    margin: 0 auto 24px;
+    max-width: 42ch;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #55524e;
+  }
+
+  .ps-cs-modal__notify-box {
+    background: #fbf9f6;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .ps-cs-modal__notify-label {
+    margin: 0 0 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2c2a27;
+  }
+
+  .ps-cs-modal__input-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .ps-cs-modal__input {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    padding: 0 14px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    color: #111;
+    outline: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .ps-cs-modal__input:focus {
+    border-color: #252724;
+    box-shadow: 0 0 0 3px rgba(37, 39, 36, 0.08);
+  }
+
+  .ps-cs-modal__submit {
+    height: 44px;
+    padding: 0 20px;
+    background: #252724;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 160ms ease, transform 160ms ease;
+  }
+
+  .ps-cs-modal__submit:hover {
+    background: #111210;
+    transform: translateY(-1px);
+  }
+
+  .ps-cs-modal__feedback {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #eef7f2;
+    border: 1px solid #c7e5d3;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #166434;
+  }
+
+  .ps-cs-modal__actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  .ps-cs-modal__btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    padding: 0 24px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    background: transparent;
+    color: #252724;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease;
+  }
+
+  .ps-cs-modal__btn-secondary:hover {
+    background: #f7f5f2;
+    border-color: rgba(0, 0, 0, 0.22);
+  }
+
+  @media (max-width: 600px) {
+    .ps-cs-modal__dialog {
+      padding: 28px 20px 24px;
+    }
+    .ps-cs-modal__input-row {
+      flex-direction: column;
+    }
+    .ps-cs-modal__submit {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const FEATURES = {
+      consultation: {
+        title: 'Dermatologist Consultation',
+        subtitle: 'Virtual Clinical Appointments',
+        desc: 'We are currently onboarding certified dermatologists to deliver clinical guidance, routine reviews, and personalized acne treatment plans. Appointment booking will go live shortly.',
+        icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M12 14v4"></path><path d="M10 16h4"></path></svg>'
+      },
+      analysis: {
+        title: 'Skin Analysis & Report',
+        subtitle: 'Digital Diagnostic Intake',
+        desc: 'Our digital skin analysis captures your facial signals, habits, and climate context to generate an evidence-backed skin report for your daily routine. This feature is currently in testing and launching soon.',
+        icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><circle cx="12" cy="12" r="3"></circle><path d="M12 7v1"></path><path d="M12 16v1"></path><path d="M7 12h1"></path><path d="M16 12h1"></path></svg>'
+      },
+      routine: {
+        title: 'Routine Finder',
+        subtitle: 'Personalized 4-Step Regimen',
+        desc: 'Answer a few targeted questions to receive a custom cleanse, treat, moisturise, and protect sequence engineered for Indian heat, humidity, and acne-prone skin. Launching very soon.',
+        icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path><line x1="9" y1="18" x2="15" y2="18"></line></svg>'
+      }
+    };
+
+    function resolveFeature(keyOrUrl) {
+      if (!keyOrUrl) return FEATURES.consultation;
+      const lower = String(keyOrUrl).toLowerCase();
+      if (lower.includes('routine') || lower.includes('quiz')) return FEATURES.routine;
+      if (lower.includes('profile') || lower.includes('analysis') || lower.includes('scan') || lower.includes('report')) return FEATURES.analysis;
+      return FEATURES.consultation;
+    }
+
+    window.openComingSoonModal = function (type, customTitle, customDesc) {
+      const modal = document.getElementById('psComingSoonModal');
+      if (!modal) return;
+
+      const feat = resolveFeature(type);
+      const titleEl = document.getElementById('psComingSoonTitle');
+      const subtitleEl = document.getElementById('psComingSoonSubtitle');
+      const descEl = document.getElementById('psComingSoonDesc');
+      const iconEl = document.getElementById('psComingSoonIcon');
+
+      if (titleEl) titleEl.textContent = customTitle || feat.title;
+      if (subtitleEl) subtitleEl.textContent = feat.subtitle;
+      if (descEl) descEl.textContent = customDesc || feat.desc;
+      if (iconEl) iconEl.innerHTML = feat.icon;
+
+      // Reset form
+      const feedback = document.getElementById('psComingSoonFeedback');
+      if (feedback) feedback.hidden = true;
+      const input = document.getElementById('psComingSoonEmail');
+      if (input) input.value = '';
+
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+      document.body.style.overflow = 'hidden';
+
+      setTimeout(function () {
+        if (input) input.focus();
+      }, 100);
+    };
+
+    window.closeComingSoonModal = function () {
+      const modal = document.getElementById('psComingSoonModal');
+      if (!modal) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+      document.body.style.overflow = '';
+    };
+
+    window.psSubmitComingSoon = function (e) {
+      e.preventDefault();
+      const email = document.getElementById('psComingSoonEmail')?.value;
+      const feedback = document.getElementById('psComingSoonFeedback');
+      if (feedback) {
+        feedback.hidden = false;
+      }
+      try {
+        const stored = JSON.parse(localStorage.getItem('ps_notify_emails') || '[]');
+        if (email && !stored.includes(email)) {
+          stored.push(email);
+          localStorage.setItem('ps_notify_emails', JSON.stringify(stored));
+        }
+      } catch (err) {}
+    };
+
+    // Global click listener for coming-soon triggers
+    document.addEventListener('click', function (e) {
+      // Close button or backdrop
+      if (e.target.closest('[data-cs-close]')) {
+        e.preventDefault();
+        window.closeComingSoonModal();
+        return;
+      }
+
+      // Check if click is inside or on a coming-soon card or link
+      const target = e.target;
+      const card = target.closest('.ps-smart__card, [data-coming-soon="true"]');
+      const link = target.closest('a[href*="/pages/consultation"], a[href*="/pages/skin-profile"], a[href*="/pages/routine-finder"]');
+
+      if (card) {
+        e.preventDefault();
+        e.stopPropagation();
+        const featType = card.dataset.feature || card.dataset.featureType || card.getAttribute('href');
+        const customTitle = card.dataset.featureTitle || card.querySelector('.ps-smart__title')?.textContent?.trim();
+        const customDesc = card.dataset.featureDesc || card.querySelector('.ps-smart__desc')?.textContent?.trim();
+        window.openComingSoonModal(featType, customTitle, customDesc);
+        return;
+      }
+
+      if (link) {
+        e.preventDefault();
+        e.stopPropagation();
+        const href = link.getAttribute('href') || '';
+        window.openComingSoonModal(href);
+      }
+    }, true);
+
+    // Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('psComingSoonModal');
+        if (modal && modal.classList.contains('is-open')) {
+          window.closeComingSoonModal();
+        }
+      }
+    });
+
+    // Check if directly loaded on one of these three pages
+    function checkDirectUrl() {
+      const p = window.location.pathname.replace(/\/$/, '');
+      if (p === '/pages/consultation' || p === '/pages/skin-profile' || p === '/pages/routine-finder') {
+        setTimeout(function () {
+          window.openComingSoonModal(p);
+        }, 300);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', checkDirectUrl);
+    } else {
+      checkDirectUrl();
+    }
+  })();
+</script>

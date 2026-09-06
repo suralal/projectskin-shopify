@@ -59,7 +59,7 @@
       {% render 'pdp-thumbnail-gallery', section: section, product: product, display_title: display_title %}
     {% else %}
     <div class="pdp-gallery" data-product-gallery>
-      {% if section.settings.use_product_media and product.media.size > 0 and product.handle != 'calming-moisturiser-acne-prone-skin' and product.handle != 'refreshing-cleanser-acne-prone-skin' and product.handle != 'protecting-sunscreen-acne-prone-skin' and product.handle != 'clear-seal' and product.handle != 'active-boba-encapsulated-cream-acne-prone-skin' and product.handle != 'project-skin-complete-4-step-skincare-routine-kit' %}
+      {% if section.settings.use_product_media and product.media.size > 0 and product.handle != '5-niacinamide-serum-acne-prone-skin' and product.handle != 'calming-moisturiser-acne-prone-skin' and product.handle != 'refreshing-cleanser-acne-prone-skin' and product.handle != 'protecting-sunscreen-acne-prone-skin' and product.handle != 'clear-seal' and product.handle != 'active-boba-encapsulated-cream-acne-prone-skin' and product.handle != 'project-skin-complete-4-step-skincare-routine-kit' %}
         {% for media in product.media %}
           <div class="pdp-gallery__item{% if forloop.index > 1 and forloop.index < 4 %} pdp-gallery__item--half{% endif %}" data-product-media>
             {% case media.media_type %}

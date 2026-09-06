@@ -1,14 +1,220 @@
 (() => {
   const PROFILE_KEY = 'ps-climate-profile-v1';
   const ROUTINE_KEY = 'ps-routine-tracker-v1';
+  const LIVE_CACHE_KEY = 'ps-climate-live-v2';
+  const LIVE_CACHE_TTL = 30 * 60 * 1000; // 30 mins cache
   const reducedMotion = () => window.PurityTheme?.reducedMotion || matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
 
+  const CITY_GEO = {
+    delhi:     { lat: 28.6139, lon: 77.2090, water: 340, name: 'Delhi', state: 'Delhi' },
+    jaipur:    { lat: 26.9124, lon: 75.7873, water: 460, name: 'Jaipur', state: 'Rajasthan' },
+    kolkata:   { lat: 22.5726, lon: 88.3639, water: 180, name: 'Kolkata', state: 'West Bengal' },
+    mumbai:    { lat: 19.0760, lon: 72.8777, water: 130, name: 'Mumbai', state: 'Maharashtra' },
+    hyderabad: { lat: 17.3850, lon: 78.4867, water: 300, name: 'Hyderabad', state: 'Telangana' },
+    bengaluru: { lat: 12.9716, lon: 77.5946, water: 250, name: 'Bengaluru', state: 'Karnataka' },
+    chennai:   { lat: 13.0827, lon: 80.2707, water: 410, name: 'Chennai', state: 'Tamil Nadu' },
+    kochi:     { lat: 9.9312,  lon: 76.2673, water: 95,  name: 'Kochi', state: 'Kerala' }
+  };
+
+  const CITY_ORDER = ['delhi', 'jaipur', 'kolkata', 'mumbai', 'hyderabad', 'bengaluru', 'chennai', 'kochi'];
+
   const SEASON_MOD = {
+    live: { uv: 1, hum: 1, pm: 1, water: 1, swing: 1 },
     annual: { uv: 1, hum: 1, pm: 1, water: 1, swing: 1 },
     monsoon: { uv: 0.93, hum: 1.2, pm: 0.82, water: 0.98, swing: 0.72 },
     winter: { uv: 0.9, hum: 0.78, pm: 1.18, water: 1.02, swing: 1.15 }
   };
+
+  function getWeatherDesc(code) {
+    if (code === 0) return 'Clear sky';
+    if (code === 1 || code === 2) return 'Partly cloudy';
+    if (code === 3) return 'Overcast';
+    if (code >= 45 && code <= 48) return 'Haze / fog';
+    if (code >= 51 && code <= 55) return 'Light drizzle';
+    if (code >= 61 && code <= 65) return 'Rain';
+    if (code >= 80 && code <= 82) return 'Rain showers';
+    if (code >= 95) return 'Thunderstorm';
+    return 'Active climate';
+  }
+
+  function getLiveAssessment(eff) {
+    const hum = eff.hum;
+    const pm = eff.pm;
+    const uv = eff.uv;
+    const water = eff.water;
+
+    let h = '';
+    let p = '';
+
+    if (hum >= 78 && pm >= 55) {
+      h = `High humidity (${hum}%) + heavy particulate (${pm} µg/m³) — your barrier works overtime.`;
+      p = `Ambient moisture spreads excess sebum while airborne particulate clings to damp skin. Prioritise a gentle rinse-off cleanse with BHA and avoid heavy occlusive creams tonight.`;
+    } else if (hum >= 75) {
+      h = `High ambient moisture (${hum}%) — switch to water-light barrier care.`;
+      p = `At ${hum}% humidity, sweat and sebum spread easily across the face. Treat steps absorb quickly, but heavy creams can trap heat and trigger congestion.`;
+    } else if (hum <= 42 && pm >= 70) {
+      h = `Dry air (${hum}%) + heavy pollution (${pm} µg/m³) — your barrier works overtime.`;
+      p = `Low humidity pulls water out faster than you replace it. Particulate crosses the stratum corneum and burns through antioxidant reserves — why SPF and barrier repair matter most here.`;
+    } else if (uv >= 8.5) {
+      h = `Extreme UV index (${uv} peak) — photoprotection is your #1 anti-aging step.`;
+      p = `Intense UVA1 radiation penetrates deep into the dermis, accelerating pigmentation and oxidative damage. Broad-spectrum SPF is non-negotiable today.`;
+    } else if (water >= 400) {
+      h = `Hard water (${water} ppm) + active climate — double stress with every wash.`;
+      p = `High calcium and magnesium levels bind to surfactants, leaving a residue that strips essential lipids. Pair a gentle cleanser with replenishing moisturiser.`;
+    } else {
+      h = eff.h || `${eff.c}: balanced environmental profile today.`;
+      p = eff.p || `Current real-time environmental metrics indicate stable conditions. Maintain a steady four-step cleanse, treat, moisturise, and protect sequence.`;
+    }
+
+    return { h, p };
+  }
+
+  let liveDataPromise = null;
+
+  function getCachedLiveData() {
+    try {
+      const raw = localStorage.getItem(LIVE_CACHE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.timestamp && (Date.now() - parsed.timestamp < LIVE_CACHE_TTL) && parsed.data) {
+        return parsed.data;
+      }
+    } catch (_e) { /* ignore */ }
+    return null;
+  }
+
+  function setCachedLiveData(data) {
+    try {
+      localStorage.setItem(LIVE_CACHE_KEY, JSON.stringify({
+        timestamp: Date.now(),
+        data
+      }));
+    } catch (_e) { /* ignore */ }
+  }
+
+  async function fetchLiveClimateData() {
+    const cached = getCachedLiveData();
+    if (cached) return cached;
+
+    if (liveDataPromise) return liveDataPromise;
+
+    liveDataPromise = (async () => {
+      try {
+        const lats = CITY_ORDER.map((k) => CITY_GEO[k].lat).join(',');
+        const lons = CITY_ORDER.map((k) => CITY_GEO[k].lon).join(',');
+
+        const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&current=temperature_2m,relative_humidity_2m,weather_code&daily=uv_index_max,temperature_2m_max,temperature_2m_min&timezone=Asia%2FKolkata&forecast_days=1`;
+        const aqUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lats}&longitude=${lons}&current=pm10,pm2_5,us_aqi&timezone=Asia%2FKolkata`;
+
+        const [wRes, aqRes] = await Promise.all([
+          fetch(forecastUrl),
+          fetch(aqUrl)
+        ]);
+
+        if (!wRes.ok || !aqRes.ok) throw new Error('API response not ok');
+
+        const [wData, aqData] = await Promise.all([
+          wRes.json(),
+          aqRes.json()
+        ]);
+
+        const wList = Array.isArray(wData) ? wData : [wData];
+        const aqList = Array.isArray(aqData) ? aqData : [aqData];
+
+        const result = {};
+
+        CITY_ORDER.forEach((key, idx) => {
+          const w = wList[idx] || {};
+          const aq = aqList[idx] || {};
+          const geo = CITY_GEO[key];
+
+          const curW = w.current || {};
+          const dailyW = w.daily || {};
+          const curAq = aq.current || {};
+
+          const hum = Math.round(curW.relative_humidity_2m ?? 60);
+          const temp = Math.round((curW.temperature_2m ?? 26) * 10) / 10;
+          const weatherCode = curW.weather_code ?? 0;
+          const weatherDesc = getWeatherDesc(weatherCode);
+
+          const uv = +(dailyW.uv_index_max?.[0] ?? 7.5).toFixed(1);
+          const pm = +(curAq.pm2_5 ?? 35).toFixed(1);
+          const aqi = Math.round(curAq.us_aqi ?? 60);
+
+          const tMax = dailyW.temperature_2m_max?.[0] ?? (temp + 4);
+          const tMin = dailyW.temperature_2m_min?.[0] ?? (temp - 4);
+          const swing = Math.round(clamp((tMax - tMin) * 7.5, 25, 95));
+
+          const water = Math.round(geo.water * (hum > 80 ? 0.92 : 1.0));
+
+          result[key] = {
+            c: geo.name,
+            temp,
+            hum,
+            weatherCode,
+            weatherDesc,
+            uv,
+            pm,
+            aqi,
+            swing,
+            water,
+            updatedAt: Date.now(),
+            isLive: true
+          };
+        });
+
+        setCachedLiveData(result);
+        return result;
+      } catch (err) {
+        console.warn('[PsClimate] Live feed fallback to baseline:', err);
+        return null;
+      } finally {
+        liveDataPromise = null;
+      }
+    })();
+
+    return liveDataPromise;
+  }
+
+  let geoPromise = null;
+
+  async function detectUserCity() {
+    if (geoPromise) return geoPromise;
+
+    geoPromise = (async () => {
+      try {
+        const res = await fetch('https://get.geojs.io/v1/ip/geo.json');
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (!data) return null;
+
+        const city = (data.city || '').toLowerCase();
+        const region = (data.region || '').toLowerCase();
+
+        for (const key of CITY_ORDER) {
+          if (city.includes(key) || CITY_GEO[key].name.toLowerCase().includes(city)) {
+            return CITY_GEO[key].name;
+          }
+        }
+
+        if (city.includes('gurgaon') || city.includes('gurugram') || city.includes('noida') || city.includes('ghaziabad') || city.includes('faridabad')) return 'Delhi';
+        if (city.includes('thane') || city.includes('navi mumbai') || city.includes('pune')) return 'Mumbai';
+        if (city.includes('howrah')) return 'Kolkata';
+        if (city.includes('secunderabad')) return 'Hyderabad';
+        if (city.includes('ernakulam') || region.includes('kerala')) return 'Kochi';
+        if (region.includes('tamil nadu')) return 'Chennai';
+        if (region.includes('karnataka') || city.includes('mysore') || city.includes('mysuru')) return 'Bengaluru';
+        if (region.includes('rajasthan')) return 'Jaipur';
+
+        return null;
+      } catch (_e) {
+        return null;
+      }
+    })();
+
+    return geoPromise;
+  }
 
   const DEFAULT_CITIES = [
     { c: 'Delhi', uv: 8.4, hum: 41, pm: 112, water: 340, swing: 88,
@@ -113,7 +319,26 @@
     return spline(AX.map((a) => pt(a, Math.max(0.05, o[a.k]))));
   }
 
-  function applySeason(base, season) {
+  function applySeason(base, season, liveData = null) {
+    if (season === 'live' && liveData) {
+      const key = (base.c || '').toLowerCase();
+      const live = liveData[key];
+      if (live) {
+        return {
+          ...base,
+          uv: live.uv,
+          hum: live.hum,
+          pm: live.pm,
+          water: live.water,
+          swing: live.swing,
+          temp: live.temp,
+          weatherCode: live.weatherCode,
+          weatherDesc: live.weatherDesc,
+          aqi: live.aqi,
+          isLive: true
+        };
+      }
+    }
     const mod = SEASON_MOD[season] || SEASON_MOD.annual;
     return {
       ...base,
@@ -121,15 +346,21 @@
       hum: Math.round(clamp(base.hum * mod.hum, 18, 95)),
       pm: Math.round(clamp(base.pm * mod.pm, 8, 180)),
       water: Math.round(base.water * mod.water),
-      swing: Math.round(clamp(base.swing * mod.swing, 20, 100))
+      swing: Math.round(clamp(base.swing * mod.swing, 20, 100)),
+      isLive: false
     };
   }
 
-  function prepCities(list, season = 'annual') {
+  function prepCities(list, season = 'live', liveData = null) {
     return list.map((c) => {
-      const eff = applySeason(c, season);
+      const eff = applySeason(c, season, liveData);
       eff.idx = Math.round(AX.reduce((s, a) => s + a.load(eff) * a.w, 0) * 100);
       eff._base = c.c;
+      if (eff.isLive) {
+        const liveAssessment = getLiveAssessment(eff);
+        eff.h = liveAssessment.h;
+        eff.p = liveAssessment.p;
+      }
       return eff;
     });
   }
@@ -146,6 +377,11 @@
 
   function formatVal(a, city) {
     const v = city[a.k];
+    if (a.k === 'uv') return `${Number(v).toFixed(1)} peak`;
+    if (a.k === 'hum') return `${Math.round(v)}%`;
+    if (a.k === 'pm') return `${Math.round(v)} µg/m³`;
+    if (a.k === 'water') return `${Math.round(v)} ppm`;
+    if (a.k === 'swing') return `${Math.round(v)}/100`;
     return v.toFixed(a.d) + (a.u ? ` ${a.u}` : '');
   }
 
@@ -169,8 +405,9 @@
   }
 
   window.PsClimate = {
-    DEFAULT_CITIES, AX, STEP_NAMES, PROFILE_KEY, ROUTINE_KEY,
-    applySeason, prepCities, loadProfile, saveProfile, SEASON_MOD
+    DEFAULT_CITIES, AX, STEP_NAMES, PROFILE_KEY, ROUTINE_KEY, LIVE_CACHE_KEY,
+    applySeason, prepCities, loadProfile, saveProfile, SEASON_MOD,
+    fetchLiveClimateData, getCachedLiveData, detectUserCity, getLiveAssessment
   };
 
   class PsClimateSignature extends HTMLElement {
@@ -189,7 +426,8 @@
       this.rawCities = raw;
       this.layout = this.dataset.climLayout || 'teaser';
       this.detailBase = this.dataset.climDetailBase || '/pages/climate';
-      this.season = 'annual';
+      this.season = 'live';
+      this.liveData = getCachedLiveData();
       this.cur = 0;
       this.cmp = -1;
       this.shown = {};
@@ -209,32 +447,55 @@
       }
 
       const params = new URLSearchParams(window.location.search);
-      if (params.get('season') && SEASON_MOD[params.get('season')]) {
-        this.season = params.get('season');
-        this.setSeasonUI(this.season);
-        this.refreshCities();
-        if (this.layout === 'full') this.buildScale();
-      }
-
+      const urlSeason = params.get('season');
       const profile = loadProfile();
+
+      if (urlSeason && SEASON_MOD[urlSeason]) {
+        this.season = urlSeason;
+      } else if (this.layout === 'full' && profile?.season && SEASON_MOD[profile.season]) {
+        this.season = profile.season;
+      } else {
+        this.season = 'live';
+      }
+      this.setSeasonUI(this.season);
+
       const cityParam = params.get('city');
       const cityName = cityParam || profile?.city;
       if (cityName) {
-        if (!params.get('season') && profile?.season && SEASON_MOD[profile.season]) {
-          this.season = profile.season;
-          this.setSeasonUI(this.season);
-          this.refreshCities();
-          if (this.layout === 'full') this.buildScale();
-        }
         const idx = this.C.findIndex((c) => c.c.toLowerCase() === cityName.toLowerCase());
         if (idx > -1) this.cur = idx;
       }
 
       this.render();
+
+      // Asynchronous non-blocking live data hydration
+      fetchLiveClimateData().then((data) => {
+        if (data) {
+          this.liveData = data;
+          this.refreshCities();
+          if (this.layout === 'full') this.buildScale();
+          this.render();
+        }
+      });
+
+      // Asynchronous non-blocking IP geolocation if no explicit user city
+      if (!cityName) {
+        detectUserCity().then((detected) => {
+          if (detected) {
+            const idx = this.C.findIndex((c) => c.c.toLowerCase() === detected.toLowerCase());
+            if (idx > -1 && idx !== this.cur) {
+              this.cur = idx;
+              this.isAutoDetected = true;
+              this.autoDetectedIdx = idx;
+              this.render();
+            }
+          }
+        });
+      }
     }
 
     refreshCities() {
-      this.C = prepCities(this.rawCities, this.season);
+      this.C = prepCities(this.rawCities, this.season, this.liveData);
       this.IMIN = Math.min(...this.C.map((c) => c.idx));
       this.IMAX = Math.max(...this.C.map((c) => c.idx));
       this.RANKED = [...this.C].sort((a, b) => b.idx - a.idx);
@@ -270,6 +531,9 @@
       this.routineCta = this.querySelector('[data-clim-routine-cta]');
       this.detailLink = this.querySelector('[data-clim-detail-link]');
       this.driverChips = this.querySelector('[data-clim-driver-chips]');
+      this.livePill = this.querySelector('[data-clim-live-pill]');
+      this.liveText = this.querySelector('[data-clim-live-text]');
+      this.liveWeather = this.querySelector('[data-clim-live-weather]');
     }
 
     bindSeasons() {
@@ -340,7 +604,7 @@
       this.C.forEach((city, i) => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'ps-clim__city';
+        btn.className = `ps-clim__city${i === this.cur ? ' is-active' : ''}`;
         btn.textContent = city.c;
         btn.setAttribute('role', 'tab');
         btn.setAttribute('aria-selected', i === this.cur ? 'true' : 'false');
@@ -502,8 +766,8 @@
       }
     }
 
-    seasonLabel() {
-      return { annual: 'year-round', monsoon: 'monsoon', winter: 'winter' }[this.season] || this.season;
+    seasonLabel(s = this.season) {
+      return { live: 'live today', annual: 'year-round', monsoon: 'monsoon', winter: 'winter' }[s] || s;
     }
 
     render() {
@@ -520,7 +784,11 @@
       AX.forEach((a) => { loads[a.k] = a.load(city); });
       const ranked = [...AX].sort((a, b) => loads[b.k] * b.w - loads[a.k] * a.w);
 
-      [...this.citiesEl.children].forEach((btn, i) => btn.setAttribute('aria-selected', String(i === this.cur)));
+      [...this.citiesEl.children].forEach((btn, i) => {
+        const isCur = i === this.cur;
+        btn.setAttribute('aria-selected', String(isCur));
+        btn.classList.toggle('is-active', isCur);
+      });
 
       this.animateNum(this.querySelector('[data-clim-idx-n]'), city.idx, 0);
       const cityEl = this.querySelector('[data-clim-idx-city]');
@@ -529,6 +797,25 @@
       const rank = this.RANKED.findIndex((x) => x.c === city.c) + 1;
       const rankEl = this.querySelector('[data-clim-idx-rank]');
       if (rankEl) rankEl.textContent = `${rankOrd(rank)} of 8 cities · score ${this.IMIN}–${this.IMAX} nationally`;
+
+      if (this.livePill && this.liveText) {
+        if (city.isLive) {
+          this.livePill.classList.remove('is-offline');
+          this.liveText.textContent = 'Live environmental feed';
+        } else {
+          this.livePill.classList.add('is-offline');
+          this.liveText.textContent = `${this.seasonLabel(this.season)} model`;
+        }
+      }
+
+      if (this.liveWeather) {
+        if (city.isLive) {
+          const locBadge = (this.isAutoDetected && this.cur === this.autoDetectedIdx) ? '<span class="ps-clim__live-loc-badge">Near you</span>' : '';
+          this.liveWeather.innerHTML = `<strong>${city.c} now:</strong> ${city.temp}°C · ${city.weatherDesc} · ${city.hum}% humidity · PM₂.₅ ${city.pm} µg/m³ (AQI ${city.aqi})${locBadge}`;
+        } else {
+          this.liveWeather.textContent = `${this.seasonLabel(this.season)} climatological baseline`;
+        }
+      }
 
       if (this.driverChips) {
         this.driverChips.innerHTML = ranked.slice(0, 2).map((a) => {
@@ -568,7 +855,11 @@
       const ranked = [...AX].sort((a, b) => loads[b.k] * b.w - loads[a.k] * a.w);
       const cmpCity = this.cmp > -1 && this.cmp !== this.cur ? this.C[this.cmp] : null;
 
-      [...this.citiesEl.children].forEach((btn, i) => btn.setAttribute('aria-selected', String(i === this.cur)));
+      [...this.citiesEl.children].forEach((btn, i) => {
+        const isCur = i === this.cur;
+        btn.setAttribute('aria-selected', String(isCur));
+        btn.classList.toggle('is-active', isCur);
+      });
       this.scaleTrack?.querySelectorAll('.ps-clim__scale-pt').forEach((pt, i) => {
         pt.classList.toggle('is-on', i === this.cur);
       });
@@ -590,6 +881,25 @@
       const rankEl = this.querySelector('[data-clim-idx-rank]');
       if (rankEl) {
         rankEl.textContent = `${rankOrd(rank)} of 8 cities · ${this.seasonLabel()} profile · scores ${this.IMIN}–${this.IMAX} nationally`;
+      }
+
+      if (this.livePill && this.liveText) {
+        if (city.isLive) {
+          this.livePill.classList.remove('is-offline');
+          this.liveText.textContent = 'Live environmental feed';
+        } else {
+          this.livePill.classList.add('is-offline');
+          this.liveText.textContent = `${this.seasonLabel(this.season)} model`;
+        }
+      }
+
+      const fullLiveWeather = this.querySelector('.ps-clim__live-meta--full [data-clim-live-weather]');
+      if (fullLiveWeather) {
+        if (city.isLive) {
+          fullLiveWeather.innerHTML = `<strong>${city.c} real-time sensors:</strong> ${city.temp}°C · ${city.weatherDesc} · ${city.hum}% humidity · PM₂.₅ ${city.pm} µg/m³ (AQI ${city.aqi}) · Peak UV ${city.uv} · Water hardness baseline ${city.water} ppm`;
+        } else {
+          fullLiveWeather.textContent = `${this.seasonLabel(this.season)} multi-year climatological baseline across five environmental axes`;
+        }
       }
 
       if (this.heroEl) {
@@ -671,7 +981,7 @@
       if (this.initialized) return;
       this.initialized = true;
 
-      this.cities = prepCities(DEFAULT_CITIES);
+      this.cities = prepCities(DEFAULT_CITIES, this.state.season || 'annual', getCachedLiveData());
       this.steps = STEP_NAMES;
       this.storageKey = ROUTINE_KEY;
 
@@ -725,7 +1035,7 @@
     }
 
     refreshSeasonalCities() {
-      this.cities = prepCities(DEFAULT_CITIES, this.state.season || 'annual');
+      this.cities = prepCities(DEFAULT_CITIES, this.state.season || 'annual', getCachedLiveData());
     }
 
     loadState() {

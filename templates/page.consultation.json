@@ -1,37 +1,94 @@
 {
   "sections": {
-    "hero": {
-      "type": "ps-consultation-hero",
+    "story": {
+      "type": "ps-story-consult",
+      "blocks": {
+        "c1": {
+          "type": "chapter",
+          "settings": {
+            "nav_label": "The pattern",
+            "heading": "The pattern you keep seeing",
+            "text": "Congestion that returns. Marks that linger. A routine that never quite settles. Most people do not need more products — they need a clearer read of what is actually happening.",
+            "detail": "We start with context: climate, barrier history, actives you have already tried, and what “better” would mean for you.",
+            "card_1": "Recurring congestion",
+            "card_2": "Barrier fatigue",
+            "card_3": "Unclear routine"
+          }
+        },
+        "c2": {
+          "type": "chapter",
+          "settings": {
+            "nav_label": "The conversation",
+            "heading": "A conversation that goes past the shelf",
+            "text": "Thirty minutes with a dermatologist — secure video — focused on your history, not a product pitch. Bring what you use. Bring what failed. Bring the climate you live in.",
+            "detail": "The goal is mechanism and practicality: what to keep, what to pause, and what to change first.",
+            "card_1": "30-minute video call",
+            "card_2": "Qualified clinician",
+            "card_3": "Your full context"
+          }
+        },
+        "c3": {
+          "type": "chapter",
+          "settings": {
+            "nav_label": "The plan",
+            "heading": "Leave with a plan you can follow",
+            "text": "You receive a written routine summary — sequence, cadence, and what to watch for. Not a shopping list of twelve serums. A path you can still keep in week four.",
+            "detail": "Follow-up guidance is included so the next decision is clearer than the last.",
+            "card_1": "Written summary",
+            "card_2": "Clear sequence",
+            "card_3": "Follow-up notes"
+          }
+        }
+      },
+      "block_order": ["c1", "c2", "c3"],
       "settings": {
-        "eyebrow": "Dermatologist consultation",
-        "heading": "Clinical guidance.\nPersonal context.",
-        "text": "Talk through recurring concerns, existing products and routine history with a qualified dermatologist, then leave with a clear plan.",
-        "duration": "30 minute consultation",
-        "format": "Secure video call",
-        "follow_up": "Written routine summary",
+        "eyebrow": "Get skin smart · Consultation",
+        "heading": "Your skin has a story. Tell it to someone who can read it.",
+        "text": "Not another product quiz. A real conversation — concerns, climate, what you already tried — ending in a written plan.",
         "button_label": "Request an appointment",
-        "button_link": "#book-consultation"
+        "cta_heading": "Ready for a clearer next step?",
+        "cta_text": "Thirty minutes. Secure video. A routine summary you can actually follow.",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "booking": {
       "type": "ps-consultation-form",
       "blocks": {
-        "context": { "type": "step", "settings": { "heading": "Share your context", "text": "Tell us the concern, your current routine and relevant history." } },
-        "consult": { "type": "step", "settings": { "heading": "Meet your dermatologist", "text": "Discuss likely triggers, product use and practical next steps." } },
-        "plan": { "type": "step", "settings": { "heading": "Receive a clear plan", "text": "Leave with a written routine summary and guidance on follow-up." } }
+        "context": {
+          "type": "step",
+          "settings": {
+            "heading": "Share your context",
+            "text": "Tell us the concern, your current routine and relevant history."
+          }
+        },
+        "consult": {
+          "type": "step",
+          "settings": {
+            "heading": "Meet your dermatologist",
+            "text": "Discuss likely triggers, product use and practical next steps."
+          }
+        },
+        "plan": {
+          "type": "step",
+          "settings": {
+            "heading": "Receive a clear plan",
+            "text": "Leave with a written routine summary and guidance on follow-up."
+          }
+        }
       },
       "block_order": ["context", "consult", "plan"],
       "settings": {
-        "eyebrow": "How it works",
-        "heading": "A clearer next step",
-        "text": "A consultation is useful when concerns recur, your current routine is unclear, or product choices require qualified clinical context.",
+        "eyebrow": "Book",
+        "heading": "Request your consultation",
+        "text": "Share enough context for our team to match the right dermatologist and confirm availability.",
         "form_heading": "Tell us what your skin is experiencing",
-        "form_text": "Share enough context for our team to match the right dermatologist and confirm availability.",
+        "form_text": "We use this only to coordinate your appointment.",
         "button_label": "Request consultation",
         "success_message": "Thank you. Our consultation team will contact you to confirm the next available appointment.",
         "privacy_note": "Your information is used only to coordinate the consultation and provide the service you request."
       }
     }
   },
-  "order": ["hero", "booking"]
+  "order": ["story", "booking"]
 }

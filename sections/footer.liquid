@@ -88,7 +88,7 @@
           <a href="{{ footer_account_url }}">{{ section.settings.link_account_label }}</a>
         {% endif %}
         {% if section.settings.link_contact_label != blank %}
-          <a href="{{ section.settings.link_contact_url | default: '/pages/contact-us' }}">{{ section.settings.link_contact_label }}</a>
+          <a href="{{ section.settings.link_contact_url | default: '/pages/contact' }}">{{ section.settings.link_contact_label }}</a>
         {% endif %}
         {% if section.settings.link_faq_label != blank %}
           <a href="{{ section.settings.link_faq_url | default: '/pages/faq' }}">{{ section.settings.link_faq_label }}</a>
@@ -139,28 +139,6 @@
 
   <div class="container footer-bottom">
     <div class="footer-localization">
-      {% if localization.available_countries.size > 1 or localization.available_languages.size > 1 %}
-        {% form 'localization', id: 'FooterLocalization', class: 'footer-localization__form' %}
-          {% if localization.available_countries.size > 1 %}
-            <label class="visually-hidden" for="FooterCountry">Country</label>
-            <select id="FooterCountry" name="country_code" onchange="this.form.submit()">
-              {% for country in localization.available_countries %}
-                <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
-                  {{ country.name }} / {{ country.currency.iso_code }}
-                </option>
-              {% endfor %}
-            </select>
-          {% endif %}
-          {% if localization.available_languages.size > 1 %}
-            <label class="visually-hidden" for="FooterLanguage">Language</label>
-            <select id="FooterLanguage" name="language_code" onchange="this.form.submit()">
-              {% for language in localization.available_languages %}
-                <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>{{ language.endonym_name }}</option>
-              {% endfor %}
-            </select>
-          {% endif %}
-        {% endform %}
-      {% endif %}
       <span>{{ section.settings.copyright_text | default: 'Copyright © 2026 Nureya Beauty and Wellness Pvt Limited' }}</span>
     </div>
 

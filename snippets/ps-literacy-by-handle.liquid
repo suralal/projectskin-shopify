@@ -1,0 +1,158 @@
+{% comment %}
+  Rich literacy pages for default page template when Admin pages exist
+  but alternate templates (page.about etc.) are not assigned yet.
+{% endcomment %}
+{{ 'ps-editorial-page.css' | asset_url | stylesheet_tag }}
+
+{% assign h = handle | default: page.handle | strip | downcase %}
+
+{% case h %}
+  {% when 'about' %}
+    <section class="ps-ed">
+      <div class="ps-ed__hero">
+        <div class="ps-ed__wrap ps-ed__hero-grid">
+          <div>
+            <p class="ps-ed__kicker">About Project Skin</p>
+            <h1>We brought the why back to skincare.</h1>
+            <p class="ps-ed__lede">Project Skin exists because the industry sold ritual instead of root cause. We sell literacy first, formulations second — for Indian skin, climate, and real routines.</p>
+            <div class="ps-ed__actions">
+              <a class="ps-ed__btn" href="/pages/philosophy">Read our philosophy</a>
+              <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/the-science">Explore the science</a>
+            </div>
+          </div>
+          <div class="ps-ed__media">
+            {% render 'purity-image', fallback_asset: 'project-skin-philosophy-people.jpg', fallback_width: 880, fallback_height: 1100, alt: 'About Project Skin', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'eager' %}
+          </div>
+        </div>
+      </div>
+      <div class="ps-ed__section">
+        <div class="ps-ed__wrap">
+          <h2>What we stand for</h2>
+          <p class="ps-ed__copy">Skin is an organ, not a canvas. What you apply interacts with biology, barrier lipids, and the environment you live in.</p>
+          <ul class="ps-ed__list">
+            <li><i aria-hidden="true">01</i><div><strong>Literacy before the jar</strong><span>Understand congestion, barrier stress, and UV load before you buy another product.</span></div></li>
+            <li><i aria-hidden="true">02</i><div><strong>Built for Indian conditions</strong><span>Heat, humidity, hard water, pollution, and year-round UV shape every formula.</span></div></li>
+            <li><i aria-hidden="true">03</i><div><strong>Named doses, named roles</strong><span>When concentration matters, we show it. Every ingredient earns its place.</span></div></li>
+            <li><i aria-hidden="true">04</i><div><strong>Comfort is not optional</strong><span>Clarity and barrier repair belong in the same sequence.</span></div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ps-ed__section ps-ed__section--soft">
+        <div class="ps-ed__wrap ps-ed__split">
+          <div class="ps-ed__media">
+            {% render 'purity-image', fallback_asset: 'psr-science-mission-scan.jpg', fallback_width: 1400, fallback_height: 1000, alt: 'Engineered for Indian climate', sizes: '(min-width: 900px) 42vw, 92vw', loading: 'lazy' %}
+          </div>
+          <div>
+            <p class="ps-ed__kicker">Why India</p>
+            <h2>Engineered for this climate — not adapted later.</h2>
+            <p class="ps-ed__copy" style="margin-top:14px">Urban India stacks UV extremes, monsoon humidity, winter TEWL, hard-water cleanses, and pollution in one year. That is the brief we design against.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ps-ed__section">
+        <div class="ps-ed__wrap">
+          <h2>Start with a literacy path</h2>
+          <div class="ps-ed__grid">
+            <a class="ps-ed__card" href="/pages/acne" style="text-decoration:none;color:inherit"><strong>Acne literacy</strong><p>Breakouts are biology meeting climate — not a cleanliness failure.</p></a>
+            <a class="ps-ed__card" href="/pages/barrier" style="text-decoration:none;color:inherit"><strong>Barrier first</strong><p>When cream fails, the lipid layer is usually the real issue.</p></a>
+            <a class="ps-ed__card" href="/pages/daily-spf" style="text-decoration:none;color:inherit"><strong>Daily SPF</strong><p>In India, photoprotection is structural — not a summer accessory.</p></a>
+            <a class="ps-ed__card" href="/pages/journal" style="text-decoration:none;color:inherit"><strong>Seasonal modules</strong><p>Monsoon, festive, and winter change the same biology in different ways.</p></a>
+          </div>
+        </div>
+      </div>
+      <div class="ps-ed__cta">
+        <div class="ps-ed__wrap">
+          <h2>Prefer a conversation?</h2>
+          <p>Thirty minutes with a dermatologist — climate, history, and a plan you can keep.</p>
+          <div class="ps-ed__actions" style="justify-content:center">
+            <a class="ps-ed__btn" href="/pages/consultation">Book a consultation</a>
+            <a class="ps-ed__btn ps-ed__btn--ghost" href="/collections/all">Shop the range</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  {% when 'contact', 'contact-us' %}
+    <section class="ps-ed">
+      <div class="ps-ed__hero">
+        <div class="ps-ed__wrap ps-ed__hero-grid">
+          <div>
+            <p class="ps-ed__kicker">Contact</p>
+            <h1>We are here for clarity — not scripts.</h1>
+            <p class="ps-ed__lede">Orders, routines, returns, or a question about what your skin is showing. Write to Project Skin and we will respond with the next useful step.</p>
+            <div class="ps-ed__actions">
+              <a class="ps-ed__btn" href="#ContactForm">Send a message</a>
+              <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/faq">Read FAQs</a>
+            </div>
+          </div>
+          <div class="ps-ed__media">
+            {% render 'purity-image', fallback_asset: 'project-skin-consultation-hero.jpg', fallback_width: 880, fallback_height: 1100, alt: 'Contact', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'eager' %}
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="ps-template ps-contact" id="ContactForm">
+      <div class="container ps-contact__layout">
+        <div class="ps-contact__copy">
+          <span class="ps-eyebrow">Message</span>
+          <h2>Write to Project Skin</h2>
+          <div class="rte"><p>Share enough context — concern, order number if relevant, and what you need.</p></div>
+          <a href="mailto:hello@projectskin.co">hello@projectskin.co</a>
+        </div>
+        {% form 'contact', class: 'ps-contact__form' %}
+          {% if form.posted_successfully? %}<div class="ps-form-message" role="status">Thanks. We'll be in touch soon.</div>{% endif %}
+          {% if form.errors %}<div class="ps-form-message ps-form-message--error">{{ form.errors | default_errors }}</div>{% endif %}
+          <div class="ps-field-row">
+            <div class="ps-field"><label for="HandleContactName">Name</label><input id="HandleContactName" type="text" name="contact[name]" autocomplete="name" required></div>
+            <div class="ps-field"><label for="HandleContactEmail">Email</label><input id="HandleContactEmail" type="email" name="contact[email]" autocomplete="email" required></div>
+          </div>
+          <div class="ps-field"><label for="HandleContactMessage">Message</label><textarea id="HandleContactMessage" name="contact[body]" rows="7" required></textarea></div>
+          <button class="ps-button" type="submit">Send message</button>
+        {% endform %}
+      </div>
+    </section>
+
+  {% when 'climate' %}
+    <section class="ps-ed">
+      <div class="ps-ed__hero">
+        <div class="ps-ed__wrap ps-ed__hero-grid">
+          <div>
+            <p class="ps-ed__kicker">Climate literacy</p>
+            <h1>Your city writes on your skin.</h1>
+            <p class="ps-ed__lede">UV, humidity, pollution, hard water, and seasonal swing are measurable pressures — not mood boards.</p>
+            <div class="ps-ed__actions">
+              <a class="ps-ed__btn" href="/pages/skin-profile">Explore city profiles</a>
+              <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/routine-finder">Find a routine</a>
+            </div>
+          </div>
+          <div class="ps-ed__media">
+            {% render 'purity-image', fallback_asset: 'psr-science-commit-human.jpg', fallback_width: 880, fallback_height: 1100, alt: 'Climate', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'eager' %}
+          </div>
+        </div>
+      </div>
+      <div class="ps-ed__section">
+        <div class="ps-ed__wrap">
+          <h2>Five pressures worth understanding</h2>
+          <ul class="ps-ed__list">
+            <li><i aria-hidden="true">01</i><div><strong>UV load</strong><span>High-to-extreme UV keeps pigmentation and barrier stress active — including cloudy days.</span></div></li>
+            <li><i aria-hidden="true">02</i><div><strong>Humidity &amp; heat</strong><span>Damp air is not hydration. Sebum, sweat, and congestion still rise.</span></div></li>
+            <li><i aria-hidden="true">03</i><div><strong>Hard water</strong><span>Mineral-heavy washes strip lipids. Tightness after cleansing is often water chemistry.</span></div></li>
+            <li><i aria-hidden="true">04</i><div><strong>Pollution &amp; season swing</strong><span>Outdoor oxidative load plus indoor AC/heaters write one barrier story across the year.</span></div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ps-ed__cta">
+        <div class="ps-ed__wrap">
+          <h2>Carry this into a season</h2>
+          <div class="ps-ed__actions" style="justify-content:center">
+            <a class="ps-ed__btn" href="/pages/monsoon">Monsoon</a>
+            <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/winter">Winter</a>
+            <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/festive">Festive</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  {% else %}
+    {% assign ps_literacy_handled = false %}
+{% endcase %}

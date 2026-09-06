@@ -1,13 +1,25 @@
 <section class="ps-template ps-page">
-  <div class="container{% if section.settings.narrow %} ps-page__narrow{% endif %}">
-    {% if section.settings.show_title %}
-      <div class="ps-template__head">
-        {% if section.settings.eyebrow != blank %}<span class="ps-eyebrow">{{ section.settings.eyebrow }}</span>{% endif %}
-        <h1>{{ page.title }}</h1>
-      </div>
-    {% endif %}
-    {% if page.content != blank %}<div class="rte ps-page__content">{{ page.content }}</div>{% endif %}
-  </div>
+  {% liquid
+    assign literacy_handles = 'about,contact,contact-us,climate' | split: ','
+    assign use_literacy = false
+    if literacy_handles contains page.handle
+      assign use_literacy = true
+    endif
+  %}
+
+  {% if use_literacy %}
+    {% render 'ps-literacy-by-handle', handle: page.handle %}
+  {% else %}
+    <div class="container{% if section.settings.narrow %} ps-page__narrow{% endif %}">
+      {% if section.settings.show_title %}
+        <div class="ps-template__head">
+          {% if section.settings.eyebrow != blank %}<span class="ps-eyebrow">{{ section.settings.eyebrow }}</span>{% endif %}
+          <h1>{{ page.title }}</h1>
+        </div>
+      {% endif %}
+      {% if page.content != blank %}<div class="rte ps-page__content">{{ page.content }}</div>{% endif %}
+    </div>
+  {% endif %}
 </section>
 
 {% schema %}

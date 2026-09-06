@@ -4,153 +4,244 @@
       "type": "project-skin-philosophy-hero",
       "settings": {
         "eyebrow": "Our philosophy",
-        "heading": "Skin is biology.\nCare should respect it.",
-        "text": "<p>Project Skin was created to move skincare beyond trends and toward better-informed, evidence-led decisions for Indian skin.</p>",
-        "primary_label": "Explore our principles",
+        "heading": "Skincare stopped asking why.\nWe brought it back.",
+        "text": "<p>Project Skin exists because the industry sold ritual instead of root cause — trends, influencers, and miracle claims over evidence. We sell literacy first, formulations second.</p>",
+        "primary_label": "Read our beliefs",
         "primary_link": "#project-skin-principles",
-        "secondary_label": "Meet the science",
-        "secondary_link": "/pages/the-science"
-      }
-    },
-    "principles": {
-      "type": "project-skin-philosophy-principles",
-      "blocks": {
-        "context": {
-          "type": "principle",
-          "settings": {
-            "icon": "✧",
-            "heading": "Context first",
-            "text": "Skin concerns make more sense when climate, routine, lifestyle and history are considered together."
-          }
-        },
-        "mechanism": {
-          "type": "principle",
-          "settings": {
-            "icon": "◎",
-            "heading": "Mechanism over trend",
-            "text": "An ingredient earns its place by what it is meant to do, the role it plays, and how clearly that can be explained."
-          }
-        },
-        "consistency": {
-          "type": "principle",
-          "settings": {
-            "icon": "♡",
-            "heading": "Consistency over novelty",
-            "text": "A routine must be usable long enough to learn from it. More products do not automatically create better care."
-          }
-        }
-      },
-      "block_order": ["context", "mechanism", "consistency"],
-      "settings": {
-        "eyebrow": "Core values",
-        "heading": "Care with confidence.",
-        "text": "<p>Healthy skin is not an overnight outcome. It is a considered process: understand the signal, choose the right mechanism, use it consistently, then review what changed.</p>"
+        "secondary_label": "See how we formulate",
+        "secondary_link": "#project-skin-formula",
+        "image_alt": "Project Skin philosophy — evidence-led care for Indian skin"
       }
     },
     "mission": {
       "type": "project-skin-philosophy-mission",
       "settings": {
-        "image_1_alt": "Gentle facial care ritual",
-        "card_1_eyebrow": "Intention",
-        "card_1_heading": "True beauty guided by intention",
-        "card_1_text": "<p>We design for Indian skin in real climates — heat, humidity, pollution, hard water and dry winters — instead of treating context as an afterthought.</p>",
-        "card_1_label": "Our principles",
+        "image_1_alt": "Science-led skincare for Indian skin and climate",
+        "card_1_eyebrow": "Why we exist",
+        "card_1_heading": "Skin is an organ — not a canvas",
+        "card_1_text": "<p>What you apply does not stay on the surface. It penetrates dermal layers and enters your bloodstream. That is not a warning — it is the mechanism we build around. Skin is health, not decoration.</p>",
+        "card_1_label": "Explore our principles",
         "card_1_link": "#project-skin-principles",
-        "card_2_eyebrow": "Integrity",
-        "card_2_heading": "Evidence until every drop",
-        "card_2_text": "<p>An ingredient earns its place by mechanism, role and clarity — not trend cycles. Consistency matters more than novelty.</p>",
+        "card_2_eyebrow": "Built for India",
+        "card_2_heading": "Engineered for Indian skin — not adapted",
+        "card_2_text": "<p>Climate volatility, pollution, high UV, hard water, and lifestyle stress: global formulas were never built for this. We design from the ground up for Indian skin, climate, and daily life.</p>",
         "card_2_label": "Meet the science",
         "card_2_link": "/pages/the-science",
-        "image_2_alt": "Portrait of calm, healthy skin",
-        "badge_text": "Evidence-led"
+        "image_2_alt": "Calm, healthy skin — long-term biology over overnight claims",
+        "badge_text": "Science-led"
       }
     },
     "timeline": {
       "type": "project-skin-philosophy-timeline",
       "blocks": {
-        "y2023": {
+        "problem": {
           "type": "milestone",
           "settings": {
-            "year": "2023",
-            "heading": "A clearer brief",
-            "text": "We began with one idea: skincare advice should respect biology, climate and daily life — not marketing theatre."
+            "year": "01",
+            "heading": "The problem",
+            "text": "Indian skincare became a cosmetic tradition — rituals, trends, influencers, and miracle claims instead of actual skin health."
           }
         },
-        "y2024": {
+        "realisation": {
           "type": "milestone",
           "settings": {
-            "year": "2024",
-            "heading": "Formulas with a reason",
-            "text": "Every active earned its place by mechanism and routine role, built for Indian skin environments."
+            "year": "02",
+            "heading": "The realisation",
+            "text": "Skin is the body’s largest organ. What you apply is absorbed, not just displayed — making this a health issue, not only an appearance one."
           }
         },
-        "y2025": {
+        "gap": {
           "type": "milestone",
           "settings": {
-            "year": "2025",
-            "heading": "Guidance that learns",
-            "text": "Recommendations, routines and check-ins connected — so care can improve with evidence over time."
+            "year": "03",
+            "heading": "The gap",
+            "text": "Indian skin faces climate swing, pollution, UV, and lifestyle stressors that Europe / US / Korea formulas were never engineered to solve."
           }
         },
-        "y2026": {
+        "beginning": {
           "type": "milestone",
           "settings": {
-            "year": "2026",
-            "heading": "Human when it matters",
-            "text": "Technology organizes decisions. A dermatologist remains the right next step for clinical concerns."
+            "year": "04",
+            "heading": "The beginning",
+            "text": "Five founders built Project Skin to bridge science, technology, and skincare — specifically for Indian skin, climate, and life."
+          }
+        },
+        "approach": {
+          "type": "milestone",
+          "settings": {
+            "year": "05",
+            "heading": "The approach",
+            "text": "Diagnose first, formulate second. Every product starts from root causes — not surface symptoms or trending ingredients."
+          }
+        },
+        "vision": {
+          "type": "milestone",
+          "settings": {
+            "year": "06",
+            "heading": "The vision",
+            "text": "Become India’s most trusted science-led skin-health ecosystem — decisions driven by data and transparency, not hype."
           }
         }
       },
-      "block_order": ["y2023", "y2024", "y2025", "y2026"],
+      "block_order": ["problem", "realisation", "gap", "beginning", "approach", "vision"],
       "settings": {
-        "eyebrow": "Our story",
-        "heading": "Our story in time",
-        "text": "<p>From a clearer standard for Indian skin to a connected system of guidance, formula and follow-through.</p>"
+        "eyebrow": "Brand story",
+        "heading": "From frustration to a clearer standard",
+        "text": "<p>A short arc: why Indian skincare needed a health ecosystem — and how Project Skin began.</p>"
+      }
+    },
+    "principles": {
+      "type": "project-skin-philosophy-principles",
+      "blocks": {
+        "literacy": {
+          "type": "principle",
+          "settings": {
+            "icon": "01",
+            "heading": "Literacy first",
+            "text": "A customer who understands their skin never buys the wrong product again. Education is the product — formulation comes second."
+          }
+        },
+        "organ": {
+          "type": "principle",
+          "settings": {
+            "icon": "02",
+            "heading": "Root cause over ritual",
+            "text": "Most products quiet symptoms temporarily. We ask why the concern exists — biology, climate, and lifestyle included."
+          }
+        },
+        "diagnose": {
+          "type": "principle",
+          "settings": {
+            "icon": "03",
+            "heading": "Diagnose, then formulate",
+            "text": "Indian skincare stayed cosmetic for too long. We make it part of a health ecosystem: understand the problem before prescribing a product."
+          }
+        },
+        "integrity": {
+          "type": "principle",
+          "settings": {
+            "icon": "04",
+            "heading": "Every ingredient earns its place",
+            "text": "Clinical evidence. Efficacious concentration. Right delivery technology. Nothing for the label alone."
+          }
+        }
+      },
+      "block_order": ["literacy", "organ", "diagnose", "integrity"],
+      "settings": {
+        "eyebrow": "Founders’ philosophy",
+        "heading": "What we refuse to compromise",
+        "text": "<p>Science over trends. Health over hype. A “Project” — because fixing skin is a systematic, evidence-led process, not a product promise.</p>"
       }
     },
     "quote": {
       "type": "project-skin-philosophy-quote",
       "settings": {
-        "quote": "Each of our formulas is a harmony of biology, climate and craft — redefining what modern skincare should mean for Indian skin.",
+        "quote": "We sell literacy first, formulations second — because trust should arrive before the sale.",
         "attribution": "Project Skin"
+      }
+    },
+    "formula": {
+      "type": "project-skin-philosophy-formula",
+      "blocks": {
+        "science": {
+          "type": "pillar",
+          "settings": {
+            "heading": "Science first",
+            "text": "Clinical evidence guides every formulation decision — at every step of the process."
+          }
+        },
+        "dose": {
+          "type": "pillar",
+          "settings": {
+            "heading": "Efficacious doses",
+            "text": "We don’t add niacinamide for the list. We deliver concentrations where peer-reviewed studies show visible results."
+          }
+        },
+        "barrier": {
+          "type": "pillar",
+          "settings": {
+            "heading": "Barrier-first thinking",
+            "text": "Treatment should not cost you your barrier. Repair and active care are designed to work together."
+          }
+        },
+        "india": {
+          "type": "pillar",
+          "settings": {
+            "heading": "Engineered for Indian skin",
+            "text": "Climate range, pollution load, and biology — accounted for from the start, not bolted onto a global formula."
+          }
+        },
+        "tech": {
+          "type": "pillar",
+          "settings": {
+            "heading": "Actives + technology",
+            "text": "Right actives, right delivery, real results — ingredients and technology chosen to work together, not independently."
+          }
+        },
+        "root": {
+          "type": "pillar",
+          "settings": {
+            "heading": "Root-cause formulas",
+            "text": "Products address the underlying cause of a concern — not the ingredient of the month."
+          }
+        }
+      },
+      "block_order": ["science", "dose", "barrier", "india", "tech", "root"],
+      "settings": {
+        "eyebrow": "Formulation philosophy",
+        "heading": "Right actives. Right technology. Real results.",
+        "text": "<p>Every line is built to solve a diagnosed concern — with honesty about what is in it, why it is there, and what it will do.</p>",
+        "mantra": "Purpose. Precision. Performance.",
+        "cta_label": "Meet the ingredients",
+        "cta_link": "/pages/ingredients",
+        "secondary_label": "Explore the science",
+        "secondary_link": "/pages/the-science"
       }
     },
     "commitment": {
       "type": "project-skin-philosophy-commitment",
       "blocks": {
-        "mechanism": {
+        "science": {
           "type": "commitment",
           "settings": {
-            "heading": "Mechanism, not marketing",
-            "text": "We explain what an ingredient is there to do and how it fits the routine — without miracle timelines."
+            "heading": "Science first",
+            "text": "We follow the science that creates trends — not the trends themselves. Mechanism over marketing theatre."
           }
         },
-        "formula": {
+        "education": {
           "type": "commitment",
           "settings": {
-            "heading": "Formula integrity",
-            "text": "Actives, supporting ingredients and delivery systems should work as one considered formula."
+            "heading": "Education before purchase",
+            "text": "We tell you exactly what is in a product, why it is there, and what it will do — literacy before the cart."
           }
         },
-        "care": {
+        "longterm": {
           "type": "commitment",
           "settings": {
-            "heading": "Human care when needed",
-            "text": "Technology can organize information. A dermatologist remains the right route for clinical concerns."
+            "heading": "Long-term skin health",
+            "text": "Healthy skin is a biological goal. Success is measured over time — not overnight transformation claims."
           }
         }
       },
-      "block_order": ["mechanism", "formula", "care"],
+      "block_order": ["science", "education", "longterm"],
       "settings": {
-        "eyebrow": "Commitment",
-        "heading": "Built to earn your trust",
-        "text": "<p>Credibility is not a badge. It is how a formula is explained, a recommendation is reasoned, and progress is reviewed without unrealistic promises.</p>",
+        "eyebrow": "Core values",
+        "heading": "Built to earn curiosity — then trust",
+        "text": "<p>Purpose, precision, performance, integrity, and inclusivity. Skin has no gender, shade, or type that deserves less. Keep learning with us.</p>",
         "cta_label": "Explore the science",
         "cta_link": "/pages/the-science",
-        "secondary_label": "Speak to a dermatologist",
+        "secondary_label": "Book a consultation",
         "secondary_link": "/pages/consultation"
       }
     }
   },
-  "order": ["hero", "principles", "mission", "timeline", "quote", "commitment"]
+  "order": [
+    "hero",
+    "mission",
+    "timeline",
+    "principles",
+    "quote",
+    "formula",
+    "commitment"
+  ]
 }

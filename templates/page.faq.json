@@ -1,27 +1,88 @@
 {
   "sections": {
-    "main": { "type": "main-page", "settings": {} },
-    "questions": {
-      "type": "faqs",
+    "faq": {
+      "type": "ps-editorial-page",
       "blocks": {
-        "products": { "type": "faq", "settings": { "question": "How do I choose the right products?", "answer": "<p>Start with your primary skin goal, then build a simple cleanse, treat, moisturize, and protect routine.</p>" } },
-        "types": { "type": "faq", "settings": { "question": "Are Purity routines suitable for every skin type?", "answer": "<p>Each routine can be adjusted around your skin type, comfort, and personal goals.</p>" } },
-        "delivery": { "type": "faq", "settings": { "question": "When will my order arrive?", "answer": "<p>Available shipping methods and delivery estimates are shown during checkout.</p>" } },
-        "returns": { "type": "faq", "settings": { "question": "What is your return policy?", "answer": "<p>Return eligibility and instructions are available in the store's return policy.</p>" } },
-        "support": { "type": "faq", "settings": { "question": "How can I contact support?", "answer": "<p>Use the contact page or the details in the footer and our team will be happy to help.</p>" } }
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "question": "How should I start if I have acne-prone skin?",
+            "answer": "Start with literacy, not a twelve-step stack. Read the acne page, then keep a simple sequence: cleanse without strip, treat oil pathways, moisturise for barrier, protect daily. Introduce one change at a time."
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "question": "Why do I still break out in monsoon humidity?",
+            "answer": "Humidity slows water loss but does not cancel sebum biology. Sweat, pollution, and harsher cleanses often raise congestion. Keep oil-soluble care and do not skip SPF on cloudy days."
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "question": "My moisturiser ‘doesn’t absorb’. What is wrong?",
+            "answer": "Often the barrier lipid layer is compromised — cream cannot replace missing ceramides alone. Repair first, then reintroduce actives. Hard water and over-exfoliation are common Indian triggers."
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need SPF in winter or on rainy days?",
+            "answer": "Yes. UVA still transmits through cloud and glass and keeps pigmentation active. In India, photoprotection is structural — not seasonal."
+          }
+        },
+        "f5": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I choose between products?",
+            "answer": "Match the mechanism to the signal: congestion → clear/regulate; marks → protect + niacinamide pathways; tightness/sting → barrier first. The concern pages explain before the shop."
+          }
+        },
+        "f6": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I book a dermatologist consultation?",
+            "answer": "Yes. Request an appointment on the consultation page. You get a focused video conversation and a written routine summary — not a product pitch."
+          }
+        },
+        "f7": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "Delivery options and estimates appear at checkout based on your address. For delays, contact support with your order number."
+          }
+        },
+        "f8": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "See the money-back guarantee page for eligibility and steps. Write to us with your order details and we will confirm next actions."
+          }
+        }
       },
-      "block_order": ["products", "types", "delivery", "returns", "support"],
+      "block_order": ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8"],
       "settings": {
-        "section_width": "fixed",
-        "subheading": "Help centre",
-        "heading": "Frequently Asked Questions",
-        "description": "<p>Clear answers for shopping, products, delivery, and returns.</p>",
-        "alignment": "center",
-        "padding_top": 32,
-        "padding_bottom": 96,
-        "show_divider": false
+        "route_key": "faq",
+        "eyebrow": "Help",
+        "heading": "Questions worth answering properly.",
+        "text": "Climate, barrier, SPF, and routine choices — answered in Project Skin’s literacy voice. For order help, contact support directly.",
+        "primary_label": "Contact us",
+        "primary_link": "/pages/contact",
+        "secondary_label": "Book a consultation",
+        "secondary_link": "/pages/consultation",
+        "fallback_asset": "project-skin-consultation-hero.jpg",
+        "body_heading": "Read the short answers",
+        "body_text": "If your question is about what is happening on your skin, start with the concern pages. If it is about an order, we are one message away.",
+        "faq_heading": "Frequently asked",
+        "faq_text": "Biology first. Logistics second.",
+        "cta_heading": "Still unsure?",
+        "cta_text": "A dermatologist conversation can untangle climate, history, and the next useful step.",
+        "cta_label": "Request consultation",
+        "cta_link": "/pages/consultation",
+        "cta_secondary_label": "Browse concerns",
+        "cta_secondary_link": "/pages/acne"
       }
     }
   },
-  "order": ["main", "questions"]
+  "order": ["faq"]
 }

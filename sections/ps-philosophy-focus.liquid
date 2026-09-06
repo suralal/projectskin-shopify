@@ -37,27 +37,27 @@
           {% render 'purity-image',
             image: section.settings.image_primary,
             fallback_asset: 'project-skin-philosophy-lab.jpg',
-            fallback_width: 900,
-            fallback_height: 1120,
+            fallback_width: 1600,
+            fallback_height: 900,
             alt: '',
-            sizes: '(min-width: 990px) 28vw, 42vw',
+            sizes: '(min-width: 990px) 36vw, 58vw',
             loading: 'lazy'
           %}
+          {% if section.settings.badge != blank %}
+            <span class="ps-phil__badge">{{ section.settings.badge }}</span>
+          {% endif %}
         </figure>
         <figure class="ps-phil__photo ps-phil__photo--secondary">
           {% render 'purity-image',
             image: section.settings.image_secondary,
             fallback_asset: 'project-skin-philosophy-people.jpg',
-            fallback_width: 720,
-            fallback_height: 900,
+            fallback_width: 880,
+            fallback_height: 1100,
             alt: '',
-            sizes: '(min-width: 990px) 22vw, 34vw',
+            sizes: '(min-width: 990px) 18vw, 28vw',
             loading: 'lazy'
           %}
         </figure>
-        {% if section.settings.badge != blank %}
-          <span class="ps-phil__badge">{{ section.settings.badge }}</span>
-        {% endif %}
       </div>
     </div>
 

@@ -1,0 +1,261 @@
+{% comment %}
+  Bundles Consultation / Routine / Finder / Skin analysis / Smart Lab for 404 fallbacks.
+{% endcomment %}
+{{ 'ps-editorial-page.css' | asset_url | stylesheet_tag }}
+{{ 'ps-skin-smart-stories.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ps-skin-smart-stories.js' | asset_url }}" defer></script>
+
+{% comment %} —— Consultation —— {% endcomment %}
+<section class="ps-ed psr-route-fallback psr-route-fallback--consultation psr-route-fallback--smart-lab">
+  <div class="ps-ed__hero">
+    <div class="ps-ed__wrap ps-ed__hero-grid">
+      <div>
+        <p class="ps-ed__kicker">Get skin smart · Consultation</p>
+        <h1>Your skin has a story. Tell it to someone who can read it.</h1>
+        <p class="ps-ed__lede">Not another product quiz. A real conversation — concerns, climate, what you already tried — ending in a written plan.</p>
+        <div class="ps-ed__actions">
+          <a class="ps-ed__btn" href="#book-consultation">Request an appointment</a>
+          <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/acne">Browse concerns</a>
+        </div>
+      </div>
+      <div class="ps-ed__media">
+        {% render 'purity-image', fallback_asset: 'project-skin-consultation-hero.jpg', fallback_width: 880, fallback_height: 1100, alt: 'Dermatologist consultation', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'eager' %}
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__section">
+    <div class="ps-ed__wrap">
+      <h2>What the conversation covers</h2>
+      <ul class="ps-ed__list">
+        <li><i aria-hidden="true">01</i><div><strong>The pattern you keep seeing</strong><span>Congestion that returns. Marks that linger. A routine that never quite settles. We start with climate, barrier history, and what “better” would mean.</span></div></li>
+        <li><i aria-hidden="true">02</i><div><strong>A conversation past the shelf</strong><span>Thirty minutes with a dermatologist — secure video — focused on your history, not a product pitch.</span></div></li>
+        <li><i aria-hidden="true">03</i><div><strong>A plan you can follow</strong><span>A written routine summary — sequence, cadence, and what to watch for. Not a shopping list of twelve serums.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="book-consultation" class="psr-page psr-section psr-route-fallback psr-route-fallback--consultation">
+  <div class="container psr-booking">
+    <div class="psr-booking__intro">
+      <span class="psr-kicker">Book</span>
+      <h2>Request your consultation</h2>
+      <p>Share enough context for our team to match the right dermatologist and confirm availability.</p>
+      <ol class="psr-booking__steps">
+        <li><span>01</span><div><strong>Share your context</strong><small>Tell us the concern, your current routine and relevant history.</small></div></li>
+        <li><span>02</span><div><strong>Meet your dermatologist</strong><small>Discuss likely triggers, product use and practical next steps.</small></div></li>
+        <li><span>03</span><div><strong>Receive a clear plan</strong><small>Leave with a written routine summary and guidance on follow-up.</small></div></li>
+      </ol>
+    </div>
+    <div class="psr-form">
+      <div class="psr-form__head">
+        <span class="psr-kicker">Appointment request</span>
+        <h3>Tell us what your skin is experiencing</h3>
+        <p>We use this only to coordinate your appointment.</p>
+      </div>
+      {% form 'contact', id: 'ProjectSkinConsultationPack' %}
+        {% if form.posted_successfully? %}<div class="psr-form__success" tabindex="-1">Thank you. Our consultation team will contact you to confirm the next available appointment.</div>{% endif %}
+        {% if form.errors %}<div class="psr-form__errors">{{ form.errors | default_errors }}</div>{% endif %}
+        <input type="hidden" name="contact[Request type]" value="Dermatologist consultation">
+        <div class="psr-form__grid">
+          <div class="psr-field">
+            <label for="PackConsultName-{{ section.id }}">Full name</label>
+            <input id="PackConsultName-{{ section.id }}" type="text" name="contact[name]" autocomplete="name" required>
+          </div>
+          <div class="psr-field">
+            <label for="PackConsultEmail-{{ section.id }}">Email address</label>
+            <input id="PackConsultEmail-{{ section.id }}" type="email" name="contact[email]" autocomplete="email" required>
+          </div>
+          <div class="psr-field">
+            <label for="PackConsultPhone-{{ section.id }}">Phone number</label>
+            <input id="PackConsultPhone-{{ section.id }}" type="tel" name="contact[phone]" autocomplete="tel" required>
+          </div>
+          <div class="psr-field">
+            <label for="PackConsultCity-{{ section.id }}">City</label>
+            <input id="PackConsultCity-{{ section.id }}" type="text" name="contact[City]" autocomplete="address-level2" required>
+          </div>
+          <fieldset class="psr-field psr-field--full">
+            <legend>Primary skin concern</legend>
+            <div class="psr-choice-row">
+              <label class="psr-choice"><input type="radio" name="contact[Primary concern]" value="Acne and breakouts" required><span>Acne and breakouts</span></label>
+              <label class="psr-choice"><input type="radio" name="contact[Primary concern]" value="Pigmentation"><span>Pigmentation</span></label>
+              <label class="psr-choice"><input type="radio" name="contact[Primary concern]" value="Sensitivity or barrier"><span>Sensitivity or barrier</span></label>
+            </div>
+          </fieldset>
+          <div class="psr-field psr-field--full">
+            <label for="PackConsultRoutine-{{ section.id }}">Current routine and relevant history</label>
+            <textarea id="PackConsultRoutine-{{ section.id }}" name="contact[Current routine and history]" placeholder="Products used, how long the concern has been present, sensitivities, and anything else the dermatologist should know."></textarea>
+          </div>
+          <label class="psr-field psr-field--full psr-consent">
+            <input type="checkbox" name="contact[Consent]" value="I consent to being contacted about this consultation" required>
+            <span>I consent to Project Skin contacting me to arrange this consultation. This request is not an emergency medical service.</span>
+          </label>
+          <div class="psr-field psr-field--full">
+            <button class="psr-button" type="submit">Request consultation</button>
+            <span class="psr-form__note">Your information is used only to coordinate the consultation and provide the service you request.</span>
+          </div>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% comment %} —— Routine finder —— {% endcomment %}
+<section class="ps-ed psr-route-fallback psr-route-fallback--routine-finder psr-route-fallback--smart-lab">
+  <div class="ps-ed__hero">
+    <div class="ps-ed__wrap ps-ed__hero-grid">
+      <div>
+        <p class="ps-ed__kicker">Get skin smart · Routine finder</p>
+        <h1>Find a sequence you will still follow next month.</h1>
+        <p class="ps-ed__lede">Three questions. One four-step story — cleanse, treat, moisturise, protect — shaped by concern and climate, not trends.</p>
+        <div class="ps-ed__actions">
+          <a class="ps-ed__btn" href="/pages/routine">Build &amp; track my routine</a>
+          <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/climate">Read climate literacy</a>
+        </div>
+      </div>
+      <div class="ps-ed__media">
+        {% render 'purity-image', fallback_asset: 'ps-smart-routine.png', fallback_width: 880, fallback_height: 1100, alt: 'Routine finder', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'lazy' %}
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__section">
+    <div class="ps-ed__wrap">
+      <h2>The four steps, explained</h2>
+      <div class="ps-ed__grid">
+        <article class="ps-ed__card"><strong>01 Cleanse</strong><p>Clear without strip — especially when hard water and heat already stress the barrier.</p></article>
+        <article class="ps-ed__card"><strong>02 Treat</strong><p>Match the mechanism: oil pathways for congestion, niacinamide pathways for marks.</p></article>
+        <article class="ps-ed__card"><strong>03 Moisturise</strong><p>Seal so actives stay wearable. Barrier comfort is part of clarity, not optional.</p></article>
+        <article class="ps-ed__card"><strong>04 Protect</strong><p>Daily SPF in India is structural — cloudy, winter, and indoor-glass days included.</p></article>
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__cta">
+    <div class="ps-ed__wrap">
+      <h2>Ready to personalise by city?</h2>
+      <p>Pick your city and primary concern, then track the sequence on your device.</p>
+      <div class="ps-ed__actions" style="justify-content:center">
+        <a class="ps-ed__btn" href="/pages/routine">Open routine builder</a>
+        <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/consultation">Ask a dermatologist</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} —— Skin analysis & report —— {% endcomment %}
+<section class="ps-ed psr-route-fallback psr-route-fallback--skin-profile psr-route-fallback--smart-lab">
+  <div class="ps-ed__hero">
+    <div class="ps-ed__wrap ps-ed__hero-grid">
+      <div>
+        <p class="ps-ed__kicker">Get skin smart · Skin analysis</p>
+        <h1>A skin report built from your face, habits, and life.</h1>
+        <p class="ps-ed__lede">We capture what your skin shows, how you care for it, and the lifestyle around it — then turn that into a comprehensive report for recommendations or your dermatologist.</p>
+        <div class="ps-ed__actions">
+          <a class="ps-ed__btn" href="/pages/consultation">Share with a dermatologist</a>
+          <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/routine-finder">Use for recommendations</a>
+        </div>
+      </div>
+      <div class="ps-ed__media">
+        {% render 'purity-image', fallback_asset: 'ps-smart-analysis.png', fallback_width: 880, fallback_height: 1100, alt: 'Skin analysis and report', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'lazy' %}
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__section">
+    <div class="ps-ed__wrap">
+      <h2>What we take into the report</h2>
+      <ul class="ps-ed__list">
+        <li><i aria-hidden="true">01</i><div><strong>Face &amp; visible signals</strong><span>Congestion, marks, texture, dryness, reactivity — organised so the brief starts from evidence.</span></div></li>
+        <li><i aria-hidden="true">02</i><div><strong>Habits &amp; routine history</strong><span>What you use, what you skip, what already failed — so a dermatologist is not starting cold.</span></div></li>
+        <li><i aria-hidden="true">03</i><div><strong>Lifestyle &amp; climate context</strong><span>Sleep, stress, sun time, water, and where you live — pressures that change what “enough” means.</span></div></li>
+        <li><i aria-hidden="true">04</i><div><strong>One shareable summary</strong><span>A comprehensive report for product recommendations and a structured handoff to consultation.</span></div></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ps-ed__cta">
+    <div class="ps-ed__wrap">
+      <h2>One report. Three uses.</h2>
+      <p>Literacy for you. Recommendations for your routine. Context for your dermatologist.</p>
+      <div class="ps-ed__actions" style="justify-content:center">
+        <a class="ps-ed__btn" href="/pages/routine-finder">Continue to routine finder</a>
+        <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/consultation">Request consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} —— Routine tracker —— {% endcomment %}
+<section class="ps-rout-page psr-route-fallback psr-route-fallback--routine">
+  <div class="ps-rout-page__hero">
+    <div class="ps-wrap">
+      <p class="ps-rout-page__eyebrow">Your routine</p>
+      <h1 class="ps-rout-page__heading">Built for your city. Tracked by you.</h1>
+      <p class="ps-rout-page__lede">Four steps, one sequence. Pick your city, name your main concern, get a climate-aware plan — then check in daily. No perfection required; consistency is the point.</p>
+    </div>
+  </div>
+  <div class="ps-wrap">
+    <ps-routine-tracker class="ps-rout">
+      <div class="ps-rout__progress" data-routine-progress aria-hidden="true"></div>
+      <ol class="ps-rout__steps-label" aria-hidden="true">
+        <li>City</li><li>Concern</li><li>Plan</li><li>Track</li>
+      </ol>
+      <div class="ps-rout__panel" data-routine-city-panel>
+        <h2>Where does your skin live?</h2>
+        <p class="ps-rout__hint">Pick your city — we'll shape the four-step plan around its UV, humidity, pollution, and water profile.</p>
+        <div class="ps-rout__chips" data-routine-cities></div>
+        <p class="ps-rout__note">Came from the climate map? Your saved city profile loads automatically.</p>
+        <button type="button" class="ps-rout__next" data-routine-nav="0" data-routine-next-city>Continue</button>
+      </div>
+      <div class="ps-rout__panel" data-routine-concern-panel hidden>
+        <h2>What are you actually fighting?</h2>
+        <p class="ps-rout__hint">No 12-step grid. One primary concern so the routine stays doable — especially on busy weeks.</p>
+        <div class="ps-rout__chips ps-rout__chips--stack" data-routine-concerns></div>
+        <button type="button" class="ps-rout__next" data-routine-nav="1" data-routine-next-concern>See my routine</button>
+      </div>
+      <div class="ps-rout__panel" data-routine-plan-panel hidden>
+        <h2>Your <span data-routine-city-name></span> routine</h2>
+        <p class="ps-rout__profile" data-routine-profile></p>
+        <p class="ps-rout__verdict" data-routine-verdict></p>
+        <div class="ps-rout__products" data-routine-products></div>
+        <button type="button" class="ps-rout__next" data-routine-nav="2" data-routine-start-track>Start tracking</button>
+      </div>
+      <div class="ps-rout__panel" data-routine-track-panel hidden>
+        <div class="ps-rout__track-head">
+          <div>
+            <h2>Today's check-in</h2>
+            <p class="ps-rout__hint">Tick what you did. Stored on this device — no account needed to start.</p>
+          </div>
+          <div class="ps-rout__streak">
+            <span data-routine-streak>0</span>
+            <small>day streak</small>
+          </div>
+        </div>
+        <div class="ps-rout__track-grid" data-routine-track-grid></div>
+        <div class="ps-rout__week" data-routine-week></div>
+        <p class="ps-rout__fine">Want a dermatologist to sanity-check the plan? <a href="/pages/consultation">Book a consultation</a>.</p>
+      </div>
+    </ps-routine-tracker>
+  </div>
+</section>
+
+{% comment %} —— Smart lab hub (shows all three when route is smart-lab via shared classes above) —— {% endcomment %}
+{% comment %} Extra hub strip only for smart-lab {% endcomment %}
+<section class="ps-ed psr-route-fallback psr-route-fallback--smart-lab" style="border-top:1px solid #e6e6e6">
+  <div class="ps-ed__cta" style="background:#111;color:#fff">
+    <div class="ps-ed__wrap">
+      <h2 style="color:#fff">Get Skin Smart</h2>
+      <p style="color:rgba(255,255,255,.72)">Three tools. One literacy path — consultation, city profile, and a routine you can keep.</p>
+      <div class="ps-ed__actions" style="justify-content:center">
+        <a class="ps-ed__btn" href="/pages/consultation" style="background:#fff;color:#111">Consultation</a>
+        <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/skin-profile" style="border-color:rgba(255,255,255,.35);color:#fff">Skin analysis</a>
+        <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/routine-finder" style="border-color:rgba(255,255,255,.35);color:#fff">Routine finder</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 tools pack",
+  "settings": [],
+  "enabled_on": { "templates": ["404"] }
+}
+{% endschema %}

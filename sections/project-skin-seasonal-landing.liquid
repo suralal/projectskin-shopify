@@ -5,6 +5,7 @@
   endif
 %}
 {% include 'seasonal-education-catalog', season_key: season_key %}
+{{ 'ps-concern-landing.css' | asset_url | stylesheet_tag }}
 
 {% liquid
   assign hero_eyebrow = season_eyebrow
@@ -19,106 +20,255 @@
   if section.settings.text != blank
     assign hero_text = section.settings.text
   endif
+
+  case season_key
+    when 'festive'
+      assign hero_asset = 'project-skin-journal-festive.png'
+      assign why_asset = 'psr-science-commit-human.jpg'
+      assign band_heading = 'Celebrate. Still protect.'
+      assign band_text = 'Makeup nights do not pause biology — sequence and SPF still matter.'
+      assign signal_1_title = '01 Makeup load'
+      assign signal_1_text = 'Long wear traps sebum and sweat against acne-prone skin.'
+      assign signal_2_title = '02 UV still counts'
+      assign signal_2_text = 'Daytime functions and travel keep melanocytes active.'
+      assign signal_3_title = '03 Sleep stress'
+      assign signal_3_text = 'Later nights raise inflammation that shows up as congestion.'
+      assign signal_4_title = '04 Skipped SPF'
+      assign signal_4_text = '“Indoor event” days still include UVA through glass and transfers.'
+      assign signal_1_asset = 'ps-concern-spf-signal-3.png'
+      assign signal_2_asset = 'ps-concern-pigmentation-signal-3.png'
+      assign signal_3_asset = 'ps-concern-barrier-signal-2.png'
+      assign signal_4_asset = 'ps-concern-spf-signal-1.png'
+      assign mech_1_title = 'Cleanse'
+      assign mech_1_em = 'After makeup'
+      assign mech_1_text = 'Clear without strip when wear time runs long.'
+      assign mech_1_asset = 'product-cleanser-1-card.png'
+      assign mech_2_title = 'Treat'
+      assign mech_2_em = 'Oil pathways'
+      assign mech_2_text = 'Keep known regulate steps — do not invent a glitter stack.'
+      assign mech_2_asset = 'product-serum-1-card.png'
+      assign mech_3_title = 'Seal'
+      assign mech_3_em = 'Barrier'
+      assign mech_3_text = 'Moisturise so late nights do not become sting.'
+      assign mech_3_asset = 'product-moisturiser-1-card.png'
+      assign mech_4_title = 'Protect'
+      assign mech_4_em = 'Daylight hours'
+      assign mech_4_text = 'Festive lighting does not replace filters.'
+      assign mech_4_asset = 'product-sunscreen-1-card.png'
+    when 'winter'
+      assign hero_asset = 'project-skin-journal-winter.png'
+      assign why_asset = 'project-skin-philosophy-people.jpg'
+      assign band_heading = 'Repair first. Clarity second.'
+      assign band_text = 'Cold air and hard water raise TEWL — barrier care is the winter mechanism.'
+      assign signal_1_title = '01 Tightness'
+      assign signal_1_text = 'Lipids strip faster in cold, dry air and hard-water cleanses.'
+      assign signal_2_title = '02 Sting'
+      assign signal_2_text = 'Products that felt fine in monsoon may prickle when barrier thins.'
+      assign signal_3_title = '03 Cream fail'
+      assign signal_3_text = 'Moisturiser cannot replace missing ceramides alone.'
+      assign signal_4_title = '04 Rebound oil'
+      assign signal_4_text = 'Over-stripping in winter often returns as congestion.'
+      assign signal_1_asset = 'ps-concern-barrier-signal-1.png'
+      assign signal_2_asset = 'ps-concern-barrier-signal-2.png'
+      assign signal_3_asset = 'ps-concern-barrier-signal-3.png'
+      assign signal_4_asset = 'ps-acne-signal-clogged-pores.png'
+      assign mech_1_title = 'Soften cleanse'
+      assign mech_1_em = 'No strip'
+      assign mech_1_text = 'Keep clarification gentle when TEWL is high.'
+      assign mech_1_asset = 'product-cleanser-1-card.png'
+      assign mech_2_title = 'Replenish'
+      assign mech_2_em = 'Ceramides'
+      assign mech_2_text = 'Rebuild the lipid matrix before chasing richer miracle creams.'
+      assign mech_2_asset = 'product-moisturiser-1-card.png'
+      assign mech_3_title = 'Treat carefully'
+      assign mech_3_em = 'Seal after'
+      assign mech_3_text = 'Keep useful actives, but cushion them.'
+      assign mech_3_asset = 'product-serum-1-card.png'
+      assign mech_4_title = 'Protect'
+      assign mech_4_em = 'Winter UV'
+      assign mech_4_text = 'Pigmentation loops do not take a holiday.'
+      assign mech_4_asset = 'product-sunscreen-1-card.png'
+    else
+      assign hero_asset = 'project-skin-journal-monsoon.png'
+      assign why_asset = 'psr-science-commit-human.jpg'
+      assign band_heading = 'Humid weeks. Clear sequence.'
+      assign band_text = 'Sebum, sweat, and pollution stack — clarity without abandoning the barrier.'
+      assign signal_1_title = '01 Sebum + sweat'
+      assign signal_1_text = 'Pores clog faster when oil mixes with humidity.'
+      assign signal_2_title = '02 Pollution load'
+      assign signal_2_text = 'Oxidative stress hits a barrier already under climate load.'
+      assign signal_3_title = '03 Harsh cleanse rebound'
+      assign signal_3_text = 'Stripping to feel clean often raises oil the next day.'
+      assign signal_4_title = '04 Skipped SPF'
+      assign signal_4_text = 'Rainy skies still transmit UVA and keep marks active.'
+      assign signal_1_asset = 'ps-acne-signal-clogged-pores.png'
+      assign signal_2_asset = 'ps-concern-spf-signal-4.png'
+      assign signal_3_asset = 'ps-concern-barrier-signal-1.png'
+      assign signal_4_asset = 'ps-concern-pigmentation-signal-1.png'
+      assign mech_1_title = 'Clear'
+      assign mech_1_em = 'Oil-soluble care'
+      assign mech_1_text = 'Functional BHA pathways without a strip.'
+      assign mech_1_asset = 'product-cleanser-1-card.png'
+      assign mech_2_title = 'Regulate'
+      assign mech_2_em = 'Niacinamide'
+      assign mech_2_text = 'Oil balance that stays wearable in heat.'
+      assign mech_2_asset = 'product-serum-1-card.png'
+      assign mech_3_title = 'Seal'
+      assign mech_3_em = 'Light barrier'
+      assign mech_3_text = 'Moisturise so humidity does not become dehydration under oil.'
+      assign mech_3_asset = 'product-moisturiser-1-card.png'
+      assign mech_4_title = 'Protect'
+      assign mech_4_em = 'Cloudy UV'
+      assign mech_4_text = 'Monsoon is not a photoprotection holiday.'
+      assign mech_4_asset = 'product-sunscreen-1-card.png'
+  endcase
 %}
 
-<section class="psr-route-fallback psr-route-fallback--season-{{ season_key }} psr-page psr-season" data-season="{{ season_key }}">
-  <div class="psr-season__hero">
-    <div class="container psr-season__hero-inner">
-      <p class="psr-kicker">{{ hero_eyebrow }}</p>
-      <h1>{{ hero_heading }}</h1>
-      <p class="psr-season__lede">{{ hero_text }}</p>
-      <div class="psr-season__hero-actions">
-        <a class="psr-button" href="#SeasonMechanism-{{ season_key }}">See the seasonal mechanism</a>
-        <a class="psr-button psr-button--secondary" href="/blogs/news">Browse the journal</a>
-      </div>
-      <nav class="psr-season__switch" aria-label="Seasonal education">
-        <a href="/pages/monsoon"{% if season_key == 'monsoon' %} aria-current="page"{% endif %}>Monsoon</a>
-        <a href="/pages/festive"{% if season_key == 'festive' %} aria-current="page"{% endif %}>Festive</a>
-        <a href="/pages/winter"{% if season_key == 'winter' %} aria-current="page"{% endif %}>Winter</a>
-      </nav>
-    </div>
-  </div>
-
-  <div class="psr-section psr-section--linen">
-    <div class="container psr-season__split">
-      <article class="psr-season__panel">
-        <span class="psr-kicker">Diagnosis first</span>
-        <h2>{{ diagnosis_heading }}</h2>
-        <p>{{ diagnosis_text }}</p>
-      </article>
-      <article class="psr-season__panel psr-season__panel--dark">
-        <span class="psr-kicker psr-kicker--light">Climate signal</span>
-        <h2>{{ causes_heading }}</h2>
-        <div class="psr-season__causes">
-          {% for row in causes_rows %}
-            {% assign parts = row | split: '|' %}
-            <div>
-              <strong>{{ parts[0] | strip }}</strong>
-              <span>{{ parts[1] | strip }}</span>
-            </div>
-          {% endfor %}
+<section class="ps-concern psr-route-fallback psr-route-fallback--season-{{ season_key }}" data-ps-season="{{ season_key }}" id="SeasonLanding-{{ section.id }}">
+  <div class="ps-concern__hero">
+    <div class="ps-concern__wrap ps-concern__hero-grid">
+      <div class="ps-concern__copy">
+        <p class="ps-concern__kicker">{{ hero_eyebrow }}</p>
+        <h1>{{ hero_heading }}</h1>
+        <p class="ps-concern__lede">{{ hero_text }}</p>
+        <div class="ps-concern__actions">
+          <a class="ps-concern__btn" href="#SeasonMechanism-{{ section.id }}">See the seasonal mechanism</a>
+          <a class="ps-concern__btn ps-concern__btn--ghost" href="/pages/journal">Back to journal</a>
         </div>
-      </article>
+        <nav class="ps-concern__switch" aria-label="Seasonal education">
+          <a href="/pages/monsoon"{% if season_key == 'monsoon' %} aria-current="page"{% endif %}>Monsoon</a>
+          <a href="/pages/festive"{% if season_key == 'festive' %} aria-current="page"{% endif %}>Festive</a>
+          <a href="/pages/winter"{% if season_key == 'winter' %} aria-current="page"{% endif %}>Winter</a>
+        </nav>
+      </div>
+      <div class="ps-concern__hero-media">
+        {% render 'purity-image', fallback_asset: hero_asset, fallback_width: 1024, fallback_height: 682, alt: hero_heading, sizes: '(min-width: 900px) 42vw, 92vw', loading: 'eager' %}
+      </div>
     </div>
   </div>
 
-  <div id="SeasonMechanism-{{ season_key }}" class="psr-section">
-    <div class="container">
-      <div class="psr-section__head">
+  <div class="ps-concern__section">
+    <div class="ps-concern__wrap">
+      <div class="ps-concern__diag-grid">
+        <div class="ps-concern__copy">
+          <p class="ps-concern__kicker">Diagnosis first</p>
+          <h2>{{ diagnosis_heading }}</h2>
+          <p>{{ diagnosis_text }}</p>
+        </div>
+        <div class="ps-concern__copy">
+          <p class="ps-concern__kicker">Climate signal</p>
+          <h2>{{ causes_heading }}</h2>
+          <div class="ps-concern__why-points" style="margin-top:18px">
+            {% for row in causes_rows %}
+              {% assign parts = row | split: '|' %}
+              <div class="ps-concern__why-point">
+                <i aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</i>
+                <div><strong>{{ parts[0] | strip }}</strong><span>{{ parts[1] | strip }}</span></div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="ps-concern__diag-cards">
+        <article class="ps-concern__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: signal_1_asset, fallback_width: 900, fallback_height: 900, alt: signal_1_title, sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>{{ signal_1_title }}</strong><span>{{ signal_1_text }}</span>
+        </article>
+        <article class="ps-concern__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: signal_2_asset, fallback_width: 900, fallback_height: 900, alt: signal_2_title, sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>{{ signal_2_title }}</strong><span>{{ signal_2_text }}</span>
+        </article>
+        <article class="ps-concern__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: signal_3_asset, fallback_width: 900, fallback_height: 900, alt: signal_3_title, sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>{{ signal_3_title }}</strong><span>{{ signal_3_text }}</span>
+        </article>
+        <article class="ps-concern__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: signal_4_asset, fallback_width: 900, fallback_height: 900, alt: signal_4_title, sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>{{ signal_4_title }}</strong><span>{{ signal_4_text }}</span>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="ps-concern__section ps-concern__section--soft" id="SeasonMechanism-{{ section.id }}">
+    <div class="ps-concern__wrap">
+      <div class="ps-concern__section-head">
         <div>
-          <span class="psr-kicker">Mechanism this season</span>
+          <p class="ps-concern__kicker">Mechanism this season</p>
           <h2>{{ mechanism_heading }}</h2>
+          <p>{{ mechanism_text }}</p>
         </div>
-        <p>{{ mechanism_text }}</p>
+        <a class="ps-concern__link" href="/pages/ingredients">Ingredient library <span aria-hidden="true">→</span></a>
       </div>
-
-      <div class="psr-season__links-head">
-        <h3>{{ links_heading }}</h3>
-        <a class="psr-text-link" href="/pages/ingredients">Ingredient library <span aria-hidden="true">↗</span></a>
+      <div class="ps-concern__mech-grid">
+        <article class="ps-concern__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: mech_1_asset, fallback_width: 900, fallback_height: 1200, alt: mech_1_title, sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-concern__step">01</span><h3>{{ mech_1_title }}</h3><em>{{ mech_1_em }}</em><p>{{ mech_1_text }}</p>
+        </article>
+        <article class="ps-concern__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: mech_2_asset, fallback_width: 900, fallback_height: 1200, alt: mech_2_title, sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-concern__step">02</span><h3>{{ mech_2_title }}</h3><em>{{ mech_2_em }}</em><p>{{ mech_2_text }}</p>
+        </article>
+        <article class="ps-concern__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: mech_3_asset, fallback_width: 900, fallback_height: 1200, alt: mech_3_title, sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-concern__step">03</span><h3>{{ mech_3_title }}</h3><em>{{ mech_3_em }}</em><p>{{ mech_3_text }}</p>
+        </article>
+        <article class="ps-concern__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: mech_4_asset, fallback_width: 900, fallback_height: 1200, alt: mech_4_title, sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-concern__step">04</span><h3>{{ mech_4_title }}</h3><em>{{ mech_4_em }}</em><p>{{ mech_4_text }}</p>
+        </article>
       </div>
-      <div class="psr-season__links">
+      <div class="ps-concern__section-head" style="margin-top:48px">
+        <div>
+          <p class="ps-concern__kicker">Keep reading</p>
+          <h2>{{ links_heading }}</h2>
+        </div>
+      </div>
+      <div class="ps-concern__why-points">
         {% for row in links_rows %}
           {% assign parts = row | split: '|' %}
-          <a class="psr-season__link" href="{{ parts[1] | strip }}">
-            <strong>{{ parts[0] | strip }}</strong>
-            <span>{{ parts[2] | strip }}</span>
+          <a class="ps-concern__why-point" href="{{ parts[1] | strip }}" style="text-decoration:none;color:inherit">
+            <i aria-hidden="true">→</i>
+            <div><strong>{{ parts[0] | strip }}</strong><span>{{ parts[2] | strip }}</span></div>
           </a>
         {% endfor %}
       </div>
     </div>
   </div>
 
-  <div class="psr-section psr-section--mist">
-    <div class="container">
-      <div class="psr-section__head">
-        <div>
-          <span class="psr-kicker">Then the formulas</span>
-          <h2>{{ products_heading }}</h2>
-        </div>
-        <p>{{ products_text }}</p>
+  <div class="ps-concern__section ps-concern__section--ink" style="padding:0">
+    <div class="ps-concern__band">
+      <div class="ps-concern__band-media">
+        {% render 'purity-image', fallback_asset: why_asset, fallback_width: 1536, fallback_height: 1024, alt: '', sizes: '48vw', loading: 'lazy' %}
       </div>
-      <div class="psr-season__products psr-edu-products" style="--psr-columns: 4;">
-        {% for handle in product_handle_list %}
-          {% assign handle_clean = handle | strip %}
-          {% if handle_clean != blank %}
-            {% assign season_product = all_products[handle_clean] %}
-            {% if season_product != blank %}
-              {% render 'product-card', product: season_product, simple_media: true %}
-            {% endif %}
-          {% endif %}
-        {% endfor %}
+      <div class="ps-concern__band-copy">
+        <h2>{{ band_heading }}</h2>
+        <p>{{ band_text }}</p>
+        <ul class="ps-concern__band-stats">
+          <li><i aria-hidden="true">◎</i>Diagnosis first</li>
+          <li><i aria-hidden="true">◎</i>Climate aware</li>
+          <li><i aria-hidden="true">◎</i>Barrier intact</li>
+          <li><i aria-hidden="true">◎</i>SPF daily</li>
+        </ul>
       </div>
-      <div class="psr-season__cta">
-        <a class="psr-button psr-button--secondary" href="/pages/consultation">Speak to a dermatologist</a>
-        <a class="psr-text-link" href="/pages/journal">Back to the journal <span aria-hidden="true">↗</span></a>
-      </div>
+    </div>
+  </div>
+
+  <div class="ps-concern__section">
+    <div class="ps-concern__wrap ps-concern__promise">
+      <h2>Season changes. Biology stays teachable.</h2>
+      <ul class="ps-concern__promise-list">
+        <li><i aria-hidden="true">◎</i><div><strong>Not a sale banner</strong><span>Seasonal modules are education — not countdown kits.</span></div></li>
+        <li><i aria-hidden="true">◎</i><div><strong>Same sequence</strong><span>Cleanse, treat, moisturise, protect — adjusted for climate load.</span></div></li>
+        <li><i aria-hidden="true">◎</i><div><strong>Continue reading</strong><span><a href="/pages/consultation" style="color:inherit">Speak to a dermatologist</a> if the pattern will not settle.</span></div></li>
+      </ul>
     </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Seasonal education",
+  "name": "Seasonal literacy",
   "settings": [
     {
       "type": "select",
@@ -136,6 +286,6 @@
     { "type": "textarea", "id": "heading", "label": "Hero heading override" },
     { "type": "textarea", "id": "text", "label": "Hero text override" }
   ],
-  "presets": [{ "name": "Seasonal education" }]
+  "presets": [{ "name": "Seasonal literacy" }]
 }
 {% endschema %}

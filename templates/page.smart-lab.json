@@ -1,0 +1,109 @@
+{
+  "sections": {
+    "consult": {
+      "type": "ps-story-consult",
+      "blocks": {
+        "c1": {
+          "type": "chapter",
+          "settings": {
+            "nav_label": "The pattern",
+            "heading": "The pattern you keep seeing",
+            "text": "Congestion that returns. Marks that linger. A routine that never quite settles.",
+            "detail": "We start with context — climate, barrier history, and what better would mean.",
+            "card_1": "Recurring congestion",
+            "card_2": "Barrier fatigue",
+            "card_3": "Unclear routine"
+          }
+        },
+        "c2": {
+          "type": "chapter",
+          "settings": {
+            "nav_label": "The conversation",
+            "heading": "A conversation that goes past the shelf",
+            "text": "Thirty minutes with a dermatologist — focused on your history, not a product pitch.",
+            "detail": "Bring what you use. Bring what failed. Bring the climate you live in.",
+            "card_1": "30-minute video call",
+            "card_2": "Qualified clinician",
+            "card_3": "Your full context"
+          }
+        },
+        "c3": {
+          "type": "chapter",
+          "settings": {
+            "nav_label": "The plan",
+            "heading": "Leave with a plan you can follow",
+            "text": "A written routine summary — sequence, cadence, and what to watch for.",
+            "detail": "Not a shopping list of twelve serums. A path you can keep in week four.",
+            "card_1": "Written summary",
+            "card_2": "Clear sequence",
+            "card_3": "Follow-up notes"
+          }
+        }
+      },
+      "block_order": ["c1", "c2", "c3"],
+      "settings": {
+        "eyebrow": "Preview · Consultation",
+        "heading": "Your skin has a story. Tell it to someone who can read it.",
+        "text": "Interactive consultation story preview.",
+        "button_label": "Request an appointment",
+        "cta_heading": "Ready for a clearer next step?",
+        "cta_text": "Thirty minutes. Secure video. A routine summary you can actually follow."
+      }
+    },
+    "analysis": {
+      "type": "ps-editorial-page",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "title": "Face signals",
+            "text": "What shows on your skin — organised into a clear brief."
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "title": "Habits & lifestyle",
+            "text": "Routine history and daily pressures that shape the report."
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "title": "Shareable report",
+            "text": "For recommendations — and for your dermatologist."
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "route_key": "skin-profile",
+        "eyebrow": "Preview · Skin analysis",
+        "heading": "A skin report built from your face, habits, and life.",
+        "text": "Capture signals, habits, and lifestyle — then use the report for product guidance or consultation.",
+        "primary_label": "Open full analysis page",
+        "primary_link": "/pages/skin-profile",
+        "secondary_label": "Book consultation",
+        "secondary_link": "/pages/consultation",
+        "fallback_asset": "ps-smart-analysis.png",
+        "body_heading": "What the analysis covers",
+        "body_text": "Face, habits, lifestyle — one comprehensive report.",
+        "cta_heading": "Prefer the full landing?",
+        "cta_text": "Open the skin analysis page for the complete report narrative.",
+        "cta_label": "Go to skin analysis",
+        "cta_link": "/pages/skin-profile"
+      }
+    },
+    "routine": {
+      "type": "ps-story-routine",
+      "settings": {
+        "eyebrow": "Preview · Routine finder",
+        "heading": "Find a sequence you will still follow next month.",
+        "text": "Interactive routine finder preview — three questions, one plan.",
+        "start_label": "Start the finder",
+        "kit_label": "Shop the complete kit"
+      }
+    }
+  },
+  "order": ["consult", "analysis", "routine"]
+}

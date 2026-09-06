@@ -1,0 +1,202 @@
+{% comment %}
+  Reusable editorial Learn / Support landing.
+  Blocks: point | faq | cta
+{% endcomment %}
+{{ 'ps-editorial-page.css' | asset_url | stylesheet_tag }}
+
+<section class="ps-ed psr-route-fallback psr-route-fallback--{{ section.settings.route_key | default: 'editorial' }}" id="Editorial-{{ section.id }}">
+  <div class="ps-ed__hero">
+    <div class="ps-ed__wrap ps-ed__hero-grid">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <p class="ps-ed__kicker">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        <h1>{{ section.settings.heading }}</h1>
+        {% if section.settings.text != blank %}
+          <p class="ps-ed__lede">{{ section.settings.text }}</p>
+        {% endif %}
+        <div class="ps-ed__actions">
+          {% if section.settings.primary_label != blank %}
+            <a class="ps-ed__btn" href="{% if section.settings.primary_link != blank %}{{ section.settings.primary_link }}{% else %}#EditorialBody-{{ section.id }}{% endif %}">{{ section.settings.primary_label }}</a>
+          {% endif %}
+          {% if section.settings.secondary_label != blank %}
+            <a class="ps-ed__btn ps-ed__btn--ghost" href="{{ section.settings.secondary_link | default: '/collections/all' }}">{{ section.settings.secondary_label }}</a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="ps-ed__media">
+        {% render 'purity-image',
+          image: section.settings.image,
+          fallback_asset: section.settings.fallback_asset | default: 'project-skin-philosophy-people.jpg',
+          fallback_width: 880,
+          fallback_height: 1100,
+          alt: section.settings.heading,
+          sizes: '(min-width: 900px) 40vw, 92vw',
+          loading: 'eager'
+        %}
+      </div>
+    </div>
+  </div>
+
+  <div class="ps-ed__section" id="EditorialBody-{{ section.id }}">
+    <div class="ps-ed__wrap">
+      {% if section.settings.body_heading != blank %}
+        <h2>{{ section.settings.body_heading }}</h2>
+      {% endif %}
+      {% if section.settings.body_text != blank %}
+        <p class="ps-ed__copy">{{ section.settings.body_text }}</p>
+      {% endif %}
+
+      {% assign point_blocks = section.blocks | where: 'type', 'point' %}
+      {% if point_blocks.size > 0 %}
+        <ul class="ps-ed__list">
+          {% for block in point_blocks %}
+            <li {{ block.shopify_attributes }}>
+              <i aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</i>
+              <div>
+                <strong>{{ block.settings.title }}</strong>
+                <span>{{ block.settings.text }}</span>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if section.settings.split_heading != blank %}
+    <div class="ps-ed__section ps-ed__section--soft">
+      <div class="ps-ed__wrap ps-ed__split">
+        <div class="ps-ed__media">
+          {% render 'purity-image',
+            image: section.settings.split_image,
+            fallback_asset: section.settings.split_fallback | default: 'psr-science-mission-scan.jpg',
+            fallback_width: 1400,
+            fallback_height: 1000,
+            alt: section.settings.split_heading,
+            sizes: '(min-width: 900px) 42vw, 92vw',
+            loading: 'lazy'
+          %}
+        </div>
+        <div>
+          <p class="ps-ed__kicker">{{ section.settings.split_eyebrow }}</p>
+          <h2>{{ section.settings.split_heading }}</h2>
+          <p class="ps-ed__copy" style="margin-top:14px">{{ section.settings.split_text }}</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% assign card_blocks = section.blocks | where: 'type', 'card' %}
+  {% if card_blocks.size > 0 %}
+    <div class="ps-ed__section">
+      <div class="ps-ed__wrap">
+        {% if section.settings.cards_heading != blank %}
+          <h2>{{ section.settings.cards_heading }}</h2>
+        {% endif %}
+        {% if section.settings.cards_text != blank %}
+          <p class="ps-ed__copy">{{ section.settings.cards_text }}</p>
+        {% endif %}
+        <div class="ps-ed__grid">
+          {% for block in card_blocks %}
+            <article class="ps-ed__card" {{ block.shopify_attributes }}>
+              <strong>{{ block.settings.title }}</strong>
+              <p>{{ block.settings.text }}</p>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% assign faq_blocks = section.blocks | where: 'type', 'faq' %}
+  {% if faq_blocks.size > 0 %}
+    <div class="ps-ed__section ps-ed__section--soft">
+      <div class="ps-ed__wrap">
+        <h2>{{ section.settings.faq_heading | default: 'Common questions' }}</h2>
+        {% if section.settings.faq_text != blank %}
+          <p class="ps-ed__copy">{{ section.settings.faq_text }}</p>
+        {% endif %}
+        <div class="ps-ed__faq">
+          {% for block in faq_blocks %}
+            <details {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.question }}</summary>
+              <p>{{ block.settings.answer }}</p>
+            </details>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.settings.cta_heading != blank %}
+    <div class="ps-ed__cta">
+      <div class="ps-ed__wrap">
+        <h2>{{ section.settings.cta_heading }}</h2>
+        {% if section.settings.cta_text != blank %}
+          <p>{{ section.settings.cta_text }}</p>
+        {% endif %}
+        <div class="ps-ed__actions" style="justify-content:center">
+          {% if section.settings.cta_label != blank %}
+            <a class="ps-ed__btn" href="{{ section.settings.cta_link | default: '/pages/consultation' }}">{{ section.settings.cta_label }}</a>
+          {% endif %}
+          {% if section.settings.cta_secondary_label != blank %}
+            <a class="ps-ed__btn ps-ed__btn--ghost" href="{{ section.settings.cta_secondary_link | default: '/collections/all' }}">{{ section.settings.cta_secondary_label }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Editorial page",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "route_key", "label": "404 route key", "default": "editorial" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Learn" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Literacy before the product." },
+    { "type": "textarea", "id": "text", "label": "Hero text" },
+    { "type": "text", "id": "primary_label", "label": "Primary CTA" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary CTA" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "fallback_asset", "label": "Hero fallback asset", "default": "project-skin-philosophy-people.jpg" },
+    { "type": "text", "id": "body_heading", "label": "Body heading" },
+    { "type": "textarea", "id": "body_text", "label": "Body text" },
+    { "type": "text", "id": "split_eyebrow", "label": "Split eyebrow" },
+    { "type": "text", "id": "split_heading", "label": "Split heading" },
+    { "type": "textarea", "id": "split_text", "label": "Split text" },
+    { "type": "image_picker", "id": "split_image", "label": "Split image" },
+    { "type": "text", "id": "split_fallback", "label": "Split fallback asset", "default": "psr-science-mission-scan.jpg" },
+    { "type": "text", "id": "cards_heading", "label": "Cards heading" },
+    { "type": "textarea", "id": "cards_text", "label": "Cards text" },
+    { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Common questions" },
+    { "type": "textarea", "id": "faq_text", "label": "FAQ intro" },
+    { "type": "text", "id": "cta_heading", "label": "Bottom CTA heading" },
+    { "type": "textarea", "id": "cta_text", "label": "Bottom CTA text" },
+    { "type": "text", "id": "cta_label", "label": "Bottom CTA label" },
+    { "type": "url", "id": "cta_link", "label": "Bottom CTA link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Bottom secondary label" },
+    { "type": "url", "id": "cta_secondary_link", "label": "Bottom secondary link" }
+  ],
+  "blocks": [
+    { "type": "point", "name": "Point", "settings": [
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "textarea", "id": "text", "label": "Text" }
+    ]},
+    { "type": "card", "name": "Card", "settings": [
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "textarea", "id": "text", "label": "Text" }
+    ]},
+    { "type": "faq", "name": "FAQ", "settings": [
+      { "type": "text", "id": "question", "label": "Question" },
+      { "type": "textarea", "id": "answer", "label": "Answer" }
+    ]}
+  ],
+  "presets": [{ "name": "Editorial page" }]
+}
+{% endschema %}

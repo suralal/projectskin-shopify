@@ -1,75 +1,198 @@
+{% comment %}
+  Multi-product feature spotlight — switch products to swap packshot, copy, and callouts.
+{% endcomment %}
 {% liquid
-  assign heading_text = section.settings.heading | strip_html
-  assign heading_highlight = section.settings.heading_highlight | strip_html
-  assign heading_prefix = heading_text | remove: heading_highlight | strip
+  assign product_blocks = section.blocks | where: 'type', 'product'
 %}
 
+{% if product_blocks.size == 0 %}
+  {% comment %} Legacy callout-only configs: keep section empty rather than crash. {% endcomment %}
+{% else %}
 <purity-result-spotlight
   class="ps-section ps-result"
   style="--ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px"
+  data-result-count="{{ product_blocks.size }}"
 >
   <div class="ps-result__wrap">
-    <header class="ps-result__header">
-      {% if section.settings.eyebrow != blank %}
-        <p class="ps-result__eyebrow">{{ section.settings.eyebrow }}</p>
-      {% endif %}
+    {% if product_blocks.size > 1 %}
+      <div class="ps-result__rail" role="tablist" aria-label="{{ section.settings.rail_label | default: 'Products' | escape }}">
+        {% for block in product_blocks %}
+          {% liquid
+            assign nav_label = block.settings.nav_label | default: block.settings.heading | default: 'Product'
+            if block.settings.product != blank
+              assign nav_label = block.settings.nav_label | default: block.settings.product.title | default: nav_label
+            endif
+          %}
+          <button
+            type="button"
+            class="ps-result__tab{% if forloop.first %} is-active{% endif %}"
+            role="tab"
+            id="ResultTab-{{ section.id }}-{{ forloop.index0 }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            aria-controls="ResultPanel-{{ section.id }}-{{ forloop.index0 }}"
+            tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+            data-result-tab
+            data-result-index="{{ forloop.index0 }}"
+            data-eyebrow="{{ block.settings.eyebrow | escape }}"
+            data-heading="{{ block.settings.heading | escape }}"
+            data-highlight="{{ block.settings.heading_highlight | escape }}"
+            data-description="{{ block.settings.description | strip_html | escape }}"
+            data-cta-label="{{ block.settings.button_label | escape }}"
+            data-cta-href="{{ block.settings.button_link | default: block.settings.product.url | default: section.settings.link | escape }}"
+            {{ block.shopify_attributes }}
+          >
+            {{ nav_label }}
+          </button>
+        {% endfor %}
+      </div>
+    {% endif %}
 
-      <h2 class="ps-result__heading">
-        {{ heading_prefix }}
-        <span class="ps-result__highlight">
-          {{ heading_highlight }}
-          <svg viewBox="0 0 186 24" aria-hidden="true">
-            <path d="M3 10.176C34.845 4.685 117.175-1.003 203 6.881C162.353 5.94 127.5 5.5 68 14C91.689 11.647 142.5 8.5 186.5 23.5" />
-          </svg>
-        </span>
+    {% assign first_block = product_blocks.first %}
+    {% liquid
+      assign active_heading = first_block.settings.heading | default: section.settings.heading | strip_html
+      assign active_highlight = first_block.settings.heading_highlight | default: section.settings.heading_highlight | strip_html
+      assign active_prefix = active_heading | remove: active_highlight | strip
+      assign active_eyebrow = first_block.settings.eyebrow | default: section.settings.eyebrow
+      assign active_description = first_block.settings.description | default: section.settings.description
+      assign active_cta_label = first_block.settings.button_label | default: section.settings.button_label
+      assign active_cta_href = first_block.settings.button_link | default: first_block.settings.product.url | default: section.settings.link | default: routes.all_products_collection_url
+    %}
+
+    <header class="ps-result__header">
+      <p class="ps-result__eyebrow" data-result-eyebrow {% if active_eyebrow == blank %}hidden{% endif %}>{{ active_eyebrow }}</p>
+
+      <h2 class="ps-result__heading" data-result-heading>
+        <span data-result-heading-prefix>{% if active_prefix != blank %}{{ active_prefix }} {% endif %}</span>
+        {% if active_highlight != blank %}
+          <span class="ps-result__highlight" data-result-highlight>
+            <span data-result-highlight-text>{{ active_highlight }}</span>
+            <svg viewBox="0 0 186 24" aria-hidden="true">
+              <path d="M3 10.176C34.845 4.685 117.175-1.003 203 6.881C162.353 5.94 127.5 5.5 68 14C91.689 11.647 142.5 8.5 186.5 23.5" />
+            </svg>
+          </span>
+        {% endif %}
       </h2>
 
-      {% if section.settings.description != blank %}
-        <div class="ps-result__description rte">{{ section.settings.description }}</div>
-      {% endif %}
+      <div class="ps-result__description rte" data-result-description {% if active_description == blank %}hidden{% endif %}>
+        {% if active_description contains '<p>' %}
+          {{ active_description }}
+        {% else %}
+          <p>{{ active_description }}</p>
+        {% endif %}
+      </div>
     </header>
 
     <div class="ps-result__stage">
-      <div class="ps-result__product">
-        {% render 'purity-image',
-          image: section.settings.image,
-          fallback_asset: 'project-skin-active-boba.jpg',
-          fallback_width: 1200,
-          fallback_height: 1200,
-          alt: heading_text,
-          sizes: '(min-width: 1025px) 400px, calc(100vw - 40px)'
-        %}
-      </div>
-
-      <div class="ps-result__callouts" role="list" aria-label="Product benefits">
-        {% for block in section.blocks %}
+      <div class="ps-result__product" aria-live="polite">
+        {% for block in product_blocks %}
+          {% liquid
+            assign slide_image = block.settings.image
+            if slide_image == blank and block.settings.product != blank
+              assign slide_image = block.settings.product.featured_image
+            endif
+            assign slide_fallback = block.settings.fallback_asset | strip
+            if slide_fallback == blank
+              assign slide_fallback = 'project-skin-active-boba.jpg'
+            endif
+            assign slide_alt = block.settings.heading | default: block.settings.nav_label | default: 'Product'
+          %}
           <div
-            class="ps-result__callout ps-result__callout--{{ forloop.index }}"
-            role="listitem"
-            data-result-callout
-            style="--ps-result-delay: {{ forloop.index0 | divided_by: 2 | times: 100 }}ms"
-            {{ block.shopify_attributes }}
+            class="ps-result__product-slide{% if forloop.first %} is-active{% endif %}"
+            id="ResultPanel-{{ section.id }}-{{ forloop.index0 }}"
+            role="tabpanel"
+            aria-labelledby="ResultTab-{{ section.id }}-{{ forloop.index0 }}"
+            data-result-image
+            data-result-index="{{ forloop.index0 }}"
+            aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
           >
-            <div class="ps-result__callout-inner">
-              {% render 'purity-benefit-icon', icon: block.settings.icon %}
-              <span>{{ block.settings.text }}</span>
-              <svg class="ps-result__bubble" width="25" height="25" viewBox="0 0 25 25" aria-hidden="true">
-                <ellipse cx="21" cy="21" rx="4" ry="4" />
-                <ellipse cx="9" cy="9" rx="9" ry="9" />
-              </svg>
-            </div>
+            {% render 'purity-image',
+              image: slide_image,
+              fallback_asset: slide_fallback,
+              fallback_width: 900,
+              fallback_height: 1125,
+              alt: slide_alt,
+              sizes: '(min-width: 1025px) 300px, min(320px, calc(100vw - 40px))',
+              loading: 'lazy'
+            %}
           </div>
         {% endfor %}
       </div>
 
-      {% if section.settings.button_label != blank %}
-        <a class="ps-button ps-result__button" href="{{ section.settings.link | default: routes.all_products_collection_url }}">
-          {{ section.settings.button_label }}
+      <div class="ps-result__callouts" aria-label="Product benefits">
+        {% for block in product_blocks %}
+          <div
+            class="ps-result__callout-set{% if forloop.first %} is-active{% endif %}"
+            data-result-features
+            data-result-index="{{ forloop.index0 }}"
+            {% unless forloop.first %}hidden{% endunless %}
+          >
+            {% if block.settings.feature_1_text != blank %}
+              <div class="ps-result__callout ps-result__callout--1" data-result-callout style="--ps-result-delay: 0ms">
+                <div class="ps-result__callout-inner">
+                  {% render 'purity-benefit-icon', icon: block.settings.feature_1_icon %}
+                  <span>{{ block.settings.feature_1_text }}</span>
+                  <svg class="ps-result__bubble" width="25" height="25" viewBox="0 0 25 25" aria-hidden="true"><ellipse cx="21" cy="21" rx="4" ry="4" /><ellipse cx="9" cy="9" rx="9" ry="9" /></svg>
+                </div>
+              </div>
+            {% endif %}
+            {% if block.settings.feature_2_text != blank %}
+              <div class="ps-result__callout ps-result__callout--2" data-result-callout style="--ps-result-delay: 80ms">
+                <div class="ps-result__callout-inner">
+                  {% render 'purity-benefit-icon', icon: block.settings.feature_2_icon %}
+                  <span>{{ block.settings.feature_2_text }}</span>
+                  <svg class="ps-result__bubble" width="25" height="25" viewBox="0 0 25 25" aria-hidden="true"><ellipse cx="21" cy="21" rx="4" ry="4" /><ellipse cx="9" cy="9" rx="9" ry="9" /></svg>
+                </div>
+              </div>
+            {% endif %}
+            {% if block.settings.feature_3_text != blank %}
+              <div class="ps-result__callout ps-result__callout--3" data-result-callout style="--ps-result-delay: 80ms">
+                <div class="ps-result__callout-inner">
+                  {% render 'purity-benefit-icon', icon: block.settings.feature_3_icon %}
+                  <span>{{ block.settings.feature_3_text }}</span>
+                  <svg class="ps-result__bubble" width="25" height="25" viewBox="0 0 25 25" aria-hidden="true"><ellipse cx="21" cy="21" rx="4" ry="4" /><ellipse cx="9" cy="9" rx="9" ry="9" /></svg>
+                </div>
+              </div>
+            {% endif %}
+            {% if block.settings.feature_4_text != blank %}
+              <div class="ps-result__callout ps-result__callout--4" data-result-callout style="--ps-result-delay: 160ms">
+                <div class="ps-result__callout-inner">
+                  {% render 'purity-benefit-icon', icon: block.settings.feature_4_icon %}
+                  <span>{{ block.settings.feature_4_text }}</span>
+                  <svg class="ps-result__bubble" width="25" height="25" viewBox="0 0 25 25" aria-hidden="true"><ellipse cx="21" cy="21" rx="4" ry="4" /><ellipse cx="9" cy="9" rx="9" ry="9" /></svg>
+                </div>
+              </div>
+            {% endif %}
+            {% if block.settings.feature_5_text != blank %}
+              <div class="ps-result__callout ps-result__callout--5" data-result-callout style="--ps-result-delay: 160ms">
+                <div class="ps-result__callout-inner">
+                  {% render 'purity-benefit-icon', icon: block.settings.feature_5_icon %}
+                  <span>{{ block.settings.feature_5_text }}</span>
+                  <svg class="ps-result__bubble" width="25" height="25" viewBox="0 0 25 25" aria-hidden="true"><ellipse cx="21" cy="21" rx="4" ry="4" /><ellipse cx="9" cy="9" rx="9" ry="9" /></svg>
+                </div>
+              </div>
+            {% endif %}
+            {% if block.settings.feature_6_text != blank %}
+              <div class="ps-result__callout ps-result__callout--6" data-result-callout style="--ps-result-delay: 240ms">
+                <div class="ps-result__callout-inner">
+                  {% render 'purity-benefit-icon', icon: block.settings.feature_6_icon %}
+                  <span>{{ block.settings.feature_6_text }}</span>
+                  <svg class="ps-result__bubble" width="25" height="25" viewBox="0 0 25 25" aria-hidden="true"><ellipse cx="21" cy="21" rx="4" ry="4" /><ellipse cx="9" cy="9" rx="9" ry="9" /></svg>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if active_cta_label != blank %}
+        <a class="ps-button ps-result__button" href="{{ active_cta_href }}" data-result-cta>
+          {{ active_cta_label }}
         </a>
       {% endif %}
     </div>
   </div>
 </purity-result-spotlight>
+{% endif %}
 
 {% schema %}
 {
@@ -77,36 +200,62 @@
   "tag": "section",
   "class": "section-wrapper",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Targeted care for blemish-prone skin" },
-    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Meet Active Boba" },
-    { "type": "text", "id": "heading_highlight", "label": "Underlined words", "default": "Active Boba", "info": "Enter words that also appear in the heading." },
-    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>An encapsulated daily cream with niacinamide, salicylic acid, and zinc PCA for clearer-looking, balanced skin.</p>" },
-    { "type": "image_picker", "id": "image", "label": "Product image" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore Active Boba" },
-    { "type": "url", "id": "link", "label": "Button link" },
-    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 100 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 100 }
+    { "type": "text", "id": "rail_label", "label": "Product rail label", "default": "Shop the lineup" },
+    { "type": "text", "id": "eyebrow", "label": "Fallback eyebrow", "default": "Targeted care for blemish-prone skin" },
+    { "type": "inline_richtext", "id": "heading", "label": "Fallback heading", "default": "Meet Active Boba" },
+    { "type": "text", "id": "heading_highlight", "label": "Fallback underlined words", "default": "Active Boba" },
+    { "type": "richtext", "id": "description", "label": "Fallback description", "default": "<p>An encapsulated daily cream with niacinamide, salicylic acid, and zinc PCA for clearer-looking, balanced skin.</p>" },
+    { "type": "text", "id": "button_label", "label": "Fallback button label", "default": "Explore Active Boba" },
+    { "type": "url", "id": "link", "label": "Fallback button link" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 88 }
   ],
   "blocks": [
     {
-      "type": "callout",
-      "name": "Benefit callout",
+      "type": "product",
+      "name": "Product",
       "settings": [
-        {
-          "type": "select",
-          "id": "icon",
-          "label": "Icon",
-          "default": "smooth",
-          "options": [
-            { "value": "smooth", "label": "Smooth lines" },
-            { "value": "bright", "label": "Brighten" },
-            { "value": "collagen", "label": "Collagen" },
-            { "value": "hydration", "label": "Hydration" },
-            { "value": "shield", "label": "Shield" },
-            { "value": "absorption", "label": "Absorption" }
-          ]
-        },
-        { "type": "text", "id": "text", "label": "Text", "default": "Smooths Lines" }
+        { "type": "text", "id": "nav_label", "label": "Rail label", "default": "Active Boba" },
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Targeted care for blemish-prone skin" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Meet Active Boba" },
+        { "type": "text", "id": "heading_highlight", "label": "Underlined words", "default": "Active Boba" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Dual-chamber capsule technology — niacinamide, salicylic acid, and zinc PCA released fresh at application." },
+        { "type": "image_picker", "id": "image", "label": "Product image" },
+        { "type": "text", "id": "fallback_asset", "label": "Fallback asset filename", "default": "product-active-boba-1.png", "info": "Theme asset used when no image/product image is set." },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Active Boba" },
+        { "type": "url", "id": "button_link", "label": "Button link" },
+        { "type": "header", "content": "Features" },
+        { "type": "select", "id": "feature_1_icon", "label": "Feature 1 icon", "default": "smooth", "options": [
+          { "value": "smooth", "label": "Smooth" }, { "value": "bright", "label": "Brighten" }, { "value": "collagen", "label": "Collagen" },
+          { "value": "hydration", "label": "Hydration" }, { "value": "shield", "label": "Shield" }, { "value": "absorption", "label": "Absorption" }
+        ]},
+        { "type": "text", "id": "feature_1_text", "label": "Feature 1 text", "default": "Salicylic Acid Care" },
+        { "type": "select", "id": "feature_2_icon", "label": "Feature 2 icon", "default": "bright", "options": [
+          { "value": "smooth", "label": "Smooth" }, { "value": "bright", "label": "Brighten" }, { "value": "collagen", "label": "Collagen" },
+          { "value": "hydration", "label": "Hydration" }, { "value": "shield", "label": "Shield" }, { "value": "absorption", "label": "Absorption" }
+        ]},
+        { "type": "text", "id": "feature_2_text", "label": "Feature 2 text", "default": "Clearer-Looking Skin" },
+        { "type": "select", "id": "feature_3_icon", "label": "Feature 3 icon", "default": "collagen", "options": [
+          { "value": "smooth", "label": "Smooth" }, { "value": "bright", "label": "Brighten" }, { "value": "collagen", "label": "Collagen" },
+          { "value": "hydration", "label": "Hydration" }, { "value": "shield", "label": "Shield" }, { "value": "absorption", "label": "Absorption" }
+        ]},
+        { "type": "text", "id": "feature_3_text", "label": "Feature 3 text", "default": "Niacinamide Powered" },
+        { "type": "select", "id": "feature_4_icon", "label": "Feature 4 icon", "default": "hydration", "options": [
+          { "value": "smooth", "label": "Smooth" }, { "value": "bright", "label": "Brighten" }, { "value": "collagen", "label": "Collagen" },
+          { "value": "hydration", "label": "Hydration" }, { "value": "shield", "label": "Shield" }, { "value": "absorption", "label": "Absorption" }
+        ]},
+        { "type": "text", "id": "feature_4_text", "label": "Feature 4 text", "default": "Comforting Moisture" },
+        { "type": "select", "id": "feature_5_icon", "label": "Feature 5 icon", "default": "shield", "options": [
+          { "value": "smooth", "label": "Smooth" }, { "value": "bright", "label": "Brighten" }, { "value": "collagen", "label": "Collagen" },
+          { "value": "hydration", "label": "Hydration" }, { "value": "shield", "label": "Shield" }, { "value": "absorption", "label": "Absorption" }
+        ]},
+        { "type": "text", "id": "feature_5_text", "label": "Feature 5 text", "default": "Zinc PCA Support" },
+        { "type": "select", "id": "feature_6_icon", "label": "Feature 6 icon", "default": "absorption", "options": [
+          { "value": "smooth", "label": "Smooth" }, { "value": "bright", "label": "Brighten" }, { "value": "collagen", "label": "Collagen" },
+          { "value": "hydration", "label": "Hydration" }, { "value": "shield", "label": "Shield" }, { "value": "absorption", "label": "Absorption" }
+        ]},
+        { "type": "text", "id": "feature_6_text", "label": "Feature 6 text", "default": "Fast-Absorbing Cream" }
       ]
     }
   ],
@@ -115,12 +264,30 @@
     {
       "name": "Result spotlight",
       "blocks": [
-        { "type": "callout", "settings": { "icon": "smooth", "text": "Salicylic Acid Care" } },
-        { "type": "callout", "settings": { "icon": "bright", "text": "Clearer-Looking Skin" } },
-        { "type": "callout", "settings": { "icon": "collagen", "text": "Niacinamide Powered" } },
-        { "type": "callout", "settings": { "icon": "hydration", "text": "Comforting Moisture" } },
-        { "type": "callout", "settings": { "icon": "shield", "text": "Zinc PCA Support" } },
-        { "type": "callout", "settings": { "icon": "absorption", "text": "Fast-Absorbing Cream" } }
+        {
+          "type": "product",
+          "settings": {
+            "nav_label": "Active Boba",
+            "eyebrow": "Targeted care for blemish-prone skin",
+            "heading": "Meet Active Boba",
+            "heading_highlight": "Active Boba",
+            "description": "Dual-chamber capsule technology — niacinamide, salicylic acid, and zinc PCA released fresh at application, with barrier support built in.",
+            "fallback_asset": "product-active-boba-1.png",
+            "button_label": "Shop Active Boba",
+            "feature_1_icon": "smooth",
+            "feature_1_text": "Salicylic Acid Care",
+            "feature_2_icon": "bright",
+            "feature_2_text": "Clearer-Looking Skin",
+            "feature_3_icon": "collagen",
+            "feature_3_text": "Niacinamide Powered",
+            "feature_4_icon": "hydration",
+            "feature_4_text": "Comforting Moisture",
+            "feature_5_icon": "shield",
+            "feature_5_text": "Zinc PCA Support",
+            "feature_6_icon": "absorption",
+            "feature_6_text": "Fast-Absorbing Cream"
+          }
+        }
       ]
     }
   ]

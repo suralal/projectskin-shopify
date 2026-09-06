@@ -1,10 +1,12 @@
 {
   "sections": {
     "landing": {
-      "type": "project-skin-concern-landing",
+      "type": "ps-concern-landing",
       "settings": {
         "concern_key": "pigmentation",
-        "columns": 3
+        "primary_label": "See the mechanism",
+        "secondary_label": "Shop the range",
+        "secondary_link": "/collections/all"
       }
     }
   },

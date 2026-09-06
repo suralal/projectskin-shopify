@@ -1,0 +1,229 @@
+{% comment %}
+  Bestseller card inspired by Kiehl’s explore experience:
+  vertical packshot, per-card gallery, centered type, size, price, ATC.
+{% endcomment %}
+{% liquid
+  assign p = product
+  assign gallery_assets = blank
+  assign loved_badge = blank
+  assign loved_size = blank
+
+  case p.handle
+    when '5-niacinamide-serum-acne-prone-skin'
+      assign gallery_assets = 'product-serum-1-card.png|product-serum-2-card.png|product-serum-3-card.png|product-serum-4-card.png|product-serum-5-card.png|product-serum-6-card.png|product-serum-7-card.png|product-serum-8-card.png|product-serum-9-card.png'
+      assign loved_badge = 'Best seller'
+      assign loved_size = '30 ml'
+      assign loved_rating = '5.0'
+      assign loved_reviews = 842
+    when 'calming-moisturiser-acne-prone-skin'
+      assign gallery_assets = 'product-moisturiser-1-card.png|product-moisturiser-2-card.png|product-moisturiser-3-card.png|product-moisturiser-4-card.png|product-moisturiser-5-card.png'
+      assign loved_badge = 'Best seller'
+      assign loved_size = '50 ml'
+      assign loved_rating = '4.9'
+      assign loved_reviews = 716
+    when 'refreshing-cleanser-acne-prone-skin'
+      assign gallery_assets = 'product-cleanser-2-card.png|product-cleanser-1-card.png|product-cleanser-3-card.png|product-cleanser-4-card.png|product-cleanser-5-card.png|product-cleanser-6-card.png|product-cleanser-7-card.png|product-cleanser-8-card.png|product-cleanser-9-card.png|product-cleanser-10-card.png'
+      assign loved_badge = 'Best seller'
+      assign loved_size = '100 ml'
+      assign loved_rating = '4.8'
+      assign loved_reviews = 923
+    when 'protecting-sunscreen-acne-prone-skin'
+      assign gallery_assets = 'product-sunscreen-1-card.png|product-sunscreen-2-card.png|product-sunscreen-3-card.png|product-sunscreen-4-card.png|product-sunscreen-5-card.png'
+      assign loved_badge = 'SPF 50'
+      assign loved_size = '50 ml'
+      assign loved_rating = '4.9'
+      assign loved_reviews = 638
+    when 'clear-seal'
+      assign gallery_assets = 'product-clear-seal-1-card.png|product-clear-seal-2-card.png|product-clear-seal-3-card.png|product-clear-seal-4-card.png'
+      assign loved_badge = 'New'
+      assign loved_size = '15 ml'
+      assign loved_rating = '4.7'
+      assign loved_reviews = 512
+    when 'active-boba-encapsulated-cream-acne-prone-skin'
+      assign gallery_assets = 'product-active-boba-1-card.png|product-active-boba-2-card.png|product-active-boba-3-card.png|product-active-boba-4-card.png|product-active-boba-5-card.png|product-active-boba-6-card.png|product-active-boba-7-card.png|product-active-boba-8-card.png|product-active-boba-9-card.png|product-active-boba-10-card.png'
+      assign loved_badge = 'Hero formula'
+      assign loved_size = '50 g'
+      assign loved_rating = '5.0'
+      assign loved_reviews = 687
+  endcase
+
+  assign gallery_list = gallery_assets | split: '|'
+  assign gallery_count = 0
+  if gallery_assets != blank
+    assign gallery_count = gallery_list.size
+  elsif p.images.size > 0
+    assign gallery_count = p.images.size
+  endif
+  assign has_gallery = false
+  if gallery_count > 1
+    assign has_gallery = true
+  endif
+
+  capture card_display_title
+    render 'product-display-title', product: p
+  endcapture
+  assign card_display_title = card_display_title | strip
+  capture card_concern_line
+    render 'product-concern-line', product: p
+  endcapture
+  assign card_concern_line = card_concern_line | strip
+  capture card_palette
+    render 'product-palette-name', product: p
+  endcapture
+  assign card_palette = card_palette | strip
+
+  assign current_variant = p.selected_or_first_available_variant
+%}
+<article
+  class="ps-best-card"
+  data-product-palette="{{ card_palette }}"
+  data-analytics-product-card
+  data-item-id="{{ current_variant.id }}"
+  data-item-name="{{ p.title | escape }}"
+  data-item-brand="{{ p.vendor | escape }}"
+  data-item-category="{{ p.type | escape }}"
+  data-item-variant="{{ current_variant.title | escape }}"
+  data-item-price="{{ current_variant.price | divided_by: 100.0 }}"
+>
+  <div class="ps-best-card__media">
+    {% if loved_badge != blank %}
+      <span class="ps-best-card__badge">{{ loved_badge }}</span>
+    {% endif %}
+
+    <button class="ps-best-card__wish" type="button" aria-label="Save {{ card_display_title | escape }}" data-wishlist data-product-handle="{{ p.handle }}">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path
+          d="M12.1 18.55 12 18.65l-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5 18.5 5 20 6.5 20 8.5c0 2.89-3.14 5.74-7.9 10.05Z"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <purity-card-gallery class="ps-best-card__gallery" data-card-gallery{% if has_gallery %} data-gallery-count="{{ gallery_count }}"{% endif %}>
+      <a class="ps-best-card__media-link" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+        <span class="ps-best-card__stage" data-card-gallery-stage>
+          {% if gallery_assets != blank %}
+            {% for asset_name in gallery_list %}
+              <img
+                class="ps-best-card__image{% if forloop.first %} is-active{% endif %}"
+                src="{{ asset_name | asset_url }}"
+                width="640"
+                height="800"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                alt="{{ p.title | escape }}"
+                data-card-gallery-slide
+                {% unless forloop.first %}aria-hidden="true"{% endunless %}
+              >
+            {% endfor %}
+          {% elsif p.featured_image %}
+            {% for image in p.images %}
+              <img
+                class="ps-best-card__image{% if forloop.first %} is-active{% endif %}"
+                src="{{ image | image_url: width: 800 }}"
+                width="640"
+                height="800"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                alt="{{ p.title | escape }}"
+                data-card-gallery-slide
+                {% unless forloop.first %}aria-hidden="true"{% endunless %}
+              >
+            {% endfor %}
+          {% else %}
+            {{ 'product-1' | placeholder_svg_tag: 'ps-best-card__image is-active' }}
+          {% endif %}
+        </span>
+      </a>
+
+      {% if has_gallery %}
+        <button class="ps-best-card__nav ps-best-card__nav--prev" type="button" data-card-gallery-prev aria-label="Previous image of {{ p.title | escape }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="ps-best-card__nav ps-best-card__nav--next" type="button" data-card-gallery-next aria-label="Next image of {{ p.title | escape }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      {% endif %}
+    </purity-card-gallery>
+  </div>
+
+  <div class="ps-best-card__body">
+    <h3 class="ps-best-card__title">
+      <a href="{{ p.url }}">{{ card_display_title }}</a>
+    </h3>
+    {% if card_concern_line != blank %}
+      <p class="ps-best-card__subtitle">{{ card_concern_line }}</p>
+    {% endif %}
+
+    {% if loved_reviews != blank %}
+      <p
+        class="ps-best-card__rating"
+        aria-label="{{ loved_rating | default: '5.0' }} out of 5 stars from {{ loved_reviews }} reviews"
+      >
+        <span class="ps-best-card__stars" aria-hidden="true">
+          {% if loved_rating == '5.0' or loved_rating == blank %}
+            {% for i in (1..5) %}
+              <svg class="ps-best-card__star is-full" viewBox="0 0 20 20" focusable="false"><path d="m10 1.6 2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 13.9l-4.8 2.6.9-5.4L2.2 7.3l5.4-.8Z"/></svg>
+            {% endfor %}
+          {% else %}
+            {% for i in (1..4) %}
+              <svg class="ps-best-card__star is-full" viewBox="0 0 20 20" focusable="false"><path d="m10 1.6 2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 13.9l-4.8 2.6.9-5.4L2.2 7.3l5.4-.8Z"/></svg>
+            {% endfor %}
+            <svg class="ps-best-card__star is-half" viewBox="0 0 20 20" focusable="false">
+              <defs><clipPath id="best-half-{{ p.id }}"><rect x="0" y="0" width="10" height="20"/></clipPath></defs>
+              <path class="ps-best-card__star-bg" d="m10 1.6 2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 13.9l-4.8 2.6.9-5.4L2.2 7.3l5.4-.8Z"/>
+              <path clip-path="url(#best-half-{{ p.id }})" d="m10 1.6 2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 13.9l-4.8 2.6.9-5.4L2.2 7.3l5.4-.8Z"/>
+            </svg>
+          {% endif %}
+        </span>
+        <span class="ps-best-card__reviews">({{ loved_reviews }})</span>
+      </p>
+    {% endif %}
+
+    {% if settings.card_quick_add and p.available %}
+      {% form 'product', p, class: 'ps-best-card__form' %}
+        {% if p.variants.size > 1 %}
+          <label class="ps-best-card__size">
+            <span>Size</span>
+            <select name="id" aria-label="Size for {{ card_display_title | escape }}">
+              {% for variant in p.variants %}
+                <option
+                  value="{{ variant.id }}"
+                  {% if variant == current_variant %}selected{% endif %}
+                  {% unless variant.available %}disabled{% endunless %}
+                >
+                  {{ variant.title }}{% unless variant.available %} — sold out{% endunless %}
+                </option>
+              {% endfor %}
+            </select>
+          </label>
+        {% else %}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+          {% if loved_size != blank or current_variant.title != 'Default Title' %}
+            <div class="ps-best-card__size ps-best-card__size--static">
+              <span>Size</span>
+              <strong>{% if loved_size != blank %}{{ loved_size }}{% else %}{{ current_variant.title }}{% endif %}</strong>
+            </div>
+          {% endif %}
+        {% endif %}
+
+        <p class="ps-best-card__price">{{ current_variant.price | money }}</p>
+        <button class="ps-best-card__atc" type="submit">Add to bag</button>
+      {% endform %}
+    {% else %}
+      {% if loved_size != blank %}
+        <div class="ps-best-card__size ps-best-card__size--static">
+          <span>Size</span>
+          <strong>{{ loved_size }}</strong>
+        </div>
+      {% endif %}
+      <p class="ps-best-card__price">{{ p.price | money }}</p>
+      {% if p.available == false %}
+        <a class="ps-best-card__atc ps-best-card__atc--link" href="{{ p.url }}">Sold out</a>
+      {% else %}
+        <a class="ps-best-card__atc ps-best-card__atc--link" href="{{ p.url }}">View product</a>
+      {% endif %}
+    {% endif %}
+  </div>
+</article>

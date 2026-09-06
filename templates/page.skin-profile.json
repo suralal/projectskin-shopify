@@ -1,0 +1,122 @@
+{
+  "sections": {
+    "analysis": {
+      "type": "ps-editorial-page",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "title": "Face & visible signals",
+            "text": "We capture what shows on your skin — congestion, marks, texture, dryness, reactivity — so the report starts from evidence, not guesswork."
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "title": "Habits & routine history",
+            "text": "What you cleanse with, what you skip, what already failed. The report notes patterns so a dermatologist does not start from zero."
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "title": "Lifestyle & climate context",
+            "text": "Sleep, stress, sun time, water, and where you live. These pressures change what “gentle” and “enough” mean for your skin."
+          }
+        },
+        "p4": {
+          "type": "point",
+          "settings": {
+            "title": "A report you can share",
+            "text": "One clear summary for product recommendations — and a structured brief you can pass to a Project Skin dermatologist."
+          }
+        },
+        "c1": {
+          "type": "card",
+          "settings": {
+            "title": "For you",
+            "text": "Understand what your skin is signalling before you buy another product."
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "title": "For recommendations",
+            "text": "Match cleanse, treat, moisturise, protect to the mechanisms in your report."
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "title": "For your dermatologist",
+            "text": "Bring a written brief into consultation — history, habits, and priorities already captured."
+          }
+        },
+        "c4": {
+          "type": "card",
+          "settings": {
+            "title": "For follow-through",
+            "text": "Use the same report to track what changed after you adjust the routine."
+          }
+        },
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "question": "What do you capture in the analysis?",
+            "answer": "Visible facial signals, your current habits and products, lifestyle factors, and climate context — enough to build a structured skin brief, not a vague quiz score."
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "question": "Is this a medical diagnosis?",
+            "answer": "No. It is a literacy and intake report that organises what you see and how you live. Clinical decisions stay with a qualified dermatologist."
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I share the report in a consultation?",
+            "answer": "Yes. That is one of its jobs — so your appointment starts with context, not a blank form."
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "question": "Will this recommend products?",
+            "answer": "The report points to mechanisms and a clearer sequence. Product suggestions follow from that — not from trend lists."
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "c1", "c2", "c3", "c4", "f1", "f2", "f3", "f4"],
+      "settings": {
+        "route_key": "skin-profile",
+        "eyebrow": "Get skin smart · Skin analysis",
+        "heading": "A skin report built from your face, habits, and life.",
+        "text": "We capture what your skin shows, how you care for it, and the lifestyle around it — then turn that into a comprehensive report for recommendations and, when you want, your dermatologist.",
+        "primary_label": "Start skin analysis",
+        "primary_link": "",
+        "secondary_label": "Book a consultation",
+        "secondary_link": "/pages/consultation",
+        "fallback_asset": "ps-smart-analysis.png",
+        "body_heading": "What we take into the report",
+        "body_text": "Analysis is intake with intent. Face signals, habits, and lifestyle land in one place — so the next step is clearer whether you shop, consult, or both.",
+        "split_eyebrow": "The deliverable",
+        "split_heading": "One report. Three uses.",
+        "split_text": "Read it yourself for literacy. Use it to guide a four-step sequence. Share it with a dermatologist so the conversation starts with your real context — not a cold open.",
+        "split_fallback": "ps-smart-analysis-card.png",
+        "cards_heading": "Where the report goes next",
+        "cards_text": "Same brief. Different decisions — personal, product, or clinical.",
+        "faq_heading": "Before you begin",
+        "faq_text": "Short answers about scope, privacy of purpose, and what the report is for.",
+        "cta_heading": "Ready for a clearer brief?",
+        "cta_text": "Start the analysis, then decide whether you need products, a routine finder, or a dermatologist conversation.",
+        "cta_label": "Continue to routine finder",
+        "cta_link": "/pages/routine-finder",
+        "cta_secondary_label": "Request consultation",
+        "cta_secondary_link": "/pages/consultation"
+      }
+    }
+  },
+  "order": ["analysis"]
+}

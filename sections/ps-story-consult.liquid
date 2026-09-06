@@ -1,0 +1,158 @@
+{% comment %}
+  Interactive consultation story landing — narrative chapters + booking.
+{% endcomment %}
+{{ 'ps-skin-smart-stories.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ps-skin-smart-stories.js' | asset_url }}" defer></script>
+
+<ps-story-consult
+  class="ps-sc psr-route-fallback psr-route-fallback--consultation psr-route-fallback--smart-lab"
+  id="ConsultStory-{{ section.id }}"
+  style="--ps-sc-top: {{ section.settings.padding_top }}px; --ps-sc-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="ps-sc__hero">
+    <div class="ps-sc__media" aria-hidden="true">
+      {% render 'purity-image',
+        image: section.settings.image,
+        fallback_asset: 'project-skin-consultation-hero.jpg',
+        fallback_width: 1800,
+        fallback_height: 1000,
+        alt: '',
+        sizes: '100vw',
+        loading: 'eager',
+        fetchpriority: 'high'
+      %}
+      <span class="ps-sc__shade"></span>
+    </div>
+    <div class="ps-sc__hero-copy" data-reveal>
+      <p class="ps-story-kicker">{{ section.settings.eyebrow }}</p>
+      <h1 class="ps-sc__heading">{{ section.settings.heading }}</h1>
+      <p class="ps-sc__lede">{{ section.settings.text }}</p>
+      <div class="ps-sc__hero-actions">
+        <a class="ps-story-btn" href="#book-consultation">{{ section.settings.button_label }}</a>
+        <button class="ps-story-btn ps-story-btn--ghost" type="button" data-sc-start>Begin the story</button>
+      </div>
+    </div>
+    <div class="ps-sc__scroll-hint" aria-hidden="true">
+      <span></span>
+    </div>
+  </div>
+
+  <nav class="ps-sc__chapters" aria-label="Consultation story chapters" data-sc-nav>
+    {% for block in section.blocks %}
+      {% if block.type == 'chapter' %}
+        <button
+          type="button"
+          class="ps-sc__chapter-btn{% if forloop.first %} is-active{% endif %}"
+          data-sc-jump="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}
+        >
+          <span class="ps-sc__chapter-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <span>{{ block.settings.nav_label | default: block.settings.heading }}</span>
+        </button>
+      {% endif %}
+    {% endfor %}
+  </nav>
+
+  <div class="ps-sc__stage" data-sc-stage>
+    {% assign chapter_i = 0 %}
+    {% for block in section.blocks %}
+      {% if block.type == 'chapter' %}
+        <article
+          class="ps-sc__panel{% if chapter_i == 0 %} is-active{% endif %}"
+          data-sc-panel="{{ chapter_i }}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="ps-sc__panel-copy" data-reveal>
+            <p class="ps-story-kicker">Chapter {{ chapter_i | plus: 1 }}</p>
+            <h2>{{ block.settings.heading }}</h2>
+            <p>{{ block.settings.text }}</p>
+            {% if block.settings.detail != blank %}
+              <p class="ps-sc__detail">{{ block.settings.detail }}</p>
+            {% endif %}
+          </div>
+          <div class="ps-sc__panel-visual" data-reveal data-reveal-delay="120">
+            <div class="ps-sc__card-stack" data-sc-stack>
+              {% if block.settings.card_1 != blank %}
+                <div class="ps-sc__float-card" style="--i:0">{{ block.settings.card_1 }}</div>
+              {% endif %}
+              {% if block.settings.card_2 != blank %}
+                <div class="ps-sc__float-card" style="--i:1">{{ block.settings.card_2 }}</div>
+              {% endif %}
+              {% if block.settings.card_3 != blank %}
+                <div class="ps-sc__float-card" style="--i:2">{{ block.settings.card_3 }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+        {% assign chapter_i = chapter_i | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="ps-sc__progress" aria-hidden="true">
+    <span data-sc-progress></span>
+  </div>
+
+  <div class="ps-sc__cta-band" data-reveal>
+    <div class="ps-sc__cta-inner">
+      <h2>{{ section.settings.cta_heading }}</h2>
+      <p>{{ section.settings.cta_text }}</p>
+      <a class="ps-story-btn" href="#book-consultation">{{ section.settings.button_label }}</a>
+    </div>
+  </div>
+</ps-story-consult>
+
+{% schema %}
+{
+  "name": "Consult story",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Get skin smart · Consultation" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Your skin has a story. Tell it to someone who can read it." },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Lede",
+      "default": "Not another product quiz. A real conversation — concerns, climate, what you already tried — ending in a written plan."
+    },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "button_label", "label": "CTA label", "default": "Request an appointment" },
+    { "type": "text", "id": "cta_heading", "label": "Closing heading", "default": "Ready for a clearer next step?" },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "Closing text",
+      "default": "Thirty minutes. Secure video. A routine summary you can actually follow."
+    },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0, "label": "Top padding" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0, "label": "Bottom padding" }
+  ],
+  "blocks": [
+    {
+      "type": "chapter",
+      "name": "Chapter",
+      "settings": [
+        { "type": "text", "id": "nav_label", "label": "Nav label", "default": "The pattern" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "The pattern you keep seeing" },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Congestion that returns. Marks that linger. A routine that never quite settles. Most people do not need more products — they need a clearer read of what is actually happening."
+        },
+        {
+          "type": "textarea",
+          "id": "detail",
+          "label": "Detail",
+          "default": "We start with context: climate, barrier history, actives you have already tried, and what “better” would mean for you."
+        },
+        { "type": "text", "id": "card_1", "label": "Card 1", "default": "Recurring congestion" },
+        { "type": "text", "id": "card_2", "label": "Card 2", "default": "Barrier fatigue" },
+        { "type": "text", "id": "card_3", "label": "Card 3", "default": "Unclear routine" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Consult story" }]
+}
+{% endschema %}

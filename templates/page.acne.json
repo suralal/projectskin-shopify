@@ -1,10 +1,12 @@
 {
   "sections": {
     "landing": {
-      "type": "project-skin-concern-landing",
+      "type": "ps-concern-landing",
       "settings": {
         "concern_key": "acne",
-        "columns": 3
+        "primary_label": "See the mechanism",
+        "secondary_label": "Shop acne range",
+        "secondary_link": "/collections/all"
       }
     }
   },

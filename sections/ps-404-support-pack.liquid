@@ -1,0 +1,304 @@
+{% comment %}
+  Bundles About / FAQ / Guarantee / Contact / Climate for the 404 route-fallback
+  system (Shopify JSON templates max out at 25 sections).
+{% endcomment %}
+{{ 'ps-editorial-page.css' | asset_url | stylesheet_tag }}
+
+{% comment %} —— About —— {% endcomment %}
+<section class="ps-ed psr-route-fallback psr-route-fallback--about">
+  <div class="ps-ed__hero">
+    <div class="ps-ed__wrap ps-ed__hero-grid">
+      <div>
+        <p class="ps-ed__kicker">About Project Skin</p>
+        <h1>We brought the why back to skincare.</h1>
+        <p class="ps-ed__lede">Project Skin exists because the industry sold ritual instead of root cause. We sell literacy first, formulations second — for Indian skin, climate, and real routines.</p>
+        <div class="ps-ed__actions">
+          <a class="ps-ed__btn" href="/pages/philosophy">Read our philosophy</a>
+          <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/the-science">Explore the science</a>
+        </div>
+      </div>
+      <div class="ps-ed__media">
+        {% render 'purity-image', fallback_asset: 'project-skin-philosophy-people.jpg', fallback_width: 880, fallback_height: 1100, alt: 'About Project Skin', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'eager' %}
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__section">
+    <div class="ps-ed__wrap">
+      <h2>What we stand for</h2>
+      <p class="ps-ed__copy">Skin is an organ, not a canvas. What you apply interacts with biology, barrier lipids, and the environment you live in. Our work starts there — then the formula.</p>
+      <ul class="ps-ed__list">
+        <li><i aria-hidden="true">01</i><div><strong>Literacy before the jar</strong><span>A customer who understands congestion, barrier stress, and UV load rarely buys the wrong product twice.</span></div></li>
+        <li><i aria-hidden="true">02</i><div><strong>Built for Indian conditions</strong><span>Heat, humidity, hard water, pollution, and year-round UV shape which actives we choose and how we deliver them.</span></div></li>
+        <li><i aria-hidden="true">03</i><div><strong>Named doses, named roles</strong><span>When concentration matters, we show it. Every ingredient must earn its place with a mechanism.</span></div></li>
+        <li><i aria-hidden="true">04</i><div><strong>Comfort is not optional</strong><span>Acne-prone care that abandons the barrier creates a longer problem. Clarity and repair belong together.</span></div></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ps-ed__section ps-ed__section--soft">
+    <div class="ps-ed__wrap ps-ed__split">
+      <div class="ps-ed__media">
+        {% render 'purity-image', fallback_asset: 'psr-science-mission-scan.jpg', fallback_width: 1400, fallback_height: 1000, alt: 'Engineered for Indian climate', sizes: '(min-width: 900px) 42vw, 92vw', loading: 'lazy' %}
+      </div>
+      <div>
+        <p class="ps-ed__kicker">Why India</p>
+        <h2>Engineered for this climate — not adapted later.</h2>
+        <p class="ps-ed__copy" style="margin-top:14px">Urban India stacks UV extremes, monsoon humidity, winter TEWL, hard-water cleanses, and pollution in one year. That is the brief we design against.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__section">
+    <div class="ps-ed__wrap">
+      <h2>Start with a literacy path</h2>
+      <p class="ps-ed__copy">Pick the story that matches what you see on your skin — then decide what to buy.</p>
+      <div class="ps-ed__grid">
+        <article class="ps-ed__card"><strong>Acne literacy</strong><p>Breakouts are biology meeting climate — not a cleanliness failure.</p></article>
+        <article class="ps-ed__card"><strong>Barrier first</strong><p>When cream fails, the lipid layer is usually the real issue.</p></article>
+        <article class="ps-ed__card"><strong>Daily SPF</strong><p>In India, photoprotection is structural — not a summer accessory.</p></article>
+        <article class="ps-ed__card"><strong>Seasonal modules</strong><p>Monsoon, festive, and winter change the same biology in different ways.</p></article>
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__cta">
+    <div class="ps-ed__wrap">
+      <h2>Prefer a conversation?</h2>
+      <p>Thirty minutes with a dermatologist — climate, history, and a plan you can keep.</p>
+      <div class="ps-ed__actions" style="justify-content:center">
+        <a class="ps-ed__btn" href="/pages/consultation">Book a consultation</a>
+        <a class="ps-ed__btn ps-ed__btn--ghost" href="/collections/all">Shop the range</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} —— FAQ —— {% endcomment %}
+<section class="ps-ed psr-route-fallback psr-route-fallback--faq">
+  <div class="ps-ed__hero">
+    <div class="ps-ed__wrap ps-ed__hero-grid">
+      <div>
+        <p class="ps-ed__kicker">Help</p>
+        <h1>Questions worth answering properly.</h1>
+        <p class="ps-ed__lede">Climate, barrier, SPF, and routine choices — answered in Project Skin’s literacy voice. For order help, contact support directly.</p>
+        <div class="ps-ed__actions">
+          <a class="ps-ed__btn" href="/pages/contact">Contact us</a>
+          <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/consultation">Book a consultation</a>
+        </div>
+      </div>
+      <div class="ps-ed__media">
+        {% render 'purity-image', fallback_asset: 'project-skin-consultation-hero.jpg', fallback_width: 880, fallback_height: 1100, alt: 'FAQ', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'lazy' %}
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__section ps-ed__section--soft">
+    <div class="ps-ed__wrap">
+      <h2>Frequently asked</h2>
+      <p class="ps-ed__copy">Biology first. Logistics second.</p>
+      <div class="ps-ed__faq">
+        <details><summary>How should I start if I have acne-prone skin?</summary><p>Start with literacy, not a twelve-step stack. Keep a simple sequence: cleanse without strip, treat oil pathways, moisturise for barrier, protect daily. Introduce one change at a time.</p></details>
+        <details><summary>Why do I still break out in monsoon humidity?</summary><p>Humidity slows water loss but does not cancel sebum biology. Sweat, pollution, and harsher cleanses often raise congestion. Keep oil-soluble care and do not skip SPF on cloudy days.</p></details>
+        <details><summary>My moisturiser “doesn’t absorb”. What is wrong?</summary><p>Often the barrier lipid layer is compromised — cream cannot replace missing ceramides alone. Repair first, then reintroduce actives. Hard water and over-exfoliation are common Indian triggers.</p></details>
+        <details><summary>Do I need SPF in winter or on rainy days?</summary><p>Yes. UVA still transmits through cloud and glass and keeps pigmentation active. In India, photoprotection is structural — not seasonal.</p></details>
+        <details><summary>How do I choose between products?</summary><p>Match the mechanism to the signal: congestion → clear/regulate; marks → protect + niacinamide pathways; tightness/sting → barrier first. The concern pages explain before the shop.</p></details>
+        <details><summary>Can I book a dermatologist consultation?</summary><p>Yes. Request an appointment on the consultation page. You get a focused video conversation and a written routine summary — not a product pitch.</p></details>
+        <details><summary>How long does shipping take?</summary><p>Delivery options and estimates appear at checkout based on your address. For delays, contact support with your order number.</p></details>
+        <details><summary>What is your return policy?</summary><p>See the money-back guarantee page for eligibility and steps. Write to us with your order details and we will confirm next actions.</p></details>
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__cta">
+    <div class="ps-ed__wrap">
+      <h2>Still unsure?</h2>
+      <p>A dermatologist conversation can untangle climate, history, and the next useful step.</p>
+      <div class="ps-ed__actions" style="justify-content:center">
+        <a class="ps-ed__btn" href="/pages/consultation">Request consultation</a>
+        <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/acne">Browse concerns</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} —— Money-back —— {% endcomment %}
+<section class="ps-ed psr-route-fallback psr-route-fallback--guarantee">
+  <div class="ps-ed__hero">
+    <div class="ps-ed__wrap ps-ed__hero-grid">
+      <div>
+        <p class="ps-ed__kicker">Promise</p>
+        <h1>Buy with clarity. Return with dignity.</h1>
+        <p class="ps-ed__lede">We want you confident in the science — and supported if a formula is not the right match. Here is how our money-back promise works in plain language.</p>
+        <div class="ps-ed__actions">
+          <a class="ps-ed__btn" href="/pages/contact">Contact support</a>
+          <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/faq">Read FAQs</a>
+        </div>
+      </div>
+      <div class="ps-ed__media">
+        {% render 'purity-image', fallback_asset: 'psr-philosophy-trust-1.jpg', fallback_width: 880, fallback_height: 1100, alt: 'Money-back promise', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'lazy' %}
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__section">
+    <div class="ps-ed__wrap">
+      <h2>The spirit of the promise</h2>
+      <p class="ps-ed__copy">Project Skin is literacy-led. That means fewer impulse stacks and more intentional purchases. When something still misses, we handle returns carefully and respectfully.</p>
+      <ul class="ps-ed__list">
+        <li><i aria-hidden="true">01</i><div><strong>Try with a clear window</strong><span>If an eligible product does not feel right within the stated return window, contact us with your order details.</span></div></li>
+        <li><i aria-hidden="true">02</i><div><strong>Literacy still comes first</strong><span>We would rather you understand the mechanism before you buy — and we stand behind that honesty.</span></div></li>
+        <li><i aria-hidden="true">03</i><div><strong>How to start a return</strong><span>Write to support with your order number, product, and a short note. We will confirm eligibility and next steps.</span></div></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ps-ed__section ps-ed__section--soft">
+    <div class="ps-ed__wrap">
+      <h2>Return questions</h2>
+      <div class="ps-ed__faq">
+        <details><summary>Does every product qualify?</summary><p>Eligibility follows the store return policy — typically unused or within the published window. Opened hygiene products may have limits for safety reasons.</p></details>
+        <details><summary>How long do I have?</summary><p>Use the window shown at checkout and in your order email. If you are unsure, contact us before the window closes.</p></details>
+        <details><summary>Will I get a full refund?</summary><p>Approved returns are refunded to the original payment method after we receive and check the item, minus any stated shipping exceptions.</p></details>
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__cta">
+    <div class="ps-ed__wrap">
+      <h2>Need help with an order?</h2>
+      <p>Our team will guide eligibility, pickup or ship-back steps, and refund timing.</p>
+      <div class="ps-ed__actions" style="justify-content:center">
+        <a class="ps-ed__btn" href="/pages/contact">Contact us</a>
+        <a class="ps-ed__btn ps-ed__btn--ghost" href="/collections/all">Browse formulas</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} —— Contact —— {% endcomment %}
+<section class="ps-ed psr-route-fallback psr-route-fallback--contact">
+  <div class="ps-ed__hero">
+    <div class="ps-ed__wrap ps-ed__hero-grid">
+      <div>
+        <p class="ps-ed__kicker">Contact</p>
+        <h1>We are here for clarity — not scripts.</h1>
+        <p class="ps-ed__lede">Orders, routines, returns, or a question about what your skin is showing. Write to Project Skin and we will respond with the next useful step.</p>
+        <div class="ps-ed__actions">
+          <a class="ps-ed__btn" href="#ContactForm">Send a message</a>
+          <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/faq">Read FAQs</a>
+        </div>
+      </div>
+      <div class="ps-ed__media">
+        {% render 'purity-image', fallback_asset: 'project-skin-consultation-hero.jpg', fallback_width: 880, fallback_height: 1100, alt: 'Contact Project Skin', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'lazy' %}
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__section">
+    <div class="ps-ed__wrap">
+      <h2>How we can help</h2>
+      <ul class="ps-ed__list">
+        <li><i aria-hidden="true">01</i><div><strong>Orders &amp; delivery</strong><span>Share your order number and we will help with status, address changes, or delays.</span></div></li>
+        <li><i aria-hidden="true">02</i><div><strong>Product fit</strong><span>Tell us what you see on your skin. We will point you to the right literacy page or consultation.</span></div></li>
+        <li><i aria-hidden="true">03</i><div><strong>Returns</strong><span>Start with the money-back page, then write to us so we can confirm eligibility quickly.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="ps-template ps-contact psr-route-fallback psr-route-fallback--contact" id="ContactForm">
+  <div class="container ps-contact__layout">
+    <div class="ps-contact__copy">
+      <span class="ps-eyebrow">Message</span>
+      <h2>Write to Project Skin</h2>
+      <div class="rte"><p>Share enough context — concern, order number if relevant, and what you need. Our team will reply as soon as possible.</p></div>
+      <a href="mailto:hello@projectskin.co">hello@projectskin.co</a>
+    </div>
+    {% form 'contact', class: 'ps-contact__form' %}
+      {% if form.posted_successfully? %}<div class="ps-form-message" role="status">Thanks. We'll be in touch soon.</div>{% endif %}
+      {% if form.errors %}<div class="ps-form-message ps-form-message--error">{{ form.errors | default_errors }}</div>{% endif %}
+      <div class="ps-field-row">
+        <div class="ps-field">
+          <label for="PackContactName-{{ section.id }}">Name</label>
+          <input id="PackContactName-{{ section.id }}" type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name" required>
+        </div>
+        <div class="ps-field">
+          <label for="PackContactEmail-{{ section.id }}">Email</label>
+          <input id="PackContactEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="ps-field">
+        <label for="PackContactPhone-{{ section.id }}">Phone <span>(optional)</span></label>
+        <input id="PackContactPhone-{{ section.id }}" type="tel" name="contact[phone]" value="{{ form.phone }}" autocomplete="tel">
+      </div>
+      <div class="ps-field">
+        <label for="PackContactTopic-{{ section.id }}">Topic</label>
+        <select id="PackContactTopic-{{ section.id }}" name="contact[topic]">
+          <option>Product advice</option>
+          <option>Order support</option>
+          <option>Returns</option>
+          <option>Partnerships</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="ps-field">
+        <label for="PackContactMessage-{{ section.id }}">Message</label>
+        <textarea id="PackContactMessage-{{ section.id }}" name="contact[body]" rows="7" required>{{ form.body }}</textarea>
+      </div>
+      <button class="ps-button" type="submit">Send message</button>
+    {% endform %}
+  </div>
+</section>
+
+{% comment %} —— Climate —— {% endcomment %}
+<section class="ps-ed psr-route-fallback psr-route-fallback--climate" id="ClimateExplorer">
+  <div class="ps-ed__hero">
+    <div class="ps-ed__wrap ps-ed__hero-grid">
+      <div>
+        <p class="ps-ed__kicker">Climate literacy</p>
+        <h1>Your city writes on your skin.</h1>
+        <p class="ps-ed__lede">UV, humidity, pollution, hard water, and seasonal swing are not mood boards — they are measurable pressures. Read the factors, then carry them into a routine.</p>
+        <div class="ps-ed__actions">
+          <a class="ps-ed__btn" href="/pages/skin-profile">Explore city profiles</a>
+          <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/routine-finder">Find a routine</a>
+        </div>
+      </div>
+      <div class="ps-ed__media">
+        {% render 'purity-image', fallback_asset: 'psr-science-commit-human.jpg', fallback_width: 880, fallback_height: 1100, alt: 'Climate literacy', sizes: '(min-width: 900px) 40vw, 92vw', loading: 'lazy' %}
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__section">
+    <div class="ps-ed__wrap">
+      <h2>Five pressures worth understanding</h2>
+      <p class="ps-ed__copy">Indian skincare fails when routines assume mild seasons and soft water. Start with the environment — then match cleanse, treat, moisturise, protect.</p>
+      <ul class="ps-ed__list">
+        <li><i aria-hidden="true">01</i><div><strong>UV load</strong><span>Indian cities spend long stretches in high-to-extreme UV. Pigmentation and barrier stress continue on cloudy days.</span></div></li>
+        <li><i aria-hidden="true">02</i><div><strong>Humidity &amp; heat</strong><span>Monsoon humidity slows water loss but raises sebum, sweat, and congestion risk — damp is not the same as hydrated.</span></div></li>
+        <li><i aria-hidden="true">03</i><div><strong>Hard water</strong><span>Mineral-heavy washes strip lipids and leave residue. Barrier tightness after cleansing is often water chemistry.</span></div></li>
+        <li><i aria-hidden="true">04</i><div><strong>Pollution &amp; season swing</strong><span>Oxidative load outdoors plus AC and heaters indoors create the same barrier story across one Indian year.</span></div></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ps-ed__section ps-ed__section--soft">
+    <div class="ps-ed__wrap">
+      <h2>Carry this into a season</h2>
+      <p class="ps-ed__copy">Each calendar module diagnoses first — then points to mechanisms.</p>
+      <div class="ps-ed__grid">
+        <a class="ps-ed__card" href="/pages/monsoon" style="text-decoration:none;color:inherit"><strong>Monsoon module</strong><p>Humidity does not cancel acne biology — or the need for daily SPF.</p></a>
+        <a class="ps-ed__card" href="/pages/winter" style="text-decoration:none;color:inherit"><strong>Winter module</strong><p>Dryness is often a barrier story — cream alone is not the fix.</p></a>
+        <a class="ps-ed__card" href="/pages/festive" style="text-decoration:none;color:inherit"><strong>Festive module</strong><p>Makeup, late nights, and UV still need photoprotection and barrier discipline.</p></a>
+        <a class="ps-ed__card" href="/pages/routine-finder" style="text-decoration:none;color:inherit"><strong>Routine finder</strong><p>Turn climate context into a four-step sequence you can keep.</p></a>
+      </div>
+    </div>
+  </div>
+  <div class="ps-ed__cta">
+    <div class="ps-ed__wrap">
+      <h2>Ready for a climate-aware sequence?</h2>
+      <p>Use a city profile, then build a routine you will still follow next month.</p>
+      <div class="ps-ed__actions" style="justify-content:center">
+        <a class="ps-ed__btn" href="/pages/routine-finder">Open routine finder</a>
+        <a class="ps-ed__btn ps-ed__btn--ghost" href="/pages/consultation">Book consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 support pack",
+  "settings": [],
+  "enabled_on": { "templates": ["404"] }
+}
+{% endschema %}

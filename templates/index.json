@@ -1,81 +1,16 @@
 {
   "sections": {
     "hero": {
-      "type": "purity-hero",
+      "type": "ps-promo-banner",
       "blocks": {
-        "sun_banner": {
-          "type": "slide",
-          "settings": {
-            "fallback_banner": "banner_1",
-            "palette": "sunscreen",
-            "image_alt": "Project Skin SPF 50 sunscreen campaign",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
-            "button_label": "Shop now",
-            "text_tone": "dark",
-            "position": "left",
-            "product": "protecting-sunscreen-acne-prone-skin"
-          }
-        },
-        "moisturiser_banner": {
-          "type": "slide",
-          "settings": {
-            "fallback_banner": "banner_2",
-            "palette": "moisturiser",
-            "image_alt": "Project Skin calming moisturiser campaign",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
-            "button_label": "Shop now",
-            "text_tone": "dark",
-            "position": "left",
-            "product": "calming-moisturiser-acne-prone-skin"
-          }
-        },
-        "cleanser_banner": {
-          "type": "slide",
-          "settings": {
-            "fallback_banner": "banner_3",
-            "palette": "cleanser",
-            "image_alt": "Project Skin refreshing cleanser campaign",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
-            "button_label": "Shop now",
-            "text_tone": "dark",
-            "position": "left",
-            "product": "refreshing-cleanser-acne-prone-skin"
-          }
-        },
         "serum_banner": {
           "type": "slide",
           "settings": {
             "fallback_banner": "banner_4",
             "palette": "serum",
-            "image_alt": "Project Skin niacinamide serum campaign",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
+            "image_alt": "Nurture your skin — Science for a healthier skin · Project Skin serum",
             "button_label": "Shop now",
-            "text_tone": "dark",
-            "position": "left",
             "product": "5-niacinamide-serum-acne-prone-skin"
-          }
-        },
-        "clean_seal_banner": {
-          "type": "slide",
-          "settings": {
-            "fallback_banner": "banner_5",
-            "palette": "clean-seal",
-            "image_alt": "Project Skin Clean Seal campaign",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
-            "button_label": "Shop now",
-            "text_tone": "dark",
-            "position": "left",
-            "product": "clear-seal"
           }
         },
         "active_boba_banner": {
@@ -83,52 +18,41 @@
           "settings": {
             "fallback_banner": "banner_6",
             "palette": "active-boba",
-            "image_alt": "Project Skin Active Boba encapsulated cream campaign",
-            "eyebrow": "",
-            "heading": "",
-            "text": "",
+            "image_alt": "Science for healthy skin · Active Boba Encapsulated Cream",
             "button_label": "Shop now",
-            "text_tone": "dark",
-            "position": "left",
             "product": "active-boba-encapsulated-cream-acne-prone-skin"
           }
         },
-        "skin_scan": {
+        "kit_banner": {
           "type": "slide",
           "settings": {
-            "fallback_banner": "scan_track_adapt",
-            "palette": "scan",
-            "image_alt": "Project Skin digital skin analysis experience",
-            "eyebrow": "Project Skin Intelligence",
-            "heading": "Your skin,\nunderstood.",
-            "text": "<p>A guided digital skin check that follows change over time and helps shape a routine around what your skin needs now.</p>",
-            "button_label": "Explore the science",
-            "link": "/pages/the-science",
-            "text_tone": "dark",
-            "position": "left"
+            "fallback_banner": "banner_kit",
+            "palette": "neutral",
+            "image_alt": "Cleaner, clearer, healthier skin · Complete 4-Step Skincare Routine Kit",
+            "button_label": "Shop the kit",
+            "product": "project-skin-complete-4-step-skincare-routine-kit"
           }
         }
       },
       "block_order": [
-        "sun_banner",
-        "moisturiser_banner",
-        "cleanser_banner",
         "serum_banner",
-        "clean_seal_banner",
         "active_boba_banner",
-        "skin_scan"
+        "kit_banner"
       ],
       "settings": {
-        "desktop_height": 720,
         "autoplay": true,
         "interval": 5,
-        "adaptive_palette": true,
         "show_arrows": true,
-        "show_price": true
+        "adaptive_palette": true,
+        "show_price": true,
+        "corner_radius": 12,
+        "padding_top": 16,
+        "padding_bottom": 12
       }
     },
     "benefits": {
       "type": "purity-benefit-marquee",
+      "disabled": true,
       "blocks": {
         "cruelty": {
           "type": "benefit",
@@ -248,11 +172,60 @@
       ],
       "settings": {
         "background": "#ffffff",
+        "card_layout": "loved",
         "eyebrow": "Shop all",
-        "heading": "The range",
-        "description": "<p>Six formulations for acne-prone Indian skin — each priced, each linked.</p>",
+        "heading": "Explore our bestsellers",
+        "description": "<p>Discover our best-selling formulas below.</p>",
         "products_to_show": 6,
-        "padding_top": 80,
+        "padding_top": 56,
+        "padding_bottom": 72
+      }
+    },
+    "skin_smart": {
+      "type": "ps-skin-smart",
+      "blocks": {
+        "consult": {
+          "type": "card",
+          "settings": {
+            "fallback_image": "consultation",
+            "title": "Dermatologist consultation",
+            "text": "Book a guided conversation about recurring concerns and your current routine.",
+            "button_label": "Book now",
+            "link": "/pages/consultation"
+          }
+        },
+        "profile": {
+          "type": "card",
+          "settings": {
+            "fallback_image": "scan",
+            "title": "Skin analysis & report",
+            "text": "Capture your face signals, habits, and lifestyle — then get a comprehensive report for recommendations or your dermatologist.",
+            "button_label": "Get started",
+            "link": "/pages/skin-profile"
+          }
+        },
+        "routine": {
+          "type": "card",
+          "settings": {
+            "fallback_image": "quiz",
+            "title": "Routine finder",
+            "text": "Answer a few questions and receive a clear four-step plan for your concerns.",
+            "button_label": "Get started",
+            "link": "/pages/routine-finder"
+          }
+        }
+      },
+      "block_order": [
+        "consult",
+        "profile",
+        "routine"
+      ],
+      "settings": {
+        "heading": "Get skin smart",
+        "text": "Expert guidance, a structured skin report, and a clearer routine — online, when you need it.",
+        "explore_label": "Explore",
+        "explore_link": "",
+        "padding_top": 72,
         "padding_bottom": 88
       }
     },
@@ -264,7 +237,7 @@
           "settings": {
             "product": "refreshing-cleanser-acne-prone-skin",
             "title": "Refreshing Cleanser",
-            "step_label": "Step 1 \u00b7 Cleanse",
+            "step_label": "Cleanse",
             "hotspot_x": 31,
             "hotspot_y": 62
           }
@@ -274,7 +247,7 @@
           "settings": {
             "product": "5-niacinamide-serum-acne-prone-skin",
             "title": "5% Niacinamide Serum",
-            "step_label": "Step 2 \u00b7 Treat",
+            "step_label": "Treat",
             "hotspot_x": 46,
             "hotspot_y": 64
           }
@@ -284,7 +257,7 @@
           "settings": {
             "product": "calming-moisturiser-acne-prone-skin",
             "title": "Calming Moisturiser",
-            "step_label": "Step 3 \u00b7 Moisturise",
+            "step_label": "Moisturise",
             "hotspot_x": 62,
             "hotspot_y": 65
           }
@@ -294,7 +267,7 @@
           "settings": {
             "product": "protecting-sunscreen-acne-prone-skin",
             "title": "Protecting Sunscreen SPF 50",
-            "step_label": "Step 4 \u00b7 Protect",
+            "step_label": "Protect",
             "hotspot_x": 78,
             "hotspot_y": 64
           }
@@ -307,17 +280,18 @@
         "sunscreen"
       ],
       "settings": {
+        "compact": true,
         "background": "#ffffff",
-        "image_alt": "Project Skin complete routine kit on marble with water",
+        "image_alt": "Project Skin complete four-step routine kit",
         "kit_product": "project-skin-complete-4-step-skincare-routine-kit",
-        "eyebrow": "Complete routine",
-        "heading": "The kit",
-        "description": "<p>Cleanse, treat, moisturise, protect — four steps, one price. Save versus buying each product separately.</p>",
+        "eyebrow": "Complete kit",
+        "heading": "The complete kit",
+        "description": "<p>Cleanse, treat, moisturise, and protect — four steps together for less than buying each separately.</p>",
         "button_label": "Add full routine to cart",
-        "kit_link_label": "Or get the Complete Kit",
+        "kit_link_label": "Shop the kit",
         "show_hotspots": false,
-        "padding_top": 72,
-        "padding_bottom": 80
+        "padding_top": 56,
+        "padding_bottom": 64
       }
     },
     "philosophy": {
@@ -352,9 +326,9 @@
       ],
       "settings": {
         "eyebrow": "The Project Skin philosophy",
-        "heading": "Skin is biology.",
-        "heading_italic": "Treat it with evidence.",
-        "description": "<p>We sell literacy first, formulations second — built for Indian skin, climate, and daily life.</p>",
+        "heading": "Literacy first.",
+        "heading_italic": "Formulations second.",
+        "description": "<p>Skincare stopped asking why. We brought root cause, Indian climate science, and evidence back — before the sale.</p>",
         "button_label": "Read our philosophy",
         "button_link": "/pages/philosophy",
         "badge": "Evidence-led",
@@ -381,121 +355,257 @@
     "reviews": {
       "type": "judgeme-home-reviews",
       "blocks": {
-        "one": {
+        "serum": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "heading": "Clearer-looking skin",
-            "quote": "<p>My routine feels simple and my skin looks more even.</p>",
-            "author": "Maya R."
+            "product": "Niacinamide Serum",
+            "heading": "Oil calmed without the strip",
+            "quote": "<p>Six weeks on the niacinamide serum — oil feels more predictable, not overnight clear. The 5% callout made me trust the treat step.</p>",
+            "author": "Ananya M.",
+            "location": "Mumbai"
           }
         },
-        "two": {
+        "cleanser": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "heading": "Comfort all day",
-            "quote": "<p>The hydration lasts without ever feeling heavy.</p>",
-            "author": "Sophie L."
+            "product": "Refreshing Cleanser",
+            "heading": "Monsoon cleanser that stays gentle",
+            "quote": "<p>Humidity usually means I over-wash. This cleanser clears congestion without the next-day oil spike. Follow with moisturiser and I am fine.</p>",
+            "author": "Arjun P.",
+            "location": "Kolkata"
           }
         },
-        "three": {
+        "sunscreen": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "heading": "A calmer routine",
-            "quote": "<p>Everything feels gentle, considered, and easy to use.</p>",
-            "author": "Amina K."
+            "product": "Protecting Sunscreen",
+            "heading": "SPF I actually reapply",
+            "quote": "<p>Aqua-gel finish works in Chennai heat. No white cast on my tone, and I finally reapply after lunch instead of leaving the bottle in my bag.</p>",
+            "author": "Karan M.",
+            "location": "Chennai"
           }
         },
-        "four": {
+        "moisturiser": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "product": "Calming Moisturiser",
+            "heading": "Barrier finally kept up",
+            "quote": "<p>Hard water was wrecking my face. The moisturiser sits under SPF without pilling. Not a miracle cream — just one I can use every day without clogging.</p>",
+            "author": "Priya N.",
+            "location": "Delhi"
+          }
+        },
+        "kit": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "heading": "Visible glow",
-            "quote": "<p>My skin has the fresh, healthy finish I was looking for.</p>",
-            "author": "Riley T."
+            "product": "Complete Kit",
+            "heading": "Kit removed the guesswork",
+            "quote": "<p>Cleanse → treat → moisturise → protect. Buying the four steps together kept me consistent. Tone looks more even once I stopped skipping SPF.</p>",
+            "author": "Neha C.",
+            "location": "Indore"
           }
         }
       },
       "block_order": [
-        "one",
-        "two",
-        "three",
-        "four"
+        "serum",
+        "cleanser",
+        "sunscreen",
+        "moisturiser",
+        "kit"
       ],
       "settings": {
         "eyebrow": "What customers see",
         "heading": "Results You Can See",
-        "description": "<p>Texture, climate, and consistency — verified when published in Judge.me.</p>",
+        "description": "<p>Texture, climate, and consistency — from people building the same routine.</p>",
         "show_fallback_when_empty": true,
-        "padding_top": 64,
-        "padding_bottom": 64
+        "fallback_note": "",
+        "padding_top": 72,
+        "padding_bottom": 80
       }
     },
     "spotlight": {
       "type": "purity-result-spotlight",
       "blocks": {
-        "smooth": {
-          "type": "callout",
+        "cleanser": {
+          "type": "product",
           "settings": {
-            "icon": "smooth",
-            "text": "Salicylic Acid Care"
+            "nav_label": "Cleanser",
+            "product": "refreshing-cleanser-acne-prone-skin",
+            "eyebrow": "Step 01 · Cleanse",
+            "heading": "Meet the Cleanser",
+            "heading_highlight": "Cleanser",
+            "description": "Congestion care that clears without stripping — built for humidity, hard water, and acne-prone barriers.",
+            "fallback_asset": "product-cleanser-1.png",
+            "button_label": "Shop Cleanser",
+            "button_link": "/products/refreshing-cleanser-acne-prone-skin",
+            "feature_1_icon": "smooth",
+            "feature_1_text": "Congestion Care",
+            "feature_2_icon": "bright",
+            "feature_2_text": "Non-Stripping Cleanse",
+            "feature_3_icon": "collagen",
+            "feature_3_text": "BHA Support",
+            "feature_4_icon": "hydration",
+            "feature_4_text": "Barrier-Friendly",
+            "feature_5_icon": "shield",
+            "feature_5_text": "Monsoon-Ready",
+            "feature_6_icon": "absorption",
+            "feature_6_text": "Daily Reset"
           }
         },
-        "bright": {
-          "type": "callout",
+        "serum": {
+          "type": "product",
           "settings": {
-            "icon": "bright",
-            "text": "Clearer-Looking Skin"
+            "nav_label": "Serum",
+            "product": "5-niacinamide-serum-acne-prone-skin",
+            "eyebrow": "Step 02 · Treat",
+            "heading": "Meet the Serum",
+            "heading_highlight": "Serum",
+            "description": "5% encapsulated niacinamide for oil, pores, and post-acne marks — a treat step with a dose you can trust.",
+            "fallback_asset": "product-serum-1.png",
+            "button_label": "Shop Serum",
+            "button_link": "/products/5-niacinamide-serum-acne-prone-skin",
+            "feature_1_icon": "collagen",
+            "feature_1_text": "5% Niacinamide",
+            "feature_2_icon": "smooth",
+            "feature_2_text": "Oil Regulation",
+            "feature_3_icon": "bright",
+            "feature_3_text": "Tone Support",
+            "feature_4_icon": "absorption",
+            "feature_4_text": "Encapsulated Delivery",
+            "feature_5_icon": "hydration",
+            "feature_5_text": "Lightweight Feel",
+            "feature_6_icon": "shield",
+            "feature_6_text": "Daily Treat Step"
           }
         },
-        "collagen": {
-          "type": "callout",
+        "moisturiser": {
+          "type": "product",
           "settings": {
-            "icon": "collagen",
-            "text": "Niacinamide Powered"
+            "nav_label": "Moisturiser",
+            "product": "calming-moisturiser-acne-prone-skin",
+            "eyebrow": "Step 03 · Moisturise",
+            "heading": "Meet the Moisturiser",
+            "heading_highlight": "Moisturiser",
+            "description": "Barrier-first hydration that sits under SPF without pilling — comfort without clogging.",
+            "fallback_asset": "product-moisturiser-1.png",
+            "button_label": "Shop Moisturiser",
+            "button_link": "/products/calming-moisturiser-acne-prone-skin",
+            "feature_1_icon": "hydration",
+            "feature_1_text": "Barrier Repair",
+            "feature_2_icon": "shield",
+            "feature_2_text": "Ceramide Support",
+            "feature_3_icon": "smooth",
+            "feature_3_text": "Non-Comedogenic",
+            "feature_4_icon": "bright",
+            "feature_4_text": "Soft Finish",
+            "feature_5_icon": "absorption",
+            "feature_5_text": "SPF-Friendly",
+            "feature_6_icon": "collagen",
+            "feature_6_text": "Daily Comfort"
           }
         },
-        "hydrate": {
-          "type": "callout",
+        "sunscreen": {
+          "type": "product",
           "settings": {
-            "icon": "hydration",
-            "text": "Comforting Moisture"
+            "nav_label": "Sunscreen",
+            "product": "protecting-sunscreen-acne-prone-skin",
+            "eyebrow": "Step 04 · Protect",
+            "heading": "Meet the Sunscreen",
+            "heading_highlight": "Sunscreen",
+            "description": "Daily photoprotection for Indian UV — aqua-gel wearability with zinc PCA so you actually reapply.",
+            "fallback_asset": "product-sunscreen-1.png",
+            "button_label": "Shop Sunscreen",
+            "button_link": "/products/protecting-sunscreen-acne-prone-skin",
+            "feature_1_icon": "shield",
+            "feature_1_text": "Broad-Spectrum",
+            "feature_2_icon": "bright",
+            "feature_2_text": "No White Cast",
+            "feature_3_icon": "absorption",
+            "feature_3_text": "Aqua-Gel Finish",
+            "feature_4_icon": "smooth",
+            "feature_4_text": "Reapply-Friendly",
+            "feature_5_icon": "collagen",
+            "feature_5_text": "Zinc PCA Support",
+            "feature_6_icon": "hydration",
+            "feature_6_text": "Indian UV Ready"
           }
         },
-        "shield": {
-          "type": "callout",
+        "clear_seal": {
+          "type": "product",
           "settings": {
-            "icon": "shield",
-            "text": "Zinc PCA Support"
+            "nav_label": "Clear Seal",
+            "product": "clear-seal",
+            "eyebrow": "Spot care",
+            "heading": "Meet Clear Seal",
+            "heading_highlight": "Clear Seal",
+            "description": "Next-gen liquid patch technology — spot treatment with an invisible shield for targeted blemish days.",
+            "fallback_asset": "product-clear-seal-1.png",
+            "button_label": "Shop Clear Seal",
+            "button_link": "/products/clear-seal",
+            "feature_1_icon": "smooth",
+            "feature_1_text": "Spot Treatment",
+            "feature_2_icon": "shield",
+            "feature_2_text": "Invisible Shield",
+            "feature_3_icon": "bright",
+            "feature_3_text": "Targeted Care",
+            "feature_4_icon": "absorption",
+            "feature_4_text": "Fast Set",
+            "feature_5_icon": "collagen",
+            "feature_5_text": "Overnight Ready",
+            "feature_6_icon": "hydration",
+            "feature_6_text": "Travel-Friendly"
           }
         },
-        "absorption": {
-          "type": "callout",
+        "active_boba": {
+          "type": "product",
           "settings": {
-            "icon": "absorption",
-            "text": "Fast-Absorbing Cream"
+            "nav_label": "Active Boba",
+            "product": "active-boba-encapsulated-cream-acne-prone-skin",
+            "eyebrow": "Targeted care for blemish-prone skin",
+            "heading": "Meet Active Boba",
+            "heading_highlight": "Active Boba",
+            "description": "Dual-chamber capsule technology — niacinamide, salicylic acid, and zinc PCA released fresh at application, with barrier support built in.",
+            "fallback_asset": "product-active-boba-1.png",
+            "button_label": "Shop Active Boba",
+            "button_link": "/products/active-boba-encapsulated-cream-acne-prone-skin",
+            "feature_1_icon": "smooth",
+            "feature_1_text": "Salicylic Acid Care",
+            "feature_2_icon": "bright",
+            "feature_2_text": "Clearer-Looking Skin",
+            "feature_3_icon": "collagen",
+            "feature_3_text": "Niacinamide Powered",
+            "feature_4_icon": "hydration",
+            "feature_4_text": "Comforting Moisture",
+            "feature_5_icon": "shield",
+            "feature_5_text": "Zinc PCA Support",
+            "feature_6_icon": "absorption",
+            "feature_6_text": "Fast-Absorbing Cream"
           }
         }
       },
       "block_order": [
-        "smooth",
-        "bright",
-        "collagen",
-        "hydrate",
-        "shield",
-        "absorption"
+        "active_boba",
+        "cleanser",
+        "serum",
+        "moisturiser",
+        "sunscreen",
+        "clear_seal"
       ],
       "settings": {
+        "rail_label": "Shop the lineup",
         "eyebrow": "Targeted care for blemish-prone skin",
         "heading": "Meet Active Boba",
         "heading_highlight": "Active Boba",
         "description": "<p>Dual-chamber capsule technology — niacinamide, salicylic acid, and zinc PCA released fresh at application, with barrier support built in.</p>",
         "button_label": "Explore the mechanism",
         "link": "/products/active-boba-encapsulated-cream-acne-prone-skin",
-        "padding_top": 100,
-        "padding_bottom": 100
+        "padding_top": 88,
+        "padding_bottom": 88
       }
     },
     "formula_earn": {
@@ -623,6 +733,7 @@
         "monsoon": {
           "type": "card",
           "settings": {
+            "theme": "monsoon",
             "eyebrow": "Season",
             "heading": "Monsoon",
             "text": "Humidity does not cancel acne biology.",
@@ -632,6 +743,7 @@
         "festive": {
           "type": "card",
           "settings": {
+            "theme": "festive",
             "eyebrow": "Season",
             "heading": "Festive",
             "text": "Celebration skin still needs biology.",
@@ -641,6 +753,7 @@
         "winter": {
           "type": "card",
           "settings": {
+            "theme": "winter",
             "eyebrow": "Season",
             "heading": "Winter",
             "text": "Dryness is often a barrier story.",
@@ -648,7 +761,11 @@
           }
         }
       },
-      "block_order": ["monsoon", "festive", "winter"],
+      "block_order": [
+        "monsoon",
+        "festive",
+        "winter"
+      ],
       "settings": {
         "wide": true,
         "eyebrow": "Project Skin Journal",
@@ -656,8 +773,8 @@
         "text": "Seasonal climate modules — monsoon, festive, winter — written to inform before you buy. Not sale banners.",
         "cta_label": "Open the journal",
         "cta_link": "/pages/journal",
-        "padding_top": 72,
-        "padding_bottom": 80
+        "padding_top": 80,
+        "padding_bottom": 88
       }
     },
     "gram": {
@@ -714,7 +831,7 @@
       "settings": {
         "eyebrow": "@projectskin.co",
         "heading": "Project Skin On Gram",
-        "description": "<p>Explore our gentle beauty highlights \u2013 trusted by over 10k fans.</p>",
+        "description": "<p>Explore our gentle beauty highlights – trusted by over 10k fans.</p>",
         "instagram_link": "https://www.instagram.com/projectskin.co/",
         "speed": 32,
         "padding_top": 60,
@@ -726,9 +843,10 @@
     "hero",
     "benefits",
     "popular",
-    "routine_bundle",
+    "skin_smart",
     "indian_context",
     "formula_earn",
+    "routine_bundle",
     "philosophy",
     "spotlight",
     "reviews",

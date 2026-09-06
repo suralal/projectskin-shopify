@@ -29,6 +29,10 @@
       this.addEventListener('focusout', () => this.play(), { signal });
       this.go(0);
       this.play();
+      if (this.classList.contains('ps-promo-banner__slider')) {
+        this.syncPromoBoardHeight();
+        window.addEventListener('resize', () => this.syncPromoBoardHeight(), { signal, passive: true });
+      }
     }
 
     disconnectedCallback() {
@@ -45,12 +49,12 @@
         slide.toggleAttribute('inert', index !== this.index);
         slide.setAttribute('aria-hidden', String(index !== this.index));
       });
-      if (this.classList.contains('ps-hero-slider')) {
+      if (this.classList.contains('ps-hero-slider') || this.classList.contains('ps-promo-banner__slider')) {
         const activeSlide = this.slides[this.index];
         const palette = activeSlide?.dataset.heroPalette || 'neutral';
         this.dataset.activeTone = activeSlide?.dataset.heroTone || 'light';
         this.dataset.activePalette = palette;
-        const hero = this.closest('.ps-hero');
+        const hero = this.closest('.ps-hero, .ps-promo-banner');
         if (hero) hero.dataset.activePalette = palette;
         if (this.dataset.adaptivePalette === 'true') {
           document.querySelectorAll('[data-follow-hero-palette="true"]').forEach((section) => {
@@ -62,9 +66,39 @@
         dot.classList.toggle('is-active', index === this.index);
         dot.setAttribute('aria-current', index === this.index ? 'true' : 'false');
       });
+      if (this.classList.contains('ps-promo-banner__slider')) {
+        this.syncPromoBoardHeight();
+      }
       if (restart) {
         this.stop();
         this.play();
+      }
+    }
+
+    syncPromoBoardHeight() {
+      const board = this.querySelector('.ps-promo-banner__board');
+      if (!board) return;
+      if (window.innerWidth <= 989) {
+        board.style.height = '';
+        return;
+      }
+
+      const active = this.slides[this.index] || this.slides[0];
+      const img = active?.querySelector('.ps-promo-banner__media img');
+      if (!img) return;
+
+      const applyNatural = () => {
+        if (!img.naturalWidth || !img.naturalHeight) return;
+        const width = board.clientWidth || img.clientWidth;
+        if (!width) return;
+        const height = Math.round(width * (img.naturalHeight / img.naturalWidth));
+        board.style.height = `${height}px`;
+      };
+
+      if (img.complete && img.naturalWidth) {
+        applyNatural();
+      } else {
+        img.addEventListener('load', applyNatural, { once: true });
       }
     }
 
@@ -361,6 +395,17 @@
       if (this.initialized) return;
       this.initialized = true;
       this.abortController = new AbortController();
+      this.index = 0;
+      this.tabs = [...this.querySelectorAll('[data-result-tab]')];
+      this.images = [...this.querySelectorAll('[data-result-image]')];
+      this.featureSets = [...this.querySelectorAll('[data-result-features]')];
+      this.eyebrowEl = this.querySelector('[data-result-eyebrow]');
+      this.headingPrefixEl = this.querySelector('[data-result-heading-prefix]');
+      this.highlightTextEl = this.querySelector('[data-result-highlight-text]');
+      this.highlightPath = this.querySelector('.ps-result__highlight path');
+      this.descriptionEl = this.querySelector('[data-result-description]');
+      this.ctaEl = this.querySelector('[data-result-cta]');
+      this.bindTabs();
       this.setupReveal();
       addEventListener('resize', () => this.setupReveal(), {
         signal: this.abortController.signal,
@@ -374,9 +419,119 @@
       this.initialized = false;
     }
 
+    bindTabs() {
+      if (this.tabs.length < 2) return;
+      const { signal } = this.abortController;
+
+      this.tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const next = Number(tab.dataset.resultIndex || 0);
+          this.select(next);
+        }, { signal });
+
+        tab.addEventListener('keydown', (event) => {
+          const key = event.key;
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(key)) return;
+          event.preventDefault();
+          let next = this.index;
+          if (key === 'ArrowLeft') next = (this.index - 1 + this.tabs.length) % this.tabs.length;
+          if (key === 'ArrowRight') next = (this.index + 1) % this.tabs.length;
+          if (key === 'Home') next = 0;
+          if (key === 'End') next = this.tabs.length - 1;
+          this.select(next, { focus: true });
+        }, { signal });
+      });
+    }
+
+    select(nextIndex, { focus = false } = {}) {
+      if (nextIndex === this.index || nextIndex < 0 || nextIndex >= this.tabs.length) return;
+      this.index = nextIndex;
+      const tab = this.tabs[nextIndex];
+
+      this.tabs.forEach((item, i) => {
+        const active = i === nextIndex;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-selected', active ? 'true' : 'false');
+        item.tabIndex = active ? 0 : -1;
+      });
+
+      this.images.forEach((slide, i) => {
+        const active = i === nextIndex;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+
+      this.featureSets.forEach((set, i) => {
+        const active = i === nextIndex;
+        set.classList.toggle('is-active', active);
+        set.toggleAttribute('hidden', !active);
+      });
+
+      this.updateCopy(tab);
+      this.replayMotion();
+      if (focus) tab.focus();
+    }
+
+    updateCopy(tab) {
+      if (!tab) return;
+      const eyebrow = tab.dataset.eyebrow || '';
+      const heading = tab.dataset.heading || '';
+      const highlight = tab.dataset.highlight || '';
+      const description = tab.dataset.description || '';
+      const ctaLabel = tab.dataset.ctaLabel || '';
+      const ctaHref = tab.dataset.ctaHref || '';
+
+      if (this.eyebrowEl) {
+        this.eyebrowEl.textContent = eyebrow;
+        this.eyebrowEl.toggleAttribute('hidden', !eyebrow);
+      }
+
+      if (this.headingPrefixEl) {
+        const prefix = highlight && heading.includes(highlight)
+          ? heading.replace(highlight, '').trim()
+          : heading;
+        this.headingPrefixEl.textContent = prefix ? `${prefix} ` : '';
+      }
+
+      if (this.highlightTextEl) {
+        this.highlightTextEl.textContent = highlight || '';
+      }
+
+      if (this.descriptionEl) {
+        this.descriptionEl.innerHTML = description ? `<p>${description}</p>` : '';
+        this.descriptionEl.toggleAttribute('hidden', !description);
+      }
+
+      if (this.ctaEl) {
+        if (ctaLabel) this.ctaEl.textContent = ctaLabel;
+        if (ctaHref) this.ctaEl.setAttribute('href', ctaHref);
+      }
+    }
+
+    replayMotion() {
+      if (reducedMotion()) {
+        this.classList.add('is-visible');
+        return;
+      }
+
+      this.classList.remove('is-visible');
+      if (this.highlightPath) {
+        this.highlightPath.style.transition = 'none';
+        this.highlightPath.style.strokeDashoffset = '260';
+      }
+
+      requestAnimationFrame(() => {
+        if (this.highlightPath) {
+          this.highlightPath.style.transition = '';
+          this.highlightPath.style.strokeDashoffset = '';
+        }
+        this.classList.add('is-visible');
+      });
+    }
+
     setupReveal() {
       this.observer?.disconnect();
-      if (reducedMotion() || innerWidth <= 1024 || window.Shopify?.designMode) {
+      if (reducedMotion() || window.Shopify?.designMode) {
         this.classList.add('is-visible');
         return;
       }
@@ -1011,6 +1166,52 @@
         });
       }, { rootMargin: '80px 0px', threshold: 0.15 });
       gramVideos.forEach((video) => observer.observe(video));
+    }
+  }
+
+  // Get Skin Smart Mobile Track Dots Controller
+  const smartRail = document.querySelector('[data-smart-rail]');
+  if (smartRail) {
+    const track = smartRail.querySelector('.ps-smart__track');
+    const cards = [...smartRail.querySelectorAll('.ps-smart__card')];
+    const dots = [...smartRail.querySelectorAll('[data-smart-dot]')];
+
+    if (track && cards.length && dots.length) {
+      let scrollTimeout;
+      const syncActiveDot = () => {
+        const trackLeft = track.scrollLeft;
+        const trackWidth = track.clientWidth;
+        let activeIdx = 0;
+        let minDiff = Infinity;
+        cards.forEach((card, idx) => {
+          const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+          const viewportCenter = trackLeft + trackWidth / 2;
+          const diff = Math.abs(cardCenter - viewportCenter);
+          if (diff < minDiff) {
+            minDiff = diff;
+            activeIdx = idx;
+          }
+        });
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('is-active', idx === activeIdx);
+          dot.setAttribute('aria-current', idx === activeIdx ? 'true' : 'false');
+        });
+      };
+
+      track.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(syncActiveDot, 50);
+      }, { passive: true });
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const idx = Number(dot.dataset.smartDot);
+          const targetCard = cards[idx];
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
+        });
+      });
     }
   }
 })();

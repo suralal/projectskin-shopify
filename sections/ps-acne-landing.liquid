@@ -1,0 +1,251 @@
+{% comment %}
+  Acne concern landing — visual education page matching Project Skin mockup.
+{% endcomment %}
+{{ 'ps-acne-landing.css' | asset_url | stylesheet_tag }}
+
+<section class="ps-acne psr-route-fallback psr-route-fallback--concern-acne" data-ps-acne id="AcneLanding-{{ section.id }}">
+  {%- comment -%} Hero {%- endcomment -%}
+  <div class="ps-acne__hero">
+    <div class="ps-acne__wrap ps-acne__hero-grid">
+      <div class="ps-acne__copy">
+        <p class="ps-acne__kicker">{{ section.settings.eyebrow }}</p>
+        <h1>{{ section.settings.heading }}</h1>
+        <p class="ps-acne__lede">{{ section.settings.text }}</p>
+        <div class="ps-acne__actions">
+          <a class="ps-acne__btn" href="#AcneMechanism-{{ section.id }}">{{ section.settings.primary_label }}</a>
+          <a class="ps-acne__btn ps-acne__btn--ghost" href="{{ section.settings.secondary_link | default: '/collections/all' }}">{{ section.settings.secondary_label }}</a>
+        </div>
+        <ul class="ps-acne__trust">
+          <li><span class="ps-acne__trust-icon" aria-hidden="true">◎</span>{{ section.settings.trust_1 }}</li>
+          <li><span class="ps-acne__trust-icon" aria-hidden="true">◎</span>{{ section.settings.trust_2 }}</li>
+          <li><span class="ps-acne__trust-icon" aria-hidden="true">◎</span>{{ section.settings.trust_3 }}</li>
+        </ul>
+      </div>
+
+      <div class="ps-acne__hero-media">
+        {% render 'purity-image',
+          image: section.settings.hero_image,
+          fallback_asset: 'ps-acne-hero-face.jpg',
+          fallback_width: 880,
+          fallback_height: 1100,
+          alt: 'Acne-prone skin analysis',
+          sizes: '(min-width: 900px) 42vw, 92vw',
+          loading: 'eager',
+          fetchpriority: 'high'
+        %}
+        <span class="ps-acne__pin ps-acne__pin--1">Oil imbalance</span>
+        <span class="ps-acne__pin ps-acne__pin--2">Congestion</span>
+        <span class="ps-acne__pin ps-acne__pin--3">Inflammation</span>
+        <span class="ps-acne__pin ps-acne__pin--4">Barrier stress</span>
+        <div class="ps-acne__insight">
+          <strong>AI Skin Insight</strong>
+          <div class="ps-acne__meter">
+            <div class="ps-acne__meter-row"><span>Congestion</span><div class="ps-acne__meter-bar"><span style="width:78%"></span></div></div>
+            <div class="ps-acne__meter-row"><span>Oil balance</span><div class="ps-acne__meter-bar"><span style="width:64%"></span></div></div>
+            <div class="ps-acne__meter-row"><span>Inflammation</span><div class="ps-acne__meter-bar"><span style="width:52%"></span></div></div>
+            <div class="ps-acne__meter-row"><span>Barrier</span><div class="ps-acne__meter-bar"><span style="width:41%"></span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Diagnosis {%- endcomment -%}
+  <div class="ps-acne__section" id="AcneDiagnosis-{{ section.id }}">
+    <div class="ps-acne__wrap">
+      <div class="ps-acne__diag-grid">
+        <div class="ps-acne__diag-visual">
+          {% render 'purity-image',
+            image: section.settings.diagnosis_image,
+            fallback_asset: 'ps-acne-diagnosis.jpg',
+            fallback_width: 1400,
+            fallback_height: 1000,
+            alt: 'Visible acne signals on skin',
+            sizes: '(min-width: 900px) 46vw, 92vw',
+            loading: 'lazy'
+          %}
+          <span class="ps-acne__badge ps-acne__badge--1">01</span>
+          <span class="ps-acne__badge ps-acne__badge--2">02</span>
+          <span class="ps-acne__badge ps-acne__badge--3">03</span>
+          <span class="ps-acne__badge ps-acne__badge--4">04</span>
+        </div>
+        <div class="ps-acne__copy">
+          <p class="ps-acne__kicker">Diagnosis first</p>
+          <h2>{{ section.settings.diagnosis_heading }}</h2>
+          <p>{{ section.settings.diagnosis_text }}</p>
+        </div>
+      </div>
+
+      <div class="ps-acne__diag-cards">
+        <article class="ps-acne__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: 'ps-acne-signal-clogged-pores.png', fallback_width: 900, fallback_height: 900, alt: 'Clogged pores close-up', sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>01 Clogged pores</strong>
+          <span>Sebum and dead cells block the follicle — oil-soluble pathways matter.</span>
+        </article>
+        <article class="ps-acne__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: 'ps-acne-signal-inflammation.png', fallback_width: 900, fallback_height: 900, alt: 'Inflamed breakout close-up', sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>02 Inflammation</strong>
+          <span>Active breakouts leave redness and marks if calm is ignored.</span>
+        </article>
+        <article class="ps-acne__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: 'ps-acne-signal-texture.png', fallback_width: 900, fallback_height: 900, alt: 'Uneven acne-prone texture', sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>03 Uneven texture</strong>
+          <span>Surface roughness often follows congestion and incomplete repair.</span>
+        </article>
+        <article class="ps-acne__diag-card">
+          <figure>{% render 'purity-image', fallback_asset: 'ps-acne-signal-marks.png', fallback_width: 900, fallback_height: 900, alt: 'Post-acne marks close-up', sizes: '148px', loading: 'lazy' %}</figure>
+          <strong>04 Post-acne marks</strong>
+          <span>Inflammation aftermath shows as PIH — especially on Indian skin.</span>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Why it happens {%- endcomment -%}
+  <div class="ps-acne__section ps-acne__section--soft" id="AcneWhy-{{ section.id }}">
+    <div class="ps-acne__wrap ps-acne__why-grid">
+      <div>
+        <div class="ps-acne__copy">
+          <p class="ps-acne__kicker">Biology + climate</p>
+          <h2>{{ section.settings.why_heading }}</h2>
+          <p>{{ section.settings.why_text }}</p>
+        </div>
+        <div class="ps-acne__why-points">
+          <div class="ps-acne__why-point"><i aria-hidden="true">01</i><div><strong>Excess oil</strong><span>Heat and humidity amplify sebum; stripping cleansers rebound oiliness.</span></div></div>
+          <div class="ps-acne__why-point"><i aria-hidden="true">02</i><div><strong>Pore congestion</strong><span>Oil-soluble pathways matter more than harsher washes.</span></div></div>
+          <div class="ps-acne__why-point"><i aria-hidden="true">03</i><div><strong>Barrier stress</strong><span>Over-treatment leaves skin reactive and slower to recover.</span></div></div>
+          <div class="ps-acne__why-point"><i aria-hidden="true">04</i><div><strong>Climate load</strong><span>Pollution, hard water, and UV stack stress on acne-prone Indian skin.</span></div></div>
+        </div>
+      </div>
+      <figure class="ps-acne__why-quote">
+        {% render 'purity-image',
+          image: section.settings.why_image,
+          fallback_asset: 'ps-acne-why.jpg',
+          fallback_width: 1672,
+          fallback_height: 941,
+          alt: '',
+          sizes: '(min-width: 900px) 40vw, 92vw',
+          loading: 'lazy'
+        %}
+        <figcaption>{{ section.settings.why_quote }}</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  {%- comment -%} Mechanism {%- endcomment -%}
+  <div class="ps-acne__section" id="AcneMechanism-{{ section.id }}">
+    <div class="ps-acne__wrap">
+      <div class="ps-acne__section-head">
+        <div>
+          <p class="ps-acne__kicker">Mechanism of fix</p>
+          <h2>{{ section.settings.mechanism_heading }}</h2>
+          <p>{{ section.settings.mechanism_text }}</p>
+        </div>
+        <a class="ps-acne__link" href="/pages/ingredients">View full ingredient library <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="ps-acne__mech-grid">
+        <article class="ps-acne__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: 'product-cleanser-1-card.png', fallback_width: 900, fallback_height: 1200, alt: 'Refreshing Cleanser', sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-acne__step">01 Clear</span>
+          <h3>Clear</h3>
+          <em>Salicylic Acid</em>
+          <p>Oil-soluble BHA that works inside the pore — not just on the surface.</p>
+        </article>
+        <article class="ps-acne__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: 'product-serum-1-card.png', fallback_width: 900, fallback_height: 1200, alt: '5% Niacinamide Serum', sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-acne__step">02 Regulate</span>
+          <h3>Regulate</h3>
+          <em>Niacinamide 5%</em>
+          <p>Oil balance, pores, and tone in a stabilised encapsulated matrix.</p>
+        </article>
+        <article class="ps-acne__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: 'product-moisturiser-1-card.png', fallback_width: 900, fallback_height: 1200, alt: 'Calming Moisturiser', sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-acne__step">03 Repair</span>
+          <h3>Repair</h3>
+          <em>Ceramide complex</em>
+          <p>Rebuild the lipid layer so clarity does not cost comfort.</p>
+        </article>
+        <article class="ps-acne__mech-card">
+          <figure>{% render 'purity-image', fallback_asset: 'product-sunscreen-1-card.png', fallback_width: 900, fallback_height: 1200, alt: 'Protecting Sunscreen', sizes: '22vw', loading: 'lazy' %}</figure>
+          <span class="ps-acne__step">04 Protect</span>
+          <h3>Protect</h3>
+          <em>Daily photoprotection</em>
+          <p>Wearable SPF so marks and barrier stress do not rebound under Indian UV.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Lifestyle band {%- endcomment -%}
+  <div class="ps-acne__section ps-acne__section--ink" style="padding: 0;">
+    <div class="ps-acne__band">
+      <div class="ps-acne__band-media">
+        {% render 'purity-image',
+          image: section.settings.band_image,
+          fallback_asset: 'ps-acne-band.jpg',
+          fallback_width: 1536,
+          fallback_height: 1024,
+          alt: '',
+          sizes: '(min-width: 900px) 48vw, 100vw',
+          loading: 'lazy'
+        %}
+      </div>
+      <div class="ps-acne__band-copy">
+        <h2>{{ section.settings.band_heading }}</h2>
+        <p>{{ section.settings.band_text }}</p>
+        <ul class="ps-acne__band-stats">
+          <li><i aria-hidden="true">◎</i>Clearer skin</li>
+          <li><i aria-hidden="true">◎</i>Even tone</li>
+          <li><i aria-hidden="true">◎</i>Smoother texture</li>
+          <li><i aria-hidden="true">◎</i>Healthier glow</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Promise {%- endcomment -%}
+  <div class="ps-acne__section">
+    <div class="ps-acne__wrap ps-acne__promise">
+      <h2>{{ section.settings.promise_heading }}</h2>
+      <ul class="ps-acne__promise-list">
+        <li><i aria-hidden="true">◎</i><div><strong>Dermatologist informed</strong><span>Guidance shaped with clinical context — not miracle timelines.</span></div></li>
+        <li><i aria-hidden="true">◎</i><div><strong>Transparent ingredients</strong><span>Named actives, honest concentrations, and a clear role for each line.</span></div></li>
+        <li><i aria-hidden="true">◎</i><div><strong>Designed for Indian skin</strong><span>Heat, humidity, hard water, and UV are part of the formula brief.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Acne landing",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Hero eyebrow", "default": "Concern / Acne" },
+    { "type": "textarea", "id": "heading", "label": "Hero heading", "default": "Your breakouts aren’t a cleanliness problem." },
+    { "type": "textarea", "id": "text", "label": "Hero text", "default": "Congestion, oil dysregulation, and inflammation sit inside a barrier that is often already stressed — especially in Indian heat and humidity." },
+    { "type": "text", "id": "primary_label", "label": "Primary CTA", "default": "See the mechanism" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary CTA", "default": "Shop acne range" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary CTA link" },
+    { "type": "text", "id": "trust_1", "label": "Trust 1", "default": "Dermatologist informed" },
+    { "type": "text", "id": "trust_2", "label": "Trust 2", "default": "Indian skin & climate" },
+    { "type": "text", "id": "trust_3", "label": "Trust 3", "default": "Evidence led" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image" },
+    { "type": "image_picker", "id": "diagnosis_image", "label": "Diagnosis image" },
+    { "type": "text", "id": "diagnosis_heading", "label": "Diagnosis heading", "default": "What you are seeing" },
+    { "type": "textarea", "id": "diagnosis_text", "label": "Diagnosis text", "default": "Active breakouts, clogged pores, and oiliness are signals — not proof you need a harsher wash. Many acne-prone routines fail because they treat oil by abandoning the barrier." },
+    { "type": "text", "id": "why_heading", "label": "Why heading", "default": "Why it happens here" },
+    { "type": "textarea", "id": "why_text", "label": "Why text", "default": "India’s climate doesn’t invent acne biology — it amplifies it. Heat, humidity, pollution, and hard water change how oil, pores, and barrier stress show up." },
+    { "type": "textarea", "id": "why_quote", "label": "Why quote", "default": "Not your fault. Just biology. Acne is a skin condition. And it can be managed." },
+    { "type": "image_picker", "id": "why_image", "label": "Why image" },
+    { "type": "text", "id": "mechanism_heading", "label": "Mechanism heading", "default": "How we approach the fix" },
+    { "type": "textarea", "id": "mechanism_text", "label": "Mechanism text", "default": "Clear inside the pore. Regulate oil. Repair the barrier. Protect daily — so progress holds." },
+    { "type": "image_picker", "id": "band_image", "label": "Lifestyle band image" },
+    { "type": "text", "id": "band_heading", "label": "Band heading", "default": "Clearer skin. A calmer you." },
+    { "type": "textarea", "id": "band_text", "label": "Band text", "default": "It’s not about perfection. It’s about progress." },
+    { "type": "text", "id": "promise_heading", "label": "Promise heading", "default": "Backed by expertise. Made for real skin." }
+  ],
+  "presets": [{ "name": "Acne landing" }]
+}
+{% endschema %}

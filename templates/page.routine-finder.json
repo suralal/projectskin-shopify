@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "story": {
+      "type": "ps-story-routine",
+      "settings": {
+        "eyebrow": "Get skin smart · Routine finder",
+        "heading": "Find a sequence you will still follow next month.",
+        "text": "Three questions. One four-step story — cleanse, treat, moisturise, protect — shaped by concern and climate, not trends.",
+        "start_label": "Start the finder",
+        "kit_label": "Shop the complete kit",
+        "kit_link": "/products/project-skin-complete-4-step-skincare-routine-kit",
+        "padding_top": 0,
+        "padding_bottom": 88
+      }
+    }
+  },
+  "order": ["story"]
+}
