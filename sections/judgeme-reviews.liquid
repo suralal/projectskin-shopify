@@ -3,21 +3,31 @@
   id="PdpReviews"
   style="--pdp-pad-top: {{ section.settings.padding_top }}px; --pdp-pad-bottom: {{ section.settings.padding_bottom }}px"
 >
-  {% if section.settings.heading != blank %}
-    <header class="pdp-section-head">
-      {% if section.settings.eyebrow != blank %}<p class="pdp-eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
-      <h2>{{ section.settings.heading }}</h2>
-      {% if section.settings.intro != blank %}
-        <p class="pdp-reviews-judgeme__intro">{{ section.settings.intro }}</p>
-      {% endif %}
-    </header>
-  {% endif %}
-
   {% liquid
     assign review_count = 0
-    if product.metafields.judgeme.widget contains 'data-number-of-reviews="'
-      assign review_count_chunk = product.metafields.judgeme.widget | split: 'data-number-of-reviews="' | last | split: '"' | first
-      assign review_count = review_count_chunk | plus: 0
+    if product.metafields.judgeme.review_widget_data contains '"number_of_reviews":'
+      assign rw_count = product.metafields.judgeme.review_widget_data | split: '"number_of_reviews":' | last | split: ',' | first | split: '}' | first | strip | plus: 0
+      if rw_count > 0
+        assign review_count = rw_count
+      endif
+    endif
+    if review_count == 0 and product.metafields.judgeme.widget contains 'data-number-of-reviews="'
+      assign review_count_chunk = product.metafields.judgeme.widget | split: 'data-number-of-reviews="' | last | split: '"' | first | plus: 0
+      if review_count_chunk > 0
+        assign review_count = review_count_chunk
+      endif
+    endif
+    if review_count == 0 and product.metafields.judgeme.all_reviews_count != blank
+      assign jm_all_count = product.metafields.judgeme.all_reviews_count.value | default: product.metafields.judgeme.all_reviews_count | plus: 0
+      if jm_all_count > 0
+        assign review_count = jm_all_count
+      endif
+    endif
+    if review_count == 0 and product.metafields.reviews.rating_count != blank
+      assign sf_count = product.metafields.reviews.rating_count.value | default: product.metafields.reviews.rating_count | plus: 0
+      if sf_count > 0
+        assign review_count = sf_count
+      endif
     endif
     if shop.metafields.judgeme.shop_reviews_count != blank
       assign shop_review_count = shop.metafields.judgeme.shop_reviews_count | plus: 0
@@ -29,6 +39,31 @@
       assign show_fallback = true
     endif
   %}
+
+  {% if section.settings.heading != blank %}
+    <header class="pdp-section-head pdp-section-head--with-action">
+      <div class="pdp-section-head__content">
+        {% if section.settings.eyebrow != blank %}<p class="pdp-eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        <h2>{{ section.settings.heading }}</h2>
+        {% if section.settings.intro != blank %}
+          <p class="pdp-reviews-judgeme__intro">{{ section.settings.intro }}</p>
+        {% endif %}
+      </div>
+      <div class="pdp-section-head__action">
+        <button
+          type="button"
+          class="pdp-reviews__write-trigger-btn"
+          data-write-review-trigger
+          data-product-id="{{ product.id }}"
+          data-fallback-url="https://api.judge.me/storefront_reviews/new?shop_domain={{ shop.permanent_domain | default: 'q9wi15-80.myshopify.com' }}&platform=shopify&product_id={{ product.id }}"
+          aria-label="Write a verified review for {{ product.title | escape }}"
+        >
+          {% render 'icon', name: 'edit' %}
+          <span>Write a review</span>
+        </button>
+      </div>
+    </header>
+  {% endif %}
 
   {% if show_fallback %}
     {% render 'product-reviews-fallback', product: product %}

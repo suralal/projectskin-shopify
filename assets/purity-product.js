@@ -321,10 +321,20 @@
     const tryOpenModal = () => {
       if (window.jdgm && window.jdgm._WriteReviewModal && window.jdgm.$ && typeof window.jdgm.$ === 'function' && productId) {
         try {
+          // Configure single-view compact theme and disable multi-step verification friction
+          if (window.jdgmSettings) {
+            window.jdgmSettings.review_form_theme = 'compact';
+            window.jdgmSettings.require_verification_before_submit = false;
+            window.jdgmSettings.modal_write_review_flow = true;
+            window.jdgmSettings.review_form_button_color = '#111827';
+            window.jdgmSettings.review_form_button_text_color = '#ffffff';
+          }
           document.querySelectorAll('.jdgm-review-widget-modal.jdgm-write-review-modal').forEach((m) => m.remove());
           const modal = new window.jdgm._WriteReviewModal(window.jdgm.$);
-          modal.setup('jdgm-review-widget-modal', productId, {}).then((ok) => {
-            if (ok) modal.showModalPage(1);
+          modal.setup('jdgm-review-widget-modal', productId, { isPreVerified: true }).then((ok) => {
+            if (ok) {
+              modal.showModalPage(2);
+            }
           }).catch((err) => {
             console.warn('[Judge.me] Modal setup error:', err);
           });
@@ -382,13 +392,35 @@
   window.triggerJudgemeWriteReview = triggerJudgemeWriteReview;
 
   document.addEventListener('click', (event) => {
-    const trigger = event.target.closest('[data-write-review-trigger], .pdp-reviews-fallback__write, a[href="#judgeme_product_reviews"], a[href="#judgeme"]');
+    const trigger = event.target.closest('[data-write-review-trigger], .pdp-reviews-fallback__write, .pdp-reviews__write-trigger-btn, a[href="#judgeme_product_reviews"], a[href="#judgeme"]');
     if (!trigger) return;
     event.preventDefault();
     triggerJudgemeWriteReview(trigger);
   });
 
+  const autoConsolidateReviews = () => {
+    const root = document.getElementById('judgeme_product_reviews');
+    if (!root) return;
+    const hasReviews = root.querySelector('.jdgm-rev') || (root.dataset.numberOfReviews && parseInt(root.dataset.numberOfReviews, 10) > 0);
+    if (hasReviews) {
+      document.querySelectorAll('.pdp-reviews-fallback, .pdp-reviews-judgeme__verified').forEach((el) => {
+        el.style.setProperty('display', 'none', 'important');
+      });
+      root.classList.remove('jdgm-widget--with-fallback');
+    }
+  };
+
   const initReviews = (context = document) => {
+    autoConsolidateReviews();
+
+    const root = document.getElementById('judgeme_product_reviews');
+    if (root && typeof MutationObserver !== 'undefined') {
+      const observer = new MutationObserver(() => {
+        autoConsolidateReviews();
+      });
+      observer.observe(root, { childList: true, subtree: true });
+    }
+
     if (window.location.hash === '#judgeme_product_reviews' || window.location.hash === '#judgeme') {
       window.setTimeout(() => {
         triggerJudgemeWriteReview(document.querySelector('[data-write-review-trigger]'));
