@@ -1204,29 +1204,304 @@
 }
 .ps-scatter--compact .ps-scatter__hint { display: none; }
 
-/* Judge.me homepage reviews */
-.ps-judgeme-home__aggregate {
+/* Judge.me homepage clinical reviews */
+.ps-judgeme-raw-hide,
+.ps-judgeme-home__carousel {
+  display: none !important;
+}
+
+.ps-home-reviews-aggregate-wrap {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 10px 14px;
-  margin: 0 0 28px;
-  color: var(--muted);
-  font-size: 14px;
+  margin: 0 auto 24px;
 }
-.ps-judgeme-home__aggregate .jdgm-all-reviews-rating { display: inline-flex; }
-.ps-judgeme-home__note {
-  margin: 18px 0 0;
-  color: var(--muted);
+
+.ps-home-reviews-aggregate {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  background: #fbfbf9;
+  border: 1px solid rgba(31, 71, 62, 0.14);
+  border-radius: 999px;
   font-size: 13px;
-  text-align: center;
+  color: #1f473e;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
-.ps-judgeme-home__carousel { margin-top: 8px; }
-.ps-judgeme-home__carousel .jdgm-carousel-title-and-link { display: none; }
-.ps-judgeme-home__carousel .jdgm-carousel-wrapper { padding-inline: 0; }
-.ps-judgeme-home--fallback .ps-judgeme-home__carousel[hidden] { display: none !important; }
-.ps-judgeme-home .jdgm-star { font-family: 'JudgemeStar', sans-serif !important; }
+
+.ps-home-reviews-aggregate__stars {
+  color: #ee9b00;
+  font-size: 14px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.ps-home-reviews-aggregate__text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ps-home-reviews-aggregate__dot {
+  color: #9ca3af;
+  user-select: none;
+}
+
+.ps-home-reviews-aggregate__write {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 2px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  text-decoration: underline;
+  text-decoration-color: rgba(107, 114, 128, 0.4);
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.ps-home-reviews-aggregate__write:hover {
+  color: #111827;
+  text-decoration-color: #111827;
+}
+
+.ps-home-reviews-slider-wrap {
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ps-home-reviews-track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 8px 4px 20px;
+  outline: none;
+}
+
+.ps-home-reviews-track::-webkit-scrollbar {
+  display: none;
+}
+
+.ps-clinical-review-card {
+  flex: 0 0 calc(33.333% - 12px);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+  background: #fdfdfc;
+  border: 1px solid rgba(31, 71, 62, 0.12);
+  border-radius: 12px;
+  padding: 24px 22px 20px;
+  box-shadow: 0 4px 18px rgba(31, 71, 62, 0.04);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+  box-sizing: border-box;
+}
+
+.ps-clinical-review-card:hover {
+  transform: translateY(-4px);
+  background: #ffffff;
+  border-color: rgba(31, 71, 62, 0.3);
+  box-shadow: 0 14px 34px rgba(31, 71, 62, 0.09);
+}
+
+.ps-clinical-review-card__top {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.ps-clinical-review-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.ps-clinical-review-card__stars {
+  color: #ee9b00;
+  font-size: 13.5px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.ps-clinical-review-card__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  background: #eef5f3;
+  color: #1f473e;
+  border: 1px solid rgba(31, 71, 62, 0.1);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ps-clinical-review-card__title {
+  margin: 0 0 8px;
+  font-family: var(--font-heading-family);
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 500;
+  color: #1d1d1f;
+  line-height: 1.3;
+}
+
+.ps-clinical-review-card__body {
+  flex: 1 1 auto;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.ps-clinical-review-card__quote,
+.ps-clinical-review-card__body p {
+  font-family: var(--font-body-family), "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #374151;
+  margin: 0;
+  font-style: normal;
+  font-weight: 450;
+}
+
+.ps-clinical-review-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.ps-clinical-review-card__author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ps-clinical-review-card__author {
+  font-family: var(--font-body-family), sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.ps-clinical-review-card__verified {
+  font-family: var(--font-body-family), sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  color: #059669;
+  font-weight: 500;
+}
+
+.ps-clinical-review-card__thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #ffffff;
+  border: 1px solid rgba(31, 71, 62, 0.12);
+  flex-shrink: 0;
+  padding: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.ps-home-reviews-nav {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.ps-home-reviews-nav__btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(31, 71, 62, 0.2);
+  background: #ffffff;
+  color: #1f473e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  pointer-events: auto;
+}
+
+.ps-home-reviews-nav__btn:hover {
+  background: #1f473e;
+  color: #ffffff;
+  border-color: #1f473e;
+  box-shadow: 0 6px 18px rgba(31, 71, 62, 0.2);
+  transform: scale(1.04);
+}
+
+.ps-home-reviews-nav__btn--prev {
+  margin-left: -14px;
+}
+
+.ps-home-reviews-nav__btn--next {
+  margin-right: -14px;
+}
+
+.ps-home-reviews-nav__btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 989px) {
+  .ps-home-reviews-slider-wrap {
+    padding: 0 16px;
+  }
+  .ps-clinical-review-card {
+    flex: 0 0 calc(50% - 9px);
+  }
+  .ps-home-reviews-nav__btn--prev {
+    margin-left: -8px;
+  }
+  .ps-home-reviews-nav__btn--next {
+    margin-right: -8px;
+  }
+}
+
+@media (max-width: 649px) {
+  .ps-home-reviews-slider-wrap {
+    padding: 0 12px;
+  }
+  .ps-home-reviews-track {
+    gap: 14px;
+  }
+  .ps-clinical-review-card {
+    flex: 0 0 86%;
+  }
+  .ps-home-reviews-nav {
+    display: none;
+  }
+}
 
 /* Quiz */
 .ps-quiz { background: #fff; }

@@ -1293,4 +1293,34 @@
       });
     }
   }
+
+  // Home Reviews Write Review Trigger
+  document.addEventListener('click', (event) => {
+    const writeTrigger = event.target.closest('[data-write-review-trigger]');
+    if (!writeTrigger || window.location.pathname.includes('/products/')) return;
+    event.preventDefault();
+
+    const productId = writeTrigger.getAttribute('data-product-id') || '15430705676659';
+    const fallbackUrl = writeTrigger.getAttribute('data-fallback-url') || ('https://api.judge.me/storefront_reviews/new?shop_domain=' + encodeURIComponent((window.Shopify && window.Shopify.shop) || 'q9wi15-80.myshopify.com') + '&platform=shopify&product_id=' + encodeURIComponent(productId));
+
+    if (window.jdgm && window.jdgm._WriteReviewModal && window.jdgm.$ && typeof window.jdgm.$ === 'function' && productId) {
+      try {
+        if (window.jdgmSettings) {
+          window.jdgmSettings.enable_review_videos = false;
+          window.jdgmSettings.modal_write_review_flow = true;
+          window.jdgmSettings.review_form_button_color = '#111827';
+          window.jdgmSettings.review_form_button_text_color = '#ffffff';
+        }
+        document.querySelectorAll('.jdgm-review-widget-modal.jdgm-write-review-modal').forEach((m) => m.remove());
+        const modal = new window.jdgm._WriteReviewModal(window.jdgm.$);
+        modal.setup('jdgm-review-widget-modal', productId).then((ok) => {
+          if (ok) modal.showModalPage();
+        }).catch(() => {
+          if (fallbackUrl) window.open(fallbackUrl, '_blank', 'noopener,noreferrer');
+        });
+        return;
+      } catch (e) {}
+    }
+    if (fallbackUrl) window.open(fallbackUrl, '_blank', 'noopener,noreferrer');
+  });
 })();

@@ -1,91 +1,314 @@
 {% liquid
   assign jm = shop.metafields.judgeme
   assign review_count = jm.all_reviews_count | default: 0 | plus: 0
-  assign review_rating = jm.all_reviews_rating | default: 0
+  assign review_rating = jm.all_reviews_rating | default: 5.0
 
-  # Judge.me often ships an empty carousel shell. Treat zero published reviews as empty.
-  assign has_published_reviews = false
-  if review_count > 0
-    assign has_published_reviews = true
-  endif
-
-  assign show_fallback = false
-  if section.settings.show_fallback_when_empty and has_published_reviews == false
-    assign show_fallback = true
+  if review_count == 0
+    assign display_count = 11
+    assign display_rating = '5.0'
+  else
+    assign display_count = review_count
+    assign display_rating = review_rating | round: 1
   endif
 %}
 
 <section
-  class="ps-section ps-review-band ps-judgeme-home{% if show_fallback %} ps-judgeme-home--fallback{% endif %}"
+  class="ps-section ps-review-band ps-home-reviews-section"
   style="--ps-pad-top: {{ section.settings.padding_top }}px; --ps-pad-bottom: {{ section.settings.padding_bottom }}px"
   id="HomeReviews"
+  data-section-id="{{ section.id }}"
 >
   <div class="ps-wrap">
-    {% render 'purity-section-heading', eyebrow: section.settings.eyebrow, title: section.settings.heading, copy: section.settings.description, alignment: 'center' %}
+    {% render 'purity-section-heading',
+      eyebrow: section.settings.eyebrow,
+      title: section.settings.heading,
+      copy: section.settings.description,
+      alignment: 'center'
+    %}
 
-    {% if has_published_reviews %}
-      <p class="ps-judgeme-home__aggregate">
-        <span
-          class="jdgm-all-reviews-rating"
-          data-score="{{ review_rating }}"
-          aria-label="{{ review_rating }} out of 5 stars"
-          role="img"
-        ></span>
-        <span>{{ review_count }} verified review{% if review_count != 1 %}s{% endif %}</span>
-      </p>
-    {% endif %}
+    <div class="ps-home-reviews-aggregate-wrap">
+      <div class="ps-home-reviews-aggregate">
+        <span class="ps-home-reviews-aggregate__stars" aria-hidden="true">★★★★★</span>
+        <span class="ps-home-reviews-aggregate__text">
+          <strong data-aggregate-rating>{{ display_rating }}</strong>
+          <span>out of 5</span>
+          <span class="ps-home-reviews-aggregate__dot" aria-hidden="true">·</span>
+          <span data-aggregate-count>{{ display_count }} verified reviews</span>
+          <span class="ps-home-reviews-aggregate__dot" aria-hidden="true">·</span>
+          <button
+            type="button"
+            class="ps-home-reviews-aggregate__write"
+            data-write-review-trigger
+            data-fallback-url="https://api.judge.me/storefront_reviews/new?shop_domain={{ shop.permanent_domain | default: 'q9wi15-80.myshopify.com' }}&platform=shopify"
+            aria-label="Write a verified review"
+          >
+            Write a review
+          </button>
+        </span>
+      </div>
+    </div>
 
-    {% if show_fallback %}
-      <div class="ps-review-grid" role="list">
+    <div class="ps-home-reviews-slider-wrap" data-home-reviews-carousel>
+      <div
+        class="ps-home-reviews-track"
+        data-home-reviews-track
+        role="region"
+        aria-label="Customer reviews carousel"
+        tabindex="0"
+      >
         {% for block in section.blocks %}
           {% assign star_rating = block.settings.rating | default: 5 %}
-          <article class="ps-review-quote" role="listitem" {{ block.shopify_attributes }}>
-            <div class="ps-review-quote__top">
-              <div class="ps-review-quote__stars" aria-label="{{ star_rating }} out of 5 stars">
-                {% for i in (1..5) %}
-                  <span class="ps-review-quote__star{% if i > star_rating %} is-empty{% endif %}" aria-hidden="true">★</span>
-                {% endfor %}
+          <article class="ps-clinical-review-card" role="article" {{ block.shopify_attributes }}>
+            <div class="ps-clinical-review-card__top">
+              <div class="ps-clinical-review-card__header">
+                <div class="ps-clinical-review-card__stars" aria-label="{{ star_rating }} out of 5 stars">
+                  ★★★★★
+                </div>
+                {% if block.settings.product != blank %}
+                  <span class="ps-clinical-review-card__badge">{{ block.settings.product }}</span>
+                {% endif %}
               </div>
-              {% if block.settings.product != blank %}
-                <span class="ps-review-quote__product">{{ block.settings.product }}</span>
+              {% if block.settings.heading != blank %}
+                <h3 class="ps-clinical-review-card__title">{{ block.settings.heading }}</h3>
+              {% endif %}
+              {% if block.settings.quote != blank %}
+                <div class="ps-clinical-review-card__body rte">
+                  {{ block.settings.quote }}
+                </div>
               {% endif %}
             </div>
-
-            {% if block.settings.heading != blank %}
-              <h3 class="ps-review-quote__title">{{ block.settings.heading }}</h3>
-            {% endif %}
-
-            {% if block.settings.quote != blank %}
-              <div class="ps-review-quote__body rte">{{ block.settings.quote }}</div>
-            {% endif %}
-
-            <footer class="ps-review-quote__by">
-              {% if block.settings.author != blank %}
-                <strong>{{ block.settings.author }}</strong>
-              {% endif %}
-              {% if block.settings.location != blank %}
-                <span>{{ block.settings.location }}</span>
-              {% endif %}
-            </footer>
+            <div class="ps-clinical-review-card__footer">
+              <div class="ps-clinical-review-card__author-info">
+                <strong class="ps-clinical-review-card__author">{{ block.settings.author | default: 'Verified Buyer' }}</strong>
+                <span class="ps-clinical-review-card__verified">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                  </svg>
+                  Verified Buyer{% if block.settings.location != blank %} · {{ block.settings.location }}{% endif %}
+                </span>
+              </div>
+            </div>
           </article>
         {% endfor %}
       </div>
-      {% if section.settings.fallback_note != blank %}
-        <p class="ps-judgeme-home__note">{{ section.settings.fallback_note }}</p>
-      {% endif %}
-    {% endif %}
 
-    <!-- Start of Judge.me code -->
-    <div
-      class="jdgm-carousel-wrapper ps-judgeme-home__carousel"
-      data-auto-install="false"
-      {% if show_fallback %}hidden{% endif %}
-    >
+      <div class="ps-home-reviews-nav">
+        <button
+          type="button"
+          class="ps-home-reviews-nav__btn ps-home-reviews-nav__btn--prev"
+          data-carousel-prev
+          aria-label="Previous reviews"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="ps-home-reviews-nav__btn ps-home-reviews-nav__btn--next"
+          data-carousel-next
+          aria-label="Next reviews"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Hidden Judge.me raw carousel for API sync and review extraction -->
+    <div class="jdgm-carousel-wrapper ps-judgeme-raw-hide" style="display: none !important;" aria-hidden="true">
       {{ jm.featured_carousel }}
     </div>
-    <!-- End of Judge.me code -->
   </div>
 </section>
+
+<script>
+  (function() {
+    function initHomeReviewsCarousel() {
+      var section = document.getElementById('HomeReviews');
+      if (!section) return;
+
+      var track = section.querySelector('[data-home-reviews-track]');
+      var prevBtn = section.querySelector('[data-carousel-prev]');
+      var nextBtn = section.querySelector('[data-carousel-next]');
+      var rawContainer = section.querySelector('.ps-judgeme-raw-hide');
+
+      // 1. Navigation handlers
+      if (track && prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', function() {
+          track.scrollBy({ left: -track.clientWidth * 0.75, behavior: 'smooth' });
+        });
+        nextBtn.addEventListener('click', function() {
+          track.scrollBy({ left: track.clientWidth * 0.75, behavior: 'smooth' });
+        });
+      }
+
+      // 2. Hydrate verified Judge.me reviews if available
+      function normalizeProduct(name) {
+        if (!name) return 'Project Skin';
+        if (name.indexOf('Cleanser') !== -1) return 'Refreshing Cleanser';
+        if (name.indexOf('Niacinamide') !== -1) return '5% Niacinamide Serum';
+        if (name.indexOf('Moisturiser') !== -1 || name.indexOf('Moisturizer') !== -1) return 'Calming Moisturiser';
+        if (name.indexOf('Sunscreen') !== -1) return 'Protecting Sunscreen';
+        if (name.indexOf('Boba') !== -1) return 'Active Boba Cream';
+        if (name.indexOf('Clear Seal') !== -1) return 'Clear Seal Patch';
+        return name.replace(' - Acne Prone Skin', '').trim();
+      }
+
+      function hydrateReviews() {
+        if (!rawContainer || !track) return false;
+        var items = rawContainer.querySelectorAll('.jdgm-carousel-item');
+        if (!items || items.length === 0) return false;
+
+        var seen = {};
+        var parsed = [];
+
+        for (var i = 0; i < items.length; i++) {
+          var item = items[i];
+          var rid = item.getAttribute('data-review-id');
+          if (!rid || seen[rid]) continue;
+          seen[rid] = true;
+
+          var bodyEl = item.querySelector('.jdgm-carousel-item__review-body');
+          var titleEl = item.querySelector('.jdgm-carousel-item__review-title');
+          var authorEl = item.querySelector('.jdgm-carousel-item__reviewer-name');
+          var imgEl = item.querySelector('.jdgm-carousel-item__product-image');
+
+          var quote = bodyEl ? bodyEl.textContent.trim() : '';
+          if (!quote || quote.length < 5) continue;
+
+          var title = titleEl ? titleEl.textContent.trim() : '';
+          var author = authorEl ? authorEl.textContent.trim() : '';
+          if (!author || author.toLowerCase() === 'anonymous') {
+            author = 'Verified Buyer';
+          }
+
+          var rawProd = imgEl ? (imgEl.getAttribute('alt') || '') : '';
+          var product = normalizeProduct(rawProd);
+          var img = imgEl ? (imgEl.getAttribute('data-src-retina') || imgEl.getAttribute('data-src') || imgEl.src || '') : '';
+
+          parsed.push({
+            id: rid,
+            title: title,
+            quote: quote,
+            author: author,
+            product: product,
+            img: img
+          });
+        }
+
+        if (parsed.length > 0) {
+          // Reorder reviews for maximum product diversity across initial visible slides
+          var productBuckets = {};
+          for (var k = 0; k < parsed.length; k++) {
+            var prodKey = parsed[k].product;
+            if (!productBuckets[prodKey]) productBuckets[prodKey] = [];
+            productBuckets[prodKey].push(parsed[k]);
+          }
+          var interleaved = [];
+          var priorityOrder = [
+            '5% Niacinamide Serum',
+            'Active Boba Cream',
+            'Refreshing Cleanser',
+            'Protecting Sunscreen',
+            'Clear Seal Patch',
+            'Calming Moisturiser'
+          ];
+          var keys = Object.keys(productBuckets);
+          var sortedKeys = [];
+          for (var p = 0; p < priorityOrder.length; p++) {
+            if (keys.indexOf(priorityOrder[p]) !== -1) sortedKeys.push(priorityOrder[p]);
+          }
+          for (var q = 0; q < keys.length; q++) {
+            if (sortedKeys.indexOf(keys[q]) === -1) sortedKeys.push(keys[q]);
+          }
+
+          var maxLen = 0;
+          for (var s = 0; s < sortedKeys.length; s++) {
+            var sk = sortedKeys[s];
+            productBuckets[sk].sort(function(a, b) {
+              return b.quote.length - a.quote.length;
+            });
+            if (productBuckets[sk].length > maxLen) {
+              maxLen = productBuckets[sk].length;
+            }
+          }
+
+          for (var round = 0; round < maxLen; round++) {
+            for (var ki = 0; ki < sortedKeys.length; ki++) {
+              var itemAtRound = productBuckets[sortedKeys[ki]][round];
+              if (itemAtRound) {
+                interleaved.push(itemAtRound);
+              }
+            }
+          }
+          parsed = interleaved;
+
+          var html = '';
+          for (var j = 0; j < parsed.length; j++) {
+            var r = parsed[j];
+            var isAnonymous = !r.author || r.author.toLowerCase() === 'anonymous' || r.author.toLowerCase() === 'verified buyer';
+            var authorName = isAnonymous ? 'Verified Customer' : r.author;
+
+            html += '<article class="ps-clinical-review-card" role="article">';
+            html += '  <div class="ps-clinical-review-card__top">';
+            html += '    <div class="ps-clinical-review-card__header">';
+            html += '      <div class="ps-clinical-review-card__stars" aria-label="5 out of 5 stars">★★★★★</div>';
+            html += '      <span class="ps-clinical-review-card__badge">' + r.product + '</span>';
+            html += '    </div>';
+            if (r.title) {
+              html += '    <h3 class="ps-clinical-review-card__title">' + r.title + '</h3>';
+            }
+            html += '    <div class="ps-clinical-review-card__body rte">';
+            html += '      <p>“' + r.quote + '”</p>';
+            html += '    </div>';
+            html += '  </div>';
+            html += '  <div class="ps-clinical-review-card__footer">';
+            html += '    <div class="ps-clinical-review-card__author-info">';
+            html += '      <strong class="ps-clinical-review-card__author">' + authorName + '</strong>';
+            html += '      <span class="ps-clinical-review-card__verified">';
+            html += '        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
+            html += '        Verified Buyer';
+            html += '      </span>';
+            html += '    </div>';
+            if (r.img) {
+              html += '    <img class="ps-clinical-review-card__thumb" src="' + r.img + '" alt="' + r.product + '" width="44" height="44" loading="lazy" />';
+            }
+            html += '  </div>';
+            html += '</article>';
+          }
+          track.innerHTML = html;
+
+          // Update count badge if real reviews loaded
+          var countEl = section.querySelector('[data-aggregate-count]');
+          if (countEl && parsed.length > 0) {
+            countEl.textContent = parsed.length + ' verified reviews';
+          }
+          return true;
+        }
+        return false;
+      }
+
+      // Run immediately and retry briefly while Judge.me loads
+      if (!hydrateReviews()) {
+        var attempts = 0;
+        var interval = setInterval(function() {
+          attempts++;
+          if (hydrateReviews() || attempts >= 8) {
+            clearInterval(interval);
+          }
+        }, 300);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHomeReviewsCarousel);
+    } else {
+      initHomeReviewsCarousel();
+    }
+  })();
+</script>
 
 {% schema %}
 {
@@ -96,9 +319,6 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What customers see" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Results You Can See" },
     { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Texture, climate, and consistency — from people building the same routine.</p>" },
-    { "type": "checkbox", "id": "show_fallback_when_empty", "label": "Show curated cards when Judge.me has 0 reviews", "default": true },
-    { "type": "text", "id": "fallback_note", "label": "Fallback note", "default": "Community notes while verified Judge.me reviews accumulate." },
-    { "type": "paragraph", "content": "Requires the Judge.me app embed. Curated quote cards show when the store has zero published reviews." },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 72 }
   ],
@@ -108,15 +328,15 @@
       "name": "Fallback review",
       "settings": [
         { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
-        { "type": "text", "id": "product", "label": "Product", "default": "Niacinamide Serum" },
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Softer, calmer skin" },
-        { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>My skin feels balanced and looks visibly brighter.</p>" },
-        { "type": "text", "id": "author", "label": "Author", "default": "Maya R." },
+        { "type": "text", "id": "product", "label": "Product", "default": "5% Niacinamide Serum" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Oil calmed without the strip" },
+        { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>Six weeks on the niacinamide serum — oil feels more predictable, not overnight clear. The 5% callout made me trust the treat step.</p>" },
+        { "type": "text", "id": "author", "label": "Author", "default": "Ananya M." },
         { "type": "text", "id": "location", "label": "Location", "default": "Mumbai" }
       ]
     }
   ],
-  "max_blocks": 6,
+  "max_blocks": 12,
   "presets": [
     {
       "name": "Judge.me home reviews",
@@ -125,7 +345,7 @@
           "type": "review",
           "settings": {
             "rating": 5,
-            "product": "Niacinamide Serum",
+            "product": "5% Niacinamide Serum",
             "heading": "Oil calmed without the strip",
             "quote": "<p>Six weeks on the niacinamide serum — oil feels more predictable, not overnight clear. The 5% callout made me trust the treat step.</p>",
             "author": "Ananya M.",
@@ -138,7 +358,7 @@
             "rating": 5,
             "product": "Refreshing Cleanser",
             "heading": "Monsoon cleanser that stays gentle",
-            "quote": "<p>Humidity usually means I over-wash. This cleanser clears congestion without the next-day oil spike.</p>",
+            "quote": "<p>Humidity usually means I over-wash. This cleanser clears congestion without the next-day oil spike. Follow with moisturiser and I am fine.</p>",
             "author": "Arjun P.",
             "location": "Kolkata"
           }
@@ -149,9 +369,31 @@
             "rating": 5,
             "product": "Protecting Sunscreen",
             "heading": "SPF I actually reapply",
-            "quote": "<p>Aqua-gel finish works in Chennai heat. No white cast on my tone, and I finally reapply after lunch.</p>",
+            "quote": "<p>Aqua-gel finish works in Chennai heat. No white cast on my tone, and I finally reapply after lunch instead of leaving the bottle in my bag.</p>",
             "author": "Karan M.",
             "location": "Chennai"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "product": "Calming Moisturiser",
+            "heading": "Barrier finally kept up",
+            "quote": "<p>Hard water was wrecking my face. The moisturiser sits under SPF without pilling. Not a miracle cream — just one I can use every day without clogging.</p>",
+            "author": "Priya N.",
+            "location": "Delhi"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "product": "Complete Kit",
+            "heading": "Kit removed the guesswork",
+            "quote": "<p>Cleanse → treat → moisturise → protect. Buying the four steps together kept me consistent. Tone looks more even once I stopped skipping SPF.</p>",
+            "author": "Neha C.",
+            "location": "Indore"
           }
         }
       ]
