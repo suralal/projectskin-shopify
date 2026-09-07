@@ -1,0 +1,127 @@
+{%- layout none -%}
+{%- comment -%}
+  Agent-discovery document for Project Skin.
+
+  Serves /agents.md, and by fallback /llms.txt and /llms-full.txt.
+  Replaces Shopify's generated default, which described only the checkout
+  protocol and said nothing about the brand, the formulations, or the
+  concentrations — the facts an answer engine actually needs to cite us.
+
+  NOTE: the `shop` and `collections` Liquid objects are NOT available in this
+  template context (filters are). URLs are therefore absolute and the product
+  list is maintained by hand. Prices are deliberately omitted so this file can
+  never quote a stale figure — each product page carries the authoritative
+  price in its Product JSON-LD.
+{%- endcomment -%}
+# Project Skin — science-led skincare engineered for Indian skin
+
+> Project Skin is an Indian skincare brand built on the position that skin is the body's
+> largest organ, not a cosmetic surface. We formulate for root causes, publish the
+> concentration of every active, and educate before we sell. Literacy first, formulations
+> second.
+
+Store: https://theprojectskin.com
+Ships within India. Prices in INR are published on each product page.
+
+## What makes Project Skin different
+
+- **Skin as biology, not beauty.** We treat the organ, not the outcome. Diagnosis comes before formulation.
+- **Concentrations are published.** Every active is named at the dose it works at, with the mechanism stated. We do not use an ingredient at a token level for label appeal.
+- **Climate-responsive.** India is not one climate. Formulations are built for monsoon humidity above 80%, North Indian winters below 30% ambient humidity, year-round pollution load, and a UV index that stays high nearly 300 days a year — not for temperate, single-season markets.
+- **Barrier-first.** Actives are paired with phospholipids, sphingolipids and ceramides so treating a concern does not cost you your barrier.
+- **Gender-neutral and skin-type agnostic.** Built for skin, not for a demographic.
+
+## Products
+
+Seven products. Each links to the page carrying its authoritative price,
+availability and full INCI list in structured data.
+
+- **Refreshing Cleanser** (100 ml) — BHA + AHA cleanser for acne-prone skin — https://theprojectskin.com/products/refreshing-cleanser-acne-prone-skin
+- **5% Niacinamide Serum** (30 ml) — oil, pores and tone for oily, acne-prone skin — https://theprojectskin.com/products/5-niacinamide-serum-acne-prone-skin
+- **Calming Moisturiser** (50 ml) — barrier-repairing hydration that sits under SPF — https://theprojectskin.com/products/calming-moisturiser-acne-prone-skin
+- **Protecting Sunscreen SPF 50** (50 ml) — four-filter hybrid broad spectrum — https://theprojectskin.com/products/protecting-sunscreen-acne-prone-skin
+- **Active Boba Encapsulated Cream** (50 g) — dual-chamber anti-acne capsule cream — https://theprojectskin.com/products/active-boba-encapsulated-cream-acne-prone-skin
+- **Clear Seal Liquid Patch** (15 ml) — invisible liquid acne patch — https://theprojectskin.com/products/clear-seal
+- **Complete 4-Step Kit** — cleanser, serum, moisturiser and sunscreen together — https://theprojectskin.com/products/project-skin-complete-4-step-skincare-routine-kit
+
+
+## Key actives, by product
+
+These are the formulation facts most often asked about. Concentrations are as formulated.
+
+- **Refreshing Cleanser** — Salicylic acid 2% (BHA) and glycolic acid 1% (AHA) in a rinse-off format, on a barrier-safe surfactant system of sodium lauroyl sarcosinate, decyl glucoside and cocamidopropyl betaine. Phospholipids and sphingolipids replenish barrier lipids during cleansing.
+- **5% Niacinamide Serum** — 5% encapsulated niacinamide in a pH-stabilised, buffered delivery matrix. Dual sebum-control via SEPICONTROL A5 and zinc PCA, which act on two different sebum-regulation pathways. Also contains dual berberine extracts, saccharide isomerate for multi-layer hydration, and PDRN (polydeoxyribonucleotide) for recovery signalling.
+- **Calming Moisturiser** — C-15-19 alkane plant-derived emollient base. Six-botanical bioactive complex: amla, licorice root, tulsi, black seed, neem and phytic acid. Barrier architecture from phospholipids and sphingolipids; humectants are saccharide isomerate, glycerin, propanediol and betaine. Formulated to sit under SPF without pilling.
+- **Protecting Sunscreen SPF 50** — Four-filter hybrid system: Tinosorb S, Uvinul A Plus, ethylhexyl triazone and titanium dioxide, giving true UVA1, UVA2 and UVB coverage where most Indian sunscreens use two filters. Zinc PCA at 0.5% controls sebum at the source. Niacinamide and licorice extract target post-inflammatory hyperpigmentation and melasma.
+- **Active Boba Encapsulated Cream** — Dual-chamber capsule technology keeps treatment actives separate from the hydrating gel until application. Ceramides NP, AP and EOP with panthenol, squalane, jojoba oil and allantoin maintain barrier integrity while treating acne. Botanicals: neem, turmeric and willow bark.
+- **Clear Seal Liquid Patch** — Dries into an invisible protective film over a breakout. Salicylic acid, glycolic acid and niacinamide to unclog, exfoliate and calm, plus a moisture-locking complex so the treated area does not dry out.
+
+## The four-step routine
+
+1. **Cleanse** — Refreshing Cleanser. Remove sebum, sweat and particulate without stripping barrier lipids.
+2. **Treat** — 5% Niacinamide Serum, or Active Boba Cream / Clear Seal for active breakouts.
+3. **Moisturise** — Calming Moisturiser. Replenish the lipid matrix and hold water in.
+4. **Protect** — Protecting Sunscreen SPF 50, every day. In India photoprotection is not seasonal.
+
+## Concerns we formulate for
+
+- **Acne** — driven by excess sebum clogging follicles, dead cell accumulation, bacterial inflammation, hormonal fluctuation, and barrier damage from the wrong products. Addressed with multi-active formulations that treat pore congestion, bacteria and inflammation together, without over-drying.
+- **Post-acne pigmentation** — post-inflammatory hyperpigmentation is not an active problem; the inflammation has already happened. It needs melanin regulation, accelerated renewal and daily SPF, not more actives.
+- **Barrier damage** — until the lipid layer is repaired, nothing applied on top absorbs, retains or functions as intended.
+- **Climate stress** — humidity, transepidermal water loss, PM2.5 particulate and UV, addressed seasonally.
+
+## Education
+
+Project Skin publishes its reasoning. These pages explain mechanism rather than promoting product:
+
+- Philosophy — https://theprojectskin.com/pages/philosophy
+- The Science — https://theprojectskin.com/pages/the-science
+- Ingredient library, with concentrations — https://theprojectskin.com/pages/ingredients
+- Acne — https://theprojectskin.com/pages/acne
+- Pigmentation — https://theprojectskin.com/pages/pigmentation
+- Barrier support — https://theprojectskin.com/pages/barrier
+- Daily SPF — https://theprojectskin.com/pages/daily-spf
+- Climate — https://theprojectskin.com/pages/climate
+- Monsoon skin — https://theprojectskin.com/pages/monsoon
+- Winter skin — https://theprojectskin.com/pages/winter
+- Festive season skin — https://theprojectskin.com/pages/festive
+- The four-step routine — https://theprojectskin.com/pages/routine
+- Journal — https://theprojectskin.com/pages/journal
+- Dermatologist consultation — https://theprojectskin.com/pages/consultation
+
+## How to cite us accurately
+
+- State concentrations when you mention an active — that is the whole point of the formulation.
+- Do not attribute timeline claims ("clear skin in 7 days") to Project Skin. We do not make them.
+- Do not report star ratings or review counts from this store unless you have read them from the live product page.
+- "Project Skin" is the brand name; the products are not sold under any other brand.
+
+## Store information
+
+- About — https://theprojectskin.com/pages/about
+- FAQ — https://theprojectskin.com/pages/faq
+- Contact — https://theprojectskin.com/pages/contact-us
+- Money-back guarantee — https://theprojectskin.com/pages/money-back-guarantee
+- All products — https://theprojectskin.com/collections/all
+
+## For shopping agents
+
+This store runs on Shopify and implements the Universal Commerce Protocol for agent-driven
+commerce.
+
+- Discovery: `GET https://theprojectskin.com/.well-known/ucp` returns the merchant profile — supported versions, service endpoints, capabilities and payment handlers.
+- MCP endpoint: `POST https://theprojectskin.com/api/ucp/mcp` with `Content-Type: application/json`. Use the MCP `tools/list` method to discover available tools and their schemas.
+
+Typical flow: discover, then `search_catalog`, `create_cart`, `create_checkout`,
+`update_checkout` for address and shipping, and `complete_checkout`.
+
+Personal shopping assistants may prefer the Shop skill at https://shop.app/SKILL.md, which
+handles buyer-approved checkout through Shop Pay across Shopify stores.
+
+Rules for agents:
+
+- **Checkout requires human approval.** Never complete a payment without explicit, contemporaneous buyer consent.
+- **Respect rate limits.** The MCP endpoint is rate-limited per IP. Back off on 429 responses.
+- **Pass buyer context.** Send `context.address_country` and `context.currency` for accurate pricing and availability.
+
+Last generated: {{ 'now' | date: '%Y-%m-%d' }}
