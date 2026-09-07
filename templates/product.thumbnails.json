@@ -108,6 +108,7 @@
     },
     "steps": {
       "type": "pdp-steps",
+      "disabled": true,
       "blocks": {
         "apply": { "type": "step", "settings": { "heading": "01. Apply", "copy": "<p>Start at the center of your lips and glide outward for a smooth, even layer.</p>" } },
         "build": { "type": "step", "settings": { "heading": "02. Build", "copy": "<p>Apply a second layer for a darker shade to achieve the desired intensity and shine.</p>" } },

@@ -219,26 +219,26 @@
           });
         });
 
-        const isContainerAtTop = () => info.scrollTop <= 2;
-        const isContainerAtBottom = () => Math.ceil(info.scrollHeight - info.scrollTop - info.clientHeight) <= 2;
+        const isContainerAtTop = () => info.scrollTop <= 6;
+        const isContainerAtBottom = () => (info.scrollHeight - info.scrollTop - info.clientHeight) <= 24;
 
         let isScrollLocked = false;
-        let lastScrollTop = 0;
+        let lastScrollTop = window.pageYOffset || 0;
 
         const handleScroll = () => {
           if (window.innerWidth < 900 || isScrollLocked || isAnchorJump) return;
-          const currentScrollTop = window.pageYOffset;
+          const currentScrollTop = window.pageYOffset || 0;
           const isScrollingDown = currentScrollTop > lastScrollTop;
           const isScrollingUp = currentScrollTop < lastScrollTop;
 
-          if (isScrollingDown && !isContainerAtBottom()) {
+          if (currentScrollTop <= 60 && isScrollingDown && !isContainerAtBottom()) {
             window.scrollTo(0, 0);
-            info.scrollTop += currentScrollTop;
+            info.scrollTop += (currentScrollTop || 30);
             isScrollLocked = true;
             setTimeout(() => { isScrollLocked = false; }, 140);
-          } else if (isScrollingUp && currentScrollTop <= 20 && !isContainerAtTop()) {
+          } else if (currentScrollTop <= 20 && isScrollingUp && !isContainerAtTop()) {
             window.scrollTo(0, 0);
-            info.scrollTop -= Math.abs(currentScrollTop);
+            info.scrollTop -= Math.abs(currentScrollTop || 30);
             isScrollLocked = true;
             setTimeout(() => { isScrollLocked = false; }, 140);
           }
