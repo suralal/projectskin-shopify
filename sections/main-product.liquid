@@ -125,12 +125,32 @@
               <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}">
                 {{ product.metafields.judgeme.badge }}
               </div>
+              <span class="pdp-rating__divider" aria-hidden="true">·</span>
+              <button
+                type="button"
+                class="pdp-rating__write-btn"
+                data-write-review-trigger
+                data-product-id="{{ product.id }}"
+                aria-label="Write a review for {{ product.title | escape }}"
+              >
+                Write a review
+              </button>
             </div>
           {% elsif section.settings.show_rating %}
             <div class="pdp-rating" aria-label="{{ section.settings.rating }} out of 5 stars">
               <span class="pdp-stars" aria-hidden="true">★★★★★</span>
               <strong>{{ section.settings.rating }}</strong>
               <a href="#PdpReviews">({{ section.settings.review_count }} reviews)</a>
+              <span class="pdp-rating__divider" aria-hidden="true">·</span>
+              <button
+                type="button"
+                class="pdp-rating__write-btn"
+                data-write-review-trigger
+                data-product-id="{{ product.id }}"
+                aria-label="Write a review for {{ product.title | escape }}"
+              >
+                Write a review
+              </button>
             </div>
           {% endif %}
           <div class="pdp-price" {% unless section.settings.use_custom_content %}data-product-price{% endunless %}>{{ display_price }}</div>

@@ -747,6 +747,7 @@
 .pdp-rating {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 7px;
   margin-bottom: 20px;
   font-family: "Instrument Sans", "Purity Sans", var(--font-body-family), sans-serif;
@@ -757,6 +758,45 @@
 .pdp-stars { color: #ee9b00; letter-spacing: 1px; }
 .pdp-rating strong { font-weight: 500; }
 .pdp-rating a { color: #6d6962; text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
+
+.pdp-rating__divider {
+  display: inline-block;
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1;
+  user-select: none;
+  margin: 0 1px;
+}
+
+.pdp-rating__write-btn {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(107, 114, 128, 0.4);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+  line-height: inherit;
+}
+
+.pdp-rating__write-btn:hover {
+  color: #111827;
+  text-decoration-color: #111827;
+}
+
+.pdp-rating__write-btn:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
 .pdp-price {
   margin-bottom: 5px;
   font-family: "Instrument Sans", "Purity Sans", var(--font-body-family), sans-serif;
@@ -1194,6 +1234,22 @@
 .pdp-rating--judgeme .jdgm-preview-badge {
   display: inline-flex;
   align-items: center;
+  cursor: pointer;
+}
+.pdp-rating--judgeme .jdgm-prev-badge:hover .jdgm-prev-badge__text {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pdp-rating--judgeme .pdp-rating__divider,
+.pdp-rating--judgeme .pdp-rating__write-btn {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.pdp-rating--judgeme:has(.jdgm--done-setup) .pdp-rating__divider,
+.pdp-rating--judgeme:has(.jdgm--done-setup) .pdp-rating__write-btn,
+.pdp-rating--judgeme:has(.jdgm-prev-badge:not([style*="display:none"]):not([style*="display: none"])) .pdp-rating__divider,
+.pdp-rating--judgeme:has(.jdgm-prev-badge:not([style*="display:none"]):not([style*="display: none"])) .pdp-rating__write-btn {
+  opacity: 1;
 }
 .pdp-disclaimer { margin: 25px 0 0; color: #8b857d; font-size: 10px; font-style: italic; }
 .pdp-sticky-atc { position: fixed; z-index: 42; right: 0; bottom: 22px; left: 0; width: min(920px, calc(100% - 36px)); margin: auto; padding: 11px; border: 1px solid #ded9d0; border-radius: 10px; background: rgba(255,255,255,.96); box-shadow: 0 14px 42px rgba(35,31,26,.16); opacity: 0; pointer-events: none; transform: translateY(calc(100% + 34px)); transition: opacity 240ms ease, transform 320ms cubic-bezier(.22,1,.36,1); backdrop-filter: blur(14px); }

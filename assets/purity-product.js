@@ -314,13 +314,6 @@
     }
     const fallbackUrl = triggerEl ? triggerEl.getAttribute('data-fallback-url') : (productId ? ('https://api.judge.me/storefront_reviews/new?shop_domain=' + encodeURIComponent((window.Shopify && window.Shopify.shop) || 'q9wi15-80.myshopify.com') + '&platform=shopify&product_id=' + encodeURIComponent(productId)) : null);
 
-    // Smooth scroll to the reviews section
-    const scrollTarget = document.getElementById('PdpReviews') || root;
-    if (scrollTarget) {
-      const topOffset = scrollTarget.getBoundingClientRect().top + window.pageYOffset - 80;
-      window.scrollTo({ top: topOffset, behavior: 'smooth' });
-    }
-
     const tryOpenModal = () => {
       if (window.jdgm && window.jdgm._WriteReviewModal && window.jdgm.$ && typeof window.jdgm.$ === 'function' && productId) {
         try {
@@ -349,6 +342,13 @@
     };
 
     if (tryOpenModal()) return;
+
+    // Smooth scroll to the reviews section if modal could not open
+    const scrollTarget = document.getElementById('PdpReviews') || root;
+    if (scrollTarget) {
+      const topOffset = scrollTarget.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top: topOffset, behavior: 'smooth' });
+    }
 
     // Check if native Judge.me review trigger button is in DOM
     const nativeBtn = document.querySelector('.jdgm-write-rev-link, [data-testid="write-review-button"], .jm-action-buttons__button');
@@ -394,11 +394,28 @@
   window.triggerJudgemeWriteReview = triggerJudgemeWriteReview;
 
   document.addEventListener('click', (event) => {
-    const trigger = event.target.closest('[data-write-review-trigger], .pdp-reviews-fallback__write, .pdp-reviews__write-trigger-btn, a[href="#judgeme_product_reviews"], a[href="#judgeme"]');
-    if (!trigger) return;
-    event.preventDefault();
-    triggerJudgemeWriteReview(trigger);
-  });
+    // 1. Write review triggers (opens modal directly)
+    const writeTrigger = event.target.closest('[data-write-review-trigger], .pdp-reviews-fallback__write, .pdp-reviews__write-trigger-btn, .pdp-rating__write-btn');
+    if (writeTrigger) {
+      event.preventDefault();
+      event.stopPropagation();
+      triggerJudgemeWriteReview(writeTrigger);
+      return;
+    }
+
+    // 2. Rating badge / stars / review count clicked -> smoothly scroll to reviews section
+    const badgeTrigger = event.target.closest('.jdgm-prev-badge, .jdgm-prev-badge__stars, .jdgm-prev-badge__text, a[href="#PdpReviews"], a[href="#judgeme_product_reviews"], a[href="#judgeme"]');
+    if (badgeTrigger) {
+      event.preventDefault();
+      event.stopPropagation();
+      const scrollTarget = document.getElementById('PdpReviews') || document.querySelector('.pdp-reviews-phd-root');
+      if (scrollTarget) {
+        const topOffset = scrollTarget.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top: topOffset, behavior: 'smooth' });
+      }
+      return;
+    }
+  }, true);
 
   const autoConsolidateReviews = () => {
     const root = document.getElementById('judgeme_product_reviews');
