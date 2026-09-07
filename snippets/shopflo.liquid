@@ -96,7 +96,50 @@
       };
     })();
 
+    // The 540 KB bridge used to load `async` in <head>, so it parsed and executed
+    // while the page was still painting. Nothing on the first screen needs it —
+    // it is only required once someone touches cart or checkout. Load it on the
+    // first user interaction, or when the browser goes idle, or 2s after load,
+    // whichever comes first; and force it immediately if a cart path asks.
+    window.PurityShopfloLoader = (function () {
+      var injected = false;
+
+      function inject() {
+        if (injected) return;
+        injected = true;
+        var script = document.createElement('script');
+        script.src = 'https://bridge.shopflo.com/js/shopflo.bundle.js';
+        script.async = true;
+        document.head.appendChild(script);
+      }
+
+      var events = ['pointerdown', 'keydown', 'touchstart'];
+      function onIntent() {
+        events.forEach(function (type) { window.removeEventListener(type, onIntent, true); });
+        inject();
+      }
+      events.forEach(function (type) {
+        window.addEventListener(type, onIntent, { capture: true, passive: true });
+      });
+
+      function scheduleIdle() {
+        if (typeof window.requestIdleCallback === 'function') {
+          window.requestIdleCallback(inject, { timeout: 2000 });
+        } else {
+          setTimeout(inject, 2000);
+        }
+      }
+      if (document.readyState === 'complete') scheduleIdle();
+      else window.addEventListener('load', scheduleIdle, { once: true });
+
+      return { ensureLoaded: inject };
+    })();
+
     window.PurityShopflo = (function () {
+      function ensureLoaded() {
+        window.PurityShopfloLoader && window.PurityShopfloLoader.ensureLoaded();
+      }
+
       function floActive() {
         if (window.Shopflo && window.Shopflo.isFloCheckoutEnabled) return true;
         var cfg = window.shopfloConfig || {};
@@ -125,20 +168,44 @@
       return {
         floActive: floActive,
 
+        ensureLoaded: ensureLoaded,
+
+        /**
+         * The bridge now loads lazily, so a very early checkout click can land
+         * before it is ready. Give it a short budget to arrive rather than
+         * falling straight through to the native checkout — the fallback is
+         * still there, it just isn't taken on a race.
+         */
         checkout: function () {
-          if (floActive() && typeof window.handleFloCheckoutBtn === 'function' && !isFallbackCartHandler()) {
-            window.handleFloCheckoutBtn();
-            return true;
+          ensureLoaded();
+          var started = Date.now();
+
+          function open() {
+            if (floActive() && typeof window.handleFloCheckoutBtn === 'function' && !isFallbackCartHandler()) {
+              window.handleFloCheckoutBtn();
+              return true;
+            }
+            if (floActive() && window.Shopflo && typeof window.Shopflo.openCheckout === 'function') {
+              window.Shopflo.openCheckout();
+              return true;
+            }
+            return false;
           }
-          if (floActive() && window.Shopflo && typeof window.Shopflo.openCheckout === 'function') {
-            window.Shopflo.openCheckout();
-            return true;
+
+          function attempt() {
+            if (open()) return;
+            if (Date.now() - started >= 1500) {
+              window.location.assign(storeCheckoutUrl());
+              return;
+            }
+            setTimeout(attempt, 100);
           }
-          window.location.assign(storeCheckoutUrl());
+          attempt();
           return true;
         },
 
         buyNow: function (event) {
+          ensureLoaded();
           if (!floActive()) return false;
           if (typeof window.handleFloBuyNowBtn === 'function') {
             window.handleFloBuyNowBtn(event);
@@ -148,6 +215,7 @@
         },
 
         cart: function () {
+          ensureLoaded();
           if (!window.PurityTheme || !window.PurityTheme.shopfloUseFloCart) return false;
 
           if (floActive() && !isFallbackCartHandler() && typeof window.handleFloCartBtn === 'function') {
@@ -168,6 +236,7 @@
          * Matches live theme: ATC / bag icon should open the "Powered by shopflo" drawer.
          */
         openCartWhenReady: function (timeoutMs) {
+          ensureLoaded();
           var self = this;
           var budget = typeof timeoutMs === 'number' ? timeoutMs : 4000;
           var started = Date.now();
@@ -190,5 +259,4 @@
       };
     })();
   </script>
-  <script src="https://bridge.shopflo.com/js/shopflo.bundle.js" async></script>
 {%- endif -%}

@@ -16,12 +16,30 @@
       alt: image_alt
   }}
 {% elsif fallback_asset != blank %}
+  {%- comment -%}
+    Theme assets accept the same &width= transform as Shopify-hosted images, but
+    asset_url alone emits the full-resolution file. Build a srcset capped at the
+    asset's own width so we never upscale, mirroring the widths used above.
+  {%- endcomment -%}
+  {%- assign fb_width = fallback_width | default: 1200 -%}
+  {%- assign fb_url = fallback_asset | asset_url -%}
+  {%- assign fb_steps = '360,540,720,900,1200,1600,2000' | split: ',' -%}
+  {%- capture fb_srcset -%}
+    {%- for step in fb_steps -%}
+      {%- assign step_w = step | plus: 0 -%}
+      {%- if step_w < fb_width -%}{{ fb_url }}&width={{ step_w }} {{ step_w }}w, {% endif -%}
+    {%- endfor -%}
+    {{ fb_url }}&width={{ fb_width }} {{ fb_width }}w
+  {%- endcapture -%}
   <img
     class="{{ image_class }}"
-    src="{{ fallback_asset | asset_url }}"
-    width="{{ fallback_width | default: 1200 }}"
+    src="{{ fb_url }}&width={{ fb_width }}"
+    srcset="{{ fb_srcset }}"
+    sizes="{{ image_sizes }}"
+    width="{{ fb_width }}"
     height="{{ fallback_height | default: 1200 }}"
     loading="{{ image_loading }}"
+    decoding="{% if fetchpriority == 'high' %}sync{% else %}async{% endif %}"
     {% if fetchpriority != blank %}fetchpriority="{{ fetchpriority }}"{% endif %}
     alt="{{ image_alt | escape }}"
   >

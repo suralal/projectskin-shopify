@@ -162,13 +162,28 @@
             >
               <a class="ps-promo-banner__media" href="{{ cta_url }}" tabindex="-1" aria-hidden="true">
                 {% if has_responsive_fallback %}
+                  {%- comment -%}
+                    Source packshots are 3200px wide (desktop) and 1080px (mobile)
+                    but the slide never renders wider than ~1180 CSS px. Without a
+                    width parameter Shopify serves the full 3200px file — this is
+                    the LCP element on the homepage, so it is sized explicitly.
+                  {%- endcomment -%}
+                  {%- assign hero_desktop = fallback_asset | asset_url -%}
+                  {%- assign hero_mobile = fallback_mobile_asset | asset_url -%}
                   <picture>
-                    <source media="(max-width: 989px)" srcset="{{ fallback_mobile_asset | asset_url }}">
+                    <source
+                      media="(max-width: 989px)"
+                      srcset="{{ hero_mobile }}&width=640 640w, {{ hero_mobile }}&width=828 828w, {{ hero_mobile }}&width=1080 1080w"
+                      sizes="100vw"
+                    >
                     <img
-                      src="{{ fallback_asset | asset_url }}"
+                      src="{{ hero_desktop }}&width=1600"
+                      srcset="{{ hero_desktop }}&width=1280 1280w, {{ hero_desktop }}&width=1600 1600w, {{ hero_desktop }}&width=1920 1920w, {{ hero_desktop }}&width=2400 2400w"
+                      sizes="(min-width: 1280px) 1180px, calc(100vw - 48px)"
                       width="{{ fallback_width }}"
                       height="{{ fallback_height }}"
                       loading="{{ image_loading }}"
+                      decoding="{% if image_priority == 'high' %}sync{% else %}async{% endif %}"
                       {% if image_priority != 'auto' %}fetchpriority="{{ image_priority }}"{% endif %}
                       alt="{{ image_alt | escape }}"
                     >

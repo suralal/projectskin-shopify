@@ -754,6 +754,16 @@
       this.abortController = new AbortController();
       const signal = this.abortController.signal;
 
+      // Slides past the first ship without a src. Pull them in on intent so the
+      // card costs one image on load instead of up to ten.
+      const hydrateNeighbours = () => {
+        this.hydrate(this.index + 1);
+        this.hydrate(this.index - 1);
+      };
+      this.addEventListener('pointerenter', hydrateNeighbours, { once: true, signal });
+      this.addEventListener('focusin', hydrateNeighbours, { once: true, signal });
+      this.addEventListener('touchstart', hydrateNeighbours, { once: true, passive: true, signal });
+
       this.previousButton?.addEventListener('click', (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -788,16 +798,30 @@
       this.initialized = false;
     }
 
+    hydrate(index) {
+      const total = this.slides?.length;
+      if (!total) return;
+      const slide = this.slides[((index % total) + total) % total];
+      if (!slide || slide.dataset.hydrated === 'true') return;
+      slide.dataset.hydrated = 'true';
+      if (slide.dataset.sizes) slide.sizes = slide.dataset.sizes;
+      if (slide.dataset.srcset) slide.srcset = slide.dataset.srcset;
+      if (slide.dataset.src) slide.src = slide.dataset.src;
+    }
+
     goTo(nextIndex) {
       const total = this.slides.length;
       if (!total) return;
       const wrapped = ((nextIndex % total) + total) % total;
       if (wrapped === this.index) return;
       this.index = wrapped;
+      this.hydrate(this.index);
+      this.hydrate(this.index + 1);
       this.render();
     }
 
     render() {
+      this.hydrate(this.index);
       this.slides.forEach((slide, index) => {
         const active = index === this.index;
         slide.classList.toggle('is-active', active);
@@ -1044,6 +1068,61 @@
 
   initMegaMenus();
   document.addEventListener('shopify:section:load', (event) => initMegaMenus(event.target));
+
+  // Instagram strip: the reels ship with no source and no autoplay. Attach the
+  // file and start playback only when the strip is actually on screen, and stop
+  // again when it leaves. The section sits at the foot of the page, so most
+  // visits never download the video at all.
+  const initGramVideos = (scope = document) => {
+    const videos = [...scope.querySelectorAll('[data-gram-video]:not([data-gram-ready])')];
+    if (!videos.length) return;
+
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    if (reduceMotion?.matches) {
+      // Posters already render; leave them as stills.
+      videos.forEach((video) => { video.dataset.gramReady = 'true'; });
+      return;
+    }
+
+    const load = (video) => {
+      if (video.dataset.gramLoaded === 'true') return;
+      video.dataset.gramLoaded = 'true';
+      const source = document.createElement('source');
+      source.src = video.dataset.src;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      video.load();
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      videos.forEach((video) => {
+        video.dataset.gramReady = 'true';
+        load(video);
+        video.play?.().catch(() => {});
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          load(video);
+          video.play?.().catch(() => {});
+        } else if (video.dataset.gramLoaded === 'true') {
+          video.pause?.();
+        }
+      });
+    }, { rootMargin: '200px 0px' });
+
+    videos.forEach((video) => {
+      video.dataset.gramReady = 'true';
+      observer.observe(video);
+    });
+  };
+
+  initGramVideos();
+  document.addEventListener('shopify:section:load', (event) => initGramVideos(event.target));
   document.addEventListener('click', (event) => {
     if (event.target.closest('[data-mega-menu-item]')) return;
     document.querySelectorAll('[data-mega-menu-item].is-open').forEach((item) => {
