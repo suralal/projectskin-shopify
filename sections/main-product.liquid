@@ -253,9 +253,23 @@
       </div>{% endif %}
 
       <div class="pdp-help-share">
-        <div class="pdp-help-share__copy">
-          <p><strong>{{ section.settings.help_heading }}</strong> {{ section.settings.help_text }}</p>
-          <button type="button" data-pdp-question-open>{{ section.settings.help_button }}</button>
+        <div class="pdp-help-share__concierge">
+          <div class="pdp-help-share__concierge-icon">
+            {% render 'icon', name: 'whatsapp' %}
+          </div>
+          <div class="pdp-help-share__concierge-text">
+            <strong>Have questions before starting?</strong>
+            <p>Our clinical skin specialists can review your routine and active layering.</p>
+          </div>
+          <a
+            href="https://wa.me/919995152200?text=Hi%20Project%20Skin%2C%20I%20have%20a%20question%20about%20{{ product.title | url_encode }}"
+            class="pdp-help-share__concierge-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>Chat on WhatsApp</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </a>
         </div>
       </div>
       {% if section.settings.disclaimer != blank %}<p class="pdp-disclaimer">{{ section.settings.disclaimer }}</p>{% endif %}

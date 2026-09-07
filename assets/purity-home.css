@@ -1819,14 +1819,14 @@
   gap: 18px;
   padding: 2px var(--ps-gutter) 10px 0;
 }
-.ps-ingredient { --ingredient-tone: #6f8f83; --ingredient-ink: #173f35; width: 340px; overflow: hidden; border: 1px solid #e5e1d8; border-radius: 8px; background: #fff; scroll-snap-align: start; transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease; }
-.ps-ingredient--clay { --ingredient-tone: #c58f65; }
-.ps-ingredient--blue { --ingredient-tone: #7f96a2; }
-.ps-ingredient--green { --ingredient-tone: #7f9f73; }
-.ps-ingredient--cream { --ingredient-tone: #c2ad8d; }
-.ps-ingredient--rose { --ingredient-tone: #b98783; }
-.ps-ingredient:hover { border-color: color-mix(in srgb, var(--ingredient-tone) 54%, #d8d4cb); box-shadow: 0 16px 34px rgba(37, 44, 40, .08); transform: translateY(-4px); }
-.ps-ingredient.is-active { border-color: color-mix(in srgb, var(--ingredient-tone) 80%, #355d51); box-shadow: 0 20px 44px rgba(29, 58, 50, .11); }
+.ps-ingredient { --ingredient-tone: #374151; --ingredient-ink: #111827; width: 340px; overflow: hidden; border: 1px solid #e5e1d8; border-radius: 12px; background: #fff; scroll-snap-align: start; transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease; }
+.ps-ingredient--clay,
+.ps-ingredient--blue,
+.ps-ingredient--green,
+.ps-ingredient--cream,
+.ps-ingredient--rose { --ingredient-tone: #374151; }
+.ps-ingredient:hover { border-color: #9ca3af; box-shadow: 0 12px 30px rgba(0, 0, 0, .06); transform: translateY(-3px); }
+.ps-ingredient.is-active { border-color: #111827; box-shadow: 0 16px 36px rgba(0, 0, 0, .08); }
 .ps-ingredient__button { display: flex; width: 100%; min-height: 454px; border: 0; background: transparent; padding: 18px; color: #222220; text-align: left; cursor: pointer; flex-direction: column; }
 .ps-ingredient__button:focus-visible { outline: 3px solid rgba(15, 110, 86, .2); outline-offset: -3px; }
 .ps-ingredient__topline { display: flex; align-items: center; justify-content: space-between; width: 100%; color: #5d5c57; font-size: 11px; font-weight: 700; line-height: 1.2; text-transform: uppercase; }

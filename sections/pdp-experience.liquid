@@ -1,5 +1,8 @@
 {% liquid
   assign show_section = true
+  if product.handle == 'clear-seal'
+    assign show_section = false
+  endif
   assign handle_list = section.settings.product_handles | strip | downcase
   if handle_list != blank
     assign show_section = false

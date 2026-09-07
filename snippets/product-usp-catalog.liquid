@@ -85,23 +85,142 @@
         <p class="pdp-diff__intro">{{ usp_intro }}</p>
       </header>
 
-      <div class="pdp-diff__grid" role="list">
-        <article class="pdp-diff__card" role="listitem">
-          <span class="pdp-diff__index" aria-hidden="true">01</span>
-          <h3>{{ usp_1_title }}</h3>
-          <p>{{ usp_1_text }}</p>
-        </article>
-        <article class="pdp-diff__card" role="listitem">
-          <span class="pdp-diff__index" aria-hidden="true">02</span>
-          <h3>{{ usp_2_title }}</h3>
-          <p>{{ usp_2_text }}</p>
-        </article>
-        <article class="pdp-diff__card" role="listitem">
-          <span class="pdp-diff__index" aria-hidden="true">03</span>
-          <h3>{{ usp_3_title }}</h3>
-          <p>{{ usp_3_text }}</p>
-        </article>
-      </div>
+      {% if product.handle == 'clear-seal' %}
+        <div class="pdp-matrix-container">
+          <div class="pdp-matrix-card">
+            <div class="pdp-matrix-header">
+              <span class="pdp-matrix-tag">Next-Gen Formulation</span>
+              <h3 class="pdp-matrix-title">Clear Seal Liquid Patch vs. Traditional Hydrocolloid Stickers</h3>
+              <p class="pdp-matrix-subtitle">See why liquid barrier technology outperforms conventional circular pimple patches across Indian weather, wearability, and clinical efficacy.</p>
+            </div>
+            
+            <div class="pdp-matrix-table-wrap">
+              <table class="pdp-matrix-table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="pdp-matrix-th pdp-matrix-th--feature">Feature & Benefit</th>
+                    <th scope="col" class="pdp-matrix-th pdp-matrix-th--standard">Traditional Pimple Sticker</th>
+                    <th scope="col" class="pdp-matrix-th pdp-matrix-th--hero">
+                      <div class="pdp-matrix-badge">
+                        <span>Project Skin</span>
+                        <strong>Clear Seal Liquid Patch</strong>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" class="pdp-matrix-td pdp-matrix-td--feature">
+                      <strong>Daytime Visibility</strong>
+                      <span>Discretion under real daylight</span>
+                    </th>
+                    <td class="pdp-matrix-td pdp-matrix-td--standard">
+                      <span class="pdp-matrix-pill pdp-matrix-pill--neutral">Noticeable</span>
+                      Yellowish, opaque circular edge that catches light and draws attention
+                    </td>
+                    <td class="pdp-matrix-td pdp-matrix-td--hero">
+                      <span class="pdp-matrix-pill pdp-matrix-pill--best">100% Invisible</span>
+                      Forms an ultra-thin, crystal-clear film that blends seamlessly into your skin
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="pdp-matrix-td pdp-matrix-td--feature">
+                      <strong>Wear Under Makeup</strong>
+                      <span>Foundation & concealer layer</span>
+                    </th>
+                    <td class="pdp-matrix-td pdp-matrix-td--standard">
+                      <span class="pdp-matrix-pill pdp-matrix-pill--neutral">Prone to Cakeing</span>
+                      Makeup clings to the sticker perimeter, forming visible rings
+                    </td>
+                    <td class="pdp-matrix-td pdp-matrix-td--hero">
+                      <span class="pdp-matrix-pill pdp-matrix-pill--best">Seamless Layering</span>
+                      Dries smooth in 30 seconds; makeup glides directly over without catching
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="pdp-matrix-td pdp-matrix-td--feature">
+                      <strong>Active Treatment</strong>
+                      <span>Medication & exfoliation</span>
+                    </th>
+                    <td class="pdp-matrix-td pdp-matrix-td--standard">
+                      <span class="pdp-matrix-pill pdp-matrix-pill--neutral">Inert or Low-Dose</span>
+                      Passive absorption only; rarely contains calibrated clinical acids
+                    </td>
+                    <td class="pdp-matrix-td pdp-matrix-td--hero">
+                      <span class="pdp-matrix-pill pdp-matrix-pill--best">Triple Clinical Actives</span>
+                      Salicylic Acid (BHA) + Glycolic Acid (AHA) + Niacinamide actively clear congestion
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="pdp-matrix-td pdp-matrix-td--feature">
+                      <strong>Precision Fit & Shape</strong>
+                      <span>Adapts to facial contours</span>
+                    </th>
+                    <td class="pdp-matrix-td pdp-matrix-td--standard">
+                      <span class="pdp-matrix-pill pdp-matrix-pill--neutral">Fixed Pre-Cut Sizes</span>
+                      Rigid circle sizes that lift and crease on the nose, jawline, or lip corners
+                    </td>
+                    <td class="pdp-matrix-td pdp-matrix-td--hero">
+                      <span class="pdp-matrix-pill pdp-matrix-pill--best">Custom Brush/Tap</span>
+                      Adapts dynamically to any size, curve, or cluster of breakout effortlessly
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="pdp-matrix-td pdp-matrix-td--feature">
+                      <strong>Sweat & Humidity Resistance</strong>
+                      <span>Tested for Indian climates</span>
+                    </th>
+                    <td class="pdp-matrix-td pdp-matrix-td--standard">
+                      <span class="pdp-matrix-pill pdp-matrix-pill--neutral">Peels With Perspiration</span>
+                      Hydrocolloid adhesive softens and slides off in heat and humidity
+                    </td>
+                    <td class="pdp-matrix-td pdp-matrix-td--hero">
+                      <span class="pdp-matrix-pill pdp-matrix-pill--best">Locked-On Shield</span>
+                      Resilient breathable barrier stays anchored through sweat, work, and sleep
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="pdp-matrix-chips">
+              <div class="pdp-matrix-chip">
+                <span class="pdp-matrix-chip__kicker">FOR</span>
+                <strong>Active, visible breakouts</strong>
+                <p>Spot-focused treatment & discreet shield in one clinical step.</p>
+              </div>
+              <div class="pdp-matrix-chip">
+                <span class="pdp-matrix-chip__kicker">FEEL</span>
+                <strong>Liquid-to-film texture</strong>
+                <p>Applies as a soothing fluid, dries into a flexible microscopic seal in 30s.</p>
+              </div>
+              <div class="pdp-matrix-chip">
+                <span class="pdp-matrix-chip__kicker">FINISH</span>
+                <strong>Non-drying barrier</strong>
+                <p>Moisture complex shields from picking without leaving flaky dryness.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="pdp-diff__grid" role="list">
+          <article class="pdp-diff__card" role="listitem">
+            <span class="pdp-diff__index" aria-hidden="true">01</span>
+            <h3>{{ usp_1_title }}</h3>
+            <p>{{ usp_1_text }}</p>
+          </article>
+          <article class="pdp-diff__card" role="listitem">
+            <span class="pdp-diff__index" aria-hidden="true">02</span>
+            <h3>{{ usp_2_title }}</h3>
+            <p>{{ usp_2_text }}</p>
+          </article>
+          <article class="pdp-diff__card" role="listitem">
+            <span class="pdp-diff__index" aria-hidden="true">03</span>
+            <h3>{{ usp_3_title }}</h3>
+            <p>{{ usp_3_text }}</p>
+          </article>
+        </div>
+      {% endif %}
     </div>
   </section>
 {% endif %}
