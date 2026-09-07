@@ -283,26 +283,29 @@
 .pdp-info { min-width: 0; }
 
 @media (min-width: 900px) {
-  .pdp-main--thumbnails .pdp-info {
-    max-height: 816px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    overscroll-behavior: contain;
-    padding-right: 6px;
+  .pdp-main__grid {
+    align-items: start;
   }
-  .pdp-main--thumbnails .pdp-info::-webkit-scrollbar {
-    display: none;
+
+  .pdp-gallery,
+  .pdp-gallery--thumbnails {
+    position: sticky;
+    top: calc(var(--header-h, 76px) + 20px);
+    align-self: start;
+  }
+
+  .pdp-main--thumbnails .pdp-info {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
   }
 
   .pdp-thumbnail-gallery__thumbs {
-    max-height: 816px;
+    max-height: calc(100vh - var(--header-h, 76px) - 40px);
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    overscroll-behavior: contain;
   }
   .pdp-thumbnail-gallery__thumbs::-webkit-scrollbar {
     display: none;
