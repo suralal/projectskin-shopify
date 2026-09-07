@@ -281,6 +281,33 @@
   backdrop-filter: blur(7px);
 }
 .pdp-info { min-width: 0; }
+
+@media (min-width: 900px) {
+  .pdp-main--thumbnails .pdp-info {
+    max-height: 816px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overscroll-behavior: contain;
+    padding-right: 6px;
+  }
+  .pdp-main--thumbnails .pdp-info::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pdp-thumbnail-gallery__thumbs {
+    max-height: 816px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overscroll-behavior: contain;
+  }
+  .pdp-thumbnail-gallery__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+}
 .pdp-concern {
   margin: 0 0 8px;
   color: var(--pdp-accent, #1f5146);

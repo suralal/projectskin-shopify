@@ -139,6 +139,9 @@
             if (rail && rail.scrollWidth > rail.clientWidth) {
               rail.scrollTo({ left: thumb.offsetLeft - (rail.clientWidth - thumb.offsetWidth) / 2, behavior: 'smooth' });
             }
+            if (rail && rail.scrollHeight > rail.clientHeight) {
+              rail.scrollTo({ top: thumb.offsetTop - (rail.clientHeight - thumb.offsetHeight) / 2, behavior: 'smooth' });
+            }
           }
         });
         if (counter) counter.textContent = `${activeIndex + 1}/${slides.length}`;
@@ -174,6 +177,96 @@
         if (mediaIndex >= 0) selectMedia(mediaIndex);
       });
       selectMedia(0);
+
+      // PhD Beauty inspired scroll setup:
+      // Keeps left product gallery visible and locks scroll to the right info column until it reaches bottom,
+      // completely eliminating empty white space on the left side during scroll.
+      const info = q('.pdp-info', root);
+      if (stage && info) {
+        const thumbsRail = q('.pdp-thumbnail-gallery__thumbs', thumbnailGallery);
+
+        const syncHeights = () => {
+          if (window.innerWidth >= 900) {
+            const stageH = stage.offsetHeight;
+            if (stageH > 200) {
+              info.style.height = `${stageH}px`;
+              info.style.maxHeight = `${stageH}px`;
+              if (thumbsRail) {
+                thumbsRail.style.maxHeight = `${stageH}px`;
+              }
+            }
+          } else {
+            info.style.height = '';
+            info.style.maxHeight = '';
+            if (thumbsRail) {
+              thumbsRail.style.maxHeight = '';
+            }
+          }
+        };
+
+        syncHeights();
+        window.addEventListener('resize', syncHeights);
+        if (window.ResizeObserver) {
+          const ro = new ResizeObserver(() => syncHeights());
+          ro.observe(stage);
+        }
+
+        let isAnchorJump = false;
+        root.querySelectorAll('a[href^="#"]').forEach((link) => {
+          link.addEventListener('click', () => {
+            isAnchorJump = true;
+            setTimeout(() => { isAnchorJump = false; }, 800);
+          });
+        });
+
+        const isContainerAtTop = () => info.scrollTop <= 2;
+        const isContainerAtBottom = () => Math.ceil(info.scrollHeight - info.scrollTop - info.clientHeight) <= 2;
+
+        let isScrollLocked = false;
+        let lastScrollTop = 0;
+
+        const handleScroll = () => {
+          if (window.innerWidth < 900 || isScrollLocked || isAnchorJump) return;
+          const currentScrollTop = window.pageYOffset;
+          const isScrollingDown = currentScrollTop > lastScrollTop;
+          const isScrollingUp = currentScrollTop < lastScrollTop;
+
+          if (isScrollingDown && !isContainerAtBottom()) {
+            window.scrollTo(0, 0);
+            info.scrollTop += currentScrollTop;
+            isScrollLocked = true;
+            setTimeout(() => { isScrollLocked = false; }, 140);
+          } else if (isScrollingUp && currentScrollTop <= 20 && !isContainerAtTop()) {
+            window.scrollTo(0, 0);
+            info.scrollTop -= Math.abs(currentScrollTop);
+            isScrollLocked = true;
+            setTimeout(() => { isScrollLocked = false; }, 140);
+          }
+          lastScrollTop = currentScrollTop;
+        };
+
+        const handleWheel = (event) => {
+          if (window.innerWidth < 900 || isAnchorJump) return;
+          if (thumbsRail && event.target instanceof Node && thumbsRail.contains(event.target)) return;
+
+          const atPageTop = window.pageYOffset <= 30;
+
+          if (event.deltaY > 0) {
+            if (atPageTop && !isContainerAtBottom()) {
+              event.preventDefault();
+              info.scrollTop += event.deltaY;
+            }
+          } else if (event.deltaY < 0) {
+            if (atPageTop && !isContainerAtTop()) {
+              event.preventDefault();
+              info.scrollTop += event.deltaY;
+            }
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: false });
+        window.addEventListener('wheel', handleWheel, { passive: false, capture: true });
+      }
     }
 
     root.addEventListener('product:variant-change', (event) => {
