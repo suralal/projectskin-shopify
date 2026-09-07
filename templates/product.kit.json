@@ -279,8 +279,9 @@
     "reviews": {
       "type": "judgeme-reviews",
       "settings": {
-        "eyebrow": "Real routines",
-        "heading": "What customers say",
+        "eyebrow": "Customer reviews",
+        "heading": "Ratings & Reviews",
+        "intro": "",
         "padding_top": 56,
         "padding_bottom": 48
       }

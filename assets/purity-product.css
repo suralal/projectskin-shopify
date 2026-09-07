@@ -1590,6 +1590,489 @@
   --jdgm-reviewer-name-color: #111827 !important;
 }
 
+/* ==========================================================================
+   PhD Beauty Inspired "Ratings & Reviews" Section Architecture
+   ========================================================================== */
+.pdp-reviews-phd-root {
+  max-width: 1140px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #111827;
+}
+
+.phd-reviews-head {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.phd-reviews-head h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  font-size: clamp(26px, 3vw, 34px) !important;
+  font-weight: 500 !important;
+  font-style: normal !important;
+  letter-spacing: -0.015em !important;
+  color: #111827 !important;
+  margin: 0 !important;
+}
+.phd-reviews-head p {
+  margin: 8px auto 0;
+  color: #6b7280;
+  font-size: 15px;
+  max-width: 48ch;
+}
+
+/* 3-Column Scoreboard */
+.phd-scoreboard {
+  display: grid;
+  grid-template-columns: 280px 1fr 240px;
+  gap: 36px;
+  align-items: center;
+  padding-bottom: 36px;
+  border-bottom: 1px solid #e8e4dc;
+  margin-bottom: 32px;
+}
+@media (max-width: 960px) {
+  .phd-scoreboard {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-bottom: 28px;
+  }
+}
+
+.phd-scoreboard__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.phd-summary__stars {
+  display: flex;
+  gap: 3px;
+  font-size: 18px;
+  line-height: 1;
+}
+.phd-star {
+  color: #d1d5db;
+  font-size: 1.1em;
+}
+.phd-star.is-filled {
+  color: #111827;
+}
+.phd-summary__score {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 2px;
+}
+.phd-summary__score strong {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+}
+.phd-summary__score span {
+  font-size: 15px;
+  color: #6b7280;
+  font-weight: 400;
+}
+.phd-summary__based {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+.phd-summary__based .phd-check-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  color: #059669;
+}
+
+/* Histogram Distribution */
+.phd-scoreboard__histogram {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 440px;
+}
+.phd-histogram__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 2px 0;
+  transition: opacity 0.2s ease;
+}
+.phd-histogram__row:hover {
+  opacity: 0.8;
+}
+.phd-histogram__stars {
+  display: flex;
+  gap: 2px;
+  font-size: 12px;
+  width: 76px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.phd-histogram__track {
+  flex: 1;
+  height: 8px;
+  background: #f1ede6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.phd-histogram__fill {
+  height: 100%;
+  background: #111827;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+.phd-histogram__count {
+  width: 28px;
+  text-align: right;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Action CTA Buttons */
+.phd-scoreboard__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.phd-btn {
+  display: block;
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+.phd-btn--primary {
+  background: #000000;
+  color: #ffffff !important;
+  border: 1px solid #000000;
+}
+.phd-btn--primary:hover {
+  background: #262626;
+  border-color: #262626;
+  color: #ffffff !important;
+}
+.phd-btn--secondary {
+  background: #ffffff;
+  color: #000000 !important;
+  border: 1px solid #000000;
+}
+.phd-btn--secondary:hover {
+  background: #f9fafb;
+}
+
+/* Customer Photos & Videos */
+.phd-media-section {
+  margin-bottom: 32px;
+}
+.phd-media-heading {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 14px 0;
+  letter-spacing: -0.01em;
+}
+.phd-media-grid {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+}
+.phd-media-item {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e5e1d8;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: #f7f5f0;
+  padding: 0;
+}
+.phd-media-item:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+.phd-media-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Tabs & Filter Bar */
+.phd-filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.phd-tabs {
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid #e5e1d8;
+}
+.phd-tab {
+  background: none;
+  border: none;
+  padding: 10px 0 14px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  position: relative;
+  font-family: inherit;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+.phd-tab:hover {
+  color: #111827;
+}
+.phd-tab.is-active {
+  color: #111827;
+  font-weight: 700;
+}
+.phd-tab.is-active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #111827;
+}
+.phd-sort-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.phd-sort-select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.phd-sort-select {
+  appearance: none;
+  background: #ffffff;
+  border: 1px solid #dcd7ce;
+  border-radius: 4px;
+  padding: 8px 32px 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #111827;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+.phd-sort-select:focus {
+  outline: none;
+  border-color: #111827;
+}
+.phd-sort-chevron {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  color: #6b7280;
+}
+.phd-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #111827;
+  border-radius: 4px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s ease;
+}
+.phd-filter-btn:hover {
+  background: #f7f5f0;
+}
+
+/* Two-Column Review Rows */
+.phd-review-list {
+  display: flex;
+  flex-direction: column;
+}
+.phd-review-row {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 36px;
+  padding: 28px 0;
+  border-top: 1px solid #eeebe4;
+}
+@media (max-width: 768px) {
+  .phd-review-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 22px 0;
+  }
+}
+.phd-review-author {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.phd-author-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.3;
+}
+.phd-author-location {
+  font-size: 13px;
+  color: #6b7280;
+}
+.phd-author-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #059669;
+  margin-top: 2px;
+}
+.phd-author-date {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+.phd-author-tag {
+  display: inline-block;
+  font-size: 12px;
+  color: #4b5563;
+  margin-top: 2px;
+}
+.phd-review-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.phd-review-stars {
+  display: flex;
+  gap: 2px;
+  font-size: 15px;
+  line-height: 1;
+}
+.phd-review-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.phd-review-body {
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: #374151;
+}
+.phd-review-body p {
+  margin: 0;
+}
+.phd-review-thumbnails {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.phd-thumb-item {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e5e1d8;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: #f7f5f0;
+  padding: 0;
+}
+.phd-thumb-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+.phd-thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Fullscreen Lightbox Modal */
+.phd-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  padding: 20px;
+}
+.phd-lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.phd-lightbox__content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.phd-lightbox__img {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.phd-lightbox__close {
+  position: absolute;
+  top: -42px;
+  right: 0;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: transform 0.2s ease;
+}
+.phd-lightbox__close:hover {
+  transform: scale(1.15);
+}
+
 /* Neutralize .jm-review-widget inline CSS variables */
 .jm-review-widget {
   --jm-review-widget-star-and-histogram-color: #ee9b00 !important;

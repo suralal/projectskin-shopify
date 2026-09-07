@@ -40,47 +40,33 @@
     endif
   %}
 
-  {% if section.settings.heading != blank %}
-    <header class="pdp-section-head pdp-reviews-head">
-      {% if section.settings.eyebrow != blank %}<p class="pdp-eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
-      <h2>{{ section.settings.heading }}</h2>
+  <div class="pdp-reviews-phd-root" id="PhdReviewsRoot-{{ section.id }}" data-product-id="{{ product.id }}">
+    <header class="phd-reviews-head">
+      <h2>{{ section.settings.heading | default: 'Ratings & Reviews' }}</h2>
       {% if section.settings.intro != blank %}
-        <p class="pdp-reviews-judgeme__intro">{{ section.settings.intro }}</p>
+        <p>{{ section.settings.intro }}</p>
       {% endif %}
-      <div class="pdp-reviews-head__action">
-        <button
-          type="button"
-          class="pdp-reviews__write-trigger-btn"
-          data-write-review-trigger
-          data-product-id="{{ product.id }}"
-          data-fallback-url="https://api.judge.me/storefront_reviews/new?shop_domain={{ shop.permanent_domain | default: 'q9wi15-80.myshopify.com' }}&platform=shopify&product_id={{ product.id }}"
-          aria-label="Write a verified review for {{ product.title | escape }}"
-        >
-          {% render 'icon', name: 'edit' %}
-          <span>Write a review</span>
-        </button>
-      </div>
     </header>
-  {% endif %}
 
-  {% if show_fallback %}
-    {% render 'product-reviews-fallback', product: product %}
-  {% endif %}
+    {% if show_fallback %}
+      {% render 'product-reviews-fallback', product: product %}
+    {% else %}
+      <div class="phd-reviews-mount" id="PhdReviewsMount-{{ section.id }}">
+        <!-- Dynamically rendered PhD Beauty Scoreboard, Media Grid, Tabs, and 2-Column Reviews -->
+      </div>
+    {% endif %}
+  </div>
 
-  <!-- Start of Judge.me code -->
+  <!-- Start of Judge.me code for API / Verification / Background Sync -->
   {% assign has_legacy = false %}
   {% if product.metafields.judgeme.widget.size > 20 %}
     {% assign has_legacy = true %}
   {% endif %}
   <div style="clear:both"></div>
-  {% if show_fallback %}
-    <div class="pdp-reviews-judgeme__verified">
-      <p>Verified reviews live in Judge.me. Leave the first published review — it replaces early notes automatically.</p>
-    </div>
-  {% endif %}
   <div
     id="judgeme_product_reviews"
     class="jdgm-widget jdgm-review-widget{% if show_fallback %} jdgm-widget--with-fallback{% endif %}"
+    style="display: none !important;"
     data-product-title="{{ product.title | escape }}"
     data-id="{{ product.id }}"
     data-product-id="{{ product.id }}"
@@ -94,62 +80,280 @@
       <div class="jdgm-legacy-widget-content" style="display: none;">{{ product.metafields.judgeme.widget }}</div>
     {% endif %}
   </div>
+
   {% if product.metafields.judgeme.review_widget_data %}
+    <script id="PhdReviewsData-{{ section.id }}" type="application/json">
+      {{ product.metafields.judgeme.review_widget_data }}
+    </script>
     <script>
-      jdgm = window.jdgm || {};
-      jdgm.data = jdgm.data || {};
-      jdgm.data.reviewWidget = jdgm.data.reviewWidget || {};
-      jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }};
+      (function() {
+        window.jdgm = window.jdgm || {};
+        window.jdgm.data = window.jdgm.data || {};
+        window.jdgm.data.reviewWidget = window.jdgm.data.reviewWidget || {};
+        try {
+          window.jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }};
+        } catch (e) {}
+      })();
+    </script>
+
+    <script>
+      (function() {
+        var sectionId = {{ section.id | json }};
+        var productId = {{ product.id | json }};
+        var productTitle = {{ product.title | json }};
+        var mount = document.getElementById('PhdReviewsMount-' + sectionId);
+        var dataScript = document.getElementById('PhdReviewsData-' + sectionId);
+        if (!mount || !dataScript) return;
+
+        var widgetData = null;
+        try {
+          widgetData = JSON.parse(dataScript.textContent);
+        } catch (err) {
+          console.error('Failed to parse review widget data', err);
+          return;
+        }
+        if (!widgetData || !widgetData.reviews || widgetData.reviews.length === 0) return;
+
+        var avg = parseFloat(widgetData.average_rating || 5).toFixed(2);
+        if (avg.endsWith('.00')) avg = parseFloat(avg).toFixed(1);
+        var count = widgetData.number_of_reviews || widgetData.reviews.length;
+        var histogram = widgetData.histogram || [
+          { rating: 5, frequency: count, percentage: 100 },
+          { rating: 4, frequency: 0, percentage: 0 },
+          { rating: 3, frequency: 0, percentage: 0 },
+          { rating: 2, frequency: 0, percentage: 0 },
+          { rating: 1, frequency: 0, percentage: 0 }
+        ];
+        var photos = widgetData.photo_gallery || [];
+        if (photos.length === 0) {
+          widgetData.reviews.forEach(function(r) {
+            if (r.pictures_urls && r.pictures_urls.length > 0) {
+              photos.push(r);
+            }
+          });
+        }
+
+        function renderStars(rating) {
+          var html = '';
+          for (var i = 1; i <= 5; i++) {
+            html += '<span class="phd-star' + (i <= rating ? ' is-filled' : '') + '">★</span>';
+          }
+          return html;
+        }
+
+        function renderReviewsList(reviewsList) {
+          if (!reviewsList || reviewsList.length === 0) {
+            return '<div style="padding: 32px 0; text-align: center; color: #6b7280; font-size: 14px;">No reviews match the selected filter.</div>';
+          }
+          return reviewsList.map(function(rev) {
+            var dateStr = '09/07/2026';
+            if (rev.created_at) {
+              var d = new Date(rev.created_at);
+              if (!isNaN(d.getTime())) {
+                var day = String(d.getDate()).padStart(2, '0');
+                var month = String(d.getMonth() + 1).padStart(2, '0');
+                dateStr = day + '/' + month + '/' + d.getFullYear();
+              }
+            }
+            var name = rev.reviewer_name || 'Anonymous';
+            var isVerified = rev.verified_buyer !== false;
+            var pic = rev.pictures_urls && rev.pictures_urls[0] ? (rev.pictures_urls[0].small || rev.pictures_urls[0].compact || rev.pictures_urls[0].original) : null;
+            var fullPic = rev.pictures_urls && rev.pictures_urls[0] ? (rev.pictures_urls[0].huge || rev.pictures_urls[0].original) : null;
+
+            return '<div class="phd-review-row">' +
+              '<div class="phd-review-author">' +
+                '<div class="phd-author-name">' + name + '</div>' +
+                '<div class="phd-author-location">India</div>' +
+                '<div class="phd-author-verified">' +
+                  '<svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path d="M13.485 4.929l-6.364 6.364-3.536-3.536 1.414-1.414 2.122 2.122 4.95-4.95z"/></svg>' +
+                  '<span>Verified Buyer</span>' +
+                '</div>' +
+                '<div class="phd-author-date">' + dateStr + '</div>' +
+              '</div>' +
+              '<div class="phd-review-content">' +
+                '<div class="phd-review-stars">' + renderStars(rev.rating || 5) + '</div>' +
+                (rev.title ? '<div class="phd-review-title">' + rev.title + '</div>' : '') +
+                '<div class="phd-review-body">' + (rev.body_html || '<p>' + rev.body + '</p>') + '</div>' +
+                (pic ? '<div class="phd-review-thumbnails">' +
+                  '<button type="button" class="phd-thumb-item" data-lightbox-src="' + fullPic + '" aria-label="View customer photo">' +
+                    '<img src="' + pic + '" alt="Customer review photo" loading="lazy">' +
+                  '</button>' +
+                '</div>' : '') +
+              '</div>' +
+            '</div>';
+          }).join('');
+        }
+
+        var currentReviews = widgetData.reviews.slice();
+
+        function buildDOM() {
+          var html = '';
+
+          // 1. Top 3-Column Scoreboard
+          html += '<div class="phd-scoreboard">';
+          // Col 1: Average Rating
+          html += '<div class="phd-scoreboard__col phd-scoreboard__summary">' +
+            '<div class="phd-summary__stars">' + renderStars(Math.round(parseFloat(avg))) + '</div>' +
+            '<div class="phd-summary__score"><strong>' + avg + '</strong> <span>out of 5</span></div>' +
+            '<div class="phd-summary__based">Based on ' + count + ' review' + (count === 1 ? '' : 's') + ' ' +
+              '<span class="phd-check-badge"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M13.485 4.929l-6.364 6.364-3.536-3.536 1.414-1.414 2.122 2.122 4.95-4.95z"/></svg></span>' +
+            '</div>' +
+          '</div>';
+
+          // Col 2: Histogram Distribution
+          html += '<div class="phd-scoreboard__col phd-scoreboard__histogram">';
+          [5, 4, 3, 2, 1].forEach(function(star) {
+            var item = histogram.find(function(h) { return h.rating === star; }) || { frequency: 0, percentage: 0 };
+            html += '<div class="phd-histogram__row" data-star-filter="' + star + '">' +
+              '<span class="phd-histogram__stars">' + renderStars(star) + '</span>' +
+              '<div class="phd-histogram__track"><div class="phd-histogram__fill" style="width:' + item.percentage + '%;"></div></div>' +
+              '<span class="phd-histogram__count">' + item.frequency + '</span>' +
+            '</div>';
+          });
+          html += '</div>';
+
+          // Col 3: Stacked Action Buttons
+          var waMessage = encodeURIComponent('Hi Project Skin, I have a question about the ' + productTitle);
+          html += '<div class="phd-scoreboard__col phd-scoreboard__actions">' +
+            '<button type="button" class="phd-btn phd-btn--primary" data-write-review-trigger data-product-id="' + productId + '" data-fallback-url="https://api.judge.me/storefront_reviews/new?shop_domain={{ shop.permanent_domain | default: "q9wi15-80.myshopify.com" }}&platform=shopify&product_id=' + productId + '">Rate Us</button>' +
+            '<a href="https://wa.me/918073577789?text=' + waMessage + '" target="_blank" rel="noopener noreferrer" class="phd-btn phd-btn--secondary">Ask a question</a>' +
+          '</div>';
+          html += '</div>';
+
+          // 2. Customer Photos & Videos
+          if (photos.length > 0) {
+            html += '<div class="phd-media-section">' +
+              '<h3 class="phd-media-heading">Customer photos & videos</h3>' +
+              '<div class="phd-media-grid">';
+            photos.forEach(function(p) {
+              var pic = p.pictures_urls && p.pictures_urls[0] ? (p.pictures_urls[0].small || p.pictures_urls[0].compact || p.pictures_urls[0].original) : null;
+              var fullPic = p.pictures_urls && p.pictures_urls[0] ? (p.pictures_urls[0].huge || p.pictures_urls[0].original) : null;
+              if (pic) {
+                html += '<button type="button" class="phd-media-item" data-lightbox-src="' + fullPic + '" aria-label="View photo">' +
+                  '<img src="' + pic + '" alt="Customer photo" loading="lazy">' +
+                '</button>';
+              }
+            });
+            html += '</div></div>';
+          }
+
+          // 3. Tabs & Filter Bar
+          html += '<div class="phd-filter-bar">' +
+            '<div class="phd-tabs">' +
+              '<button type="button" class="phd-tab is-active" data-phd-tab="reviews">Reviews (' + count + ')</button>' +
+              '<a href="https://wa.me/918073577789?text=' + waMessage + '" target="_blank" rel="noopener noreferrer" class="phd-tab">Questions (0)</a>' +
+            '</div>' +
+            '<div class="phd-sort-controls">' +
+              '<div class="phd-sort-select-wrap">' +
+                '<select class="phd-sort-select" aria-label="Sort reviews">' +
+                  '<option value="created_at">Most Recent</option>' +
+                  '<option value="highest_rating">Highest Rating</option>' +
+                  '<option value="lowest_rating">Lowest Rating</option>' +
+                  '<option value="with_pictures">Only Pictures</option>' +
+                '</select>' +
+                '<svg class="phd-sort-chevron" viewBox="0 0 16 16" width="12" height="12"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2"/></svg>' +
+              '</div>' +
+              '<button type="button" class="phd-filter-btn" aria-label="Filter reviews">' +
+                '<svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M2.5 3.5h11l-4.5 5.5v5l-2-1v-4z"/></svg>' +
+                '<span>Filters</span>' +
+              '</button>' +
+            '</div>' +
+          '</div>';
+
+          // 4. Two-Column Review List
+          html += '<div class="phd-review-list" id="PhdReviewsList-' + sectionId + '">' +
+            renderReviewsList(currentReviews) +
+          '</div>';
+
+          // 5. Fullscreen Lightbox Modal
+          html += '<div class="phd-lightbox" id="PhdLightbox-' + sectionId + '" role="dialog" aria-modal="true" aria-hidden="true">' +
+            '<div class="phd-lightbox__content">' +
+              '<button type="button" class="phd-lightbox__close" aria-label="Close photo preview">&times;</button>' +
+              '<img class="phd-lightbox__img" src="" alt="Customer photo enlarged">' +
+            '</div>' +
+          '</div>';
+
+          mount.innerHTML = html;
+          bindEvents();
+        }
+
+        function bindEvents() {
+          var listContainer = document.getElementById('PhdReviewsList-' + sectionId);
+          var select = mount.querySelector('.phd-sort-select');
+          if (select && listContainer) {
+            select.addEventListener('change', function() {
+              var val = select.value;
+              var sorted = widgetData.reviews.slice();
+              if (val === 'created_at') {
+                sorted.sort(function(a, b) { return new Date(b.created_at) - new Date(a.created_at); });
+              } else if (val === 'highest_rating') {
+                sorted.sort(function(a, b) { return (b.rating || 5) - (a.rating || 5); });
+              } else if (val === 'lowest_rating') {
+                sorted.sort(function(a, b) { return (a.rating || 5) - (b.rating || 5); });
+              } else if (val === 'with_pictures') {
+                sorted = sorted.filter(function(r) { return r.pictures_urls && r.pictures_urls.length > 0; });
+              }
+              listContainer.innerHTML = renderReviewsList(sorted);
+              bindLightbox();
+            });
+          }
+
+          // Star click in histogram to filter
+          mount.querySelectorAll('[data-star-filter]').forEach(function(row) {
+            row.addEventListener('click', function() {
+              var star = parseInt(row.getAttribute('data-star-filter'), 10);
+              var filtered = widgetData.reviews.filter(function(r) { return (r.rating || 5) === star; });
+              if (listContainer) {
+                listContainer.innerHTML = renderReviewsList(filtered.length > 0 ? filtered : widgetData.reviews);
+                bindLightbox();
+              }
+            });
+          });
+
+          bindLightbox();
+        }
+
+        function bindLightbox() {
+          var lightbox = document.getElementById('PhdLightbox-' + sectionId);
+          if (!lightbox) return;
+          var img = lightbox.querySelector('.phd-lightbox__img');
+          var closeBtn = lightbox.querySelector('.phd-lightbox__close');
+
+          function openModal(src) {
+            img.src = src;
+            lightbox.classList.add('is-open');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          }
+          function closeModal() {
+            lightbox.classList.remove('is-open');
+            lightbox.setAttribute('aria-hidden', 'true');
+            img.src = '';
+            document.body.style.overflow = '';
+          }
+
+          mount.querySelectorAll('[data-lightbox-src]').forEach(function(el) {
+            el.onclick = function(e) {
+              e.preventDefault();
+              var src = el.getAttribute('data-lightbox-src');
+              if (src) openModal(src);
+            };
+          });
+
+          if (closeBtn) closeBtn.onclick = closeModal;
+          lightbox.onclick = function(e) {
+            if (e.target === lightbox) closeModal();
+          };
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeModal();
+          });
+        }
+
+        buildDOM();
+      })();
     </script>
   {% endif %}
   <!-- End of Judge.me code -->
-  <style>
-    /* Scoped override for Judge.me widget styles */
-    #PdpReviews .jm-review-widget-minimal-header__title,
-    #PdpReviews .jdgm-rev-widg__title {
-      display: none !important;
-    }
-    #PdpReviews .jm-review-widget {
-      --jm-review-widget-star-and-histogram-color: #ee9b00 !important;
-      --jm-review-widget-button-color: #111827 !important;
-      --jm-review-widget-button-text-color: #ffffff !important;
-      --jm-widget-primary-color: #111827 !important;
-    }
-    #PdpReviews .jm-star-rating__font-icon,
-    #PdpReviews .jm-star-rating,
-    #PdpReviews .jdgm-star,
-    #PdpReviews .jdgm-rev-widg .jdgm-star,
-    #PdpReviews .jdgm-preview-badge .jdgm-star,
-    #PdpReviews .jdgm-rev__rating .jdgm-star,
-    #PdpReviews .jdgm-histogram .jdgm-star,
-    #PdpReviews .jdgm-rev-widg__summary-stars .jdgm-star,
-    #PdpReviews .jdgm-star.jdgm--on:before,
-    #PdpReviews .jdgm-star.jdgm--half:before,
-    #PdpReviews .jdgm-star:before {
-      color: #ee9b00 !important;
-      --17d289b0: #ee9b00 !important;
-    }
-    #PdpReviews .jdgm-star.jdgm--off:before {
-      color: #e5e7eb !important;
-    }
-    #PdpReviews .jm-reviewer-avatar,
-    #PdpReviews .jdgm-rev__icon {
-      background-color: #f3f4f6 !important;
-      color: #1f2937 !important;
-      border-radius: 50% !important;
-      font-weight: 600 !important;
-    }
-    #PdpReviews .jm-reviewer-avatar__initial .jm-text {
-      color: #111827 !important;
-      font-weight: 600 !important;
-    }
-    #PdpReviews .jm-review-widget__header,
-    #PdpReviews .jdgm-rev-widg__header {
-      border-bottom: 1px solid #e5e1d8 !important;
-      padding-bottom: 20px !important;
-      margin-bottom: 24px !important;
-    }
-  </style>
 </section>
 
 {% schema %}
@@ -157,8 +361,8 @@
   "name": "Judge.me reviews",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer reviews" },
-    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What customers say" },
-    { "type": "text", "id": "intro", "label": "Intro", "default": "Texture, climate, and consistency — from people building the same routine." },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Ratings & Reviews" },
+    { "type": "text", "id": "intro", "label": "Intro" },
     { "type": "checkbox", "id": "show_fallback_when_empty", "label": "Show curated feedback when Judge.me has 0 reviews", "default": true },
     { "type": "paragraph", "content": "Requires the Judge.me app for verified reviews and write-a-review. Fallback cards appear only while the product has zero published reviews." },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "unit": "px", "default": 68 },

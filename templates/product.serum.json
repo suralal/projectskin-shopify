@@ -334,8 +334,8 @@
       "type": "judgeme-reviews",
       "settings": {
         "eyebrow": "Customer reviews",
-        "heading": "What customers say",
-        "intro": "Texture, climate, and consistency — from people building the same routine.",
+        "heading": "Ratings & Reviews",
+        "intro": "",
         "show_fallback_when_empty": true,
         "padding_top": 68,
         "padding_bottom": 64
