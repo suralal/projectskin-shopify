@@ -2377,6 +2377,33 @@
   color: #4b5563 !important;
 }
 
+/* Hide YouTube URL input completely from Judge.me review form */
+.jdgm-write-review-modal .jdgm-write-review-modal__field-group:has(#yt_url),
+.jdgm-write-review-modal [for="yt_url"],
+.jdgm-write-review-modal #yt_url,
+.jdgm-write-review-modal [for="yt_url"] + input,
+.jdgm-write-review-modal #jdgm-yt_url-error {
+  display: none !important;
+}
+
+/* Close button in review modal */
+.jdgm-write-review-modal__close-btn {
+  display: flex !important;
+  opacity: 1 !important;
+  position: absolute !important;
+  top: 18px !important;
+  right: 18px !important;
+  width: 32px !important;
+  height: 32px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #f3f4f6 !important;
+  border-radius: 50% !important;
+  border: none !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+}
+
 /* Submit Button */
 .jdgm-write-review-modal__nav-btn-next {
   background: #111827 !important;

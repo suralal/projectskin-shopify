@@ -324,19 +324,18 @@
     const tryOpenModal = () => {
       if (window.jdgm && window.jdgm._WriteReviewModal && window.jdgm.$ && typeof window.jdgm.$ === 'function' && productId) {
         try {
-          // Configure single-view compact theme and disable multi-step verification friction
+          // Disable YouTube video review URL and style modal button
           if (window.jdgmSettings) {
-            window.jdgmSettings.review_form_theme = 'compact';
-            window.jdgmSettings.require_verification_before_submit = false;
+            window.jdgmSettings.enable_review_videos = false;
             window.jdgmSettings.modal_write_review_flow = true;
             window.jdgmSettings.review_form_button_color = '#111827';
             window.jdgmSettings.review_form_button_text_color = '#ffffff';
           }
           document.querySelectorAll('.jdgm-review-widget-modal.jdgm-write-review-modal').forEach((m) => m.remove());
           const modal = new window.jdgm._WriteReviewModal(window.jdgm.$);
-          modal.setup('jdgm-review-widget-modal', productId, { isPreVerified: true }).then((ok) => {
+          modal.setup('jdgm-review-widget-modal', productId).then((ok) => {
             if (ok) {
-              modal.showModalPage(2);
+              modal.showModalPage();
             }
           }).catch((err) => {
             console.warn('[Judge.me] Modal setup error:', err);
