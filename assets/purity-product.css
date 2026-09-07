@@ -1515,17 +1515,40 @@
   font-size: 14px;
   line-height: 1.5;
 }
-.pdp-section-head--with-action {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 20px;
-  flex-wrap: wrap;
+/* Reviews Header & Action Trigger */
+.pdp-reviews-head {
+  max-width: 760px;
+  margin: 0 auto 36px;
+  text-align: center;
 }
-.pdp-section-head--with-action .pdp-section-head__content {
-  flex: 1;
-  min-width: 260px;
+.pdp-reviews-head .pdp-eyebrow {
+  margin: 0 0 10px;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.pdp-reviews-head h2 {
+  margin: 0;
+  font-family: Fraunces, "Purity Editorial", Georgia, serif;
+  font-size: clamp(38px, 4.2vw, 54px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  color: #111827;
+}
+.pdp-reviews-head .pdp-reviews-judgeme__intro {
+  margin: 12px auto 0;
+  max-width: 48ch;
+  color: #615c55;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.pdp-reviews-head__action {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
 }
 .pdp-reviews__write-trigger-btn {
   display: inline-flex;
@@ -1535,23 +1558,144 @@
   color: #ffffff;
   border: 1px solid #111827;
   border-radius: 9999px;
-  padding: 10px 22px;
-  font-family: inherit;
+  padding: 10px 24px;
+  font-family: "Instrument Sans", sans-serif;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.01em;
   cursor: pointer;
   transition: all 0.2s ease;
-  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(17, 24, 39, 0.08);
 }
 .pdp-reviews__write-trigger-btn:hover {
   background: #1f2937;
   color: #ffffff;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(17, 24, 39, 0.14);
 }
 .pdp-reviews__write-trigger-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
+}
+
+/* Eliminate Judge.me Neon Pink Theme (#FF3780) -> Brand Amber Gold & Monochrome */
+:root {
+  --jdgm-primary-color: #111827 !important;
+  --jdgm-secondary-color: #f3f4f6 !important;
+  --jdgm-star-color: #ee9b00 !important;
+  --jdgm-write-review-text-color: #ffffff !important;
+  --jdgm-write-review-bg-color: #111827 !important;
+  --jdgm-paginate-color: #111827 !important;
+  --jdgm-border-radius: 8px !important;
+  --jdgm-reviewer-name-color: #111827 !important;
+}
+
+/* Neutralize .jm-review-widget inline CSS variables */
+.jm-review-widget {
+  --jm-review-widget-star-and-histogram-color: #ee9b00 !important;
+  --jm-review-widget-button-color: #111827 !important;
+  --jm-review-widget-button-text-color: #ffffff !important;
+  --jm-widget-primary-color: #111827 !important;
+}
+
+/* Warm Amber Gold Stars across ALL Judge.me Components (.jm and .jdgm) */
+.jm-star-rating__font-icon,
+.jm-star-rating,
+.jdgm-star,
+.jdgm-rev-widg .jdgm-star,
+.jdgm-preview-badge .jdgm-star,
+.jdgm-rev__rating .jdgm-star,
+.jdgm-histogram .jdgm-star,
+.jdgm-rev-widg__summary-stars .jdgm-star,
+.jdgm-star.jdgm--on:before,
+.jdgm-star.jdgm--half:before,
+.jdgm-star:before {
+  color: #ee9b00 !important;
+  --17d289b0: #ee9b00 !important;
+}
+.jdgm-star.jdgm--off:before {
+  color: #e5e7eb !important;
+}
+
+/* Neutral Avatar & Badges */
+.jm-reviewer-avatar,
+.jdgm-rev__icon {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+  border-radius: 50% !important;
+  font-weight: 600 !important;
+}
+.jm-reviewer-avatar__initial .jm-text {
+  color: #111827 !important;
+  font-weight: 600 !important;
+}
+.jdgm-rev[data-verified-buyer="true"] .jdgm-rev__icon:after,
+.jdgm-rev__buyer-badge,
+.jm-reviewer-verified-badge {
+  background-color: #059669 !important; /* Clinical green badge */
+  color: #ffffff !important;
+}
+
+/* Hide Redundant Judge.me "Customer Reviews" Heading */
+.jm-review-widget-minimal-header__title,
+.jdgm-rev-widg__title {
+  display: none !important;
+}
+
+/* Polished Judge.me Widget Toolbar & List */
+.jm-review-widget__header,
+.jdgm-rev-widg__header {
+  border-bottom: 1px solid #e5e1d8 !important;
+  padding-bottom: 20px !important;
+  margin-bottom: 24px !important;
+}
+.jdgm-rev-widg__summary {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-family: "Instrument Sans", sans-serif !important;
+}
+.jdgm-rev-widg__summary-average {
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+}
+.jdgm-rev-widg__summary-text {
+  font-size: 14px !important;
+  color: #6b7280 !important;
+}
+.jdgm-sort-dropdown,
+.jdgm-filter-btn {
+  border: 1px solid #e5e1d8 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #374151 !important;
+  font-size: 13px !important;
+  padding: 6px 12px !important;
+  transition: all 0.2s ease !important;
+}
+.jdgm-sort-dropdown:hover,
+.jdgm-filter-btn:hover {
+  border-color: #111827 !important;
+  color: #111827 !important;
+}
+.jdgm-rev {
+  padding: 24px 0 !important;
+  border-bottom: 1px solid #f0ede6 !important;
+}
+.jdgm-rev__author {
+  font-weight: 600 !important;
+  color: #111827 !important;
+  font-size: 14px !important;
+}
+.jdgm-rev__timestamp {
+  font-size: 13px !important;
+  color: #9ca3af !important;
+}
+.jdgm-rev__body {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  color: #374151 !important;
 }
 
 .pdp-reviews-judgeme .jdgm-widget--with-fallback .jm-review-widget-minimal-header,

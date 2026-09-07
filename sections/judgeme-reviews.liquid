@@ -41,15 +41,13 @@
   %}
 
   {% if section.settings.heading != blank %}
-    <header class="pdp-section-head pdp-section-head--with-action">
-      <div class="pdp-section-head__content">
-        {% if section.settings.eyebrow != blank %}<p class="pdp-eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
-        <h2>{{ section.settings.heading }}</h2>
-        {% if section.settings.intro != blank %}
-          <p class="pdp-reviews-judgeme__intro">{{ section.settings.intro }}</p>
-        {% endif %}
-      </div>
-      <div class="pdp-section-head__action">
+    <header class="pdp-section-head pdp-reviews-head">
+      {% if section.settings.eyebrow != blank %}<p class="pdp-eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+      <h2>{{ section.settings.heading }}</h2>
+      {% if section.settings.intro != blank %}
+        <p class="pdp-reviews-judgeme__intro">{{ section.settings.intro }}</p>
+      {% endif %}
+      <div class="pdp-reviews-head__action">
         <button
           type="button"
           class="pdp-reviews__write-trigger-btn"
@@ -105,6 +103,53 @@
     </script>
   {% endif %}
   <!-- End of Judge.me code -->
+  <style>
+    /* Scoped override for Judge.me widget styles */
+    #PdpReviews .jm-review-widget-minimal-header__title,
+    #PdpReviews .jdgm-rev-widg__title {
+      display: none !important;
+    }
+    #PdpReviews .jm-review-widget {
+      --jm-review-widget-star-and-histogram-color: #ee9b00 !important;
+      --jm-review-widget-button-color: #111827 !important;
+      --jm-review-widget-button-text-color: #ffffff !important;
+      --jm-widget-primary-color: #111827 !important;
+    }
+    #PdpReviews .jm-star-rating__font-icon,
+    #PdpReviews .jm-star-rating,
+    #PdpReviews .jdgm-star,
+    #PdpReviews .jdgm-rev-widg .jdgm-star,
+    #PdpReviews .jdgm-preview-badge .jdgm-star,
+    #PdpReviews .jdgm-rev__rating .jdgm-star,
+    #PdpReviews .jdgm-histogram .jdgm-star,
+    #PdpReviews .jdgm-rev-widg__summary-stars .jdgm-star,
+    #PdpReviews .jdgm-star.jdgm--on:before,
+    #PdpReviews .jdgm-star.jdgm--half:before,
+    #PdpReviews .jdgm-star:before {
+      color: #ee9b00 !important;
+      --17d289b0: #ee9b00 !important;
+    }
+    #PdpReviews .jdgm-star.jdgm--off:before {
+      color: #e5e7eb !important;
+    }
+    #PdpReviews .jm-reviewer-avatar,
+    #PdpReviews .jdgm-rev__icon {
+      background-color: #f3f4f6 !important;
+      color: #1f2937 !important;
+      border-radius: 50% !important;
+      font-weight: 600 !important;
+    }
+    #PdpReviews .jm-reviewer-avatar__initial .jm-text {
+      color: #111827 !important;
+      font-weight: 600 !important;
+    }
+    #PdpReviews .jm-review-widget__header,
+    #PdpReviews .jdgm-rev-widg__header {
+      border-bottom: 1px solid #e5e1d8 !important;
+      padding-bottom: 20px !important;
+      margin-bottom: 24px !important;
+    }
+  </style>
 </section>
 
 {% schema %}
