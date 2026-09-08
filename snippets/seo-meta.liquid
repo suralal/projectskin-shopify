@@ -1,6 +1,14 @@
 {% liquid
   if request.page_type == 'index'
     assign seo_title = 'Project Skin™ – Science-Backed Acne Skincare Online in India'
+  elsif request.page_type == 'collection'
+    if collection.handle == 'all' or collection.title == 'Products' or collection.title == blank
+      assign seo_title = 'Targeted Acne Care & Barrier Formulations for Indian Skin | Project Skin'
+    elsif collection.metafields.seo.title != blank
+      assign seo_title = collection.metafields.seo.title
+    else
+      assign seo_title = collection.title | append: ' | Clinical Skincare for Indian Skin – Project Skin'
+    endif
   else
     assign seo_title = page_title
     if current_tags
@@ -11,17 +19,39 @@
       assign seo_title = seo_title | append: ' – ' | append: shop.name
     endunless
   endif
+
   assign default_brand_desc = 'Science-backed acne skincare engineered for Indian skin. Real active concentrations, lightweight barrier-first formulas, and dermatologist guidance.'
-  assign seo_description = page_description | default: shop.description | default: default_brand_desc | strip_html | strip_newlines | truncate: 160
+  if request.page_type == 'collection'
+    if collection.metafields.seo.description != blank
+      assign seo_description = collection.metafields.seo.description | strip_html | strip_newlines | truncate: 160
+    elsif collection.handle == 'all' or collection.title == 'Products' or collection.title == blank
+      assign seo_description = 'Shop dermatologist-formulated acne care & barrier repair engineered for Indian humidity and UV. Active niacinamide, salicylic acid, ceramides, and SPF 50+.'
+    elsif collection.description != blank
+      assign seo_description = collection.description | strip_html | strip_newlines | truncate: 160
+    else
+      assign seo_description = 'Explore clinical skincare formulations engineered for Indian skin by Project Skin. Cleanse, treat, hydrate, and protect with proven actives.'
+    endif
+  else
+    assign seo_description = page_description | default: shop.description | default: default_brand_desc | strip_html | strip_newlines | truncate: 160
+  endif
+
+  assign share_image = page_image | default: collection.image | default: collection.products.first.featured_image | default: settings.share_image
 %}
 <title>{{ seo_title | escape }}</title>
 {% if seo_description != blank %}<meta name="description" content="{{ seo_description | escape }}">{% endif %}
 <link rel="canonical" href="{{ canonical_url }}">
 <link rel="alternate" hreflang="en-IN" href="{{ canonical_url }}">
 <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
-<meta name="geo.region" content="IN">
-<meta name="geo.placename" content="India">
+
+<!-- GEO & Regional Authority Tags -->
+<meta name="geo.region" content="IN-KA">
+<meta name="geo.placename" content="Bengaluru, Karnataka, India">
+<meta name="geo.position" content="12.9716;77.5946">
+<meta name="ICBM" content="12.9716, 77.5946">
 <meta name="target-country" content="IN">
+<meta name="coverage" content="India">
+<meta name="distribution" content="India">
+
 {% if settings.google_site_verification != blank %}
   <meta name="google-site-verification" content="{{ settings.google_site_verification | escape }}">
 {% endif %}
@@ -61,13 +91,21 @@
 <meta name="theme-color" content="#1f473e">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 {% if request.page_type == 'search' or request.page_type == 'cart' or request.page_type == '404' %}<meta name="robots" content="noindex,follow">{% else %}<meta name="robots" content="index,follow,max-image-preview:large">{% endif %}
+
+<!-- OpenGraph / Social Metadata -->
+<meta property="og:locale" content="en_IN">
 <meta property="og:site_name" content="{{ shop.name | escape }}">
 <meta property="og:url" content="{{ canonical_url }}">
 <meta property="og:title" content="{{ seo_title | escape }}">
 <meta property="og:type" content="{% if request.page_type == 'product' %}product{% else %}website{% endif %}">
 {% if seo_description != blank %}<meta property="og:description" content="{{ seo_description | escape }}">{% endif %}
-{% if page_image %}<meta property="og:image" content="https:{{ page_image | image_url: width: 1200 }}"><meta property="og:image:width" content="1200">{% endif %}
+{% if share_image %}
+  <meta property="og:image" content="https:{{ share_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="1200">
+{% endif %}
+
+<!-- Twitter Card Metadata -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ seo_title | escape }}">
 {% if seo_description != blank %}<meta name="twitter:description" content="{{ seo_description | escape }}">{% endif %}
-{% if page_image %}<meta name="twitter:image" content="https:{{ page_image | image_url: width: 1200 }}">{% endif %}
+{% if share_image %}<meta name="twitter:image" content="https:{{ share_image | image_url: width: 1200 }}">{% endif %}

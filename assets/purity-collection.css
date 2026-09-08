@@ -1,0 +1,1257 @@
+/* ==========================================================================
+   Project Skin — Elevated Clinical Collection Architecture (Phase 1)
+   ========================================================================== */
+
+/* 1. Luminous Warm Alabaster Canvas */
+body.template-collection,
+body.page-type-collection {
+  background-color: #f7f6f2 !important;
+  color: #171713;
+}
+
+.template-collection #MainContent {
+  background-color: #f7f6f2 !important;
+}
+
+.ps-collection-grid-section {
+  padding-top: 32px !important;
+  padding-bottom: 88px !important;
+  background-color: #f7f6f2 !important;
+}
+
+/* 2. Editorial Clinical Hero Banner */
+.ps-collection-hero {
+  background: #ffffff !important;
+  border-bottom: 1px solid rgba(31, 71, 62, 0.1) !important;
+  padding: 56px 0 34px !important;
+  position: relative;
+}
+
+.ps-collection-hero__container {
+  width: min(100%, var(--page-width, 1360px));
+  margin: 0 auto;
+  padding-inline: var(--page-pad, 24px);
+}
+
+.ps-collection-hero__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.ps-collection-hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #1f473e;
+  background: rgba(31, 71, 62, 0.07);
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 71, 62, 0.12);
+}
+
+.ps-collection-hero__kicker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1f473e;
+}
+
+.ps-collection-hero__guide-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b5563;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(75, 85, 99, 0.35);
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+}
+
+.ps-collection-hero__guide-link:hover {
+  color: #1f473e;
+  text-decoration-color: #1f473e;
+}
+
+.ps-collection-hero__title {
+  font-family: var(--font-heading-family, Fraunces, serif);
+  font-size: clamp(34px, 4.4vw, 56px);
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #171713;
+  margin: 0 0 16px;
+  max-width: 860px;
+}
+
+.ps-collection-hero__description {
+  max-width: 720px;
+  margin-bottom: 24px;
+}
+
+.ps-collection-hero__description p {
+  margin: 0;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 15.5px;
+  line-height: 1.62;
+  color: #4b5563;
+}
+
+/* Clinical Trust Pillars Strip in Hero */
+.ps-collection-hero__trust {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(31, 71, 62, 0.08);
+  margin-bottom: 26px;
+}
+
+.ps-collection-hero__trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #1f473e;
+}
+
+.ps-collection-hero__trust-item svg {
+  color: #1f473e;
+  flex-shrink: 0;
+}
+
+.ps-collection-hero__trust-divider {
+  color: #cbd5e1;
+  font-size: 14px;
+  user-select: none;
+}
+
+/* 3. Quick Filter Tabs Navigation */
+.ps-collection-filters {
+  padding-top: 20px;
+  border-top: 1px solid rgba(31, 71, 62, 0.08);
+}
+
+.ps-collection-filters__scroll {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 4px;
+}
+
+.ps-collection-filters__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.ps-collection-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid rgba(31, 71, 62, 0.16);
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.ps-collection-filter-pill:hover {
+  border-color: #1f473e;
+  color: #1f473e;
+  background: #fdfdfd;
+  transform: translateY(-1px);
+}
+
+.ps-collection-filter-pill.is-active {
+  background: #1f473e;
+  border-color: #1f473e;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(31, 71, 62, 0.24);
+}
+
+.ps-collection-filter-pill__count {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.85;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.ps-collection-filter-pill.is-active .ps-collection-filter-pill__count {
+  background: rgba(255, 255, 255, 0.24);
+  color: #ffffff;
+  opacity: 1;
+}
+
+/* 4. Toolbar & Sort Bar */
+.ps-collection-toolbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 28px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid rgba(31, 71, 62, 0.1) !important;
+  gap: 16px !important;
+}
+
+.ps-collection-toolbar__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ps-collection-toolbar__count,
+.ps-grid-counter {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: 0.01em;
+}
+
+.ps-collection-toolbar__sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.ps-sort-label {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.ps-sort-select {
+  padding: 8px 34px 8px 14px !important;
+  border: 1px solid rgba(31, 71, 62, 0.18) !important;
+  border-radius: 999px !important;
+  background: #ffffff url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 12px center !important;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #374151 !important;
+  cursor: pointer !important;
+  appearance: none !important;
+  outline: none !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.ps-sort-select:hover,
+.ps-sort-select:focus {
+  border-color: #1f473e !important;
+  box-shadow: 0 0 0 2px rgba(31, 71, 62, 0.1) !important;
+}
+
+.ps-mobile-facet-bar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(31, 71, 62, 0.1);
+}
+
+@media (max-width: 800px) {
+  .ps-collection-toolbar {
+    display: none !important;
+  }
+  .ps-mobile-facet-bar {
+    display: flex;
+  }
+}
+
+/* 5. Elevated Clinical Product Cards */
+.template-collection .psr-product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(var(--psr-columns, 4), minmax(0, 1fr)) !important;
+  gap: var(--psr-grid-gap, 24px) !important;
+  align-items: stretch !important;
+}
+
+.template-collection .product-card.ps-product {
+  background: #ffffff !important;
+  border: 1px solid rgba(31, 71, 62, 0.12) !important;
+  border-radius: 18px !important;
+  padding: 16px 16px 20px !important;
+  box-shadow: 0 4px 18px rgba(31, 71, 62, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+}
+
+.template-collection .product-card.ps-product:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(31, 71, 62, 0.3) !important;
+  box-shadow: 0 18px 42px rgba(31, 71, 62, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+}
+
+.template-collection .product-card.ps-product .product-card__media {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
+  margin-bottom: 14px !important;
+  position: relative !important;
+  aspect-ratio: 3 / 4 !important;
+}
+
+/* Step Badge on Product Card Media (e.g. 01 · CLEANSE) */
+.ps-card-step-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: rgba(17, 24, 39, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+.ps-card-step-badge__num {
+  color: #a7f3d0;
+  font-weight: 700;
+}
+
+/* Active Ingredient Concentration Badge (e.g. 5% Niacinamide + Zinc) */
+.ps-card-active-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #1f473e;
+  border: 1px solid rgba(31, 71, 62, 0.14);
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+
+/* Card Content Typography & Spacing */
+.template-collection .ps-product__content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+}
+
+.template-collection .ps-product__title {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif) !important;
+  font-size: 15.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  color: #171713 !important;
+  margin: 4px 0 4px !important;
+  letter-spacing: -0.01em !important;
+}
+
+.template-collection .ps-product__title a {
+  color: #171713 !important;
+  transition: color 0.15s ease !important;
+}
+
+.template-collection .product-card.ps-product:hover .ps-product__title a {
+  color: #1f473e !important;
+}
+
+/* Product Card Rating Line */
+.template-collection .ps-product__rating {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  margin-bottom: 6px !important;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif) !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+}
+
+.template-collection .ps-product__rating-stars {
+  color: #ee9b00 !important;
+  letter-spacing: 1px !important;
+  font-size: 11px !important;
+}
+
+.template-collection .ps-product__rating-score {
+  font-weight: 600 !important;
+  color: #111827 !important;
+}
+
+.template-collection .ps-product__rating-count {
+  color: #6b7280 !important;
+  font-weight: 500 !important;
+}
+
+.template-collection .ps-product__concern {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif) !important;
+  font-size: 12.5px !important;
+  line-height: 1.45 !important;
+  color: #525c55 !important;
+  margin: 0 0 12px !important;
+  min-height: 36px !important;
+}
+
+.template-collection .ps-product__meta {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  margin-top: auto !important;
+  padding-top: 12px !important;
+  border-top: 1px solid rgba(31, 71, 62, 0.08) !important;
+}
+
+.template-collection .ps-product__price-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+}
+
+.template-collection .ps-product__price {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  display: inline-flex !important;
+  align-items: baseline !important;
+  gap: 6px !important;
+}
+
+.template-collection .ps-product__compare-price {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #9ca3af !important;
+  text-decoration: line-through !important;
+}
+
+.template-collection .ps-product__size-badge {
+  display: inline-block !important;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #4b5563 !important;
+  background: #f3f4f6 !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.01em !important;
+}
+
+.template-collection .ps-product__atc {
+  min-height: 44px !important;
+  border-radius: 8px !important;
+  background: #111827 !important;
+  color: #ffffff !important;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  border: 1px solid transparent !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.template-collection .ps-product__atc:hover {
+  background: #1f473e !important;
+  border-color: #1f473e !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(31, 71, 62, 0.28) !important;
+}
+
+.template-collection .ps-product__atc--link {
+  min-height: 44px !important;
+  border-radius: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #f1f5f9 !important;
+  color: #64748b !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Concierge Guidance Card (Grid Balance in Slot 8) */
+.template-collection .product-card.ps-product.ps-concierge-card {
+  background: linear-gradient(155deg, #1f473e 0%, #112822 100%) !important;
+  border: 1px solid rgba(31, 71, 62, 0.4) !important;
+  border-radius: 18px !important;
+  padding: 24px 20px 22px !important;
+  color: #ffffff !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-shadow: 0 4px 20px rgba(31, 71, 62, 0.15) !important;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease !important;
+}
+
+.template-collection .product-card.ps-product.ps-concierge-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(31, 71, 62, 0.6) !important;
+  box-shadow: 0 18px 42px rgba(31, 71, 62, 0.25) !important;
+}
+
+.ps-concierge-card__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.ps-concierge-card__top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ps-concierge-card__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #a7f3d0;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+
+.ps-concierge-card__tag svg {
+  color: #a7f3d0;
+}
+
+.ps-concierge-card__heading {
+  font-family: var(--font-heading-family, Fraunces, serif) !important;
+  font-size: 25px !important;
+  font-weight: 600 !important;
+  font-style: italic !important;
+  line-height: 1.15 !important;
+  color: #ffffff !important;
+  margin: 0 0 14px !important;
+  letter-spacing: -0.01em !important;
+}
+
+.ps-concierge-card__body {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif) !important;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+  color: #d1fae5 !important;
+  opacity: 0.9 !important;
+  margin: 0 0 24px !important;
+}
+
+.ps-concierge-card__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.ps-concierge-card__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1f473e !important;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ps-concierge-card__cta:hover {
+  background: #f0fdf4;
+  color: #15332c !important;
+  transform: translateY(-1px);
+}
+
+.ps-concierge-card__whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 12.5px;
+  color: #a7f3d0 !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(167, 243, 208, 0.4);
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.ps-concierge-card__whatsapp:hover {
+  color: #ffffff !important;
+  text-decoration-color: #ffffff;
+}
+
+/* Empty State */
+.ps-grid-empty-state {
+  text-align: center;
+  padding: 64px 20px;
+  background: #ffffff;
+  border: 1px dashed rgba(31, 71, 62, 0.2);
+  border-radius: 16px;
+  margin: 20px 0;
+}
+
+.ps-grid-empty-state h3 {
+  font-family: var(--font-heading-family, Fraunces, serif);
+  font-size: 24px;
+  color: #171713;
+  margin: 0 0 8px;
+}
+
+.ps-grid-empty-state p {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .template-collection .psr-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .ps-collection-hero {
+    padding: 38px 0 24px !important;
+  }
+  .template-collection .psr-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px 10px !important;
+  }
+  .template-collection .product-card.ps-product {
+    padding: 12px 12px 16px !important;
+    border-radius: 14px !important;
+  }
+  .template-collection .ps-product__title {
+    font-size: 13.5px !important;
+  }
+  .template-collection .ps-product__concern {
+    font-size: 11.5px !important;
+    min-height: 32px !important;
+    margin-bottom: 8px !important;
+  }
+  .template-collection .ps-product__atc {
+    min-height: 38px !important;
+    font-size: 11.5px !important;
+  }
+  .ps-card-active-badge {
+    display: none;
+  }
+  .ps-card-step-badge {
+    top: 7px;
+    left: 7px;
+    padding: 3px 7px;
+    font-size: 9.5px;
+  }
+}
+
+/* ==========================================================================
+   Phase 2: 4-Step Clinical Regimen Matrix Architecture
+   ========================================================================== */
+.ps-regimen-matrix-section {
+  padding: 80px 0 70px;
+  background: #ffffff;
+  border-top: 1px solid rgba(31, 71, 62, 0.1);
+  border-bottom: 1px solid rgba(31, 71, 62, 0.1);
+}
+
+.ps-regimen-matrix__container {
+  width: min(100%, var(--page-width, 1360px));
+  margin: 0 auto;
+  padding-inline: var(--page-pad, 24px);
+}
+
+.ps-regimen-matrix__header {
+  max-width: 820px;
+  margin-bottom: 44px;
+}
+
+.ps-regimen-matrix__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #1f473e;
+  background: rgba(31, 71, 62, 0.07);
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 71, 62, 0.12);
+  margin-bottom: 14px;
+}
+
+.ps-regimen-matrix__kicker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1f473e;
+}
+
+.ps-regimen-matrix__title {
+  font-family: var(--font-heading-family, Fraunces, serif);
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #171713;
+  margin: 0 0 14px;
+}
+
+.ps-regimen-matrix__desc p {
+  margin: 0;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 15.5px;
+  line-height: 1.62;
+  color: #4b5563;
+}
+
+.ps-regimen-matrix__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  margin-bottom: 36px;
+}
+
+.ps-regimen-card {
+  background: #fbfbfa;
+  border: 1px solid rgba(31, 71, 62, 0.12);
+  border-radius: 16px;
+  padding: 24px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease;
+}
+
+.ps-regimen-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(31, 71, 62, 0.32);
+  box-shadow: 0 14px 34px rgba(31, 71, 62, 0.08);
+  background: #ffffff;
+}
+
+.ps-regimen-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.ps-regimen-card__step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #111827;
+  color: #ffffff;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.ps-regimen-card__step-num {
+  color: #a7f3d0;
+}
+
+.ps-regimen-card__frequency {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #1f473e;
+  background: rgba(31, 71, 62, 0.08);
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.ps-regimen-card__product-name {
+  font-family: var(--font-heading-family, Fraunces, serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: #171713;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.ps-regimen-card__product-sub {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 12.5px;
+  color: #6b7280;
+  margin: 0 0 14px;
+}
+
+.ps-regimen-card__active-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid rgba(31, 71, 62, 0.14);
+  color: #1f473e;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.ps-regimen-card__active-pill svg {
+  color: #1f473e;
+  flex-shrink: 0;
+}
+
+.ps-regimen-card__action {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 13px;
+  line-height: 1.55;
+  color: #4b5563;
+  margin: 0 0 20px;
+  flex: 1;
+}
+
+.ps-regimen-card__footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(31, 71, 62, 0.08);
+}
+
+.ps-regimen-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1f473e;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.ps-regimen-card__link:hover {
+  color: #111827;
+}
+
+/* Regimen Bundle Promo Box */
+.ps-regimen-bundle-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  background: linear-gradient(135deg, #f7f9f8 0%, #edf3f0 100%);
+  border: 1px solid rgba(31, 71, 62, 0.2);
+  border-radius: 16px;
+  padding: 30px 34px;
+  margin-top: 12px;
+}
+
+.ps-regimen-bundle-banner__content {
+  max-width: 640px;
+}
+
+.ps-regimen-bundle-banner__badge {
+  display: inline-block;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #1f473e;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.ps-regimen-bundle-banner__title {
+  font-family: var(--font-heading-family, Fraunces, serif);
+  font-size: 24px;
+  font-weight: 600;
+  font-style: italic;
+  color: #171713;
+  margin: 0 0 6px;
+}
+
+.ps-regimen-bundle-banner__text {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+  color: #4b5563;
+  margin: 0;
+}
+
+.ps-regimen-bundle-banner__action {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ps-regimen-bundle-banner__pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.ps-regimen-bundle-banner__price {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.ps-regimen-bundle-banner__compare {
+  font-size: 15px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.ps-regimen-bundle-banner__save {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #047857;
+  background: #d1fae5;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.ps-regimen-bundle-banner__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 24px;
+  border-radius: 8px;
+  background: #1f473e;
+  color: #ffffff !important;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(31, 71, 62, 0.22);
+}
+
+.ps-regimen-bundle-banner__btn:hover {
+  background: #14332c;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(31, 71, 62, 0.32);
+}
+
+/* ==========================================================================
+   Phase 2: Collection Clinical FAQs Accordion Architecture
+   ========================================================================== */
+.ps-collection-faq-section {
+  padding: 84px 0 90px;
+  background: #f7f6f2;
+}
+
+.ps-collection-faq__container {
+  width: min(100%, var(--page-width, 1360px));
+  margin: 0 auto;
+  padding-inline: var(--page-pad, 24px);
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.ps-collection-faq__intro {
+  position: sticky;
+  top: calc(var(--header-h, 76px) + 24px);
+}
+
+.ps-collection-faq__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #1f473e;
+  background: rgba(31, 71, 62, 0.07);
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 71, 62, 0.12);
+  margin-bottom: 14px;
+}
+
+.ps-collection-faq__kicker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1f473e;
+}
+
+.ps-collection-faq__heading {
+  font-family: var(--font-heading-family, Fraunces, serif);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #171713;
+  margin: 0 0 14px;
+}
+
+.ps-collection-faq__copy p {
+  margin: 0;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.ps-collection-faq__support-card {
+  margin-top: 28px;
+  background: #ffffff;
+  border: 1px solid rgba(31, 71, 62, 0.12);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(31, 71, 62, 0.03);
+}
+
+.ps-collection-faq__support-card strong {
+  display: block;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 14.5px;
+  color: #171713;
+  margin-bottom: 4px;
+}
+
+.ps-collection-faq__support-card p {
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #6b7280;
+  margin: 0 0 14px;
+}
+
+.ps-collection-faq__support-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f473e;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.ps-collection-faq__support-btn:hover {
+  color: #111827;
+}
+
+.ps-collection-faq__items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ps-collection-faq-item {
+  background: #ffffff;
+  border: 1px solid rgba(31, 71, 62, 0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ps-collection-faq-item:hover,
+.ps-collection-faq-item[open] {
+  border-color: rgba(31, 71, 62, 0.28);
+  box-shadow: 0 4px 18px rgba(31, 71, 62, 0.04);
+}
+
+.ps-collection-faq-item__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: #171713;
+  cursor: pointer;
+  list-style: none;
+  gap: 16px;
+  user-select: none;
+}
+
+.ps-collection-faq-item__question::-webkit-details-marker {
+  display: none;
+}
+
+.ps-collection-faq-item__icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.ps-collection-faq-item__icon::before,
+.ps-collection-faq-item__icon::after {
+  content: '';
+  position: absolute;
+  background: #374151;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease;
+}
+
+.ps-collection-faq-item__icon::before {
+  width: 10px;
+  height: 2px;
+}
+
+.ps-collection-faq-item__icon::after {
+  width: 2px;
+  height: 10px;
+}
+
+.ps-collection-faq-item[open] .ps-collection-faq-item__icon {
+  background: #1f473e;
+}
+
+.ps-collection-faq-item[open] .ps-collection-faq-item__icon::before {
+  background: #ffffff;
+}
+
+.ps-collection-faq-item[open] .ps-collection-faq-item__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+}
+
+.ps-collection-faq-item__answer {
+  padding: 0 24px 22px;
+  font-family: var(--font-body-family, "Instrument Sans", sans-serif);
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #4b5563;
+}
+
+.ps-collection-faq-item__answer p {
+  margin: 0;
+}
+
+/* Phase 2 Responsive Adjustments */
+@media (max-width: 1024px) {
+  .ps-regimen-matrix__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .ps-collection-faq__container {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .ps-collection-faq__intro {
+    position: static;
+  }
+}
+
+@media (max-width: 680px) {
+  .ps-regimen-matrix-section {
+    padding: 56px 0 46px;
+  }
+  .ps-regimen-matrix__grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .ps-regimen-bundle-banner {
+    padding: 24px 20px;
+  }
+  .ps-regimen-bundle-banner__action {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .ps-regimen-bundle-banner__btn {
+    width: 100%;
+  }
+  .ps-collection-faq-section {
+    padding: 56px 0 60px;
+  }
+  .ps-collection-faq-item__question {
+    padding: 18px 18px;
+    font-size: 15px;
+  }
+  .ps-collection-faq-item__answer {
+    padding: 0 18px 18px;
+    font-size: 13.5px;
+  }
+}
+

@@ -78,6 +78,7 @@
     {% if shop.customer_accounts_enabled %}{{ 'customer-entry.css' | asset_url | stylesheet_tag }}{% endif %}
     {% if template.directory == 'customers' %}{{ 'customer-account.css' | asset_url | stylesheet_tag }}{% endif %}
     {% if request.page_type == 'product' %}{{ 'purity-product.css' | asset_url | stylesheet_tag }}{% endif %}
+    {% if request.page_type == 'collection' %}{{ 'purity-collection.css' | asset_url | stylesheet_tag }}{% endif %}
     <script>
       window.Shopify = window.Shopify || {};
       Shopify.currency = { active: {{ cart.currency.iso_code | default: shop.currency | json }} };
@@ -104,7 +105,7 @@
     {% if template.directory == 'customers' %}<script src="{{ 'customer-account.js' | asset_url }}" defer></script>{% endif %}
     {% if request.page_type == 'product' %}<script src="{{ 'purity-product.js' | asset_url }}" defer></script>{% endif %}
   </head>
-  <body class="hover-effect--{{ settings.hover_effect }} scroll-animation--{{ settings.scroll_animation }}">
+  <body class="hover-effect--{{ settings.hover_effect }} scroll-animation--{{ settings.scroll_animation }}{% if template.name %} template-{{ template.name }}{% endif %}{% if request.page_type %} page-type-{{ request.page_type }}{% endif %}">
     <a class="skip-link" href="#MainContent">Skip to content</a>
     {% if settings.page_loader %}
       <div class="page-loader" data-page-loader aria-hidden="true"><div class="page-loader__mark"><span></span><span></span><span></span></div></div>

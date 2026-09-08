@@ -1,0 +1,147 @@
+{% liquid
+  assign eyebrow = section.settings.eyebrow | default: 'Evidence & Guidance'
+  assign heading = section.settings.heading | default: 'Frequently Asked Questions'
+  assign copy = section.settings.copy | default: '<p>Everything you need to know about our active concentrations, non-comedogenic bases, and routine sequencing for Indian skin.</p>'
+%}
+
+<section class="ps-collection-faq-section" data-collection-faq>
+  <div class="container ps-collection-faq__container">
+    <div class="ps-collection-faq__intro">
+      <span class="ps-collection-faq__kicker">
+        <span class="ps-collection-faq__kicker-dot" aria-hidden="true"></span>
+        {{ eyebrow }}
+      </span>
+      <h2 class="ps-collection-faq__heading">{{ heading }}</h2>
+      <div class="ps-collection-faq__copy rte">{{ copy }}</div>
+      
+      <div class="ps-collection-faq__support-card">
+        <strong>Need personalized advice?</strong>
+        <p>Our skin specialists review your acne stage and prescribe the right routine.</p>
+        <a class="ps-collection-faq__support-btn" href="/pages/consultation">
+          Book Dermatologist Consultation <span>→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="ps-collection-faq__items">
+      {% for block in section.blocks %}
+        <details class="ps-collection-faq-item" {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+          <summary class="ps-collection-faq-item__question">
+            <span>{{ block.settings.question }}</span>
+            <span class="ps-collection-faq-item__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="ps-collection-faq-item__answer rte">
+            {{ block.settings.answer }}
+          </div>
+        </details>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if section.blocks.size > 0 %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {% for block in section.blocks %}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ block.settings.answer | strip_html | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    }
+    </script>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Collection FAQs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow / Kicker",
+      "default": "Evidence & Guidance"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "richtext",
+      "id": "copy",
+      "label": "Description",
+      "default": "<p>Everything you need to know about our active concentrations, non-comedogenic bases, and routine sequencing for Indian skin.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection FAQs",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Will these formulations feel heavy or cause sweating in hot, humid Indian weather?",
+            "answer": "<p>No. Every Project Skin formulation is engineered with lightweight water-gel, fluid, or quick-absorbing emulsions specifically stress-tested in peak Indian humidity. They absorb completely without leaving a greasy residue, film, or suffocating layer on your pores.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How soon can I expect to see visible improvement in active breakouts and marks?",
+            "answer": "<p>Excess sebum secretion and active redness typically calm within 7–14 days. Barrier stabilization and reduced breakout frequency occur within 2–4 weeks. Dark post-acne marks (PIH/PIE) show significant fading over 6–8 weeks with daily application and consistent SPF 50 protection.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use Project Skin formulations alongside prescription acne medications (e.g., Tretinoin, Benzoyl Peroxide)?",
+            "answer": "<p>Yes. Our Calming Moisturiser and Refreshing Cleanser are ideal companions to medical acne therapies, replenishing essential ceramides and preventing the severe peeling, dryness, and stinging often triggered by prescription retinoids.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Are all products 100% non-comedogenic and free of added fragrances?",
+            "answer": "<p>Yes. All products are strictly formulated without pore-clogging waxes, mineral oils, synthetic fragrances, drying alcohols, or essential oils that trigger micro-inflammation in acne-prone skin.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What is the Project Skin 30-day money-back guarantee?",
+            "answer": "<p>We stand behind our clinical evidence. If you do not see visible improvements in your skin within 30 days of consistent use, contact us at support@theprojectskin.com or on WhatsApp for a complete, no-questions-asked refund.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

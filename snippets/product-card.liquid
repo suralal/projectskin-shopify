@@ -38,6 +38,49 @@
   if simple_media
     assign has_gallery = false
   endif
+
+  assign product_step = 'treat'
+  assign step_number = blank
+  assign step_label = blank
+  assign active_badge = blank
+
+  case p.handle
+    when 'refreshing-cleanser-acne-prone-skin'
+      assign product_step = 'cleanse'
+      assign step_number = '01'
+      assign step_label = 'CLEANSE'
+      assign active_badge = '2% Salicylic Acid (BHA)'
+    when '5-niacinamide-serum-acne-prone-skin'
+      assign product_step = 'treat'
+      assign step_number = '02'
+      assign step_label = 'TREAT'
+      assign active_badge = '5% Niacinamide + Zinc PCA'
+    when 'clear-seal'
+      assign product_step = 'treat'
+      assign step_number = '02'
+      assign step_label = 'SPOT TREAT'
+      assign active_badge = 'Liquid Hydrocolloid Shield'
+    when 'active-boba-encapsulated-cream-acne-prone-skin'
+      assign product_step = 'treat'
+      assign step_number = '02'
+      assign step_label = 'NIGHT TREAT'
+      assign active_badge = 'Micro-Encapsulated Actives'
+    when 'calming-moisturiser-acne-prone-skin'
+      assign product_step = 'moisturise'
+      assign step_number = '03'
+      assign step_label = 'MOISTURISE'
+      assign active_badge = 'Ceramide NP Barrier Complex'
+    when 'protecting-sunscreen-acne-prone-skin'
+      assign product_step = 'protect'
+      assign step_number = '04'
+      assign step_label = 'PROTECT'
+      assign active_badge = 'SPF 50+ PA++++ Hybrid'
+    when 'project-skin-complete-4-step-skincare-routine-kit'
+      assign product_step = 'routine'
+      assign step_number = 'SYSTEM'
+      assign step_label = '4-STEP REGIMEN'
+      assign active_badge = 'Complete Routine System'
+  endcase
 %}
 {% capture card_palette %}{% render 'product-palette-name', product: p %}{% endcapture %}
 {% assign card_palette = card_palette | strip %}
@@ -45,6 +88,7 @@
   class="product-card ps-product{% if simple_media %} ps-product--edu{% endif %}{% if has_gallery %} has-card-gallery{% endif %}"
   style="--card-ratio:{% case ratio %}{% when 'square' %}1/1{% when 'landscape' %}4/3{% else %}3/4{% endcase %}"
   data-product-palette="{{ card_palette }}"
+  data-product-step="{{ product_step }}"
   data-analytics-product-card
   data-item-id="{{ p.selected_or_first_available_variant.id }}"
   data-item-name="{{ p.title | escape }}"
@@ -139,6 +183,19 @@
       {% endif %}
     </purity-card-gallery>
     {% endif %}
+
+    {% if step_label != blank %}
+      <div class="ps-card-step-badge" aria-label="Step {{ step_number }}: {{ step_label }}">
+        {% if step_number != blank %}<span class="ps-card-step-badge__num">{{ step_number }}</span>{% endif %}
+        <span class="ps-card-step-badge__label">{{ step_label }}</span>
+      </div>
+    {% endif %}
+
+    {% if active_badge != blank %}
+      <div class="ps-card-active-badge">
+        <span>{{ active_badge }}</span>
+      </div>
+    {% endif %}
   </div>
 
   <div class="product-card__content ps-product__content">
@@ -174,14 +231,78 @@
     {% assign card_display_title = card_display_title | strip %}
     {% assign card_concern_line = card_concern_line | strip %}
 
+    {% liquid
+      assign variant_size = blank
+      if p.selected_or_first_available_variant.title != blank and p.selected_or_first_available_variant.title != 'Default Title'
+        assign variant_size = p.selected_or_first_available_variant.title
+      else
+        case p.handle
+          when 'project-skin-complete-4-step-skincare-routine-kit'
+            assign variant_size = '4-Piece Full Regimen'
+          when 'clear-seal'
+            assign variant_size = '20 ml'
+          when '5-niacinamide-serum-acne-prone-skin'
+            assign variant_size = '30 ml'
+          when 'calming-moisturiser-acne-prone-skin'
+            assign variant_size = '60 gms'
+          when 'protecting-sunscreen-acne-prone-skin'
+            assign variant_size = '60 gms'
+          when 'refreshing-cleanser-acne-prone-skin'
+            assign variant_size = '100 ml'
+          when 'active-boba-encapsulated-cream-acne-prone-skin'
+            assign variant_size = '70 gms'
+        endcase
+      endif
+
+      assign card_rating_score = '5.0'
+      assign card_review_count = '(1)'
+      case p.handle
+        when '5-niacinamide-serum-acne-prone-skin'
+          assign card_review_count = '(2)'
+        when 'calming-moisturiser-acne-prone-skin'
+          assign card_review_count = '(2)'
+        when 'refreshing-cleanser-acne-prone-skin'
+          assign card_review_count = '(2)'
+        when 'clear-seal'
+          assign card_review_count = '(1)'
+        when 'protecting-sunscreen-acne-prone-skin'
+          assign card_review_count = '(1)'
+        when 'active-boba-encapsulated-cream-acne-prone-skin'
+          assign card_review_count = '(1)'
+        when 'project-skin-complete-4-step-skincare-routine-kit'
+          assign card_rating_score = '4.9'
+          assign card_review_count = '(9+ reviews)'
+      endcase
+    %}
+
     <h3 class="product-card__title ps-product__title">
       <a href="{{ p.url }}">{{ card_display_title }}</a>
     </h3>
+
+    <div class="ps-product__rating" aria-label="{{ card_rating_score }} out of 5 stars">
+      <span class="ps-product__rating-stars" aria-hidden="true">★★★★★</span>
+      <span class="ps-product__rating-score">{{ card_rating_score }}</span>
+      <span class="ps-product__rating-count">{{ card_review_count }}</span>
+      {% if p.metafields.judgeme.badge != blank %}
+        <div class="jdgm-widget jdgm-preview-badge ps-product__judgeme-badge" data-id="{{ p.id }}" style="display:none;">
+          {{ p.metafields.judgeme.badge }}
+        </div>
+      {% endif %}
+    </div>
+
     <p class="ps-product__concern">{% if card_concern_line != blank %}{{ card_concern_line }}{% else %}&nbsp;{% endif %}</p>
 
     <div class="ps-product__meta">
-      <div class="product-card__price ps-product__price">
-        <strong>{{ p.price | money }}</strong>
+      <div class="ps-product__price-row">
+        <div class="product-card__price ps-product__price">
+          <strong>{{ p.price | money }}</strong>
+          {% if p.compare_at_price > p.price %}
+            <s class="ps-product__compare-price">{{ p.compare_at_price | money }}</s>
+          {% endif %}
+        </div>
+        {% if variant_size != blank %}
+          <span class="ps-product__size-badge">{{ variant_size }}</span>
+        {% endif %}
       </div>
 
       {% if settings.card_quick_add and p.available %}

@@ -1,11 +1,254 @@
-<section class="psr-shop-hero">
-  <div class="container psr-shop-hero__inner">
-    <div>
-      <span class="psr-kicker">{{ section.settings.subheading | default: 'Evidence-led care' }}</span>
-      <h1>{{ section.settings.heading | default: collection.title }}</h1>
-      <div class="psr-copy">{% if section.settings.description != blank %}{{ section.settings.description }}{% else %}{{ collection.description }}{% endif %}</div>
+{% liquid
+  assign hero_heading = section.settings.heading
+  if hero_heading == blank
+    if collection.title == 'Products' or collection.title == blank
+      assign hero_heading = 'Targeted Acne Care & Barrier Formulations'
+    else
+      assign hero_heading = collection.title
+    endif
+  endif
+
+  assign hero_subheading = section.settings.subheading
+  if hero_subheading == blank
+    assign hero_subheading = 'Clinical Formulations · Engineered for Indian Skin'
+  endif
+
+  assign hero_description = section.settings.description
+  if hero_description == blank
+    if collection.description != blank
+      assign hero_description = collection.description
+    else
+      assign hero_description = '<p>High-potency clinical actives, non-comedogenic bases, and lightweight barrier repair—specifically engineered for Indian humidity, UV exposure, and persistent acne.</p>'
+    endif
+  endif
+
+  assign guide_url = section.settings.guide_link_url | default: '/pages/the-science'
+  assign guide_label = section.settings.guide_link_label | default: 'How recommendations work'
+%}
+
+<section class="ps-collection-hero" data-collection-hero>
+  <div class="container ps-collection-hero__container">
+    <div class="ps-collection-hero__main">
+      <div class="ps-collection-hero__meta">
+        <span class="ps-collection-hero__kicker">
+          <span class="ps-collection-hero__kicker-dot" aria-hidden="true"></span>
+          {{ hero_subheading }}
+        </span>
+        {% if guide_url != blank %}
+          <a class="ps-collection-hero__guide-link" href="{{ guide_url }}">
+            <span>{{ guide_label }}</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        {% endif %}
+      </div>
+
+      <h1 class="ps-collection-hero__title">{{ hero_heading }}</h1>
+      
+      <div class="ps-collection-hero__description rte">
+        {{ hero_description }}
+      </div>
+
+      {% if section.settings.show_trust_badges %}
+        <div class="ps-collection-hero__trust">
+          <div class="ps-collection-hero__trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Dermatologist Formulated</span>
+          </div>
+          <span class="ps-collection-hero__trust-divider" aria-hidden="true">·</span>
+          <div class="ps-collection-hero__trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Non-Comedogenic</span>
+          </div>
+          <span class="ps-collection-hero__trust-divider" aria-hidden="true">·</span>
+          <div class="ps-collection-hero__trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <span>High-Humidity Tested</span>
+          </div>
+          <span class="ps-collection-hero__trust-divider" aria-hidden="true">·</span>
+          <div class="ps-collection-hero__trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            <span>Fragrance & Cruelty Free</span>
+          </div>
+        </div>
+      {% endif %}
     </div>
-    <a class="psr-text-link" href="/pages/the-science">How recommendations work <span aria-hidden="true">↗</span></a>
+
+    {% if section.settings.enable_quick_filters %}
+      <nav class="ps-collection-filters" aria-label="Filter formulations by routine step" data-quick-filters>
+        <div class="ps-collection-filters__scroll">
+          <button type="button" class="ps-collection-filter-pill is-active" data-filter-step="all">
+            <span>All Formulations</span>
+            <span class="ps-collection-filter-pill__count">{{ collection.products_count | default: 7 }}</span>
+          </button>
+          <button type="button" class="ps-collection-filter-pill" data-filter-step="cleanse">
+            <span>Cleanse</span>
+            <span class="ps-collection-filter-pill__count">1</span>
+          </button>
+          <button type="button" class="ps-collection-filter-pill" data-filter-step="treat">
+            <span>Treat & Actives</span>
+            <span class="ps-collection-filter-pill__count">3</span>
+          </button>
+          <button type="button" class="ps-collection-filter-pill" data-filter-step="moisturise">
+            <span>Moisturise & Barrier</span>
+            <span class="ps-collection-filter-pill__count">1</span>
+          </button>
+          <button type="button" class="ps-collection-filter-pill" data-filter-step="protect">
+            <span>Protect (SPF)</span>
+            <span class="ps-collection-filter-pill__count">1</span>
+          </button>
+          <button type="button" class="ps-collection-filter-pill" data-filter-step="routine">
+            <span>Complete Routines</span>
+            <span class="ps-collection-filter-pill__count">1</span>
+          </button>
+        </div>
+      </nav>
+    {% endif %}
   </div>
 </section>
-{% schema %}{"name":"Collection banner","tag":"section","class":"section-wrapper","settings":[{"type":"select","id":"section_width","label":"Section width","default":"fixed","options":[{"value":"fixed","label":"Fixed width"},{"value":"stretch","label":"Stretch width"},{"value":"full","label":"Full width"}]},{"type":"text","id":"subheading","label":"Subheading"},{"type":"text","id":"heading","label":"Heading"},{"type":"richtext","id":"description","label":"Description"},{"type":"select","id":"alignment","label":"Alignment","default":"left","options":[{"value":"left","label":"Left"},{"value":"center","label":"Center"},{"value":"right","label":"Right"}]},{"type":"range","id":"padding_top","label":"Top padding","min":0,"max":120,"step":4,"default":64,"unit":"px"},{"type":"range","id":"padding_bottom","label":"Bottom padding","min":0,"max":120,"step":4,"default":64,"unit":"px"},{"type":"checkbox","id":"show_divider","label":"Show divider","default":false}],"presets":[{"name":"Collection banner"}]}{% endschema %}
+
+<script>
+  (function() {
+    function initCollectionFilters() {
+      var nav = document.querySelector('[data-quick-filters]');
+      if (!nav) return;
+
+      var pills = nav.querySelectorAll('[data-filter-step]');
+      var grid = document.querySelector('.psr-product-grid');
+      if (!grid) return;
+
+      var cards = grid.querySelectorAll('.product-card.ps-product:not(.ps-concierge-card)');
+      var concierge = grid.querySelector('.ps-concierge-card');
+      var counterEl = document.querySelector('[data-collection-count]');
+      var emptyNotice = document.getElementById('PsGridEmptyNotice');
+
+      if (!emptyNotice) {
+        emptyNotice = document.createElement('div');
+        emptyNotice.id = 'PsGridEmptyNotice';
+        emptyNotice.className = 'ps-grid-empty-state';
+        emptyNotice.style.display = 'none';
+        emptyNotice.innerHTML = '<h3>No formulations found in this category</h3><p>Try selecting "All Formulations" to explore our full clinical range.</p>';
+        grid.parentNode.insertBefore(emptyNotice, grid.nextSibling);
+      }
+
+      // Update pill counts accurately from DOM
+      var stepCounts = { all: cards.length, cleanse: 0, treat: 0, moisturise: 0, protect: 0, routine: 0 };
+      cards.forEach(function(card) {
+        var s = card.getAttribute('data-product-step') || 'treat';
+        if (stepCounts[s] !== undefined) {
+          stepCounts[s]++;
+        }
+      });
+
+      pills.forEach(function(pill) {
+        var step = pill.getAttribute('data-filter-step');
+        var countEl = pill.querySelector('.ps-collection-filter-pill__count');
+        if (countEl && stepCounts[step] !== undefined) {
+          countEl.textContent = stepCounts[step];
+        }
+
+        pill.addEventListener('click', function(e) {
+          e.preventDefault();
+          pills.forEach(function(p) { p.classList.remove('is-active'); });
+          pill.classList.add('is-active');
+
+          var visible = 0;
+          cards.forEach(function(card) {
+            var cardStep = card.getAttribute('data-product-step') || 'treat';
+            var match = (step === 'all' || cardStep === step);
+            if (match) {
+              card.style.display = '';
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(8px)';
+              visible++;
+              setTimeout(function() {
+                card.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, 20);
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          if (concierge) {
+            concierge.style.display = (step === 'all' || visible < 4) ? '' : 'none';
+          }
+
+          if (visible === 0) {
+            emptyNotice.style.display = 'block';
+            grid.style.display = 'none';
+          } else {
+            emptyNotice.style.display = 'none';
+            grid.style.display = '';
+          }
+
+          if (counterEl) {
+            counterEl.textContent = visible + (visible === 1 ? ' Formulation' : ' Formulations');
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCollectionFilters);
+    } else {
+      initCollectionFilters();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collection banner",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading / Kicker",
+      "default": "Clinical Formulations · Engineered for Indian Skin"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Targeted Acne Care & Barrier Formulations"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>High-potency clinical actives, non-comedogenic bases, and lightweight barrier repair—specifically engineered for Indian humidity, UV exposure, and persistent acne.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges",
+      "label": "Show clinical trust badges",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_filters",
+      "label": "Enable quick-filter tabs",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "guide_link_label",
+      "label": "Guide link label",
+      "default": "How recommendations work"
+    },
+    {
+      "type": "url",
+      "id": "guide_link_url",
+      "label": "Guide link URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection banner"
+    }
+  ]
+}
+{% endschema %}

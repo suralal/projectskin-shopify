@@ -203,23 +203,150 @@
           </div>
         </div>
       {% else %}
-        <div class="pdp-diff__grid" role="list">
-          <article class="pdp-diff__card" role="listitem">
-            <span class="pdp-diff__index" aria-hidden="true">01</span>
-            <h3>{{ usp_1_title }}</h3>
-            <p>{{ usp_1_text }}</p>
-          </article>
-          <article class="pdp-diff__card" role="listitem">
-            <span class="pdp-diff__index" aria-hidden="true">02</span>
-            <h3>{{ usp_2_title }}</h3>
-            <p>{{ usp_2_text }}</p>
-          </article>
-          <article class="pdp-diff__card" role="listitem">
-            <span class="pdp-diff__index" aria-hidden="true">03</span>
-            <h3>{{ usp_3_title }}</h3>
-            <p>{{ usp_3_text }}</p>
-          </article>
-        </div>
+        {% capture catalog_experience %}
+          {% render 'product-experience-catalog', product: product %}
+        {% endcapture %}
+        {% assign catalog_experience = catalog_experience | strip %}
+
+        {% if catalog_experience != blank %}
+          <div class="pdp-diff-tabs" data-pdp-diff-tabs>
+            <div class="pdp-diff-tabs__nav" role="tablist" aria-label="Formula details and experience">
+              <button
+                type="button"
+                class="pdp-diff-tab-btn is-active"
+                role="tab"
+                aria-selected="true"
+                aria-controls="PdpDiffTabInnovations-{{ product.id }}"
+                id="PdpDiffBtnInnovations-{{ product.id }}"
+                data-tab-target="innovations"
+              >
+                <span class="pdp-diff-tab-btn__indicator" aria-hidden="true"></span>
+                <span>Formula Innovations</span>
+                <span class="pdp-diff-tab-btn__count">3</span>
+              </button>
+              <button
+                type="button"
+                class="pdp-diff-tab-btn"
+                role="tab"
+                aria-selected="false"
+                aria-controls="PdpDiffTabExperience-{{ product.id }}"
+                id="PdpDiffBtnExperience-{{ product.id }}"
+                data-tab-target="experience"
+              >
+                <span class="pdp-diff-tab-btn__indicator" aria-hidden="true"></span>
+                <span>Skin Feel &amp; Fit</span>
+                <span class="pdp-diff-tab-btn__count">3</span>
+              </button>
+            </div>
+
+            <div
+              class="pdp-diff-tab-panel is-active"
+              id="PdpDiffTabInnovations-{{ product.id }}"
+              role="tabpanel"
+              aria-labelledby="PdpDiffBtnInnovations-{{ product.id }}"
+            >
+              <div class="pdp-diff__grid" role="list">
+                <article class="pdp-diff__card" role="listitem">
+                  <span class="pdp-diff__index" aria-hidden="true">01</span>
+                  <h3>{{ usp_1_title }}</h3>
+                  <p>{{ usp_1_text }}</p>
+                </article>
+                <article class="pdp-diff__card" role="listitem">
+                  <span class="pdp-diff__index" aria-hidden="true">02</span>
+                  <h3>{{ usp_2_title }}</h3>
+                  <p>{{ usp_2_text }}</p>
+                </article>
+                <article class="pdp-diff__card" role="listitem">
+                  <span class="pdp-diff__index" aria-hidden="true">03</span>
+                  <h3>{{ usp_3_title }}</h3>
+                  <p>{{ usp_3_text }}</p>
+                </article>
+              </div>
+            </div>
+
+            <div
+              class="pdp-diff-tab-panel"
+              id="PdpDiffTabExperience-{{ product.id }}"
+              role="tabpanel"
+              aria-labelledby="PdpDiffBtnExperience-{{ product.id }}"
+              style="display: none;"
+            >
+              <div class="pdp-experience__grid pdp-diff__grid" role="list">
+                {{ catalog_experience }}
+              </div>
+            </div>
+          </div>
+
+          <script>
+            (function() {
+              function initPdpDiffTabs() {
+                var containers = document.querySelectorAll('[data-pdp-diff-tabs]');
+                containers.forEach(function(container) {
+                  if (container.dataset.tabsInitialized) return;
+                  container.dataset.tabsInitialized = 'true';
+
+                  var buttons = container.querySelectorAll('.pdp-diff-tab-btn');
+                  var panels = container.querySelectorAll('.pdp-diff-tab-panel');
+
+                  buttons.forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                      e.preventDefault();
+                      var target = btn.getAttribute('data-tab-target');
+
+                      buttons.forEach(function(b) {
+                        b.classList.remove('is-active');
+                        b.setAttribute('aria-selected', 'false');
+                      });
+                      btn.classList.add('is-active');
+                      btn.setAttribute('aria-selected', 'true');
+
+                      panels.forEach(function(p) {
+                        var isTarget = p.id.indexOf(target === 'innovations' ? 'Innovations' : 'Experience') !== -1;
+                        if (isTarget) {
+                          p.style.display = '';
+                          p.style.opacity = '0';
+                          p.style.transform = 'translateY(6px)';
+                          p.classList.add('is-active');
+                          setTimeout(function() {
+                            p.style.transition = 'opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)';
+                            p.style.opacity = '1';
+                            p.style.transform = 'translateY(0)';
+                          }, 10);
+                        } else {
+                          p.style.display = 'none';
+                          p.classList.remove('is-active');
+                        }
+                      });
+                    });
+                  });
+                });
+              }
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initPdpDiffTabs);
+              } else {
+                initPdpDiffTabs();
+              }
+            })();
+          </script>
+        {% else %}
+          <div class="pdp-diff__grid" role="list">
+            <article class="pdp-diff__card" role="listitem">
+              <span class="pdp-diff__index" aria-hidden="true">01</span>
+              <h3>{{ usp_1_title }}</h3>
+              <p>{{ usp_1_text }}</p>
+            </article>
+            <article class="pdp-diff__card" role="listitem">
+              <span class="pdp-diff__index" aria-hidden="true">02</span>
+              <h3>{{ usp_2_title }}</h3>
+              <p>{{ usp_2_text }}</p>
+            </article>
+            <article class="pdp-diff__card" role="listitem">
+              <span class="pdp-diff__index" aria-hidden="true">03</span>
+              <h3>{{ usp_3_title }}</h3>
+              <p>{{ usp_3_text }}</p>
+            </article>
+          </div>
+        {% endif %}
       {% endif %}
     </div>
   </section>

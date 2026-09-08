@@ -1,0 +1,203 @@
+{% liquid
+  assign eyebrow = section.settings.eyebrow | default: 'The 4-Step Clinical Protocol'
+  assign heading = section.settings.heading | default: 'Engineered to work synergistically. Zero conflicting actives.'
+  assign description = section.settings.description | default: '<p>Most persistent acne in India is exacerbated by compromised skin barriers and heavy, pore-clogging bases. Our clinical regimen follows a strict 4-phase sequence formulated at skin-optimal pH levels to clear active acne, prevent post-inflammatory hyperpigmentation (PIH), and fortify barrier lipids.</p>'
+  assign bundle_product = all_products['project-skin-complete-4-step-skincare-routine-kit']
+%}
+
+<section class="ps-regimen-matrix-section" data-regimen-matrix>
+  <div class="container ps-regimen-matrix__container">
+    <header class="ps-regimen-matrix__header">
+      {% if eyebrow != blank %}
+        <span class="ps-regimen-matrix__kicker">
+          <span class="ps-regimen-matrix__kicker-dot" aria-hidden="true"></span>
+          {{ eyebrow }}
+        </span>
+      {% endif %}
+      <h2 class="ps-regimen-matrix__title">{{ heading }}</h2>
+      {% if description != blank %}
+        <div class="ps-regimen-matrix__desc rte">
+          {{ description }}
+        </div>
+      {% endif %}
+    </header>
+
+    <div class="ps-regimen-matrix__grid">
+      <!-- Step 01 -->
+      <article class="ps-regimen-card" data-step="1">
+        <div class="ps-regimen-card__header">
+          <div class="ps-regimen-card__step-badge">
+            <span class="ps-regimen-card__step-num">01</span>
+            <span class="ps-regimen-card__step-name">CLEANSE</span>
+          </div>
+          <span class="ps-regimen-card__frequency">AM · PM</span>
+        </div>
+
+        <div class="ps-regimen-card__product">
+          <h3 class="ps-regimen-card__product-name">Refreshing Cleanser</h3>
+          <p class="ps-regimen-card__product-sub">Congestion care without stripping</p>
+        </div>
+
+        <div class="ps-regimen-card__active-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>2% Salicylic Acid (BHA) + Zinc PCA</span>
+        </div>
+
+        <p class="ps-regimen-card__action">
+          Micro-exfoliates trapped sebum inside pores and dissolves dead cellular debris while keeping the natural skin acid mantle intact.
+        </p>
+
+        <div class="ps-regimen-card__footer">
+          <a class="ps-regimen-card__link" href="/products/refreshing-cleanser-acne-prone-skin">
+            Explore Formulation <span>→</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Step 02 -->
+      <article class="ps-regimen-card" data-step="2">
+        <div class="ps-regimen-card__header">
+          <div class="ps-regimen-card__step-badge">
+            <span class="ps-regimen-card__step-num">02</span>
+            <span class="ps-regimen-card__step-name">TREAT</span>
+          </div>
+          <span class="ps-regimen-card__frequency">Daily</span>
+        </div>
+
+        <div class="ps-regimen-card__product">
+          <h3 class="ps-regimen-card__product-name">5% Niacinamide Serum</h3>
+          <p class="ps-regimen-card__product-sub">Sebum control & post-acne mark repair</p>
+        </div>
+
+        <div class="ps-regimen-card__active-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>5% Niacinamide + Zinc PCA</span>
+        </div>
+
+        <p class="ps-regimen-card__action">
+          Calms follicular inflammation, balances excessive lipid secretion, and targets hyperpigmented post-acne blemishes (PIE/PIH).
+        </p>
+
+        <div class="ps-regimen-card__footer">
+          <a class="ps-regimen-card__link" href="/products/5-niacinamide-serum-acne-prone-skin">
+            Explore Formulation <span>→</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Step 03 -->
+      <article class="ps-regimen-card" data-step="3">
+        <div class="ps-regimen-card__header">
+          <div class="ps-regimen-card__step-badge">
+            <span class="ps-regimen-card__step-num">03</span>
+            <span class="ps-regimen-card__step-name">MOISTURISE</span>
+          </div>
+          <span class="ps-regimen-card__frequency">AM · PM</span>
+        </div>
+
+        <div class="ps-regimen-card__product">
+          <h3 class="ps-regimen-card__product-name">Calming Moisturiser</h3>
+          <p class="ps-regimen-card__product-sub">Barrier replenishment without pore clogging</p>
+        </div>
+
+        <div class="ps-regimen-card__active-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>Ceramide NP + Centella (Cica)</span>
+        </div>
+
+        <p class="ps-regimen-card__action">
+          Reconstitutes intercellular lipids depleted by acne treatments. Formulated in a fast-absorbing fluid base tested for high Indian humidity.
+        </p>
+
+        <div class="ps-regimen-card__footer">
+          <a class="ps-regimen-card__link" href="/products/calming-moisturiser-acne-prone-skin">
+            Explore Formulation <span>→</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Step 04 -->
+      <article class="ps-regimen-card" data-step="4">
+        <div class="ps-regimen-card__header">
+          <div class="ps-regimen-card__step-badge">
+            <span class="ps-regimen-card__step-num">04</span>
+            <span class="ps-regimen-card__step-name">PROTECT</span>
+          </div>
+          <span class="ps-regimen-card__frequency">Morning</span>
+        </div>
+
+        <div class="ps-regimen-card__product">
+          <h3 class="ps-regimen-card__product-name">Protecting Sunscreen</h3>
+          <p class="ps-regimen-card__product-sub">Daily photoprotection for Indian UV</p>
+        </div>
+
+        <div class="ps-regimen-card__active-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>SPF 50+ PA++++ Hybrid Filter</span>
+        </div>
+
+        <p class="ps-regimen-card__action">
+          Defends vulnerable post-acne skin against UV radiation and particulate air pollution, eliminating the primary cause of dark marks.
+        </p>
+
+        <div class="ps-regimen-card__footer">
+          <a class="ps-regimen-card__link" href="/products/protecting-sunscreen-acne-prone-skin">
+            Explore Formulation <span>→</span>
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Regimen Bundle Banner -->
+    <div class="ps-regimen-bundle-banner">
+      <div class="ps-regimen-bundle-banner__content">
+        <span class="ps-regimen-bundle-banner__badge">CLINICAL REGIMEN SYSTEM</span>
+        <h3 class="ps-regimen-bundle-banner__title">Get All 4 Synergistic Formulations Together</h3>
+        <p class="ps-regimen-bundle-banner__text">
+          Engineered to be used together. Complete routine kit includes cleanser, treatment serum, barrier moisturizer, and hybrid SPF with ₹598 in bundled savings.
+        </p>
+      </div>
+      <div class="ps-regimen-bundle-banner__action">
+        <div class="ps-regimen-bundle-banner__pricing">
+          <span class="ps-regimen-bundle-banner__price">₹1,699</span>
+          <s class="ps-regimen-bundle-banner__compare">₹2,297</s>
+          <span class="ps-regimen-bundle-banner__save">Save ₹598</span>
+        </div>
+        <a class="ps-regimen-bundle-banner__btn" href="/products/project-skin-complete-4-step-skincare-routine-kit">
+          Shop Complete Routine Kit
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Regimen Matrix",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow / Kicker",
+      "default": "The 4-Step Clinical Protocol"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Engineered to work synergistically. Zero conflicting actives."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Most persistent acne in India is exacerbated by compromised skin barriers and heavy, pore-clogging bases. Our clinical regimen follows a strict 4-phase sequence formulated at skin-optimal pH levels to clear active acne, prevent post-inflammatory hyperpigmentation (PIH), and fortify barrier lipids.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Regimen Matrix"
+    }
+  ]
+}
+{% endschema %}

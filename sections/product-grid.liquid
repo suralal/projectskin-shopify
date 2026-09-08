@@ -1,1 +1,219 @@
-<section class="section"><div class="container"><div class="mobile-facet-bar"><button class="button button--secondary" type="button" data-filter-open>Filter</button><span class="muted">{{ collection.products_count }} products</span></div><form class="facets" method="get"><div class="facets__filters">{% if section.settings.enable_filtering %}{% for filter in collection.filters %}<div class="facet"><details><summary>{{ filter.label }}{% if filter.active_values.size > 0 %} ({{ filter.active_values.size }}){% endif %}</summary><div class="facet__panel">{% case filter.type %}{% when 'boolean','list' %}{% for value in filter.values %}<label><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}> <span>{{ value.label }}{% if section.settings.show_counts %} ({{ value.count }}){% endif %}</span></label>{% endfor %}{% when 'price_range' %}<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input class="product-select" name="{{ filter.min_value.param_name }}" type="number" placeholder="Min" value="{{ filter.min_value.value | money_without_currency | replace:',','' }}"><input class="product-select" name="{{ filter.max_value.param_name }}" type="number" placeholder="Max" value="{{ filter.max_value.value | money_without_currency | replace:',','' }}"></div>{% endcase %}<button class="button" type="submit" style="margin-top:10px;width:100%">Apply</button></div></details></div>{% endfor %}{% endif %}</div>{% if section.settings.enable_sorting %}<select class="sort-select" name="sort_by" onchange="this.form.submit()">{% assign sort_by=collection.sort_by | default:collection.default_sort_by %}{% for option in collection.sort_options %}<option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>{% endfor %}</select>{% endif %}</form><aside class="filter-drawer" data-filter-drawer aria-label="Filters"><div class="filter-drawer__head"><strong>Filter & sort</strong><button class="icon-button" type="button" data-filter-close aria-label="Close">{% render 'icon', name:'close' %}</button></div><form method="get" class="filter-drawer__body">{% if section.settings.enable_sorting %}<label class="filter-drawer__sort">Sort by<select class="sort-select" name="sort_by">{% assign sort_by=collection.sort_by | default:collection.default_sort_by %}{% for option in collection.sort_options %}<option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>{% endfor %}</select></label>{% endif %}{% if section.settings.enable_filtering %}{% for filter in collection.filters %}<details class="mobile-facet" {% if filter.active_values.size > 0 %}open{% endif %}><summary>{{ filter.label }}<span>+</span></summary><div class="mobile-facet__panel">{% case filter.type %}{% when 'boolean','list' %}{% for value in filter.values %}<label><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}><span>{{ value.label }}</span><small>{{ value.count }}</small></label>{% endfor %}{% when 'price_range' %}<div class="price-range"><input class="product-select" name="{{ filter.min_value.param_name }}" type="number" placeholder="Min" value="{{ filter.min_value.value | money_without_currency | replace:',','' }}"><input class="product-select" name="{{ filter.max_value.param_name }}" type="number" placeholder="Max" value="{{ filter.max_value.value | money_without_currency | replace:',','' }}"></div>{% endcase %}</div></details>{% endfor %}{% endif %}<button class="button button--full filter-apply" type="submit">Show results</button></form></aside><div class="filter-drawer-backdrop" data-filter-close></div>{% paginate collection.products by section.settings.items_per_page %}<div class="grid psr-product-grid" style="--psr-columns:{{ section.settings.columns_desktop }};--psr-grid-gap:{% case section.settings.gap %}{% when 'none' %}0px{% when 'small' %}14px{% when 'large' %}40px{% else %}28px{% endcase %}">{% for product in collection.products %}{% render 'product-card', product:product %}{% else %}<div style="grid-column:1/-1;text-align:center;padding:80px 0"><h3>No products found</h3><p class="muted">Try adjusting your filters.</p></div>{% endfor %}</div>{% if paginate.pages > 1 %}<div class="pagination">{{ paginate | default_pagination }}</div>{% endif %}{% endpaginate %}</div></section>{% schema %}{"name":"Product grid","settings":[{"type":"range","id":"items_per_page","label":"Items to show per page","min":4,"max":24,"step":4,"default":12},{"type":"range","id":"columns_desktop","label":"Columns per row on desktop","min":2,"max":5,"default":4},{"type":"select","id":"gap","label":"Column gap","options":[{"value":"none","label":"No gap"},{"value":"small","label":"Small"},{"value":"medium","label":"Medium"},{"value":"large","label":"Large"}],"default":"medium"},{"type":"checkbox","id":"enable_sorting","label":"Enable sorting","default":true},{"type":"checkbox","id":"enable_filtering","label":"Enable filtering","default":true},{"type":"checkbox","id":"show_counts","label":"Show product counts","default":true}],"presets":[{"name":"Product grid"}]}{% endschema %}
+<section class="section ps-collection-grid-section">
+  <div class="container">
+    <div class="mobile-facet-bar ps-mobile-facet-bar">
+      {% if section.settings.enable_filtering %}
+        <button class="button button--secondary" type="button" data-filter-open>Filter</button>
+      {% endif %}
+      <span class="ps-grid-counter" data-collection-count>{{ collection.products_count }} Formulations</span>
+      {% if section.settings.enable_sorting %}
+        <div class="ps-sort-mobile-wrap">
+          <select class="sort-select ps-sort-select" name="sort_by" onchange="window.location.search = '?sort_by=' + encodeURIComponent(this.value)">
+            {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endif %}
+    </div>
+
+    <form class="facets ps-collection-toolbar" method="get">
+      <div class="ps-collection-toolbar__left">
+        <span class="ps-collection-toolbar__count" data-collection-count>{{ collection.products_count }} Formulations</span>
+      </div>
+
+      <div class="facets__filters ps-collection-toolbar__filters">
+        {% if section.settings.enable_filtering %}
+          {% for filter in collection.filters %}
+            <div class="facet">
+              <details>
+                <summary>{{ filter.label }}{% if filter.active_values.size > 0 %} ({{ filter.active_values.size }}){% endif %}</summary>
+                <div class="facet__panel">
+                  {% case filter.type %}
+                    {% when 'boolean', 'list' %}
+                      {% for value in filter.values %}
+                        <label>
+                          <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                          <span>{{ value.label }}{% if section.settings.show_counts %} ({{ value.count }}){% endif %}</span>
+                        </label>
+                      {% endfor %}
+                    {% when 'price_range' %}
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                        <input class="product-select" name="{{ filter.min_value.param_name }}" type="number" placeholder="Min" value="{{ filter.min_value.value | money_without_currency | replace:',','' }}">
+                        <input class="product-select" name="{{ filter.max_value.param_name }}" type="number" placeholder="Max" value="{{ filter.max_value.value | money_without_currency | replace:',','' }}">
+                      </div>
+                  {% endcase %}
+                  <button class="button" type="submit" style="margin-top:10px;width:100%">Apply</button>
+                </div>
+              </details>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      {% if section.settings.enable_sorting %}
+        <div class="ps-collection-toolbar__sort">
+          <label for="CollectionSortBy" class="ps-sort-label">Sort by:</label>
+          <select id="CollectionSortBy" class="sort-select ps-sort-select" name="sort_by" onchange="this.form.submit()">
+            {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endif %}
+    </form>
+
+    <aside class="filter-drawer" data-filter-drawer aria-label="Filters">
+      <div class="filter-drawer__head">
+        <strong>Filter & sort</strong>
+        <button class="icon-button" type="button" data-filter-close aria-label="Close">{% render 'icon', name:'close' %}</button>
+      </div>
+      <form method="get" class="filter-drawer__body">
+        {% if section.settings.enable_sorting %}
+          <label class="filter-drawer__sort">
+            Sort by
+            <select class="sort-select" name="sort_by">
+              {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+              {% for option in collection.sort_options %}
+                <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+              {% endfor %}
+            </select>
+          </label>
+        {% endif %}
+        {% if section.settings.enable_filtering %}
+          {% for filter in collection.filters %}
+            <details class="mobile-facet" {% if filter.active_values.size > 0 %}open{% endif %}>
+              <summary>{{ filter.label }}<span>+</span></summary>
+              <div class="mobile-facet__panel">
+                {% case filter.type %}
+                  {% when 'boolean', 'list' %}
+                    {% for value in filter.values %}
+                      <label>
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                        <span>{{ value.label }}</span>
+                        <small>{{ value.count }}</small>
+                      </label>
+                    {% endfor %}
+                  {% when 'price_range' %}
+                    <div class="price-range">
+                      <input class="product-select" name="{{ filter.min_value.param_name }}" type="number" placeholder="Min" value="{{ filter.min_value.value | money_without_currency | replace:',','' }}">
+                      <input class="product-select" name="{{ filter.max_value.param_name }}" type="number" placeholder="Max" value="{{ filter.max_value.value | money_without_currency | replace:',','' }}">
+                    </div>
+                {% endcase %}
+              </div>
+            </details>
+          {% endfor %}
+        {% endif %}
+        <button class="button button--full filter-apply" type="submit">Show results</button>
+      </form>
+    </aside>
+    <div class="filter-drawer-backdrop" data-filter-close></div>
+
+    {% paginate collection.products by section.settings.items_per_page %}
+      <div class="grid psr-product-grid" style="--psr-columns:{{ section.settings.columns_desktop }};--psr-grid-gap:{% case section.settings.gap %}{% when 'none' %}0px{% when 'small' %}16px{% when 'large' %}36px{% else %}24px{% endcase %}">
+        {% for product in collection.products %}
+          {% render 'product-card', product: product %}
+        {% else %}
+          <div style="grid-column:1/-1;text-align:center;padding:80px 0">
+            <h3>No products found</h3>
+            <p class="muted">Try adjusting your filters.</p>
+          </div>
+        {% endfor %}
+
+        {% if section.settings.show_concierge_card %}
+          <article class="product-card ps-product ps-concierge-card" data-product-step="all">
+            <div class="ps-concierge-card__inner">
+              <div class="ps-concierge-card__top">
+                <span class="ps-concierge-card__tag">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  Dermatologist Guidance
+                </span>
+                <h3 class="ps-concierge-card__heading">Not sure where to begin?</h3>
+                <p class="ps-concierge-card__body">Speak directly with our skin specialists to get a personalized regimen based on your acne stage and skin barrier health.</p>
+              </div>
+              <div class="ps-concierge-card__bottom">
+                <a class="ps-concierge-card__cta" href="/pages/consultation">
+                  Book Consultation <span>→</span>
+                </a>
+                <a class="ps-concierge-card__whatsapp" href="https://wa.me/918446544458?text=Hi%2C%20I%20need%20help%20choosing%20the%20right%20acne%20skincare%20formulation" target="_blank" rel="noopener noreferrer">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  Chat with Specialist on WhatsApp
+                </a>
+              </div>
+            </div>
+          </article>
+        {% endif %}
+      </div>
+      {% if paginate.pages > 1 %}
+        <div class="pagination">{{ paginate | default_pagination }}</div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "items_per_page",
+      "label": "Items to show per page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns per row on desktop",
+      "min": 2,
+      "max": 5,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "gap",
+      "label": "Column gap",
+      "options": [
+        { "value": "none", "label": "No gap" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_counts",
+      "label": "Show product counts",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_concierge_card",
+      "label": "Show concierge guidance card",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product grid"
+    }
+  ]
+}
+{% endschema %}

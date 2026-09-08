@@ -3,9 +3,13 @@
     "banner": {
       "type": "collection-banner",
       "settings": {
-        "subheading": "Evidence-led care",
-        "padding_top": 56,
-        "padding_bottom": 28
+        "subheading": "Clinical Formulations · Engineered for Indian Skin",
+        "heading": "Targeted Acne Care & Barrier Formulations",
+        "description": "<p>High-potency clinical actives, non-comedogenic bases, and lightweight barrier repair—specifically engineered for Indian humidity, UV exposure, and persistent acne.</p>",
+        "show_trust_badges": true,
+        "enable_quick_filters": true,
+        "guide_link_label": "How recommendations work",
+        "guide_link_url": "/pages/the-science"
       }
     },
     "grid": {
@@ -13,13 +17,78 @@
       "settings": {
         "items_per_page": 12,
         "columns_desktop": 4,
+        "gap": "medium",
         "enable_sorting": true,
-        "enable_filtering": true
+        "enable_filtering": false,
+        "show_counts": true,
+        "show_concierge_card": true
+      }
+    },
+    "regimen": {
+      "type": "collection-regimen-matrix",
+      "settings": {
+        "eyebrow": "The 4-Step Clinical Protocol",
+        "heading": "Engineered to work synergistically. Zero conflicting actives.",
+        "description": "<p>Most persistent acne in India is exacerbated by compromised skin barriers and heavy, pore-clogging bases. Our clinical regimen follows a strict 4-phase sequence formulated at skin-optimal pH levels to clear active acne, prevent post-inflammatory hyperpigmentation (PIH), and fortify barrier lipids.</p>"
+      }
+    },
+    "faq": {
+      "type": "collection-faq",
+      "blocks": {
+        "faq-1": {
+          "type": "faq",
+          "settings": {
+            "question": "Will these formulations feel heavy or cause sweating in hot, humid Indian weather?",
+            "answer": "<p>No. Every Project Skin formulation is engineered with lightweight water-gel, fluid, or quick-absorbing emulsions specifically stress-tested in peak Indian humidity. They absorb completely without leaving a greasy residue, film, or suffocating layer on your pores.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "faq",
+          "settings": {
+            "question": "How soon can I expect to see visible improvement in active breakouts and marks?",
+            "answer": "<p>Excess sebum secretion and active redness typically calm within 7–14 days. Barrier stabilization and reduced breakout frequency occur within 2–4 weeks. Dark post-acne marks (PIH/PIE) show significant fading over 6–8 weeks with daily application and consistent SPF 50 protection.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use Project Skin formulations alongside prescription acne medications (e.g., Tretinoin, Benzoyl Peroxide)?",
+            "answer": "<p>Yes. Our Calming Moisturiser and Refreshing Cleanser are ideal companions to medical acne therapies, replenishing essential ceramides and preventing the severe peeling, dryness, and stinging often triggered by prescription retinoids.</p>"
+          }
+        },
+        "faq-4": {
+          "type": "faq",
+          "settings": {
+            "question": "Are all products 100% non-comedogenic and free of added fragrances?",
+            "answer": "<p>Yes. All products are strictly formulated without pore-clogging waxes, mineral oils, synthetic fragrances, drying alcohols, or essential oils that trigger micro-inflammation in acne-prone skin.</p>"
+          }
+        },
+        "faq-5": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the Project Skin 30-day money-back guarantee?",
+            "answer": "<p>We stand behind our clinical evidence. If you do not see visible improvements in your skin within 30 days of consistent use, contact us at support@theprojectskin.com or on WhatsApp for a complete, no-questions-asked refund.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4",
+        "faq-5"
+      ],
+      "settings": {
+        "eyebrow": "Evidence & Guidance",
+        "heading": "Frequently Asked Questions",
+        "copy": "<p>Everything you need to know about our active concentrations, non-comedogenic bases, and routine sequencing for Indian skin.</p>"
       }
     }
   },
   "order": [
     "banner",
-    "grid"
+    "grid",
+    "regimen",
+    "faq"
   ]
 }

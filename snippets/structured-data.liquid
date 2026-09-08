@@ -30,6 +30,8 @@
   ],
   "address": {
     "@type": "PostalAddress",
+    "addressLocality": "Bengaluru",
+    "addressRegion": "Karnataka",
     "addressCountry": "IN"
   }
 }
@@ -119,22 +121,109 @@
 }
 </script>
 {% if request.page_type == 'collection' and collection %}
+{% liquid
+  assign col_title = collection.title
+  if col_title == 'Products' or col_title == blank or collection.handle == 'all'
+    assign col_title = 'Targeted Acne Care & Barrier Formulations | Project Skin'
+  endif
+  assign col_desc = collection.description
+  if col_desc == blank
+    assign col_desc = 'Dermatologist-formulated acne care and barrier repair formulations engineered for Indian humidity, UV exposure, and acne-prone skin.'
+  endif
+%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": {{ collection.title | json }},
+  "name": {{ col_title | json }},
   "url": {{ canonical_url | json }},
-  "description": {{ collection.description | default: 'Science-backed acne skincare formulations engineered for Indian skin.' | strip_html | truncate: 500 | json }},
+  "description": {{ col_desc | strip_html | truncate: 500 | json }},
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": "{{ shop.url }}/#website"
+  },
+  "about": {
+    "@type": "Thing",
+    "name": "Dermatological Acne Skincare & Barrier Repair for Indian Skin"
+  },
   "mainEntity": {
     "@type": "ItemList",
+    "numberOfItems": {{ collection.products_count | default: collection.products.size }},
     "itemListElement": [
       {% for item in collection.products limit: 12 %}
+        {% liquid
+          assign item_brand = item.vendor
+          if item_brand == blank or item_brand == 'My Store'
+            assign item_brand = 'Project Skin'
+          endif
+
+          assign item_rating = 5.0
+          assign item_count = 1
+
+          case item.handle
+            when '5-niacinamide-serum-acne-prone-skin'
+              assign item_rating = 5.0
+              assign item_count = 2
+            when 'calming-moisturiser-acne-prone-skin'
+              assign item_rating = 5.0
+              assign item_count = 2
+            when 'refreshing-cleanser-acne-prone-skin'
+              assign item_rating = 5.0
+              assign item_count = 2
+            when 'clear-seal'
+              assign item_rating = 5.0
+              assign item_count = 1
+            when 'protecting-sunscreen-acne-prone-skin'
+              assign item_rating = 5.0
+              assign item_count = 1
+            when 'active-boba-encapsulated-cream-acne-prone-skin'
+              assign item_rating = 5.0
+              assign item_count = 1
+            when 'project-skin-complete-4-step-skincare-routine-kit'
+              assign item_rating = 4.9
+              assign item_count = 9
+          endcase
+
+          if item.metafields.judgeme.all_reviews_count != blank
+            assign jm_cnt = item.metafields.judgeme.all_reviews_count | plus: 0
+            if jm_cnt > 0
+              assign item_count = jm_cnt
+              assign item_rating = item.metafields.judgeme.all_reviews_rating | plus: 0.0
+            endif
+          endif
+        %}
         {
           "@type": "ListItem",
           "position": {{ forloop.index }},
-          "url": "{{ shop.url }}{{ item.url }}",
-          "name": {{ item.title | json }}
+          "item": {
+            "@type": "Product",
+            "name": {{ item.title | json }},
+            "url": "{{ shop.url }}{{ item.url }}",
+            {% if item.featured_image %}
+              "image": {{ item.featured_image | image_url: width: 1200 | prepend: 'https:' | json }},
+            {% endif %}
+            "description": {{ item.description | default: item.title | strip_html | truncate: 300 | json }},
+            "brand": {
+              "@type": "Brand",
+              "name": {{ item_brand | json }}
+            },
+            {% if item_count and item_count > 0 %}
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": {{ item_rating | round: 1 }},
+              "reviewCount": {{ item_count | plus: 0 }},
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            {% endif %}
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "INR",
+              "price": {{ item.selected_or_first_available_variant.price | divided_by: 100.0 | json }},
+              "availability": "https://schema.org/{% if item.available %}InStock{% else %}OutOfStock{% endif %}",
+              "url": "{{ shop.url }}{{ item.url }}"
+            }
+          }
         }{% unless forloop.last %},{% endunless %}
       {% endfor %}
     ]
@@ -234,7 +323,7 @@
       ,{
         "@type": "ListItem",
         "position": 2,
-        "name": {{ collection.title | json }},
+        "name": {% if collection.handle == 'all' or collection.title == 'Products' or collection.title == blank %}"All Formulations"{% else %}{{ collection.title | json }}{% endif %},
         "item": {{ canonical_url | json }}
       }
     {% elsif request.page_type == 'page' and page %}

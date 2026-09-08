@@ -1,27 +1,6 @@
 {% liquid
-  assign show_section = true
-  if product.handle == 'clear-seal'
-    assign show_section = false
-  endif
-  assign handle_list = section.settings.product_handles | strip | downcase
-  if handle_list != blank
-    assign show_section = false
-    if handle_list contains product.handle
-      assign show_section = true
-    endif
-  endif
-
-  capture catalog_experience
-    render 'product-experience-catalog', product: product
-  endcapture
-  assign catalog_experience = catalog_experience | strip
-  assign use_catalog = false
-  if section.settings.use_formula_catalog and catalog_experience != blank
-    assign use_catalog = true
-  endif
-  if catalog_experience == blank and section.blocks.size == 0
-    assign show_section = false
-  endif
+  # Experience cards are now consolidated inside the interactive segmented tabs in pdp-differentiation
+  assign show_section = false
 %}
 {% if show_section %}
 <section

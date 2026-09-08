@@ -147,6 +147,7 @@
     },
     "experience": {
       "type": "pdp-experience",
+      "disabled": true,
       "blocks": {
         "for_skin": {
           "type": "item",
@@ -338,7 +339,7 @@
         "heading": "Ratings & Reviews",
         "intro": "",
         "show_fallback_when_empty": true,
-        "padding_top": 68,
+        "padding_top": 52,
         "padding_bottom": 64
       }
     },
