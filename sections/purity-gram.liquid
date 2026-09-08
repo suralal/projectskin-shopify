@@ -21,23 +21,10 @@
               assign video = block.settings.video
               assign asset_video = blank
               assign asset_poster = blank
-              case block.settings.asset_key
-                when '1'
-                  assign asset_video = 'psr-gram-1.mp4'
-                  assign asset_poster = 'psr-gram-1.jpg'
-                when '2'
-                  assign asset_video = 'psr-gram-2.mp4'
-                  assign asset_poster = 'psr-gram-2.jpg'
-                when '3'
-                  assign asset_video = 'psr-gram-3.mp4'
-                  assign asset_poster = 'psr-gram-3.jpg'
-                when '4'
-                  assign asset_video = 'psr-gram-4.mp4'
-                  assign asset_poster = 'psr-gram-4.jpg'
-                when '5'
-                  assign asset_video = 'psr-gram-5.mp4'
-                  assign asset_poster = 'psr-gram-5.jpg'
-              endcase
+              if block.settings.asset_key != blank
+                assign asset_video = 'psr-gram-' | append: block.settings.asset_key | append: '.mp4'
+                assign asset_poster = 'psr-gram-' | append: block.settings.asset_key | append: '.jpg'
+              endif
             %}
 
             {% if block.type == 'text' %}
@@ -159,7 +146,12 @@
           { "value": "2", "label": "Reel 2" },
           { "value": "3", "label": "Reel 3" },
           { "value": "4", "label": "Reel 4" },
-          { "value": "5", "label": "Reel 5" }
+          { "value": "5", "label": "Reel 5" },
+          { "value": "6", "label": "Reel 6" },
+          { "value": "7", "label": "Reel 7" },
+          { "value": "8", "label": "Reel 8" },
+          { "value": "9", "label": "Reel 9" },
+          { "value": "10", "label": "Reel 10" }
         ], "default": "1" },
         { "type": "video", "id": "video", "label": "Shopify-hosted video (optional)" },
         { "type": "image_picker", "id": "poster", "label": "Poster image (optional)" },
@@ -170,7 +162,7 @@
     { "type": "image", "name": "Image", "settings": [{ "type": "image_picker", "id": "image", "label": "Image" }, { "type": "text", "id": "alt", "label": "Alt text" }, { "type": "url", "id": "link", "label": "Link" }] },
     { "type": "text", "name": "Editorial text", "settings": [{ "type": "textarea", "id": "text", "label": "Text", "default": "Science-backed skincare, made for Indian skin." }] }
   ],
-  "max_blocks": 12,
+  "max_blocks": 16,
   "presets": [{
     "name": "Purity on Gram",
     "blocks": [

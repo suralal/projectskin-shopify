@@ -784,40 +784,80 @@
           "type": "video",
           "settings": {
             "asset_key": "1",
-            "alt": "Project Skin Instagram reel",
-            "link": "https://www.instagram.com/projectskin.co/reel/DaX2CisRZ46/"
+            "alt": "Project Skin on Instagram - Bhai, tu serum bhi use karta hai?",
+            "link": "https://www.instagram.com/p/DcX2TFIhu7v/"
           }
         },
         "v2": {
           "type": "video",
           "settings": {
             "asset_key": "2",
-            "alt": "Project Skin Instagram reel",
-            "link": "https://www.instagram.com/projectskin.co/reel/DZXZv48xyMv/"
+            "alt": "Project Skin on Instagram - A few minutes every day. A routine I never skip.",
+            "link": "https://www.instagram.com/p/DaX2CisRZ46/"
           }
         },
         "v3": {
           "type": "video",
           "settings": {
             "asset_key": "3",
-            "alt": "Project Skin Instagram reel",
-            "link": "https://www.instagram.com/projectskin.co/reel/Dcdbq7DRdlO/"
+            "alt": "Project Skin on Instagram - Picture abhi baaki hai - 5% Niacinamide Serum",
+            "link": "https://www.instagram.com/p/DcLZxsJSMh1/"
           }
         },
         "v4": {
           "type": "video",
           "settings": {
             "asset_key": "4",
-            "alt": "Project Skin Instagram reel",
-            "link": "https://www.instagram.com/projectskin.co/reel/DcVRgDKSXUZ/"
+            "alt": "Project Skin on Instagram - When you think serums are overrated",
+            "link": "https://www.instagram.com/p/DamYvWOx24H/"
           }
         },
         "v5": {
           "type": "video",
           "settings": {
             "asset_key": "5",
-            "alt": "Project Skin Instagram reel",
-            "link": "https://www.instagram.com/projectskin.co/reel/DcNTzG9x2gr/"
+            "alt": "Project Skin on Instagram - Good skin isn't built overnight",
+            "link": "https://www.instagram.com/p/DaCTfSTRIQz/"
+          }
+        },
+        "v6": {
+          "type": "video",
+          "settings": {
+            "asset_key": "6",
+            "alt": "Project Skin on Instagram - Your skin revealing your past",
+            "link": "https://www.instagram.com/p/DZkRih_RrlD/"
+          }
+        },
+        "v7": {
+          "type": "video",
+          "settings": {
+            "asset_key": "7",
+            "alt": "Project Skin on Instagram - Acne isn't just about what you apply",
+            "link": "https://www.instagram.com/p/DW_kiBLkin-/"
+          }
+        },
+        "v8": {
+          "type": "video",
+          "settings": {
+            "asset_key": "8",
+            "alt": "Project Skin on Instagram - Jab logon ne finally notice kiya - glowing skin",
+            "link": "https://www.instagram.com/p/Dcdbq7DRdlO/"
+          }
+        },
+        "v9": {
+          "type": "video",
+          "settings": {
+            "asset_key": "9",
+            "alt": "Project Skin on Instagram - Mineral sunscreen protection",
+            "link": "https://www.instagram.com/p/DbxIhlmR-rG/"
+          }
+        },
+        "v10": {
+          "type": "video",
+          "settings": {
+            "asset_key": "10",
+            "alt": "Project Skin on Instagram - Keeping it simple, keeping it consistent",
+            "link": "https://www.instagram.com/p/DbFcUDcysQo/"
           }
         }
       },
@@ -826,14 +866,19 @@
         "v2",
         "v3",
         "v4",
-        "v5"
+        "v5",
+        "v6",
+        "v7",
+        "v8",
+        "v9",
+        "v10"
       ],
       "settings": {
         "eyebrow": "@projectskin.co",
         "heading": "Project Skin On Gram",
         "description": "<p>Explore our gentle beauty highlights – trusted by over 10k fans.</p>",
         "instagram_link": "https://www.instagram.com/projectskin.co/",
-        "speed": 32,
+        "speed": 40,
         "padding_top": 36,
         "padding_bottom": 28
       }
